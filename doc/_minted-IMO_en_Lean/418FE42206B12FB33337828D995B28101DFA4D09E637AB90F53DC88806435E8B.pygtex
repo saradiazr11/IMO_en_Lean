@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{k+kn}{import} \PYG{n}{data}\PYG{n+nb+bp}{.}\PYG{n}{real}\PYG{n+nb+bp}{.}\PYG{n}{basic}
+\PYG{k+kn}{import} \PYG{n}{algebra}\PYG{n+nb+bp}{.}\PYG{n}{group}\PYG{n+nb+bp}{.}\PYG{n}{pi}
+\PYG{k+kn}{example} \PYG{o}{(}\PYG{n}{f} \PYG{n}{g} \PYG{o}{:} \PYG{n}{ℝ} \PYG{n+nb+bp}{→} \PYG{n}{ℝ}\PYG{o}{)} \PYG{o}{:} \PYG{n}{odd\PYGZus{}fun} \PYG{n}{f} \PYG{n+nb+bp}{→} \PYG{n}{odd\PYGZus{}fun} \PYG{n}{g} \PYG{n+nb+bp}{→}  \PYG{n}{odd\PYGZus{}fun} \PYG{o}{(}\PYG{n}{g} \PYG{err}{∘} \PYG{n}{f}\PYG{o}{)} \PYG{o}{:=}
+\PYG{k}{begin}
+\PYG{n}{intros} \PYG{n}{hf} \PYG{n}{hg} \PYG{n}{x}\PYG{o}{,}
+\PYG{k}{calc} \PYG{o}{(}\PYG{n}{g} \PYG{err}{∘} \PYG{n}{f}\PYG{o}{)} \PYG{o}{(}\PYG{n+nb+bp}{\PYGZhy{}}\PYG{n}{x}\PYG{o}{)} \PYG{n+nb+bp}{=} \PYG{n}{g} \PYG{o}{(}\PYG{n}{f} \PYG{o}{(}\PYG{n+nb+bp}{\PYGZhy{}}\PYG{n}{x}\PYG{o}{))} \PYG{o}{:} \PYG{n}{rfl}
+\PYG{n+nb+bp}{...} \PYG{n+nb+bp}{=} \PYG{n}{g} \PYG{o}{(}\PYG{n+nb+bp}{\PYGZhy{}}\PYG{n}{f} \PYG{n}{x}\PYG{o}{):} \PYG{k}{by} \PYG{n}{rw} \PYG{n}{hf}
+\PYG{n+nb+bp}{...} \PYG{n+nb+bp}{=\PYGZhy{}} \PYG{n}{g} \PYG{o}{(}\PYG{n}{f} \PYG{n}{x}\PYG{o}{):}\PYG{k}{by} \PYG{n}{rw} \PYG{n}{hg}
+\PYG{n+nb+bp}{...=} \PYG{n+nb+bp}{\PYGZhy{}} \PYG{o}{(}\PYG{n}{g} \PYG{err}{∘} \PYG{n}{f}\PYG{o}{)} \PYG{n}{x}\PYG{o}{:} \PYG{n}{rfl}\PYG{o}{,}
+\PYG{k+kn}{end}
+\end{Verbatim}

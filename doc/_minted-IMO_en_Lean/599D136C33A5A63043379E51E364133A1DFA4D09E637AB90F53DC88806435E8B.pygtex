@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYG{n}{def} \PYG{n}{limite} \PYG{o}{:} \PYG{o}{(}\PYG{n+nb+bp}{ℕ} \PYG{n+nb+bp}{→} \PYG{n}{ℝ}\PYG{o}{)} \PYG{n+nb+bp}{→} \PYG{n}{ℝ} \PYG{n+nb+bp}{→} \PYG{k+kt}{Prop} \PYG{o}{:=}
+\PYG{n+nb+bp}{λ} \PYG{n}{u} \PYG{n}{c}\PYG{o}{,} \PYG{n+nb+bp}{∀} \PYG{n}{ε} \PYG{n+nb+bp}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{o}{,} \PYG{n+nb+bp}{∃} \PYG{n}{N}\PYG{o}{,} \PYG{n+nb+bp}{∀} \PYG{n}{n} \PYG{n+nb+bp}{≥} \PYG{n}{N}\PYG{o}{,} \PYG{n+nb+bp}{|}\PYG{n}{u} \PYG{n}{n} \PYG{n+nb+bp}{\PYGZhy{}} \PYG{n}{c}\PYG{n+nb+bp}{|} \PYG{n+nb+bp}{≤} \PYG{n}{ε} \PYG{n}{para} \PYG{n}{todo}
+\end{Verbatim}
