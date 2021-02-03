@@ -1,0 +1,117 @@
+\documentclass[a4paper,12pt,twoside]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Paquetes adicionales                                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fontspec}
+\usepackage{xltxtra}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle}
+\setromanfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale={0.90}]
+
+\usepackage[spanish]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath,amssymb,amstext,amsthm}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{minted}
+\usemintedstyle{emacs}
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\newminted{lean}{bgcolor=bg, autogobble=true, mathescape}
+\setminted{fontsize=\small,baselinestretch=1}
+
+\usepackage{unicode-math}
+\setmathfont{texgyrepagella-math.otf}
+
+\usepackage[%
+  colorlinks=true,
+  urlcolor=blue,
+  pdfauthor={Sara Díaz Real},%
+  pdftitle={IMO en Lean},%
+  pdfstartview=FitH,%
+  bookmarks=false]{hyperref}
+
+\usepackage{tocstyle}
+\usetocstyle{KOMAlike}
+
+\usepackage[colorinlistoftodos
+           , backgroundcolor = yellow
+           , textwidth = 4cm
+           , shadow
+           , spanish]{todonotes}
+
+\linespread{1.05}                  % Distancia entre líneas
+\raggedbottom                      % No ajusta los espacios verticales.
+\setlength{\parskip}{1ex}          % Distancia entre párrfos
+\setlength{\parindent}{2em}        % Indentación de comienzo de párrafo
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Cabeceras                                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+
+\addtolength{\headheight}{\baselineskip}
+
+\pagestyle{fancy}
+
+\cfoot{}
+
+\fancyhead{}
+\fancyhead[RE]{\mdseries\sffamily \nouppercase{\leftmark}}
+\fancyhead[LO]{\mdseries\sffamily \nouppercase{\rightmark}}
+\fancyhead[LE,RO]{\mdseries\sffamily \thepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Definiciones                                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input definiciones
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Título                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{{\LARGE Formalización en Lean de soluciones del IMO}}
+\author{Sara Díaz Real}
+\date{\vfill \hrule \vspace*{2mm}
+  \begin{tabular}{l}
+      \href{http://www.cs.us.es/glc}
+           {Grupo de Lógica Computacional} \\
+      \href{http://www.cs.us.es}
+           {Dpto. de Ciencias de la Computación e Inteligencia Artificial} \\
+      \href{http://www.us.es}
+           {Universidad de Sevilla}  \\
+    Sevilla, \today
+  \end{tabular}\hfill\mbox{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Documento                                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \includeonly{Elementos}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\input{Licencia/licenciaCC}
+\newpage
+
+\tableofcontents
+\clearpage
+
+\include{Resumen}
+\include{Introduccion}
+\include{Elementos}
+\include{IMO}
+\appendix
+\include{Tácticas}
+\include{Teoremas}
+\include{Bibliografia}
+
+\end{document}
