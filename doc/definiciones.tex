@@ -24,3 +24,12 @@
 % Para incluir teorías
 \newcommand{\teoria}[1]
   {\inputminted[mathescape]{lean}{../src/#1.lean}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Notas pendientes                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{nc}
+\newcommand{\comentario}[1]{%
+  \addtocounter{nc}{1}
+  \todo[inline]{\textbf{Comentario \arabic{nc}}: #1}}
