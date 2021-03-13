@@ -279,3 +279,6 @@ TSWLatexianTemp*
 /.vscode
 /doc/_minted-IMO_en_Lean
 /_target
+
+# Borradores
+/borrador
