@@ -298,30 +298,33 @@ rw ge_max_iff at hn,
  ... = |(u n - l) + (v n - l')| : by congr' 1 ; ring
  ... ≤ |u n - l| + |v n - l'|   : by apply abs_add
  ... ≤  eps                     : by linarith [hN1 n (by linarith),
-                                              hN2 n (by linarith)],
+                                               hN2 n (by linarith)],
 end
 \end{leancode}
 
 \subsection{Paridad de la suma de funciones}
-Como ya se adelantó, los tres resultados que vamos a estudiar
-a continuación son relativos a la paridad de las funciones.
-Es por eso, que previo al desarrollo de los resultados veamos
-las dos siguientes definiciones:
+
+Como ya se adelantó, los tres resultados que vamos a estudiar a
+continuación son relativos a la paridad de las funciones. Es por eso,
+que previo al desarrollo de los resultados veamos las dos siguientes
+definiciones:
+
+\comentario{En las definiciones cambiar underline por textbf.}
+
 \begin{definicion}\label{funpar}
-  Sea \(f: ℝ → ℝ\), se dirá que
-  \(f\) es una \underline{función par}
-  si para cualquier número real \(x\) se verifica que \(f(-x)=f(x)\).
+  Sea \(f: ℝ → ℝ\), se dirá que \(f\) es una \textbf{función par} si
+  para cualquier número real \(x\) se verifica que \(f(-x)=f(x)\).
 \end{definicion}
 
 \begin{definicion}\label{funimpar}
-  Sea \(f: ℝ →  ℝ\), se dirá que \(f\) es una \underline{función impar}
-  si para cualquier número real \(x\) se verifica que \(f(-x)=-f(x)\).
+  Sea \(f: ℝ → ℝ\), se dirá que \(f\) es una \textbf{función impar} si
+  para cualquier número real \(x\) se verifica que \(f(-x)=-f(x)\).
 \end{definicion}
 
 Estas dos definiciones se formalizan en Lean como sigue:
 \begin{leancode}
 def even_fun (f : ℝ → ℝ) := ∀ x, f (-x) = f x
-def odd_fun (f : ℝ → ℝ) := ∀ x, f (-x) = -f x
+def odd_fun  (f : ℝ → ℝ) := ∀ x, f (-x) = -f x
 \end{leancode}
 
 A continuación, ya estamos preparados para ver la
