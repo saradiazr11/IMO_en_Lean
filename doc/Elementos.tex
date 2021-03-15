@@ -178,21 +178,21 @@ def cauchy_sequence (u : ℕ → ℝ) :=
     de configuración de Emacs.}
 
   \[\begin{array}{llll}
-          |u_p-u_q| &= &|u_p-l+l-u_q|   & \\
-                   &≤ &|u_p-l|+|u_q-l| & [(*)] \\
-                   &≤ &\frac{ε}{2}+\frac{ε}{2} & [(**)] \\
-                   &= &ε
+      |u_p-u_q| &= &|u_p-l+l-u_q|           & \\
+                &≤ &|u_p-l|+|u_q-l|         & [(*)] \\
+                &≤ &\frac{ε}{2}+\frac{ε}{2} & [(**)] \\
+                &= &ε
   \end{array}\]
-  donde \( (*) \) se ha hecho uso de la desigualdad triangular y de
-  la propia definición del valor absoluto; mientras que en \((**)\)
-  se ha usado lo visto en (\ref{lim3}) para los casos de \(p\) y \(q\).
+  donde \((*)\) se ha hecho uso de la desigualdad triangular y de la
+  propia definición del valor absoluto; mientras que en \((**)\) se ha
+  usado lo visto en (\ref{lim3}) para los casos de \(p\) y \(q\).
 
-  De esta forma, se ha demostrado que para cualquier número real \(ε >0\)
-  se verifica que \(|u_p-u_q| ≤ 0\), es decir, hemos demostrado
+  De esta forma, se ha demostrado que para cualquier número real \(ε > 0\)
+  se verifica que \(|u_p - u_q| ≤ 0\); es decir, hemos demostrado
   que \(\{u_n\}\) es una sucesión de Cauchy.
 \end{demostracion}
 
-En Lean esto se formalice como sigue:
+En Lean esto se formaliza como sigue:
 \begin{leancode}
 import data.real.basic
 
@@ -208,20 +208,23 @@ def cauchy_sequence (u : ℕ → ℝ) :=
 
 example : (∃ l, seq_limit u l) → cauchy_sequence u :=
 begin
-intros h eps eps_pos,
-cases h with l hl,
-rw seq_limit at hl,
-cases hl (eps/2) (by linarith) with N hN,
-use N,
-  intros p q hp hq,
-calc  |u p - u q|
-    = |(u p - l)+(l - u q)|  : by ring
-... ≤ |u p - l| + |l - u q|  : by apply abs_add
-... = |u p - l| + |u q - l|  : by rw abs_sub l (u q)
-... ≤ eps/2 + eps/2          : by linarith [hN p hp, hN q hq]
-... = eps                    : by ring,
+  intros h eps eps_pos,
+  cases h with l hl,
+  rw seq_limit at hl,
+  cases hl (eps/2) (by linarith) with N hN,
+  use N,
+    intros p q hp hq,
+  calc  |u p - u q|
+      = |(u p - l)+(l - u q)|  : by ring
+  ... ≤ |u p - l| + |l - u q|  : by apply abs_add
+  ... = |u p - l| + |u q - l|  : by rw abs_sub l (u q)
+  ... ≤ eps/2 + eps/2          : by linarith [hN p hp, hN q hq]
+  ... = eps                    : by ring,
 end
 \end{leancode}
+
+\comentario{Escribir dos espacios al inicio de cada línea de los bloques
+  begin/end. Lo he corregido en el bloque anterior.}
 
 \subsection{Suma de sucesiones convergentes}
 \begin{teorema}
