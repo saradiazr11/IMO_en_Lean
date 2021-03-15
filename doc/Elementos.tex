@@ -227,45 +227,44 @@ end
   begin/end. Lo he corregido en el bloque anterior.}
 
 \subsection{Suma de sucesiones convergentes}
+
 \begin{teorema}
-  Sean \(\{u_n\}\) y \(\{v_n\}\) dos sucesiones convergentes,
-  entonces se tiene que la suma de estas dos sucesiones
-  converge a la suma de sus respectivos límites. Simbólicamente:
+  Sean \(\{u_n\}\) y \(\{v_n\}\) dos sucesiones convergentes, entonces
+  se tiene que la suma de estas dos sucesiones converge a la suma de sus
+  respectivos límites. Simbólicamente,
   \begin{equation}
-  lim (u_n+v_n)=lim (u_n)+lim (v_n).
+  lim (u_n + v_n) = lim (u_n) + lim (v_n).
   \end{equation}
 \end{teorema}
+
 \begin{demostracion}
-  Como consecuencia de que las sucesiones \(\{u_n\}\) y
-  \(\{v_n\}\) sean convergentes se tiene que:
-  \begin{equation}\label{limU}
-  ∀ ε >0, ∃ N_1 ∈ ℕ, \ ∀ n ≥ N_1 \ |u_n-l| ≤ \frac{ε}{2}
-  \hspace{0.8cm}\text{y}
-  \end{equation}
-  \begin{equation}\label{limV}
-  ∀ ε >0, ∃ N_2 ∈ ℕ, \ ∀ n ≥ N_1 \ |v_n-l'| ≤ \frac{ε}{2},
-  \end{equation}
-  donde hemos denotado \(l\) y \(l'\) a los límites de
-  \(\{u_n\}\) y \(\{v_n\}\), respectivamente.
+  Como consecuencia de que las sucesiones \(\{u_n\}\) y \(\{v_n\}\) sean
+  convergentes se tiene que:
+  \begin{align}
+    & ∀ ε > 0, ∃ N_1 ∈ ℕ, ∀ n ≥ N_1 |u_n - l| ≤ \frac{ε}{2} \label{limU} \\
+    & ∀ ε > 0, ∃ N_2 ∈ ℕ, ∀ n ≥ N_1 |v_n - l'| ≤ \frac{ε}{2}, \label{limV}
+  \end{align}
+  donde hemos denotado \(l\) y \(l'\) a los límites de \(\{u_n\}\) y
+  \(\{v_n\}\), respectivamente.
 
-  A continuación, definimos \(N_0 := max(N_1,N_2)\)
-  y consideremos un número natural \(n\)
-  que sea mayor o igual que \(N_0\), de manera que:
+  \comentario{He cambiado equations por align.}
+
+  A continuación, definimos \(N_0 := \max(N_1,N_2)\) y consideremos un
+  número natural \(n\) que sea mayor o igual que \(N_0\), de manera que:
   \[\begin{array}{llll}
-	|(u_n+v_n)-(l+l')| &= &|u_p-l+l-u_q|   & \\
-			   &≤ &|u_n-l|+|v_n-l'| & [(*)] \\
-                           &≤ &\frac{ε}{2}+\frac{ε}{2} & [(**)] \\
-                           &= &ε
+      |(u_n+v_n)-(l+l')| &= &|u_p-l+l-u_q|           & \\
+                         &≤ &|u_n-l|+|v_n-l'|        & [(*)] \\
+                         &≤ &\frac{ε}{2}+\frac{ε}{2} & [(**)] \\
+                         &= &ε
   \end{array}\]
-  donde en \((*)\) se usado la desigualdad triangular
-  y en \((**)\) las desigualdades vistas en (\ref{limU}) y (\ref{limV}).
+  donde en \((*)\) se usado la desigualdad triangular y en \((**)\) las
+  desigualdades vistas en (\ref{limU}) y (\ref{limV}).
 
-  De manera que finalmente se ha demostrado que para cualquier
-  número real \(ε >0\), existe un número natural \(N_0\)
-  tal que para cualquier número \(n\) mayor o igual
-  que \(N_0\), se verifica que \( | (u_n+v_n)-(l+l')|≤ ε\),
-  o lo que es lo mismo que la sucesión \(\{u_n+v_n\}\) converge a
-  \( (l+l')\).
+  De manera que finalmente se ha demostrado que para cualquier número
+  real \(ε > 0\), existe un número natural \(N_0\) tal que para
+  cualquier número \(n\) mayor o igual que \(N_0\), se verifica que
+  \(|(u_n+v_n)-(l+l')| ≤ ε\), o lo que es lo mismo que la sucesión
+  \(\{u_n+v_n\}\) converge a \((l+l')\).
 \end{demostracion}
 
 En Lean esto se formaliza como:
