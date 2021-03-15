@@ -480,51 +480,56 @@ end
   ¿las dos importaciones son necesarias?}
 
 \section{Álgebra Básica}
+
 En esta segunda sección se estudiarán diversos resultados
 correspondientes a la asignatura de formación básica: Álgebra Básica.
-Al igual que Cálculo Infinitesimal, también se corresponde al primer
-año del grado en Matemáticas.
+Al igual que Cálculo Infinitesimal, también se corresponde al primer año
+del grado en Matemáticas.
 
-Se van a estudiar dos resultados para los cuales es necesario
-introducir previamente el siguiente concepto:
+Se van a estudiar dos resultados para los cuales es necesario introducir
+previamente el siguiente concepto:
 \begin{definicion}\label{division}
-  Denotaremos la división en el conjunto de los números enteros por el símbolo
-   \( "|" \). Entonces se dirá que un número entero \(a\) divide a otro \(b\)
-  si y solamente si existe otro número entero \(k\) tal que \(b=a · k\).
-  Simbólicamente:
+  Denotaremos la divisibilidad en el conjunto de los números enteros por
+  el símbolo \("|"\). Se dirá que el número entero \(a\) es un
+  \textbf{divisor de} \(b\) (o que \(a\) \textbf{divide a} \(b\)) si y
+  solamente si existe otro número entero \(k\) tal que \(b = a · k\).
+  Simbólicamente,
   \begin{equation}
-  a|b  ⟺  ∃ k ∈ ℤ, \ b=a · k.
+    a|b ⟺ ∃ k ∈ ℤ, b = a · k.
   \end{equation}
 \end{definicion}
 
-A continuación, una vez hemos introducido el concepto, ya estamos listos p
-ara ver los resultados en cuestión.
+A continuación, una vez hemos introducido el concepto, ya estamos listos
+para ver los resultados en cuestión.
 
 \subsection{Transitividad de la división}
+
 \begin{teorema}
-  Sean \(a, b\) y \(c\) tres número enteros tales que verifican
-  que \(a\) divide a \(b\) y \(b\) divide a \(c\),
-  entonces se tiene que \(a\) divide a \(c\).
+  Sean \(a, b\) y \(c\) tres número enteros tales que verifican que
+  \(a\) divide a \(b\) y \(b\) divide a \(c\), entonces se tiene que
+  \(a\) divide a \(c\).
 \end{teorema}
+
 \begin{demostracion}
-  Por la definición \ref{division} de división en el conjunto
-  de los números enteros vista anteriormente, como
-  consecuencia de que \(a\) divide a \(b\), se tiene que:
+  Por la definición \ref{division} de división en el conjunto de los
+  números enteros vista anteriormente, como consecuencia de que \(a\)
+  divide a \(b\), se tiene que existe un \(k_1 ∈ ℤ\) tal que
   \begin{equation}\label{div1}
-  ∃ k_1 ∈ ℤ, \ b=k_1 · a.
+    b = k_1 · a.
   \end{equation}
-  Asimismo, como consecuencia de que \(b\) divide a \(c\) se
-  verifica que:
+  Asimismo, como consecuencia de que \(b\) divide a \(c\) se verifica
+  que existe un \(k_2 ∈ ℤ\) tal que
   \begin{equation}\label{div2}
-  ∃ k_2 ∈ ℤ, \ c=k_2 · b.
+    c = k_2 · b.
   \end{equation}
-  De manera que si introducimos la descomposición de \(b\) descrita
-  en (\ref{div1}) en la de \(c\) vista en (\ref{div2}), se tiene que:
-  \begin{equation}
-  ∃ k_1, k_2 ∈ ℤ, \ c=\underbrace{k_1 · k_2}_{k_3} · a
-  ⟹ ∃ k_3 ∈ ℤ, \ c=k_3 · a .
-  \end{equation}
-  Y ya tendríamos el resultado deseado.
+  De manera que si introducimos la descomposición de \(b\) descrita en
+  (\ref{div1}) en la de \(c\) vista en (\ref{div2}), se tiene que:
+  \[\begin{array}{ll}
+      c & = k_2 · (k_1  · a) \\
+        & = (k_2 · k_1)  · a) \\
+        & = k_3 · a,
+    \end{array}\]
+  donde \(k_3 = k_2 · k _1\). Y ya tendríamos el resultado deseado.
 \end{demostracion}
 
 Veamos ahora la formalización en Lean:
@@ -536,14 +541,20 @@ variables (a b c : ℤ)
 
 example (h₁ : a ∣ b) (h₂ : b ∣ c) : a ∣ c :=
 begin
-cases h₁ with k1 hk1,
-cases h₂ with k2 hk2,
-rw hk1 at hk2,
-use k1*k2,
-rw ← mul_assoc,
+  cases h₁ with k1 hk1,
+  cases h₂ with k2 hk2,
+  rw hk1 at hk2,
+  use k1*k2,
+  rw ← mul_assoc,
 exact hk2,
 end
 \end{leancode}
+
+\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
+  ¿las dos importaciones son necesarias?}
+
+\comentario{Revisar la definición de divisibilidad para que se
+  corresponda el orden de los factores con la de Lean.}
 
 \subsection{Aditividad de la división}
 \begin{teorema}
