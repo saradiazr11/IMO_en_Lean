@@ -387,27 +387,27 @@ end
 \subsection{Paridad de la composición de funciones}
 
 \begin{teorema}
-  Sea \(f\) una función par y sea \(g\) una función arbitraria,
-  entonces se tiene que la composición de \(g\) con \(f\),
-  es decir, \((g ∘ f)\) es también par.
+  Sea \(f\) una función par y sea \(g\) una función arbitraria, entonces
+  se tiene que la composición de \(g\) con \(f\); es decir, \((g ∘ f)\)
+  es también par.
 \end{teorema}
+
 \begin{demostracion}
-  Al igual que en la demostración anterior, por
-  la definición \ref{funpar}, se tiene que para la
-  función \(f\) se verifica que
+  Al igual que en la demostración anterior, por la definición
+  \ref{funpar}, se tiene que para la función \(f\) se verifica que
   \begin{equation}\label{fpar2}
-  f(-x)=f(x) \hspace{1cm}∀ x ∈ ℝ.
+     ∀ x ∈ ℝ, f(-x) = f(x).
   \end{equation}
-  Consideremos ahora un número real \(x\) arbitrario y estudiemos
-  la composición de una función arbitraria \(g\) con \(f\):
+  Consideremos ahora un número real \(x\) arbitrario y estudiemos la
+  composición de una función arbitraria \(g\) con \(f\):
   \[\begin{array}{llll}
-        (g ∘ f)(-x) &= &g(f(-x))   & [(1)]\\
-                    &≤ &g(f(x)) & [(2)] \\
-                    &≤ &(g ∘ f)(x),& [(3)]
-  \end{array}\]
-  donde en \((1)\) y \((3)\) se ha usado la definición de la composición;
-  mientras que en \((2)\) se ha hecho uso de la hipótesis de paridad
-  de \(f\), (\ref{fpar2}).
+      (g ∘ f)(-x) &= &g(f(-x))    & [(1)]\\
+                  &≤ &g(f(x))     & [(2)] \\
+                  &≤ &(g ∘ f)(x), & [(3)]
+    \end{array}\]
+  donde en \((1)\) y \((3)\) se ha usado la definición de la
+  composición; mientras que en \((2)\) se ha hecho uso de la hipótesis
+  de paridad de \(f\), (\ref{fpar2}).
 \end{demostracion}
 
 En Lean esto se formalizaría como sigue:
@@ -419,12 +419,15 @@ def even_fun (f : ℝ → ℝ) := ∀ x, f (-x) = f x
 
 example (f g : ℝ → ℝ) : even_fun f → even_fun (g ∘ f) :=
 begin
-intros hf x,
-calc (g ∘ f) (-x)
-    = g (f (-x)) : rfl
-... = g (f x)    : by rw hf,
+  intros hf x,
+  calc (g ∘ f) (-x)
+      = g (f (-x)) : rfl
+  ... = g (f x)    : by rw hf,
 end
 \end{leancode}
+
+\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
+  ¿las dos importaciones son necesarias?}
 
 \subsection{Imparidad de la composición de funciones impares}
 \begin{teorema}
