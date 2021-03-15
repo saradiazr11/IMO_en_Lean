@@ -430,28 +430,27 @@ end
   ¿las dos importaciones son necesarias?}
 
 \subsection{Imparidad de la composición de funciones impares}
+
 \begin{teorema}
-  Sean \(f\) y \(g\) dos funciones impares, entonces
-  se tiene que la composición de ambas,
-  \( (g ∘ f)\), es también una función impar.
+  Sean \(f\) y \(g\) dos funciones impares, entonces se tiene que la
+  composición de ambas, \((g ∘ f)\), es también una función impar.
 \end{teorema}
+
 \begin{demostracion}
-  Por la definición \ref{funimpar} de una función impar
-  vista anteriormente, se tiene que se verifica lo siguiente:
-  \begin{equation}\label{fimpar}
-  f(-x)=-f(x)\hspace{1cm}∀ x ∈ ℝ \ \text{y}
-  \end{equation}
-  \begin{equation}\label{gimpar}
-  g(-x)=-g(x)\hspace{1cm}∀ x ∈ ℝ.
-  \end{equation}
+  Por la definición \ref{funimpar} de una función impar vista
+  anteriormente, se tiene que se verifica lo siguiente:
+  \begin{align}
+    & ∀ x ∈ ℝ, f(-x) = -f(x)  \label{fimpar} \\
+    & ∀ x ∈ ℝ, g(-x) = -g(x). \label{gimpar}
+  \end{align}
   A continuación, vamos a estudiar la composición de estas dos funciones
   para un número real \(x\) arbitrario:
   \[\begin{array}{llll}
-        (g ∘ f)(-x) &= &g(f(-x))   & [(1)]\\
-                    &≤ &g(-f(x)) & [(2)] \\
-                    &≤ &-(g ∘ f)(x),& [(3)]
-  \end{array}\]
-  donde en \((1)\) y en \((2)\) se han usado las hipótesis de funciones
+      (g ∘ f)(-x) &= &g(f(-x))     & [(1)]\\
+                  &≤ &g(-f(x))     & [(2)] \\
+                  &≤ &-(g ∘ f)(x), & [(3)]
+    \end{array}\]
+  donde en \((2)\) y en \((3)\) se han usado las hipótesis de funciones
   impares, (\ref{fimpar}) y (\ref{gimpar}) respectivamente.
 
   De esta forma ya tendríamos la demostración deseada.
@@ -464,16 +463,21 @@ import algebra.group.pi
 
 def odd_fun (f : ℝ → ℝ) := ∀ x, f (-x) = -f x
 
-example (f g : ℝ → ℝ) : odd_fun f → odd_fun g →  odd_fun (g ∘ f) :=
+example
+  (f g : ℝ → ℝ)
+  : odd_fun f → odd_fun g →  odd_fun (g ∘ f) :=
 begin
-intros hf hg x,
-calc (g ∘ f) (-x)
-    = g (f (-x)) : rfl
-... = g (-f x)   : by rw hf
-... =-g (f x)    : by rw hg
-... = -(g ∘ f) x : rfl,
+  intros hf hg x,
+  calc (g ∘ f) (-x)
+      =  g (f (-x)) : rfl
+  ... =  g (-f x)   : by rw hf
+  ... = -g (f x)    : by rw hg
+  ... =  -(g ∘ f) x : rfl,
 end
 \end{leancode}
+
+\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
+  ¿las dos importaciones son necesarias?}
 
 \section{Álgebra Básica}
 En esta segunda sección se estudiarán diversos resultados
