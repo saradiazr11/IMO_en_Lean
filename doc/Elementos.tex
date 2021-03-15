@@ -28,6 +28,11 @@ la paridad de las funciones.
   \[∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N, |u_n-a| ≤ ε\]
 \end{definicion}
 
+\comentario{Se debe de aproximar lo máximo posible la escritura en
+  lenguaje natural y en LaTeX. En el caso de la definición anterior se
+  usa \(a\) para el límite pero en su formalizaciónse cambia por
+  \(c\). Se debe de poner las dos veces el mismo símbolo.}
+
 La formalización de la definición anterior en Lean es
 \begin{leancode}
 def limite : (ℕ → ℝ) → ℝ → Prop :=
@@ -59,7 +64,9 @@ Cada sucesión tiene como máximo un límite.
     ∀ ε > 0, ∃ N_2 ∈ ℕ, ∀ n ≥ N_2 |u_n-l'| ≤ \frac{ε}{2}.
   \end{equation}
 
-  A continuación, definamos \(N_0 = \text{max} (N_1,N_2)\).
+  \comentario{He cambiado la forma de escribir max .}
+
+  A continuación, definamos \(N_0 = \max(N_1,N_2)\).
   De manera que, considerando un número arbitrario \(n\) que
   sea mayor o igual que \(N_0\) y teniendo en cuenta lo visto anteriormente,
   podemos escribir:
