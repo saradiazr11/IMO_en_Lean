@@ -557,28 +557,27 @@ end
   corresponda el orden de los factores con la de Lean.}
 
 \subsection{Aditividad de la división}
+
 \begin{teorema}
-  Sean \(a, b\) y \(c\) tres números enteros tales que
-  verifican que \(a\) divide a \(b\) y a \(c\), entonces
-  se tiene que \(a\) divide a la suma de \(b\) y \(c\).
-  Simbólicamente:
+  Sean \(a, b\) y \(c\) tres números enteros tales que verifican que
+  \(a\) divide a \(b\) y a \(c\), entonces se tiene que \(a\) divide a
+  la suma de \(b\) y \(c\).  Simbólicamente:
   \begin{equation}
   a|b, \ a|c \ ⟹ \ a|(b+c).
   \end{equation}
 \end{teorema}
+
 \begin{demostracion}
   Análogamente a la demostración anterior, por la definición
-  \ref{division}, se tiene que:
-  \begin{equation}\label{div3}
-  a|b\  ⟹ \ ∃k_1 ∈ ℤ, \ b=k_1 · a \hspace{0.5cm} \text{y}
-  \end{equation}
-  \begin{equation}\label{div4}
-  a|c \  ⟹ \ ∃k_2 ∈ ℤ, \ c=k_2 · a.
-  \end{equation}
+  \ref{division}, se tiene que existen \(k_1, k_2 ∈ ℤ\) tales que
+  \begin{alig}
+    & b = k_1 · a \label{div3} \\
+    & c = k_2 · a. \label{div4}
+  \end{align}
   De manera que sumando las dos expresiones descritas en las expresiones
   (\ref{div3}) y (\ref{div4}), se llega a que:
   \begin{equation*}
-  ∃ k_1, k_2 ∈ ℤ, \ b+c=(k_1+k_2)· a ⟹ a | (b+c).
+    b+c = (k_1+k_2)· a.
   \end{equation*}
   Teniendo en cuenta la definición \ref{division}, ya se tendría
   el resultado.
@@ -591,16 +590,23 @@ import data.int.parity
 
 variables (a b c : ℤ)
 
-example (h1 : a ∣ b) (h2 : a ∣ c) : a ∣ b+c :=
+example
+  (h1 : a ∣ b)
+  (h2 : a ∣ c)
+  : a ∣ b+c :=
 begin
-cases h1 with k1 hk1,
-rw hk1,
-cases h2 with k2 hk2,
-rw hk2,
-use k1+k2,
-ring,
+  cases h1 with k1 hk1,
+  rw hk1,
+  cases h2 with k2 hk2,
+  rw hk2,
+  use k1+k2,
+  ring,
 end
 \end{leancode}
+
+\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
+  ¿las dos importaciones son necesarias?}
+
 
 %%% Local Variables:
 %%% mode: latex
