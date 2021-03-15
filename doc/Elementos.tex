@@ -89,7 +89,7 @@ Cada sucesión tiene como máximo un límite.
   Finalmente, se concluye la demostración sin más que aplicar sobre
   (\ref{leq}) el siguiente resultado:
   \begin{equation}
-    ∀ x,y ∈ ℝ,  (∀ ε > 0, |x-y| ≤ ε) ⟹ x=y.
+    ∀ x, y ∈ ℝ, (∀ ε > 0, |x - y| ≤ ε) ⟹ x = y.
   \end{equation}
 \end{demostracion}
 
@@ -136,43 +136,52 @@ end
 \end{leancode}
 
 \subsection{Las sucesiones convergentes son sucesiones de Cauchy}
-Previo al enunciado y demostración del Teorema, veamos en qué
-consiste una sucesión de Cauchy.
+
+Previo al enunciado y demostración del Teorema, veamos en qué consiste
+una sucesión de Cauchy.
+
 \begin{definicion}
-  Una sucesión \(\{u_n\}\) se dice que es de Cauchy si,
-  dado cualquier número real \(ε >0\),
-  existe un número natural \(N\) tal que si \(p\) y \(q\) son
-  cualesquiera dos números naturales mayores o iguales que
-  \(N\) se cumple que \(|u_p-u_q| ≤ ε \).
-  Simbólicamente:
+  Una sucesión \(\{u_n\}\) se dice que es de Cauchy si, dado cualquier
+  número real \(ε > 0\), existe un número natural \(N\) tal que si \(p\)
+  y \(q\) son cualesquiera dos números naturales mayores o iguales que
+  \(N\) se cumple que \(|u_p - u_q| ≤ ε\). Simbólicamente:
   \begin{equation}
-  ∀ ε > 0, \  N ∈ ℕ, \ ∀ p, q ≥ N, \ |u_p-u_q| ≤ ε.
+  ∀ ε > 0, N ∈ ℕ, ∀ p, q ≥ N, |u_p - u_q| ≤ ε.
   \end{equation}
 \end{definicion}
+
 En Lean esta definición se formaliza como:
 \begin{leancode}
 def cauchy_sequence (u : ℕ → ℝ) :=
 ∀ ε > 0, ∃ N, ∀ p q, p ≥ N → q ≥ N → |u p - u q| ≤ ε
 \end{leancode}
+
 \begin{teorema}
   Toda sucesión convergente es una sucesión de Cauchy.
 \end{teorema}
 \begin{demostracion}
-  Sea \(\{u_n\}\) una sucesión convergente, es decir,
-  por la definición \ref{limite}, se tiene que si denotamos
-  \(l\) como el límite de la sucesión en cuestión se verifica que
-\begin{equation}\label{lim3}
-  ∀ ε >0, ∃ N ∈ ℕ, \  ∀ n ≥ N \ |u_n-l| ≤ \frac{ε}{2}.
-\end{equation}
+  Sea \(\{u_n\}\) una sucesión convergente; es decir, por la definición
+  \ref{limite}, se tiene que si denotamos \(l\) como el límite de la
+  sucesión en cuestión se verifica que
 
-  A continuación, consideremos \(p,q ∈ ℕ\) tales
-  que estos dos números verifican que son mayores o iguales
-  que \(N\). Entonces tenemos que se puede escribir:
+  \begin{equation}\label{lim3}
+  ∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N |u_n-l| ≤ \frac{ε}{2}.
+  \end{equation}
+
+  A continuación, consideremos \(p,q ∈ ℕ\) tales que estos dos números
+  verifican que son mayores o iguales que \(N\). Entonces tenemos que se
+  puede escribir:
+
+  \comentario{No usar tabuladores como estaban en la siguiente
+    matriz. Se pueden eliminar con untabify y se puede evitar su
+    escritura poniendo (setq-default indent-tabs-mode nil) en el fichero
+    de configuración de Emacs.}
+
   \[\begin{array}{llll}
-  	  |u_p-u_q| &= &|u_p-l+l-u_q|   & \\
-  		   &≤ &|u_p-l|+|u_q-l| & [(*)] \\
-  		   &≤ &\frac{ε}{2}+\frac{ε}{2} & [(**)] \\
-  		   &= &ε
+          |u_p-u_q| &= &|u_p-l+l-u_q|   & \\
+                   &≤ &|u_p-l|+|u_q-l| & [(*)] \\
+                   &≤ &\frac{ε}{2}+\frac{ε}{2} & [(**)] \\
+                   &= &ε
   \end{array}\]
   donde \( (*) \) se ha hecho uso de la desigualdad triangular y de
   la propia definición del valor absoluto; mientras que en \((**)\)
