@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
-\PYG{n}{def} \PYG{n}{cauchy\PYGZus{}sequence} \PYG{o}{(}\PYG{n}{u} \PYG{o}{:} \PYG{n+nb+bp}{ℕ} \PYG{n+nb+bp}{→} \PYG{n}{ℝ}\PYG{o}{)} \PYG{o}{:=}
-\PYG{n+nb+bp}{∀} \PYG{n}{ε} \PYG{n+nb+bp}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{o}{,} \PYG{n+nb+bp}{∃} \PYG{n}{N}\PYG{o}{,} \PYG{n+nb+bp}{∀} \PYG{n}{p} \PYG{n}{q}\PYG{o}{,} \PYG{n}{p} \PYG{n+nb+bp}{≥} \PYG{n}{N} \PYG{n+nb+bp}{→} \PYG{n}{q} \PYG{n+nb+bp}{≥} \PYG{n}{N} \PYG{n+nb+bp}{→} \PYG{n+nb+bp}{|}\PYG{n}{u} \PYG{n}{p} \PYG{n+nb+bp}{\PYGZhy{}} \PYG{n}{u} \PYG{n}{q}\PYG{n+nb+bp}{|} \PYG{n+nb+bp}{≤} \PYG{n}{ε}
-\end{Verbatim}
