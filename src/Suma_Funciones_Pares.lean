@@ -1,5 +1,4 @@
 import data.real.basic
-import algebra.group.pi
 
 def even_fun (f : ℝ → ℝ) := ∀ x, f (-x) = f x
 
@@ -12,5 +11,5 @@ begin
   calc (f + g) (-x) = f (-x) + g (-x) : rfl
                 ... = f x + g (-x)    : by rw hf
                 ... = f x + g x       : by rw hg
-                ... = (f + g) x       : rfl
+                ... = (f + g) x       : rfl,
 end
