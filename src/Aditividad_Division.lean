@@ -1,4 +1,3 @@
---import data.real.basic
 import data.int.parity
 
 variables (a b c : ℤ)
