@@ -265,6 +265,7 @@ TSWLatexianTemp*
 # auto folder when using emacs and auctex
 ./auto/*
 *.el
+./_minted-IMO_en_Lean/*
 
 # expex forward references with \gathertags
 *-tags.tex
