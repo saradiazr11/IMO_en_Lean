@@ -21,17 +21,12 @@ la paridad de las funciones.
 \subsection{Unicidad del límite}
 
 \begin{definicion}\label{limite}
-  Una sucesión \(\{u_n\}\) se dice que converge a un número real \(a\) si,
+  Una sucesión \(\{u_n\}\) se dice que converge a un número real \(c\) si,
   dado cualquier número real \(ε > 0\), existe un número natural \(N\)
   tal que si \(n\) es cualquier número natural mayor o igual que \(N\) se
-  cumple que \(|u_n-a| ≤ ε\). Simbólicamente,
-  \[∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N, |u_n-a| ≤ ε\]
+  cumple que \(|u_n-c| ≤ ε\). Simbólicamente,
+  \[∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N, |u_n-c| ≤ ε\]
 \end{definicion}
-
-\comentario{Se debe de aproximar lo máximo posible la escritura en
-  lenguaje natural y en LaTeX. En el caso de la definición anterior se
-  usa \(a\) para el límite pero en su formalizaciónse cambia por
-  \(c\). Se debe de poner las dos veces el mismo símbolo.}
 
 La formalización de la definición anterior en Lean es
 \begin{leancode}
@@ -63,8 +58,6 @@ Cada sucesión tiene como máximo un límite.
   \begin{equation}\label{lim2}
     ∀ ε > 0, ∃ N_2 ∈ ℕ, ∀ n ≥ N_2 |u_n-l'| ≤ \frac{ε}{2}.
   \end{equation}
-
-  \comentario{He cambiado la forma de escribir max .}
 
   A continuación, definamos \(N_0 = \max(N_1,N_2)\).
   De manera que, considerando un número arbitrario \(n\) que
@@ -172,11 +165,6 @@ def cauchy_sequence (u : ℕ → ℝ) :=
   verifican que son mayores o iguales que \(N\). Entonces tenemos que se
   puede escribir:
 
-  \comentario{No usar tabuladores como estaban en la siguiente
-    matriz. Se pueden eliminar con untabify y se puede evitar su
-    escritura poniendo (setq-default indent-tabs-mode nil) en el fichero
-    de configuración de Emacs.}
-
   \[\begin{array}{llll}
       |u_p-u_q| &= &|u_p-l+l-u_q|           & \\
                 &≤ &|u_p-l|+|u_q-l|         & [(*)] \\
@@ -223,9 +211,6 @@ begin
 end
 \end{leancode}
 
-\comentario{Escribir dos espacios al inicio de cada línea de los bloques
-  begin/end. Lo he corregido en el bloque anterior.}
-
 \subsection{Suma de sucesiones convergentes}
 
 \begin{teorema}
@@ -246,8 +231,6 @@ end
   \end{align}
   donde hemos denotado \(l\) y \(l'\) a los límites de \(\{u_n\}\) y
   \(\{v_n\}\), respectivamente.
-
-  \comentario{He cambiado equations por align.}
 
   A continuación, definimos \(N_0 := \max(N_1,N_2)\) y consideremos un
   número natural \(n\) que sea mayor o igual que \(N_0\), de manera que:
@@ -286,18 +269,18 @@ max_le_iff
 example (hu : seq_limit u l) (hv : seq_limit v l') :
 seq_limit (u + v) (l + l') :=
 begin
-intros eps eps_pos,
-cases hu (eps/2) (by linarith) with N1 hN1,
-cases hv (eps/2) (by linarith) with N2 hN2,
-let N0:= max N1 N2,
-use N0,
-intros n hn,
-rw ge_max_iff at hn,
-  calc |(u + v) n - (l + l')|
-     = |u n + v n - (l + l')|   : rfl
- ... = |(u n - l) + (v n - l')| : by congr' 1 ; ring
- ... ≤ |u n - l| + |v n - l'|   : by apply abs_add
- ... ≤  eps                     : by linarith [hN1 n (by linarith),
+  intros eps eps_pos,
+  cases hu (eps/2) (by linarith) with N1 hN1,
+  cases hv (eps/2) (by linarith) with N2 hN2,
+  let N0:= max N1 N2,
+  use N0,
+  intros n hn,
+  rw ge_max_iff at hn,
+  calc  |(u + v) n - (l + l')|
+      = |u n + v n - (l + l')|   : rfl
+  ... = |(u n - l) + (v n - l')| : by congr' 1 ; ring
+  ... ≤ |u n - l| + |v n - l'|   : by apply abs_add
+  ... ≤  eps                     : by linarith [hN1 n (by linarith),
                                                hN2 n (by linarith)],
 end
 \end{leancode}
@@ -308,8 +291,6 @@ Como ya se adelantó, los tres resultados que vamos a estudiar a
 continuación son relativos a la paridad de las funciones. Es por eso,
 que previo al desarrollo de los resultados veamos las dos siguientes
 definiciones:
-
-\comentario{En las definiciones cambiar underline por textbf.}
 
 \begin{definicion}\label{funpar}
   Sea \(f: ℝ → ℝ\), se dirá que \(f\) es una \textbf{función par} si
@@ -383,6 +364,11 @@ end
 
 \comentario{Importar sólo las teorías necesarias. En la prueba anterior,
   ¿las dos importaciones son necesarias?}
+\comentario{En este caso creo que ambas teorías son necesarias. La primera
+  de ellas porque las funciones usadas están definidas en el conjunto de
+  los números reales y la segunda para que la suma de funciones esté bien
+  definida.}
+
 
 \subsection{Paridad de la composición de funciones}
 
@@ -413,7 +399,6 @@ end
 En Lean esto se formalizaría como sigue:
 \begin{leancode}
 import data.real.basic
-import algebra.group.pi
 
 def even_fun (f : ℝ → ℝ) := ∀ x, f (-x) = f x
 
@@ -426,8 +411,6 @@ begin
 end
 \end{leancode}
 
-\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
-  ¿las dos importaciones son necesarias?}
 
 \subsection{Imparidad de la composición de funciones impares}
 
@@ -459,7 +442,6 @@ end
 Prosigamos con la formalización en Lean de esta demostración:
 \begin{leancode}
 import data.real.basic
-import algebra.group.pi
 
 def odd_fun (f : ℝ → ℝ) := ∀ x, f (-x) = -f x
 
@@ -475,9 +457,6 @@ begin
   ... =  -(g ∘ f) x : rfl,
 end
 \end{leancode}
-
-\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
-  ¿las dos importaciones son necesarias?}
 
 \section{Álgebra Básica}
 
@@ -515,26 +494,25 @@ para ver los resultados en cuestión.
   números enteros vista anteriormente, como consecuencia de que \(a\)
   divide a \(b\), se tiene que existe un \(k_1 ∈ ℤ\) tal que
   \begin{equation}\label{div1}
-    b = k_1 · a.
+    b = a · k_1.
   \end{equation}
   Asimismo, como consecuencia de que \(b\) divide a \(c\) se verifica
   que existe un \(k_2 ∈ ℤ\) tal que
   \begin{equation}\label{div2}
-    c = k_2 · b.
+    c = b · k_2.
   \end{equation}
   De manera que si introducimos la descomposición de \(b\) descrita en
   (\ref{div1}) en la de \(c\) vista en (\ref{div2}), se tiene que:
   \[\begin{array}{ll}
-      c & = k_2 · (k_1  · a) \\
-        & = (k_2 · k_1)  · a) \\
-        & = k_3 · a,
+      c & = (a · k_1) · k_2\\
+        & = a · (k_1 · k_2) \\
+        & = a · k_3,
     \end{array}\]
-  donde \(k_3 = k_2 · k _1\). Y ya tendríamos el resultado deseado.
+  donde \(k_3 = k_1 · k_2\). Y ya tendríamos el resultado deseado.
 \end{demostracion}
 
 Veamos ahora la formalización en Lean:
 \begin{leancode}
-import data.real.basic
 import data.int.parity
 
 variables (a b c : ℤ)
@@ -550,12 +528,6 @@ exact hk2,
 end
 \end{leancode}
 
-\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
-  ¿las dos importaciones son necesarias?}
-
-\comentario{Revisar la definición de divisibilidad para que se
-  corresponda el orden de los factores con la de Lean.}
-
 \subsection{Aditividad de la división}
 
 \begin{teorema}
@@ -570,14 +542,14 @@ end
 \begin{demostracion}
   Análogamente a la demostración anterior, por la definición
   \ref{division}, se tiene que existen \(k_1, k_2 ∈ ℤ\) tales que
-  \begin{alig}
-    & b = k_1 · a \label{div3} \\
-    & c = k_2 · a. \label{div4}
+  \begin{align}
+    & b = a · k_1 \label{div3} \\
+    & c = a · k_2 . \label{div4}
   \end{align}
   De manera que sumando las dos expresiones descritas en las expresiones
   (\ref{div3}) y (\ref{div4}), se llega a que:
   \begin{equation*}
-    b+c = (k_1+k_2)· a.
+    b+c = a· (k_1+k_2).
   \end{equation*}
   Teniendo en cuenta la definición \ref{division}, ya se tendría
   el resultado.
@@ -585,7 +557,6 @@ end
 
 La formalización de esta demostración en Lean sería:
 \begin{leancode}
-import data.real.basic
 import data.int.parity
 
 variables (a b c : ℤ)
@@ -604,8 +575,6 @@ begin
 end
 \end{leancode}
 
-\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
-  ¿las dos importaciones son necesarias?}
 
 
 %%% Local Variables:
