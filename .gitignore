@@ -161,6 +161,7 @@ acs-*.bib
 # minted
 _minted*
 *.pyg
+*.pygtex
 
 # morewrites
 *.mw
@@ -279,3 +280,6 @@ TSWLatexianTemp*
 /.vscode
 /doc/_minted-IMO_en_Lean
 /_target
+
+# Borradores
+/borrador

@@ -1,9 +1,12 @@
-import data.real.basic
+-- import data.real.basic
 import data.int.parity
 
 variables (a b c : ℤ)
 
-example (h₁ : a ∣ b) (h₂ : b ∣ c) : a ∣ c :=
+example
+  (h₁ : a ∣ b)
+  (h₂ : b ∣ c)
+  : a ∣ c :=
 begin
   cases h₁ with k1 hk1,
   cases h₂ with k2 hk2,
