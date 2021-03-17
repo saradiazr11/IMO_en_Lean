@@ -281,7 +281,7 @@ begin
   ... = |(u n - l) + (v n - l')| : by congr' 1 ; ring
   ... ≤ |u n - l| + |v n - l'|   : by apply abs_add
   ... ≤  eps                     : by linarith [hN1 n (by linarith),
-                                               hN2 n (by linarith)],
+                                                hN2 n (by linarith)],
 end
 \end{leancode}
 
@@ -344,7 +344,6 @@ resultado deseado.
 Esta demostración se formaliza en Lean de la siguiente manera:
 \begin{leancode}
 import data.real.basic
-import algebra.group.pi
 
 def even_fun (f : ℝ → ℝ) := ∀ x, f (-x) = f x
 
@@ -362,13 +361,15 @@ begin
 end
 \end{leancode}
 
-\comentario{Importar sólo las teorías necesarias. En la prueba anterior,
-  ¿las dos importaciones son necesarias?}
 \comentario{En este caso creo que ambas teorías son necesarias. La primera
   de ellas porque las funciones usadas están definidas en el conjunto de
   los números reales y la segunda para que la suma de funciones esté bien
   definida.}
 
+\comentario{Lo he probado y la segunda no es necesaria. Puede que
+  tengamos distintas versiones de Lean. La que estoy usando es la 3.24.0
+  y la versión de mathlib es la 44fd23d139bdb8cf3680c4a481e8035468e1d390
+  como se indica en el fichero leanpkg.toml.}
 
 \subsection{Paridad de la composición de funciones}
 
