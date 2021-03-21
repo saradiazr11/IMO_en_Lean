@@ -25,7 +25,7 @@ la paridad de las funciones.
   dado cualquier número real \(ε > 0\), existe un número natural \(N\)
   tal que si \(n\) es cualquier número natural mayor o igual que \(N\) se
   cumple que \(|u_n-c| ≤ ε\). Simbólicamente,
-  \[∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N, |u_n-c| ≤ ε\]
+  \[∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N, |u_n-c| ≤ ε \]
 \end{definicion}
 
 La formalización de la definición anterior en Lean es
@@ -361,15 +361,6 @@ begin
 end
 \end{leancode}
 
-\comentario{En este caso creo que ambas teorías son necesarias. La primera
-  de ellas porque las funciones usadas están definidas en el conjunto de
-  los números reales y la segunda para que la suma de funciones esté bien
-  definida.}
-
-\comentario{Lo he probado y la segunda no es necesaria. Puede que
-  tengamos distintas versiones de Lean. La que estoy usando es la 3.24.0
-  y la versión de mathlib es la 44fd23d139bdb8cf3680c4a481e8035468e1d390
-  como se indica en el fichero leanpkg.toml.}
 
 \subsection{Paridad de la composición de funciones}
 
