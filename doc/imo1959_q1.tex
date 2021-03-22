@@ -1,0 +1,172 @@
+\section{IMO 1959 Q1}
+
+En esta sección se va a detallar la solución al problema Q1
+correspondiente al año 1959. En primer lugar, se presentarán el
+enunciado y su solución en lenguaje natural, de manera que ésta última
+se asemeje a la solución que posteriormente se formalizará en
+Lean. Luego, se analizará de manera detallada dicha formalización del
+problema en Lean.
+
+\noindent
+\framebox{\parbox{\textwidth}{
+  \textbf{Problema 1 (1959--Q1)}. Demostrar que la fracción
+  \[\frac{21⋅n+4}{14⋅n+3}\]
+  es irreducible para cualquier número natural \(n\).}}
+
+\textbf{Solución:}
+
+Para ver que esta fracción es irreducible para cualquier número natural
+\(n\) se demostrará que el numerador y el denominador de ésta son dos
+números coprimos independientemente del valor de \(n\).
+
+Antes de proseguir, introduzcamos el concepto de que dos números sean
+coprimos:
+
+\begin{definicion}\label{coprimos}
+  Se dirá que dos números enteros \(a\) y \(b\) son \textbf{coprimos}
+  o \textbf{primos relativos} si no tienen ningún factor primo en común,
+  o equivalentemente, si no poseen otro divisor común distinto de \(1\)
+  y \(-1\).
+\end{definicion}
+
+\comentario{Añadir su definición en Lean.}
+
+A continuación, se va a introducir un lema auxiliar, el cual nos dirá
+que si existe un número natural \(k\) que divide al numerador y al
+denominador de la fracción anterior; entonces, dicho número \(k\)
+dividide a \(1\).
+
+\begin{lema}\label{lema}
+  Sean \(k\) y \(n\) dos números naturales tales que \(k\) divide al
+  numerador y al denominador de la fracción anterior; es decir,
+  \begin{align}
+    & k | (21⋅n+4)   \label{k1} \\
+    & k | (14⋅n+3).  \label{k2}
+  \end{align}
+  Entonces se tiene que \(k\) divide a \(1\), para cualquier número
+  natural \(n\).
+\end{lema}
+
+\begin{demostracion}
+  Como consecuencia de que \(k\) divida al numerador de la fracción,
+  (\ref{k1}), se tiene que también divide a un múltiplo cualquiera de
+  éste; es decir,
+  \begin{equation}\label{p1}
+    k | 2⋅(21⋅n+4),
+  \end{equation}
+  donde en particular hemos considerado el múltiplo resultante de
+  multiplicar por \(2\).
+
+  Análogamente para el caso del denominador, como se verifica
+  (\ref{k2}), se puede escribir que
+  \begin{equation}\label{p2}
+    k | 3⋅(14⋅n+3),
+  \end{equation}
+  donde en este caso se ha considerado el múltiplo resultante de
+  multiplicar por \(3\).
+
+  Por otro lado, se tiene que desarrollando los productos de (\ref{p1}) y
+  (\ref{p2}) como sigue:
+  \begin{align}
+    & 2⋅(21⋅n+4)=42⋅n+8    \\
+    & 3·(14·n+3)=42·n+9,
+  \end{align}
+  se puede observar que para todo número natural \(n\), se verifica la
+  siguiente relación entre el múltiplo del numerador y el del denominador:
+  \begin{equation}\label{k}
+    3⋅(14⋅n+3)=2⋅(21⋅n+4)+1.
+  \end{equation}
+
+  Ahora bien, como consecuencia de que \(k\) sea divisor de
+  \(3⋅(14⋅n+4)\), (\ref{p2}), y la igualdad vista en(\ref{k}), se llega
+  a que:
+  \begin{equation}\label{div1b}
+    k | 2⋅(21⋅n+4)+1
+  \end{equation}
+
+  Para concluir la demostración de este lema, basta con usar la siguiente
+  propiedad de la división en los números naturales:
+
+  \begin{proposicion}\label{divn}
+    Sean \(k,m\) y \(n\) tres números naturales. Entonces se tiene que
+    \(k\) divide a la suma de \(m\) y \(n\) si y solamente si \(k\)
+    divide a \(n\). Simbólicamente:
+    \begin{equation}
+      ∀k,m,n ∈ ℕ, k | (m+n) ⟺ k|n.
+    \end{equation}
+  \end{proposicion}
+
+  \cometario{La propiedad anterior es falsa. Por ejemplo, 2 divide a 1+3
+  y no divide a 3.}
+
+  \begin{nota}
+    Como consecuncia de que la suma es conmutativa, en la proposición
+    anterior se puede afirmar que \(k\) también ha de dividir a \(m\).
+  \end{nota}
+
+  De esta forma, aplicando la propiedad \ref{divn} sobre (\ref{div1b}),
+  se llega a que \(k\) divide a \(1\); que era lo que queríamos demostrar.
+\end{demostracion}
+
+Destacar que cuando hacemos la factorización de un número, se hace en
+función de sus factores primos. Por tanto, el divisor \(k\) considerado
+es un número primo.
+
+Finalmente, aplicando el Lema \ref{lema} se puede concluir que para
+cualquier número natural \(n\) se verifica que los números \( (21⋅n+4)\)
+y \((14⋅n+3)\) son coprimos. O equivalentemente, que la fracción
+\begin{equation*}
+  \frac{21⋅n+4}{14⋅n+3}
+\end{equation*}
+es irreducible. Esta afirmación se tiene como consecuencia de la
+definición de dos números coprimos, vista en \ref{coprimos}.
+
+A continuación, vamos a analizar la formalización en Lean propuesta:
+
+\begin{leancode}
+/-
+Copyright (c) 2020 Kevin Lacker. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Kevin Lacker
+-/
+
+import tactic.ring
+import data.nat.prime
+
+/-!
+# IMO 1959 Q1
+
+Prove that the fraction `(21n+4)/(14n+3)` is irreducible for every
+natural number `n`.
+
+Since Lean doesn't have a concept of "irreducible fractions" per se,
+we just formalize this as saying the numerator and denominator are
+relatively prime.
+-/
+
+open nat
+
+lemma calculation (n k : ℕ) (h1 : k ∣ 21 * n + 4) (h2 : k ∣ 14 * n + 3) :
+k ∣ 1 :=
+have h3 : k ∣ 2 * (21 * n + 4), from dvd_mul_of_dvd_right h1 2,
+have h4 : k ∣ 3 * (14 * n + 3), from dvd_mul_of_dvd_right h2 3,
+have h5 : 3 * (14 * n + 3) = 2 * (21 * n + 4) + 1, by ring,
+(nat.dvd_add_right h3).mp (h5 ▸ h4)
+
+theorem imo1959_q1 : ∀ n : ℕ, coprime (21 * n + 4) (14 * n + 3) :=
+assume n, coprime_of_dvd' $ λ k hp h1 h2, calculation n k h1 h2
+\end{leancode}
+
+En primer lugar, se puede observar que el lema que en la
+formalización se nombra \textit{calculation}, se corresponde con
+el lema \ref{lema} de la solución en lenguaje natural.
+
+Finalmente, el teroema que se presenta es el que acaba concluyendo
+el resultado deseado. Se comprueba que el numerador y el denominador
+de la fracción son coprimos para cualquier número natural \(n\).
+Esto lo hace aplicando el lema anterior.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "IMO_en_Lean"
+%%% End:
