@@ -96,7 +96,7 @@ dividide a \(1\).
     \end{equation}
   \end{proposicion}
 
-  \cometario{La propiedad anterior es falsa. Por ejemplo, 2 divide a 1+3
+  \comentario{La propiedad anterior es falsa. Por ejemplo, 2 divide a 1+3
   y no divide a 3.}
 
   \begin{nota}
@@ -105,7 +105,8 @@ dividide a \(1\).
   \end{nota}
 
   De esta forma, aplicando la propiedad \ref{divn} sobre (\ref{div1b}),
-  se llega a que \(k\) divide a \(1\); que era lo que queríamos demostrar.
+  se llega a que \(k\) divide a \(1\); que era lo que queríamos
+  demostrar.
 \end{demostracion}
 
 Destacar que cuando hacemos la factorización de un número, se hace en
@@ -113,8 +114,8 @@ función de sus factores primos. Por tanto, el divisor \(k\) considerado
 es un número primo.
 
 Finalmente, aplicando el Lema \ref{lema} se puede concluir que para
-cualquier número natural \(n\) se verifica que los números \( (21⋅n+4)\)
-y \((14⋅n+3)\) son coprimos. O equivalentemente, que la fracción
+cualquier número natural \(n\) se verifica que los números \(21⋅n+4\)
+y \(14⋅n+3\) son coprimos. O equivalentemente, que la fracción
 \begin{equation*}
   \frac{21⋅n+4}{14⋅n+3}
 \end{equation*}
@@ -124,26 +125,6 @@ definición de dos números coprimos, vista en \ref{coprimos}.
 A continuación, vamos a analizar la formalización en Lean propuesta:
 
 \begin{leancode}
-/-
-Copyright (c) 2020 Kevin Lacker. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Kevin Lacker
--/
-
-import tactic.ring
-import data.nat.prime
-
-/-!
-# IMO 1959 Q1
-
-Prove that the fraction `(21n+4)/(14n+3)` is irreducible for every
-natural number `n`.
-
-Since Lean doesn't have a concept of "irreducible fractions" per se,
-we just formalize this as saying the numerator and denominator are
-relatively prime.
--/
-
 open nat
 
 lemma calculation (n k : ℕ) (h1 : k ∣ 21 * n + 4) (h2 : k ∣ 14 * n + 3) :
@@ -161,10 +142,31 @@ En primer lugar, se puede observar que el lema que en la
 formalización se nombra \textit{calculation}, se corresponde con
 el lema \ref{lema} de la solución en lenguaje natural.
 
-Finalmente, el teroema que se presenta es el que acaba concluyendo
+Finalmente, el teorema que se presenta es el que acaba concluyendo
 el resultado deseado. Se comprueba que el numerador y el denominador
 de la fracción son coprimos para cualquier número natural \(n\).
 Esto lo hace aplicando el lema anterior.
+
+\comentario{Añadir una cita en la bibliografía a la prueba original.}
+
+\comentario{Poner la demostración en Lean del lema a continuación de su
+  demostración en lenguaje natural.}
+
+\comentario{Adaptar las pruebas para que la correspondencias entre la
+  del lenguaje natural y la de Lean sea máxima. Por ejemplo, usando los
+  mismos nombres para los lemas y las etiquetas.}
+
+\comentario{Escribir los lemas usados en la prueba, como se indica a
+  continuación.}
+
+En la prueba se han usado los siguientes lemas:
+\begin{itemize}
+\item \mint{lean}|dvd_mul_of_dvd_right: a ∣ b → ∀ c, a ∣ c * b|
+  \index{\url{dvd_mul_of_dvd_right}}
+\end{itemize}
+
+
+
 
 %%% Local Variables:
 %%% mode: latex
