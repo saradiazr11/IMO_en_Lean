@@ -46,8 +46,8 @@ dividide a \(1\).
   Sean \(k\) y \(n\) dos números naturales tales que \(k\) divide al
   numerador y al denominador de la fracción anterior; es decir,
   \begin{align}
-    &h1: k | (21⋅n+4)   \label{k1} \\
-    &h2: k | (14⋅n+3).  \label{k2}
+    & k | (21⋅n+4)   \label{h1} \\
+    & k | (14⋅n+3).  \label{h2}
   \end{align}
   Entonces se tiene que \(k\) divide a \(1\), para cualquier número
   natural \(n\).
@@ -55,36 +55,36 @@ dividide a \(1\).
 
 \begin{demostracion}
   Como consecuencia de que \(k\) divida al numerador de la fracción,
-  (\ref{k1}), se tiene que también divide a un múltiplo cualquiera de
+  (\ref{h1}), se tiene que también divide a un múltiplo cualquiera de
   éste; es decir,
-  \begin{equation}\label{p1}
-    h3: k | 2⋅(21⋅n+4),
+  \begin{equation}\label{h3}
+    k | 2⋅(21⋅n+4),
   \end{equation}
   donde en particular hemos considerado el múltiplo resultante de
   multiplicar por \(2\).
 
   Análogamente para el caso del denominador, como se verifica
-  (\ref{k2}), se puede escribir que
-  \begin{equation}\label{p2}
-    h4: k | 3⋅(14⋅n+3),
+  (\ref{h2}), se puede escribir que
+  \begin{equation}\label{h4}
+    k | 3⋅(14⋅n+3),
   \end{equation}
   donde en este caso se ha considerado el múltiplo resultante de
   multiplicar por \(3\).
 
-  Por otro lado, se tiene que desarrollando los productos de (\ref{p1}) y
-  (\ref{p2}) como sigue:
+  Por otro lado, se tiene que desarrollando los productos de (\ref{h3}) y
+  (\ref{h4}) como sigue:
   \begin{align}
     & 2⋅(21⋅n+4)=42⋅n+8    \\
     & 3·(14·n+3)=42·n+9,
   \end{align}
   se puede observar que para todo número natural \(n\), se verifica la
   siguiente relación entre el múltiplo del numerador y el del denominador:
-  \begin{equation}\label{k}
-    h5: 3⋅(14⋅n+3)=2⋅(21⋅n+4)+1.
+  \begin{equation}\label{h5}
+    3⋅(14⋅n+3)=2⋅(21⋅n+4)+1.
   \end{equation}
 
   Ahora bien, como consecuencia de que \(k\) sea divisor de
-  \(3⋅(14⋅n+4)\), (\ref{p2}), y la igualdad vista en(\ref{k}), se llega
+  \(3⋅(14⋅n+4)\), (\ref{h4}), y la igualdad vista en(\ref{h5}), se llega
   a que:
   \begin{equation}\label{div1b}
     k | 2⋅(21⋅n+4)+1
@@ -159,21 +159,19 @@ begin
 end
 \end{leancode}
 
-
 En la prueba del lema auxiliar se han usado los siguientes lemas:
 \begin{itemize}
 \item \mint{lean}|dvd_mul_of_dvd_right: a ∣ b → ∀ c, a ∣ c * b|
   \index{\url{dvd_mul_of_dvd_right}}
-\item \mint{lean}|dvd_add_right: a ∣ b → ∀ c, a ∣ c * b{k m n : ℕ}(h : k ∣ m) :|
-  \mint{lean}| k ∣ m + n ↔ k ∣ n |
-  \index{\url{dvd_add_right}}
+\item \mint{lean}|nat.dvd_add_right: ∀ {k m n : ℕ}, k ∣ m → (k ∣ m + n ↔ k ∣ n)|
+  \index{\url{nat.dvd_add_right}}
 \end{itemize}
 
 Mientras que en la demostración del teorema en sí se ha usado el
 siguiente lema:
 \begin{itemize}
-\item \mint{lean}|dvd_mul_of_dvd_right: a ∣ b → ∀ c, a ∣ c * b|
-  \index{\url{dvd_mul_of_dvd_right}}
+\item \mint{lean}|coprime_of_dvd' : ∀ {m n : ℕ} (∀ k, prime k → k ∣ m → k ∣ n → k ∣ 1) → coprime m n|
+  \index{\url{coprime_of_dvd'}}
 \end{itemize}
 
 
