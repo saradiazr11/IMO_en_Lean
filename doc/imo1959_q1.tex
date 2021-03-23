@@ -46,8 +46,8 @@ dividide a \(1\).
   Sean \(k\) y \(n\) dos números naturales tales que \(k\) divide al
   numerador y al denominador de la fracción anterior; es decir,
   \begin{align}
-    & k | (21⋅n+4)   \label{h1} \\
-    & k | (14⋅n+3).  \label{h2}
+    & k \mid (21⋅n+4)   \label{h1}\tag{h1} \\
+    & k \mid (14⋅n+3).  \label{h2}\tag{h2}
   \end{align}
   Entonces se tiene que \(k\) divide a \(1\), para cualquier número
   natural \(n\).
@@ -57,16 +57,16 @@ dividide a \(1\).
   Como consecuencia de que \(k\) divida al numerador de la fracción,
   (\ref{h1}), se tiene que también divide a un múltiplo cualquiera de
   éste; es decir,
-  \begin{equation}\label{h3}
-    k | 2⋅(21⋅n+4),
+  \begin{equation}\label{h3}\tag{h3}
+    k \mid 2⋅(21⋅n+4),
   \end{equation}
   donde en particular hemos considerado el múltiplo resultante de
   multiplicar por \(2\).
 
   Análogamente para el caso del denominador, como se verifica
   (\ref{h2}), se puede escribir que
-  \begin{equation}\label{h4}
-    k | 3⋅(14⋅n+3),
+  \begin{equation}\label{h4}\tag{h4}
+    k \mid 3⋅(14⋅n+3),
   \end{equation}
   donde en este caso se ha considerado el múltiplo resultante de
   multiplicar por \(3\).
@@ -79,7 +79,7 @@ dividide a \(1\).
   \end{align}
   se puede observar que para todo número natural \(n\), se verifica la
   siguiente relación entre el múltiplo del numerador y el del denominador:
-  \begin{equation}\label{h5}
+  \begin{equation}\label{h5}\tag{h5}
     3⋅(14⋅n+3)=2⋅(21⋅n+4)+1.
   \end{equation}
 
@@ -87,7 +87,7 @@ dividide a \(1\).
   \(3⋅(14⋅n+4)\), (\ref{h4}), y la igualdad vista en(\ref{h5}), se llega
   a que:
   \begin{equation}\label{div1b}
-    k | 2⋅(21⋅n+4)+1
+    k \mid 2⋅(21⋅n+4)+1
   \end{equation}
 
   Para concluir la demostración de este lema, basta con usar la siguiente
@@ -98,15 +98,9 @@ dividide a \(1\).
     \(m\). Entonces se tiene que \(k\) divide a la suma de \(m\) y \(n\)
     si y solamente si \(k\) divide a \(n\). Simbólicamente,
     \begin{equation}
-      ∀ {k m n ∈ ℕ}, k ∣ m → (k ∣ m + n ↔ k ∣ n)
+      ∀ \{k, m, n ∈ ℕ\}, k ∣ m → (k ∣ m + n ↔ k ∣ n)
     \end{equation}
   \end{proposicion}
-
-  La formalización en Lean de esta proposición es la siguiente:
-
-  \begin{leancode}
-    theorem dvd_add_right {k m n : ℕ} (h : k ∣ m) : k ∣ m + n ↔ k ∣ n
-  \end{leancode}
 
   De esta forma, aplicando la propiedad \ref{divn} sobre (\ref{div1b}),
   se llega a que \(k\) divide a \(1\); que era lo que queríamos
@@ -116,6 +110,9 @@ dividide a \(1\).
 A continuación vamos a ver la formalización en Lean de este Lema:
 
 \begin{leancode}
+import tactic.ring
+import data.nat.prime
+
 open nat
 
 lemma Auxiliar
@@ -124,23 +121,29 @@ lemma Auxiliar
   (h2 : k ∣ 14 * n + 3)
   : k ∣ 1 :=
 begin
-  have h3 : k ∣ 2 * (21 * n + 4), from dvd_mul_of_dvd_right h1 2,
-  have h4 : k ∣ 3 * (14 * n + 3), from dvd_mul_of_dvd_right h2 3,
+  have h3 : k ∣ 2 * (21 * n + 4),
+    from dvd_mul_of_dvd_right h1 2,
+  have h4 : k ∣ 3 * (14 * n + 3),
+    from dvd_mul_of_dvd_right h2 3,
   have h5 : 3 * (14 * n + 3) = 2 * (21 * n + 4) + 1,
-  { ring,},
+    { ring, },
   rw h5 at h4,
-  rw ←  nat.dvd_add_right h3,
+  rw ← nat.dvd_add_right h3,
   exact h4,
 end
 \end{leancode}
 
-Destacar que cuando hacemos la factorización de un número, se hace en
-función de sus factores primos. Por tanto, el divisor \(k\) considerado
-es un número primo.
+En la prueba del lema se han usado los siguientes lemas:
+\begin{itemize}
+\item \mint{lean}|dvd_mul_of_dvd_right: a ∣ b → ∀ c, a ∣ c * b|
+  \index{\url{dvd_mul_of_dvd_right}}
+\item \mint{lean}|nat.dvd_add_right: ∀ {k m n : ℕ}, k ∣ m → (k ∣ m + n ↔ k ∣ n)|
+  \index{\url{nat.dvd_add_right}}
+\end{itemize}
 
 Finalmente, aplicando el Lema Auxiliar \ref{lema} se puede concluir que para
 cualquier número natural \(n\) se verifica que los números \(21⋅n+4\)
-y \(14⋅n+3\) son coprimos. O equivalentemente, que la fracción
+y \(14⋅n+3\) son coprimos. O, equivalentemente, que la fracción
 \begin{equation*}
   \frac{21⋅n+4}{14⋅n+3}
 \end{equation*}
@@ -159,22 +162,12 @@ begin
 end
 \end{leancode}
 
-En la prueba del lema auxiliar se han usado los siguientes lemas:
+En la demostración del teorema se ha usado el siguiente lema:
 \begin{itemize}
-\item \mint{lean}|dvd_mul_of_dvd_right: a ∣ b → ∀ c, a ∣ c * b|
-  \index{\url{dvd_mul_of_dvd_right}}
-\item \mint{lean}|nat.dvd_add_right: ∀ {k m n : ℕ}, k ∣ m → (k ∣ m + n ↔ k ∣ n)|
-  \index{\url{nat.dvd_add_right}}
-\end{itemize}
-
-Mientras que en la demostración del teorema en sí se ha usado el
-siguiente lema:
-\begin{itemize}
-\item \mint{lean}|coprime_of_dvd' : ∀ {m n : ℕ} (∀ k, prime k → k ∣ m → k ∣ n → k ∣ 1) → coprime m n|
+\item \mint{lean}|coprime_of_dvd' :
+  (∀ k, prime k → k ∣ m → k ∣ n → k ∣ 1) → coprime m n|
   \index{\url{coprime_of_dvd'}}
 \end{itemize}
-
-
 
 %%% Local Variables:
 %%% mode: latex
