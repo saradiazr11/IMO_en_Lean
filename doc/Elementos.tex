@@ -120,7 +120,7 @@ begin
   cases hb (eps/2) (by linarith) with N2 hN2,
   let N0:=max N1 N2,
   calc  |a-b|
-      = |(a-u N0)+(u N0-b)| : by ring
+      = |(a-u N0)+(u N0-b)| : by ring_nf
   ... ≤ |a-u N0| + |u N0-b| : by apply abs_add
   ... = |u N0-a| + |u N0-b| : by rw abs_sub
   ... ≤ eps                 : by linarith [hN1 N0 (le_max_left N1 N2),
