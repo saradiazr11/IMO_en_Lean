@@ -54,7 +54,7 @@ begin
   end
   
 
-lemma finding_zeros2 {x : ℝ} :
+lemma CasosSolucion {x : ℝ} :
 funauxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0 :=
 begin
   rw funauxiliar,
@@ -63,18 +63,16 @@ begin
   rw mul_eq_zero,
   rw sub_eq_zero,
   split,
-
-  intro h,
-  cases h with h1 h2,
+  {intro h1,
+  cases h1 with h11 h12,
   right,
   rw cos_three_mul,
-  rw h1,
+  rw h11,
   ring,
-  exact h2,
-
-  intro h,
+  exact h12,},
+  {intro h2,
   right,
-  exact h,
+  exact h2,},
 end
 
 
@@ -82,42 +80,42 @@ end
 Now we can solve for `x` using basic-ish trigonometry.
 -/
 
-lemma solve_cos2_half2 {x : ℝ} : cos x ^ 2 = 1/2 ↔ ∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 :=
+lemma SolucionCosenoCuadrado {x : ℝ} : cos x ^ 2 = 1/2 ↔ 
+∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 :=
 begin
   rw cos_square,
   rw add_right_eq_self,
   rw div_eq_zero_iff,
   split,
-
-  intro h,
-  cases h with h1 h2,
-  rw cos_eq_zero_iff at h1,
-  cases h1 with k hk,
-  use k,
+  {intro h1,
+  cases h1 with h11 h12,
+  rw cos_eq_zero_iff at h11,
+  cases h11 with k1 hk1,
+  use k1,
   linarith,
-  norm_num at h2,
-
-  intro h, cases h with k hk,
+  norm_num at h12,},
+  {intro h2, 
+  cases h2 with k2 hk2,
   left,
   rw cos_eq_zero_iff,
-  use k,
-  linarith,
+  use k2,
+  linarith,},
 end
 
 
-lemma solve_cos3x_02 {x : ℝ} : cos (3 * x) = 0 ↔ ∃ k : ℤ, x = (2 * ↑k + 1) * π / 6 :=
+lemma SolucionCosenoTriple {x : ℝ} : cos (3 * x) = 0 ↔ 
+∃ k : ℤ, x = (2 * ↑k + 1) * π / 6 :=
 begin
   rw cos_eq_zero_iff,
   split,
-  intro h1,
+  {intro h1,
   cases h1 with k1 hk1,
   use k1,
-  linarith,
-
-  intro h2,
+  linarith,},
+  {intro h2,
   cases h2 with k2 hk2,
   use k2,
-  linarith,
+  linarith,},
 end
 
 /-
@@ -126,10 +124,10 @@ The final theorem is now just gluing together our lemmas.
 
 theorem imo1962_q4 {x : ℝ} : problema x ↔ x ∈ conjunto_solucion :=
 begin
-  rw equivalencia,
-  rw finding_zeros2,
-  rw solve_cos3x_02,
-  rw solve_cos2_half2,
+  rw Equivalencia,
+  rw CasosSolucion,
+  rw SolucionCosenoTriple,
+  rw SolucionCosenoCuadrado,
   rw conjunto_solucion,
 
   exact exists_or_distrib.symm,

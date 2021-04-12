@@ -52,6 +52,7 @@ def funcion_auxiliar (x : ℝ) : ℝ :=
 cos x * (cos x ^ 2 - 1/2) * cos (3 * x)
 \end{leancode}
 
+\subsection{Equivalencia de problemas}
 Una vez introducido estas dos definiciones, se va a proceder
 a demostrar que resolver la ecuación\( \_ \)problema es
 equivalente a resolver la ecuación obtenida al igualar a
@@ -158,38 +159,50 @@ la expresión obtenidad de igualar a cero \textbf{funauxiliar},
 
   \noindent
   \framebox{\longrightarrow}
-  Comencemos suponiendo que se puede resolver la expresión
+  En primer lugar, comenzamos considerando el problema planteado
+  por la siguiente expresión:
   \begin{equation}\label{h1}\tag{h1}
-    \cos²(x)+\cos²(2x)+\cos²(3x)=1,
+    \cos²(x)+\cos²(2x)+\cos²(3x)=1.
   \end{equation}
-  entonces se tiene, sin más que pasar todos los términos a un mismo
-  lado de la igualdad, que también se puede resolver la expresión:
+
+  Queremos demostrar que este problema planteado es equivalente a
+  considerar el problema planteado en (\ref{probaux}).
+
+  Aplicando el Lema \ref{igualdadlema} sobre (\ref{probaux}), se
+  tiene que el objetivo a demostrar pasa a ser que el problema
+  (\ref{h1}) es equivalente al problema:
   \begin{equation}\label{h11}
-    \cos²(x)+\cos²(2x)+\cos²(3x)-1=0.
-  \end{equation}
-
-  Como se tiene que podemos resolver la igualdad anterior,
-  (\ref{h11}), y que está igualad a cero. Se tiene que se puede resolver
-  cualquier múltiplo o submúltiplo de ella; en este caso consideraremos
-  la expresión dividida por cuatro.
-
-  Entonces, se verifica que podemos resolver la expresión:
-  \begin{equation}\label{h12}
     \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=0.
   \end{equation}
 
-  Para concluir esta implicación de la demostración, bastaría con
-  aplicar el Lema \ref{igualdadlema}. De manera que se verificaría
-  que se puede resolver el problema (\ref{probaux}).
+  Observando esta expresión, donde tenemos una fracción igualada
+  a cero, se concluye que o bien el numerador o bien el denominador
+  ha de ser nulo. Entonces, se tiene que demostrar (\ref{h11}) es
+  equivalente a demostrar que
+  \begin{equation}
+    (\cos²(x)+\cos²(2x)+\cos²(3x)-1=0) \lor 4=0.
+  \end{equation}
+
+  Como se trata de una disyunción, para concluir la prueba bastaría
+  con demostrar alguna de las dos igualdades y por ello, elegimos
+  la primera parte de la disyunción, esto es,
+  \begin{equation}\label{h12}
+    \cos²(x)+\cos²(2x)+\cos²(3x)-1=0.
+  \end{equation}
+
+  De esta forma ya se ha teminado esta implicación pues (\ref{h12})
+  es exactamente la hipótesis (\ref{h1}), basta con pasar el término
+  unidad al lado derecho de la igualdad.
+
 
   \noindent
-  \framebox{\longleftarrow} A continuación, supongamos que se puede
-  resolver el problema
+  \framebox{\longleftarrow} A continuación, supongamos que se tiene
+  el problema
   \begin{equation}\label{h2}\tag{h2}
     \text{funauxiliar}(x)=0.
   \end{equation}
-  Queremos demostrar que resolver este problema es equivalente a
-  resolver el problema planteado en (\ref{expprob}).
+  Queremos demostrar que plantear este problema es equivalente al
+  problema planteado en (\ref{expprob}).
 
   En primer lugar, aplicamos el Lema \ref{igualdadlema} sobre la
   hipótesis (\ref{h2}). De manera que se obtiene que la hipótesis
@@ -197,13 +210,27 @@ la expresión obtenidad de igualar a cero \textbf{funauxiliar},
   \begin{equation}
     \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=0.
   \end{equation}
-  Cuando se tiene una división igualda a cero, existen dos
-  posibilidades: o bien que el numerador sea cero o que lo sea
-  el denominador. De esta forma, se verifica que:
-  \begin{equation}
-    (\cos²(x)+\cos²(2x)+\cos²(3x)-1)=0 \lor 4=0
-  \end{equation}
   
+  Cuando se tiene una división igualda a cero, existen dos
+  posibilidades: la primera de ellas es que el numerador sea
+  cero, mientras que la segunda es o que lo sea el denominador.
+  De esta forma, se verifica que:
+  \begin{equation}
+    (\cos²(x)+\cos²(2x)+\cos²(3x)-1=0) \lor 4=0
+  \end{equation}
+
+  Ahora bien, como sabemos que en el caso que nos concierne el
+  denominador no puede ser nulo puesto que cuatro es distinto
+  de cero; se tiene que el problema (\ref{h2}) es equivalente a:
+  \begin{equation}
+    \cos²(x)+\cos²(2x)+\cos²(3x)-1=0.
+  \end{equation}
+
+  Para concluir esta implicación basta con pasar el término uno
+  hacia el otro lado de la igualdad. De esta forma se concluye que:
+  \begin{equation}
+    \cos²(x)+\cos²(2x)+\cos²(3x)=1.
+  \end{equation}
 \end{demostracion}
 
 La formalización en Lean de este Lema es la siguiente:
@@ -227,3 +254,145 @@ begin
   exact h2,},
 end
 \end{leancode}
+
+En la prueba del lema se han usado los siguientes lemas:
+\begin{itemize}
+\item \mint{lean}|div_eq_zero_iff : a / b = 0 ↔ a = 0 ∨ b = 0|
+  \index{\url{div_eq_zero_iff}}
+\item \mint{lean}|sub_eq_zero : a - b = 0 ↔ a = b |
+  \index{\url{sub_eq_zero}}
+\end{itemize}
+
+Además se ha usado también la siguiente táctica:
+\begin{leancode}
+meta def norm_num (hs : parse simp_arg_list) (l : parse location) :
+tactic unit :=
+do f ← get_step, tactic.norm_num f hs l
+\end{leancode}
+
+En el caso de la prueba de nuestro lema, esta táctica ha sido
+usada para demostrar que cuatro es distinto de cero. Esta táctica
+ese tipo de igualdades las hace de manera directa.
+
+\subsection{Resolución del problema equivalente}
+Una vez ya se ha demostrado que el problema (\ref{probaux}) es
+equivalente al problema que inicialmente queríamos demostrar, se
+va a proceder a encontrar los ceros de (\ref{probaux}). Para
+ello, se introducirán tres lemas auxiliares. El primero de ellos
+consistirá en ver para en qué dos casos se verifica el problema
+(\ref{probaux}); mientras que en los dos últimos lemas se detallará
+la forma de la solución para los dos casos que se obtendrán en el
+primer lema.
+
+\begin{lema}[CasosSolucion]El problema (\ref{probaux}) se verifica
+  si y solamente si o bien el coseno al cuadrado de \(x\) es igual
+  a un medio, o bien, el coseno del triple de \(x\) es nulo.
+  Simbólicamente:
+  \begin{equation}
+    \text{funauxiliar}(x)=0 ⟺ \cos²(x)=\frac{1}{2} \lor \cos(3x)=0.
+  \end{equation}
+  \end{lema}
+\begin{demostracion}
+  Demostracion del lema CasosSolucion en lenguaje natural
+\end{demostracion}
+
+A continuación, se plantea la formalización en Lean de este lema:
+\begin{leancode}
+lemma CasosSolucion {x : ℝ} :
+funauxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0 :=
+begin
+  rw funauxiliar,
+  rw mul_assoc,
+  rw mul_eq_zero,
+  rw mul_eq_zero,
+  rw sub_eq_zero,
+  split,
+  {intro h1,
+  cases h1 with h11 h12,
+  right,
+  rw cos_three_mul,
+  rw h11,
+  ring,
+  exact h12,},
+  {intro h2,
+  right,
+  exact h2,},
+end
+\end{leancode}
+
+\begin{lema}[SolucionCosenoCuadrado]La expresión coseno al
+  cuadrado de \(x\) es igual a un medio si y solamente si
+  existe un \(k\) perteneciente al conjunto de los números
+  enteros tal que \(x\) es igual al producto de \(2k\) más
+  uno por \(π\) cuarto. Simbólicamente:
+  \begin{equation}
+    \cos²(x)=\frac{1}{2} ⟺ x=(2k+1)⋅\frac{π}{4}.
+  \end{equation}
+\end{lema}
+\begin{demostracion}
+  Demostracion del lema SolucionCosenoCuadrado en lenguaje
+  natural.
+\end{demostracion}
+
+Formalización en Lean del lema:
+\begin{leancode}
+lemma SolucionCosenoCuadrado {x : ℝ} : cos x ^ 2 = 1/2 ↔
+∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 :=
+begin
+  rw cos_square,
+  rw add_right_eq_self,
+  rw div_eq_zero_iff,
+  split,
+  {intro h1,
+  cases h1 with h11 h12,
+  rw cos_eq_zero_iff at h11,
+  cases h11 with k1 hk1,
+  use k1,
+  linarith,
+  norm_num at h12,},
+  {intro h2, 
+  cases h2 with k2 hk2,
+  left,
+  rw cos_eq_zero_iff,
+  use k2,
+  linarith,},
+end
+\end{leancode}
+
+
+\begin{lema}[SolucionCosenoTriple]La expresión coseno del
+  triple de \(x\) es igual a cero si y solamente si
+  existe un \(k\) perteneciente al conjunto de los números
+  enteros tal que \(x\) es igual al producto de \(2k\) más
+  uno por \(π\) sexto. Simbólicamente:
+  \begin{equation}
+    \cos(3x)=0 ⟺ x=(2k+1)⋅\frac{π}{6}.
+  \end{equation}
+\end{lema}
+\begin{demostracion}
+  Demostracion del lema SolucionCosenoTriple en lenguaje
+  natural.
+\end{demostracion}
+
+A continuación, se presenta la correspondiente formalización
+en Lean del lema anterior:
+\begin{leancode}
+lemma SolucionCosenoTriple {x : ℝ} : cos (3 * x) = 0 ↔ 
+∃ k : ℤ, x = (2 * ↑k + 1) * π / 6 :=
+begin
+  rw cos_eq_zero_iff,
+  split,
+  {intro h1,
+  cases h1 with k1 hk1,
+  use k1,
+  linarith,},
+  {intro h2,
+  cases h2 with k2 hk2,
+  use k2,
+  linarith,},
+end
+\end{leancode}
+
+
+\subsection{Conclusión}
+Aquí se detallará la conclusión final.
