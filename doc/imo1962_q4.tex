@@ -1,0 +1,229 @@
+\section{IMO 1962 Q4}
+
+En esta sección se va a detallar la solución al problema Q4
+correspondiente al año 1962. Realizaremos la demostración
+en lenguaje natural del problema y a su vez se presentará la
+correspondiente formalización en Lean.
+
+La formalización que aquí se presenta ha sido inspirada en
+las que se proponen en ???? realizadas por Kevin Lacker y
+Healther Macbeth.
+
+
+
+\noindent
+\framebox{\parbox{\textwidth}{
+  \textbf{Problema 2 (1962--Q4)}. Resolver la ecuación
+  \[\cos²(x)+\cos²(2x)+\cos²(3x)=1\].}}
+
+\textbf{Solución:}
+
+Previo a la resolución como tal del problema, se van a
+introducir una serie de definiciones que nos servirán
+para llevar una notación más compacta:
+
+\begin{definicion}\label{problema}
+  De aquí en adelante usaremos la etiqueta \textbf{problema}
+  para referirnos a la expresión que queremos resolver,
+  es decir,
+  \begin{equation}\label{expprob}
+    \cos²(x)+\cos²(2x)+\cos²(3x)=1.
+  \end{equation}
+\end{definicion}
+
+La formalización en Lean de esta definición es:
+\begin{leancode}
+ def problema (x : ℝ) : Prop :=
+ cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
+\end{leancode}
+
+\begin{definicion}\label{funaux}
+  De aquí en adelante usaremos la etiqueta
+  \textbf{funauxiliar} para referirnos a la siguiente
+  expresión:
+  \begin{equation*}
+    \cos(x)·(\cos²(x)-\frac{1}{2})·\cos(3x).
+  \end{equation*}
+\end{definicion}
+
+La formalización en Lean en sete caso sería:
+\begin{leancode}
+def funcion_auxiliar (x : ℝ) : ℝ :=
+cos x * (cos x ^ 2 - 1/2) * cos (3 * x)
+\end{leancode}
+
+Una vez introducido estas dos definiciones, se va a proceder
+a demostrar que resolver la ecuación\( \_ \)problema es
+equivalente a resolver la ecuación obtenida al igualar a
+cero la funauxiliar.
+
+Esta demostración se detallará a continuación, pero previo a
+ella se necesita de la demostración de un lema previo:
+
+\begin{lema}[Igualdad]\label{igualdadlema}
+  Para cualquier \(x\) perteneciente al conjunto de los
+  números reales, se verifica la siguiente igualdad:
+  \begin{equation}\label{lemaigualdad}
+    \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=\text{funauxiliar}(x).
+  \end{equation}
+\end{lema}
+\begin{demostracion}
+  En primer lugar, según la definición vista en \ref{funaux}, se
+  tendría que la expresión (\ref{lemaigualdad}) se convierte en:
+  \begin{equation}\label{igualdad}
+    \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=
+    \cos(x)·(\cos²(x)-\frac{1}{2})·\cos(3x).
+  \end{equation}
+  Ahora bien, para llevar a cabo la demostración comenzaremos
+  introduciendo las conocidas definiciones del coseno del
+  ángulo doble y del coseno del ángulo triple, que son:
+  \begin{align}
+    & \cos(2x)=2\cos²(x)-\frac{1}{2}\label{cos2}\\
+    & \cos(3x)=4\cos³(x)-3\cos(x)\label{cos3},
+  \end{align}
+  donde estas dos propiedades en Lean se formalizan con los
+  dos siguientes lemas:
+  \begin{itemize}
+\item \mint{lean}|cos_two_mul : cos (2 * x) = 2 * cos x ^ 2 - 1|
+  \index{\url{cos_two_mul}}
+\item \mint{lean}|cos_three_mul : cos (3 * x) = 4 * cos x ^ 3 - 3 * cos x|
+  \index{\url{cos_three_mul}}
+\end{itemize}
+
+A continuación, se van a desarrollar los dos términos de la
+igualdad (\ref{igualdad}). Comencemos por el primer término
+de los dos:
+\begin{align}\label{term1}
+  \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}&=\frac{\cos²(x)+(2\cos²(x)-1)²}{4}\\
+  &+\frac{(4\cos³(x)-3\cos(x))²-1}{4},
+\end{align}
+donde simplemente se han introducido las definiciones (\ref{cos2})
+y (\ref{cos3}).
+
+Desarrollando los cuadrados que aparecen en (\ref{term1}) y
+simplificando los términos se acaba teniendo que:
+\begin{equation}\label{term11}
+  \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=
+  \cos(x)(\frac{3}{2}\cos(x)+4\cos⁵(x)-5\cos³(x))
+\end{equation}
+
+Por otro lado, desarrollando de manera totalmente análoga el
+segundo término de la igualdad (\ref{igualdad}), se tiene que:
+\begin{align}
+  \cos(x)·(\cos²(x)-\frac{1}{2})·\cos(3x)&\stackrel{(*)}{=}\cos(x)·
+                                           (\cos²(x)-\frac{1}{2})·
+                                           (4\cos³(x)-3\cos(x)
+                                           )\label{term2}\\
+                                         &=\cos(x)·
+                                           (4\cos⁵(x)-5\cos³(x)
+                                           +\frac{3}{2}\cos(x))
+                                           \label{term21},
+\end{align}
+donde en (\ref{term2}) se ha hecho uso de las definiciones (\ref{cos2})
+y (\ref{cos3}).
+
+De manera que observando las expresiones (\ref{term11}) y (\ref{term21}),
+se puede concluir que la igualdad planteada en (\ref{igualdad}) es cierta.
+De esta forma, ya se tendría el lema demostrado.
+\end{demostracion}
+
+Veamos la formalización en Lean de este lema:
+\begin{leancode}
+lemma Igualdad {x : ℝ} :
+(cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 - 1) / 4 = funauxiliar x :=
+begin
+  rw funauxiliar,
+  rw real.cos_two_mul,
+  rw cos_three_mul,
+  ring,
+end
+\end{leancode}
+
+Una vez se ha introducido este lema, se puede proceder a la demostración
+del lema que ya se adelantó y que consiste en probar que resolver la
+expresión \textbf{problema}, (\ref{problema}), es equivalente a resolver
+la expresión obtenidad de igualar a cero \textbf{funauxiliar},
+(\ref{funaux}). Veámoslo:
+
+\begin{lema}[Equivalencia]
+  Resolver la expresión (\ref{expprob}) es equivalente a resolver
+  la expresión
+  \begin{equation}\label{probaux}
+    \text{funauxiliar}(x)=0.
+  \end{equation}
+\end{lema}
+\begin{demostracion}
+  Esta demostración se trata de una doble implicación, por ello,
+  separaremos las implicaciones:
+
+  \noindent
+  \framebox{\longrightarrow}
+  Comencemos suponiendo que se puede resolver la expresión
+  \begin{equation}\label{h1}\tag{h1}
+    \cos²(x)+\cos²(2x)+\cos²(3x)=1,
+  \end{equation}
+  entonces se tiene, sin más que pasar todos los términos a un mismo
+  lado de la igualdad, que también se puede resolver la expresión:
+  \begin{equation}\label{h11}
+    \cos²(x)+\cos²(2x)+\cos²(3x)-1=0.
+  \end{equation}
+
+  Como se tiene que podemos resolver la igualdad anterior,
+  (\ref{h11}), y que está igualad a cero. Se tiene que se puede resolver
+  cualquier múltiplo o submúltiplo de ella; en este caso consideraremos
+  la expresión dividida por cuatro.
+
+  Entonces, se verifica que podemos resolver la expresión:
+  \begin{equation}\label{h12}
+    \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=0.
+  \end{equation}
+
+  Para concluir esta implicación de la demostración, bastaría con
+  aplicar el Lema \ref{igualdadlema}. De manera que se verificaría
+  que se puede resolver el problema (\ref{probaux}).
+
+  \noindent
+  \framebox{\longleftarrow} A continuación, supongamos que se puede
+  resolver el problema
+  \begin{equation}\label{h2}\tag{h2}
+    \text{funauxiliar}(x)=0.
+  \end{equation}
+  Queremos demostrar que resolver este problema es equivalente a
+  resolver el problema planteado en (\ref{expprob}).
+
+  En primer lugar, aplicamos el Lema \ref{igualdadlema} sobre la
+  hipótesis (\ref{h2}). De manera que se obtiene que la hipótesis
+  se transforma en la siguiente:
+  \begin{equation}
+    \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=0.
+  \end{equation}
+  Cuando se tiene una división igualda a cero, existen dos
+  posibilidades: o bien que el numerador sea cero o que lo sea
+  el denominador. De esta forma, se verifica que:
+  \begin{equation}
+    (\cos²(x)+\cos²(2x)+\cos²(3x)-1)=0 \lor 4=0
+  \end{equation}
+  
+\end{demostracion}
+
+La formalización en Lean de este Lema es la siguiente:
+\begin{leancode}
+lemma Equivalencia {x : ℝ} : problema x ↔ funauxiliar x = 0 :=
+begin
+  split,
+  {intro h1,
+  rw problema at h1,
+  rw ← Igualdad,
+  rw div_eq_zero_iff,
+  left,
+  rw sub_eq_zero,
+  exact h1,},
+  {intro h2,
+  rw problema,
+  rw ← Igualdad at h2,
+  rw div_eq_zero_iff at h2,
+  norm_num at h2,
+  rw sub_eq_zero at h2,
+  exact h2,},
+end
+\end{leancode}
