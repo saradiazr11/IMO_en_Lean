@@ -443,14 +443,132 @@ En la prueba del lema se han usado los siguientes lemas:
   existe un \(k\) perteneciente al conjunto de los números
   enteros tal que \(x\) es igual al producto de \(2k\) más
   uno por \(π\) cuarto. Simbólicamente:
-  \begin{equation}
+  \begin{equation}\label{problema2}
     \cos²(x)=\frac{1}{2} ⟺ x=(2k+1)⋅\frac{π}{4}.
   \end{equation}
 \end{lema}
 \begin{demostracion}
-  Demostracion del lema SolucionCosenoCuadrado en lenguaje
-  natural.
-\end{demostracion}
+  Se puede observar que se trata de una demostración de doble
+  implicación. No obstante, previo a la demostración de las
+  correspondientes implicaciones, reescribiremos el problema
+  (\ref{problema2}). Para ello, comenzaremos usando la definición
+  del cuadrado del coseno de un ángulo, es decir,
+  \begin{equation}
+    \cos²(x)=\frac{1}{2}+\cos(2x).
+  \end{equation}
+
+  De esta forma, el problema (\ref{problema2}), se puede reescribir
+  como sigue:
+  \begin{equation}
+    \frac{1}{2}+\frac{\cos(2x)}{2}=\frac{1}{2} ⟺ x=(2k+1)⋅
+    \frac{π}{4}.
+  \end{equation}
+
+  Se puede observar que en la primera parte de la equivalencia, la
+  igualdad tiene el mismo término a derecha que a izquierda, de
+  manera que se puede eliminar. Obtenemos que
+  \begin{equation}\label{problema21}
+    \frac{\cos(2x)}{2}=0 ⟺ x=(2k+1)⋅\frac{π}{4}.
+  \end{equation}
+
+  Por último, en (\ref{problema21}), se tiene una fracción igualada
+  a 0, esto significa que o el numerador es cero o bien lo es el
+  denominador. Por tanto, el problema que inicialmente planteamos,
+  (\ref{problema2}), quedaría reescrito de la siguiente manera:
+  \begin{equation}\label{problema22}
+    \cos(2x)=0 \lor 2=0 ⟺ x=(2k+1)⋅\frac{π}{4}.
+  \end{equation}
+
+  Procedamos ahora a la demostración por doble implicación del
+  problema (\ref{problema22}).
+
+  \noindent
+  \framebox{\longrightarrow} Supongamos que se verifica que
+  \begin{equation}\label{Dobleh2}\tag{h1}
+    \cos(2x)=0 \lor 2=0.
+  \end{equation}
+
+  Entonces, se quiere demostrar que la solución \(x\) es de la
+  siguiente forma:
+  \begin{equation}\label{ConcDoble}
+    x=(2k+1)⋅\frac{π}{4}.
+  \end{equation}
+  Al igual que en la demostración del lema anterior, al tener una
+  hipótesis formada por una disyunción, se tiene que dicha hipótesis
+  puede ser separada en dos posibles casos:
+  \begin{align}
+    &\cos(2x)=0 \label{Dobleh11}\tag{h11}\\
+    &2=0. \label{Dobleh12}\tag{h12}
+  \end{align}
+
+  De manera análoga, para demostrar (\ref{ConcDoble}) ahora se
+  divide en dos subproblemas: el primero de ellos considerando
+  la hipótesis (\ref{Dobleh11}) y en el segundo considerando
+  (\ref{Dobleh12}).
+
+  \begin{itemize}
+  \item \textbf{Subproblema 1}
+
+    Supongamos (\ref{Dobleh11}), se ha de demostrar
+    (\ref{ConcDoble}). Para ello, comenzaremos usando que sabemos
+    que cuando tenemos el coseno de un ángulo \( α \) igualado
+    a cero, se verfica que, para todo \(k\) perteneciente a los
+    números naturales, dicho ángulo es igual al producdo de el
+    doble de \(k\) más uno por \(π \) medios. Simbólicamente:
+    \begin{equation}\label{alpha}
+      \cos(α)=0 ⟺ α=\frac{(2k+1)π}{2}, ∀ k ∈ ℤ.
+    \end{equation}
+
+    Entonces, usando la propiedad (\ref{alpha}) sobre nuestra
+    hipótesis (\ref{Dobleh11}), se tiene que
+    \begin{equation}\label{hk1}\tag{hk1}
+      2x=\frac{(2k_1+1)π}{2}, ∀ k_1 ∈ ℤ.
+    \end{equation}
+
+    De esta forma, sin más que pasar dividiendo el dos que se
+    encuentra multiplicando en la parte izquierda de la igualdad
+    se tiene lo que queremos demostrar, (\ref{ConcDoble}).
+
+  \item \textbf{Subproblema 2}
+
+    En este caso, partimos de la hipótesis (\ref{Doble12}), lo cual
+    bien sabemos que es una hipótesis falsa. Entonces, se tendría
+    que partiendo de una hipótesis falsa cualquier afirmación es
+    cierta, y en concreto la que a nosotros nos interesa también,
+    (\ref{ConcDoble}).
+  \end{itemize}
+
+  De manera que ya hemos terminado la primera implicación de la
+  demostración.
+
+   \noindent
+   \framebox{\longrightarrow} Supongamos ahora que existe  \(k_2\)
+   perteneciente al conjunto de los números enteros, a partir del
+   cual \(x\) se puede escribir como el producto de el doble de
+   \(k_2 \) más uno, por \( π \) medio. Simbólicamente
+   \begin{equation}\label{hk2}\tag{hk2}
+      x=\frac{(2k_2+1)π}{4}, ∀ k_2 ∈ ℤ.
+    \end{equation}
+
+    Entonces queremos demostrar que se verifica la siguiente
+    expresión:
+    \begin{equation}\label{ConcDoble2}
+      \cos(2x)=0 \lor 2=0.
+    \end{equation}
+
+    Es más, como se trata de una disyunción para concluir la
+    prueba basta con demostrar una de las dos posibilidades.
+    En nuestro caso, se demostrará que el coseno del ángulo doble
+    de \(x\) es nulo. Esto es,
+    \begin{equation}\label{ConcDoble3}
+      \cos(2x)=0.
+    \end{equation}
+
+    Análogamente a como hicimos en la implicación anterior,
+    sustituiremos la expresión del coseno igualada a cero por la
+    descrita en (\ref{alpha}). Entonces, si se lo aplicamos a
+    (\ref{ConcDoble3}), se obtiene que existe ????
+    \end{demostracion}
 
 Formalización en Lean del lema:
 \begin{leancode}
