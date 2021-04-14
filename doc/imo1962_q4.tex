@@ -288,12 +288,118 @@ primer lema.
   si y solamente si o bien el coseno al cuadrado de \(x\) es igual
   a un medio, o bien, el coseno del triple de \(x\) es nulo.
   Simbólicamente:
-  \begin{equation}
-    \text{funauxiliar}(x)=0 ⟺ \cos²(x)=\frac{1}{2} \lor \cos(3x)=0.
+  \begin{equation}\label{problema}
+    \text{funauxiliar}(x)=0 ⟺ \cos²(x)=\frac{1}{2} \lor
+    \cos(3x)=0.
   \end{equation}
   \end{lema}
 \begin{demostracion}
-  Demostracion del lema CasosSolucion en lenguaje natural
+  En primer lugar, previo a la demostración en sí del problema
+  (\ref{problema}), se va a proceder a la reescritura del musmo.
+  Para ello, lo que hacemos es escribir la definición de
+  funauxiliar vista en (\ref{funaux}), es decir,
+  \begin{equation}\label{fun1}
+    \text{funauxiliar}(x)=\cos(x)·(\cos²(x)-\frac{1}{2})·\cos(3x).
+  \end{equation}
+
+  Aplicando ahora la propiedad asociativa de la multiplicaión,
+  se tiene que (\ref{fun1}) es equivalente a
+  \begin{equation}\label{fun2}
+    \cos(x)·((\cos²(x)-\frac{1}{2})·\cos(3x)).
+  \end{equation}
+
+  De esta forma como en el problema inicial se tiene que funaxiliar
+  está igualda a cero; se sabe que cuando un producto está igualado
+  a cero uno de los dos términos ha de ser nulo. En el caso que a
+  nosotros nos incumbe:
+  \begin{align}
+    \cos(x)·((\cos²(x)-\frac{1}{2})·\cos(3x))=0 &⟺ \cos(x)=0
+                                                  \lor (\cos²(x)-
+                                                  \frac{1}{2})·
+                                                  \cos(3x)=0 \\
+    & ⟺ \cos(x)=0 \lor \cos²(x)=\frac{1}{2} \lor \cos(3x)=0,
+  \end{align}
+  donde hemos aplicado dos veces el resultado de que el producto
+  de dos términos esté igualado a cero.
+
+  De esta forma, tenemos que el problema inicial, (\ref{problema}),
+  se reescribe de la siguiente forma:
+  \begin{equation}\label{problema2}
+    \cos(x)=0 \lor \cos²(x)=\frac{1}{2} \lor \cos(3x)=0
+    ⟺ \cos²(x)=\frac{1}{2} \lor \cos(3x)=0.
+  \end{equation}
+
+  Ahora ya sí procederemos a la demostración de (\ref{problema2});
+  como se trata de un si y solamente si lo haremos por doble
+  implicación.
+
+  \noindent
+  \framebox{\longrightarrow} Suponemos que se verifica que
+  \begin{equation}\label{Casosh1}\tag{h1}
+    \cos(x)=0 \lor \cos²(x)=\frac{1}{2} \lor \cos(3x)=0.
+  \end{equation}
+
+  Entonces tenemos que demostrar que bajo la suposición (\ref{h1}),
+  se verifica que
+  \begin{equation}\label{CasosConc1}
+     \cos²(x)=\frac{1}{2} \lor \cos(3x)=0.
+  \end{equation}
+
+  La hipótesis (\ref{h1}) significa que una de las dos disyunciones
+  ha de ser cierta. Por ello, considerar dicha hipótesis es
+  equivalente a considerar dos posibles casos, que serían los
+  siguientes:
+  \begin{align}
+    &\cos(x)=0 \label{Casosh11}\tag{h11}\\
+    &\cos²(x)=\frac{1}{2}\lor \cos(3x)=0. \label{Casosh12}\tag{h12}
+  \end{align}
+
+  Esto supone que la demostración pasa a ser dividida en
+  dos subproblemas: el primero de
+  ellos consiste en demostrar (\ref{CasosConc1}) suponiendo
+  cierta la hipótesis (\ref{Casosh11}) y el segundo de ellos
+  es también demostrar (\ref{CasosConc1}) pero ahora bajo la
+  hipótesis (\ref{Casosh12}).
+
+  \begin{itemize}
+  \item \textbf{Subproblema 1}
+    
+    Con el objetivo de demostrar (\ref{CasosConc1}) suponiendo
+    cierta la hipótesis (\ref{Casosh11}), basta con demostrar una
+    de las dos disyunciones. En este caso se demostrará la segunda
+    de ellas, es decir, se demsotrará que el coseno del ángulo
+    \(3x\) es nulo.
+
+    Para demostrar esto, basta con hacer uso de la definción del
+    ángulo triple. De esta forma se tiene que:
+    \begin{equation}
+      \cos(3x)=4\cos³(x)-3\cos(x)\stackrel{(*)}{=}0,
+    \end{equation}
+    donde en \((*)\) se ha hecho uso de la hipótesis
+    (\ref{Casosh11}). Y ya se tendría el resultado.
+    
+  \item \textbf{Subproblema 2}
+
+    En este caso suponemos cierta la hipótesis (\ref{Casosh12})
+    y tenemos que demostrar (\ref{CasosConc1}), lo cual se tiene
+    de manera directa pues son la misma afirmación.
+  \end{itemize}
+
+  \noindent
+  \framebox{\longleftarrow} A continuación se tiene que demostrar
+  la implicación contraria. Esto es, suponiendo cierta la
+  hipótesis
+  \begin{equation}\label{Casosh2}\tag{h2}
+    \cos²(x)=\frac{1}{2} \lor \cos(3x)=0,
+  \end{equation}
+  hay que demostrar que es equivalente a
+  \begin{equation}\label{CasosConc2}
+    \cos(x)=0 \lor \cos²(x)=\frac{1}{2}\lor \cos(3x)=0.
+  \end{equation}
+
+  En este caso, la implicación es directa puesto que basta con
+  quedarse con las dos disyunciones de la derecha en
+  (\ref{CasosConc2}).
 \end{demostracion}
 
 A continuación, se plantea la formalización en Lean de este lema:
@@ -319,6 +425,18 @@ begin
   exact h2,},
 end
 \end{leancode}
+
+En la prueba del lema se han usado los siguientes lemas:
+\begin{itemize}
+\item \mint{lean}|cos_three_mul : cos (3 * x) = 4 * cos x ^ 3 - 3 * cos x|
+  \index{\url{cos_three_mul}}
+\item \mint{lean}|mul_assoc : ∀ a b c : G, a * b * c = a * (b * c) |
+  \index{\url{mul_assoc}}
+\item \mint{lean}|mul_eq_zero : a * b = 0 ↔ a = 0 ∨ b = 0|
+  \index{\url{mul_eq_zero}}
+\item \mint{lean}|sub_eq_zero : a - b = 0 ↔ a = b|
+  \index{\url{sub_eq_zero}}
+\end{itemize}
 
 \begin{lema}[SolucionCosenoCuadrado]La expresión coseno al
   cuadrado de \(x\) es igual a un medio si y solamente si
