@@ -14,8 +14,8 @@ noncomputable theory
 
 def problema (x : ℝ) : Prop := cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
 
-def conjunto_solucion : set ℝ :=
-{ x : ℝ | ∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 ∨ x = (2 * ↑k + 1) * π / 6 }
+def Solucion : set ℝ :=
+{ x : ℝ | ∃ k : ℤ, x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6 }
 
 /-
 The key to solving this problem simply is that we can rewrite the equation as
@@ -81,7 +81,7 @@ Now we can solve for `x` using basic-ish trigonometry.
 -/
 
 lemma SolucionCosenoCuadrado {x : ℝ} : cos x ^ 2 = 1/2 ↔ 
-∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 :=
+∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
 begin
   rw cos_square,
   rw add_right_eq_self,
@@ -104,7 +104,7 @@ end
 
 
 lemma SolucionCosenoTriple {x : ℝ} : cos (3 * x) = 0 ↔ 
-∃ k : ℤ, x = (2 * ↑k + 1) * π / 6 :=
+∃ k : ℤ, x = (2 * k + 1) * π / 6 :=
 begin
   rw cos_eq_zero_iff,
   split,
@@ -118,17 +118,14 @@ begin
   linarith,},
 end
 
-/-
-The final theorem is now just gluing together our lemmas.
--/
 
-theorem imo1962_q4 {x : ℝ} : problema x ↔ x ∈ conjunto_solucion :=
+theorem imo1962_q4 {x : ℝ} : problema x ↔ x ∈ Solucion :=
 begin
   rw Equivalencia,
   rw CasosSolucion,
   rw SolucionCosenoTriple,
   rw SolucionCosenoCuadrado,
-  rw conjunto_solucion,
+  rw Solucion,
 
   exact exists_or_distrib.symm,
 end

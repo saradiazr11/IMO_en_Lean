@@ -274,7 +274,7 @@ En el caso de la prueba de nuestro lema, esta táctica ha sido
 usada para demostrar que cuatro es distinto de cero. Esta táctica
 ese tipo de igualdades las hace de manera directa.
 
-\subsection{Resolución del problema equivalente}
+\subsection{Resolución del problema equivalente}\label{secequiv}
 Una vez ya se ha demostrado que el problema (\ref{probaux}) es
 equivalente al problema que inicialmente queríamos demostrar, se
 va a proceder a encontrar los ceros de (\ref{probaux}). Para
@@ -444,7 +444,7 @@ En la prueba del lema se han usado los siguientes lemas:
   enteros tal que \(x\) es igual al producto de \(2k\) más
   uno por \(π\) cuarto. Simbólicamente:
   \begin{equation}\label{problema2}
-    \cos²(x)=\frac{1}{2} ⟺ x=(2k+1)⋅\frac{π}{4}.
+    \cos²(x)=\frac{1}{2} ⟺∃ k∈ℤ, x=(2k+1)⋅\frac{π}{4}.
   \end{equation}
 \end{lema}
 \begin{demostracion}
@@ -460,7 +460,7 @@ En la prueba del lema se han usado los siguientes lemas:
   De esta forma, el problema (\ref{problema2}), se puede reescribir
   como sigue:
   \begin{equation}
-    \frac{1}{2}+\frac{\cos(2x)}{2}=\frac{1}{2} ⟺ x=(2k+1)⋅
+    \frac{1}{2}+\frac{\cos(2x)}{2}=\frac{1}{2} ⟺∃ k∈ℤ, x=(2k+1)⋅
     \frac{π}{4}.
   \end{equation}
 
@@ -468,7 +468,7 @@ En la prueba del lema se han usado los siguientes lemas:
   igualdad tiene el mismo término a derecha que a izquierda, de
   manera que se puede eliminar. Obtenemos que
   \begin{equation}\label{problema21}
-    \frac{\cos(2x)}{2}=0 ⟺ x=(2k+1)⋅\frac{π}{4}.
+    \frac{\cos(2x)}{2}=0 ⟺ ∃ k∈ℤ, x=(2k+1)⋅\frac{π}{4}.
   \end{equation}
 
   Por último, en (\ref{problema21}), se tiene una fracción igualada
@@ -476,7 +476,7 @@ En la prueba del lema se han usado los siguientes lemas:
   denominador. Por tanto, el problema que inicialmente planteamos,
   (\ref{problema2}), quedaría reescrito de la siguiente manera:
   \begin{equation}\label{problema22}
-    \cos(2x)=0 \lor 2=0 ⟺ x=(2k+1)⋅\frac{π}{4}.
+    \cos(2x)=0 \lor 2=0 ⟺∃ k, x=(2k+1)⋅\frac{π}{4}.
   \end{equation}
 
   Procedamos ahora a la demostración por doble implicación del
@@ -488,10 +488,9 @@ En la prueba del lema se han usado los siguientes lemas:
     \cos(2x)=0 \lor 2=0.
   \end{equation}
 
-  Entonces, se quiere demostrar que la solución \(x\) es de la
-  siguiente forma:
+  Entonces, se quiere demostrar que
   \begin{equation}\label{ConcDoble}
-    x=(2k+1)⋅\frac{π}{4}.
+    ∃ k,x=(2k+1)⋅\frac{π}{4}.
   \end{equation}
   Al igual que en la demostración del lema anterior, al tener una
   hipótesis formada por una disyunción, se tiene que dicha hipótesis
@@ -510,28 +509,53 @@ En la prueba del lema se han usado los siguientes lemas:
   \item \textbf{Subproblema 1}
 
     Supongamos (\ref{Dobleh11}), se ha de demostrar
-    (\ref{ConcDoble}). Para ello, comenzaremos usando que sabemos
-    que cuando tenemos el coseno de un ángulo \( α \) igualado
-    a cero, se verfica que, para todo \(k\) perteneciente a los
-    números naturales, dicho ángulo es igual al producdo de el
-    doble de \(k\) más uno por \(π \) medios. Simbólicamente:
-    \begin{equation}\label{alpha}
-      \cos(α)=0 ⟺ α=\frac{(2k+1)π}{2}, ∀ k ∈ ℤ.
+    (\ref{ConcDoble}). Para ello, comenzaremos usando la
+    caracterización de la solución del coseno de un ángulo
+    igualado a cero. Esto es:
+    
+    \begin{proposicion}\label{alpha}
+      Sea \(α\) un número perteneciente al conjunto de los
+      números naturales. Entonces se tiene que se verifica la
+      expresión coseno de \(α \) igual a cero si y solamente si
+      existe un número \(k\) perteneciente al conjunto de los
+      números enteros tal que \(α \) es igual al producdo del
+      doble de \(k\) más uno por \(π \) medio. Simbólicamente:
+    \begin{equation}\label{alpha2}
+      \cos(α)=0 ⟺∃ k ∈ℤ,  α=\frac{(2k+1)π}{2}.
     \end{equation}
+    \end{proposicion}
 
-    Entonces, usando la propiedad (\ref{alpha}) sobre nuestra
+    La formalización en Lean de esta proposición es la planteada
+    a continuación:
+    \begin{leancode}
+      theorem cos_eq_zero_iff {θ : ℝ} : cos θ = 0 ↔
+      ∃ k : ℤ, θ = (2 * k + 1) * π / 2 
+    \end{leancode}
+    
+    Entonces, usando la propiedad \ref{alpha} sobre nuestra
     hipótesis (\ref{Dobleh11}), se tiene que
-    \begin{equation}\label{hk1}\tag{hk1}
-      2x=\frac{(2k_1+1)π}{2}, ∀ k_1 ∈ ℤ.
+    \begin{equation}\label{Doble2h11}
+      ∃k∈ ℤ, 2x=\frac{(2k+1)π}{2}.
     \end{equation}
 
-    De esta forma, sin más que pasar dividiendo el dos que se
-    encuentra multiplicando en la parte izquierda de la igualdad
-    se tiene lo que queremos demostrar, (\ref{ConcDoble}).
+    A partir de la hipótesis (\ref{Doble2h11}), se sabe que existe
+    un número entero verificando dicha hipótesis. Sin pérdida de
+    generalidad, se puede considerar que dicho número entero es
+    \(k_1\) y de esta forma la hipótesis (\ref{Doble2h11}) se
+    convierte en:
+    \begin{equation}\label{Doblehk1}\tag{hk1}
+       2x=\frac{(2k_1+1)π}{2}.
+    \end{equation}
+
+    De esta forma, para demostrar (\ref{ConcDoble}) basta con usar
+    el mismo número entero, \(k_1\), y la hipótesis
+    (\ref{Doblehk1}). Pasando el dos que se encuentra multiplicando
+    en la parte izquierda de la igualdad ya se tendría lo que
+    queremos demostrar.
 
   \item \textbf{Subproblema 2}
 
-    En este caso, partimos de la hipótesis (\ref{Doble12}), lo cual
+    En este caso, partimos de la hipótesis (\ref{Dobleh12}), lo cual
     bien sabemos que es una hipótesis falsa. Entonces, se tendría
     que partiendo de una hipótesis falsa cualquier afirmación es
     cierta, y en concreto la que a nosotros nos interesa también,
@@ -542,21 +566,29 @@ En la prueba del lema se han usado los siguientes lemas:
   demostración.
 
    \noindent
-   \framebox{\longrightarrow} Supongamos ahora que existe  \(k_2\)
+   \framebox{\longleftarrow} Supongamos ahora que existe \(k\)
    perteneciente al conjunto de los números enteros, a partir del
    cual \(x\) se puede escribir como el producto de el doble de
-   \(k_2 \) más uno, por \( π \) medio. Simbólicamente
-   \begin{equation}\label{hk2}\tag{hk2}
-      x=\frac{(2k_2+1)π}{4}, ∀ k_2 ∈ ℤ.
+   \(k \) más uno, por \( π \) medio. Simbólicamente
+   \begin{equation}\label{CosDobleh2}\tag{h2}
+      ∃ k ∈ ℤ, x=\frac{(2k+1)π}{4}.
     \end{equation}
 
-    Entonces queremos demostrar que se verifica la siguiente
+    Sin pérdida de generalidad, la hipótesis (\ref{CosDobleh2}) se
+    puede reescribir considerarando que el número entero que la
+    verifica es un determinado número que denotaremos \(k_2\).
+    Entonces la hiótesis (\ref{CosDoble2}) pasa a ser:
+    \begin{equation}\label{hk2}\tag{hk2}
+       x=\frac{(2k_2+1)π}{4}.
+    \end{equation}
+
+    Entonces se quiere demostrar que se verifica la siguiente
     expresión:
     \begin{equation}\label{ConcDoble2}
       \cos(2x)=0 \lor 2=0.
     \end{equation}
 
-    Es más, como se trata de una disyunción para concluir la
+    Es más, como se trata de una disyunción, para concluir la
     prueba basta con demostrar una de las dos posibilidades.
     En nuestro caso, se demostrará que el coseno del ángulo doble
     de \(x\) es nulo. Esto es,
@@ -566,14 +598,24 @@ En la prueba del lema se han usado los siguientes lemas:
 
     Análogamente a como hicimos en la implicación anterior,
     sustituiremos la expresión del coseno igualada a cero por la
-    descrita en (\ref{alpha}). Entonces, si se lo aplicamos a
-    (\ref{ConcDoble3}), se obtiene que existe ????
+    descrita en la Proposición \ref{alpha}. Entonces, si se lo
+    aplicamos a (\ref{ConcDoble3}), se obtiene que el objetivo
+    a probar pasa a ser que exista un número entero \(k\) tal que
+    el ángulo \(2x\) se describa como se describió en
+    (\ref{alpha2}). Simbólicamente:
+    \begin{equation}
+      ∃k∈ ℤ, 2x=\frac{(2k+1)π}{2}.
+    \end{equation}
+
+    Finalmante, se puede concluir la demostración haciendo uso del
+    número entero \(k_2\) y de la hipótesis (\ref{hk2}). 
     \end{demostracion}
 
-Formalización en Lean del lema:
+La formalización en Lean del lema anteriormente desarrollado es
+la que se presenta a continuación:
 \begin{leancode}
 lemma SolucionCosenoCuadrado {x : ℝ} : cos x ^ 2 = 1/2 ↔
-∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 :=
+∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
 begin
   rw cos_square,
   rw add_right_eq_self,
@@ -595,26 +637,103 @@ begin
 end
 \end{leancode}
 
+Seguidamente, veámos los lemas auxiliares que se han utilizado
+para realizar la formalización de este lema son los siguiente:
+\begin{itemize}
+\item \mint{lean}|cos_square : cos x ^ 2 = 1 / 2 + cos (2 * x) / 2 |
+  \index{\url{cos_square}}
+\item \mint{lean}|add_right_eq_self : a + b = a ↔ a = 0|
+  \index{\url{add_right_eq_self}}
+\item \mint{lean}|div_eq_zero_iff : a / b = 0 ↔ a = 0 ∨ b = 0|
+  \index{\url{div_eq_zero_iff}}
+\end{itemize}
+
+Además, también se ha usado la formalización de la proposición
+\ref{alpha} que ya se detalló anteriormente. También se ha usado
+la siguiente táctica:
+\begin{leancode}
+meta def norm_num (hs : parse simp_arg_list) (l : parse location) :
+tactic unit :=
+do f ← get_step, tactic.norm_num f hs l
+\end{leancode}
 
 \begin{lema}[SolucionCosenoTriple]La expresión coseno del
   triple de \(x\) es igual a cero si y solamente si
   existe un \(k\) perteneciente al conjunto de los números
   enteros tal que \(x\) es igual al producto de \(2k\) más
   uno por \(π\) sexto. Simbólicamente:
-  \begin{equation}
-    \cos(3x)=0 ⟺ x=(2k+1)⋅\frac{π}{6}.
+  \begin{equation}\label{problemaTriple}
+    \cos(3x)=0 ⟺ ∃k ∈ ℤ,x=(2k+1)⋅\frac{π}{6}.
   \end{equation}
 \end{lema}
 \begin{demostracion}
-  Demostracion del lema SolucionCosenoTriple en lenguaje
-  natural.
+  Antes de comenzar con la demostración en sí del lema, vamos a
+  reescribir el problema (\ref{problemaTriple}) haciendo uso de la
+  Proposición \ref{alpha}. Entonces, nos quedaría el siguiente
+  problema:
+  \begin{equation}
+    ∃k∈ ℤ,3x=\frac{(2k+1)π}{2}⟺ ∃k ∈ ℤ,x=(2k+1)⋅\frac{π}{6}.
+  \end{equation}
+
+  Ahora sí, se procederá a la demostración de las correspondientes
+  implicaciones por separado.
+
+  \noindent
+  \framebox{\longrightarrow}
+  Supongamos que se verifica la siguiente hipótesis:
+  \begin{equation}\label{Tripleh1}\tag{h1}
+    ∃k∈ ℤ,3x=\frac{(2k+1)π}{2}.
+  \end{equation}
+
+  Se quiere demostrar, que entonces se verifica también la
+  siguiente afirmación:
+  \begin{equation}\label{ConTriple}
+     ∃k ∈ ℤ,x=(2k+1)⋅\frac{π}{6}.
+   \end{equation}
+
+   Al considerar la hipótesis (\ref{Tripleh1}) sabemos que existe
+   al menos un número entero verificando esa expresión. Sin
+   pérdida de generalidad podemos considerar que el número entero
+   que verifica (\ref{Tripleh1}) es \(k_1\). De manera que la
+   hipótesis pasa a ser:
+   \begin{equation}\label{Triplehk1}\tag{hk1}
+    3x=\frac{(2k_1+1)π}{2}.
+  \end{equation}
+
+  Para demostrar (\ref{ConTriple}) basta con usar el número
+  entero \(k_1\) y la hipótesis (\ref{Triplehk1}).
+
+   \noindent
+   \framebox{\longleftarrow}
+   Supongamos que se verifica ahora la siguiente hipótesis:
+   \begin{equation}\label{Tripleh2}\tag{h2}
+     ∃k ∈ ℤ,x=(2k+1)⋅\frac{π}{6}.
+  \end{equation}
+
+  Se quiere demostrar que entonces, se verifica la siguiente
+  afirmación:
+  \begin{equation}\label{ConTriple2}
+    ∃k∈ ℤ,3x=\frac{(2k+1)π}{2}.
+  \end{equation}
+
+  De manera totalmente análoga a como se ha procedido en la
+  implicación anterior; sin pérdida de generalidad, en la
+  hipótesis (\ref{Tripleh2}), como sabemos que existe dicho número
+  entero, se puede denotar como \(k_2\) y la hipótesis pasa a ser:
+  \begin{equation}\label{Triplehk2}\tag{hk2}
+     x=(2k_2+1)⋅\frac{π}{6}.
+   \end{equation}
+
+   Entonces, ya se puede concluir la demostración, pues basta con
+   usar el mismo número entero (\(k_2\)) en (\ref{ConTriple2}) y
+   usar la hipótesis (\ref{Triplehk2}).
 \end{demostracion}
 
 A continuación, se presenta la correspondiente formalización
-en Lean del lema anterior:
+en Lean de la demostración del lema que acabamos de detallar:
 \begin{leancode}
 lemma SolucionCosenoTriple {x : ℝ} : cos (3 * x) = 0 ↔ 
-∃ k : ℤ, x = (2 * ↑k + 1) * π / 6 :=
+∃ k : ℤ, x = (2 * k + 1) * π / 6 :=
 begin
   rw cos_eq_zero_iff,
   split,
@@ -629,6 +748,40 @@ begin
 end
 \end{leancode}
 
+En la formalización de este lema en Lean sólo ha sido necesario
+el uso de un teorema y es el siguiente:
+\begin{itemize}
+\item \mint{lean}|cos_eq_zero_iff :  cos θ = 0 ↔ ∃ k : ℤ, θ = (2 * k + 1) * π / 2|
+  \index{\url{cos_eq_zero}}
+\end{itemize} 
 
 \subsection{Conclusión}
-Aquí se detallará la conclusión final.
+Finalmente, una vez se ha demostrado tanto la equivalencia entre el
+problema original que queríamos resolver y el problema auxiliar,
+como las soluciones del problema auxiliar; se puede concluir el
+ejercicio.
+
+En primer lugar, por lo que hemos visto en la sección
+\ref{secequiv}, se sabe que el problema equivalente
+(y por tanto del problema original) tiene solución en dos casos:
+\begin{align}
+  &∃k∈ℤ, x=\frac{(2k+1)π}{4}\label{condicion1}\\
+  &∃k∈ℤ, x=\frac{(2k+1)π}{6}.\label{condicion2}
+\end{align}
+
+Esto nos permite definir el conjunto de soluciones del problema
+como el cojunto de los números reales, \(x\), tales que o bien
+verifiquen (\ref{condicion1}), o bien (\ref{condicion2}). De
+manera formal, podemos introducir el siguiente conjunto
+correspondiente a las soluciones del problema:
+\begin{equation}
+  \text{Solucion}(x)=\{x∈ ℝ | (∃k∈ℤ, x= \frac{(2k+1)π}{4})
+  \lor (∃k∈ℤ, x=\frac{(2k+1)π}{6}.) \}
+\end{equation}
+
+La formalización en Lean de esta definición es la que se detalla
+a continuación:
+\begin{leancode}
+  def Solucion : set ℝ :={ x : ℝ | ∃ k : ℤ,
+    x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6 }
+\end{leancode}
