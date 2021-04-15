@@ -4,8 +4,6 @@ import analysis.special_functions.trigonometric
 /-!
 # IMO 1962 Q4
 Solve the equation `cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1`.
-Since Lean does not have a concept of "simplest form", we just express what is
-in fact the simplest form of the set of solutions, and then prove it equals the set of solutions.
 -/
 
 open real
@@ -17,10 +15,6 @@ def problema (x : ℝ) : Prop := cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 =
 def Solucion : set ℝ :=
 { x : ℝ | ∃ k : ℤ, x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6 }
 
-/-
-The key to solving this problem simply is that we can rewrite the equation as
-a product of terms, shown in `alt_formula`, being equal to zero.
--/
 
 def funauxiliar (x : ℝ) : ℝ := cos x * (cos x ^ 2 - 1/2) * cos (3 * x)
 
@@ -76,10 +70,6 @@ begin
 end
 
 
-/-
-Now we can solve for `x` using basic-ish trigonometry.
--/
-
 lemma SolucionCosenoCuadrado {x : ℝ} : cos x ^ 2 = 1/2 ↔ 
 ∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
 begin
@@ -126,7 +116,6 @@ begin
   rw SolucionCosenoTriple,
   rw SolucionCosenoCuadrado,
   rw Solucion,
-
   exact exists_or_distrib.symm,
 end
 
