@@ -285,3 +285,6 @@ TSWLatexianTemp*
 # Borradores
 /borrador
 doc/_minted-IMO_en_Lean/*
+
+# Emacs
+*~
