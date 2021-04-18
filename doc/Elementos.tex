@@ -33,6 +33,7 @@ La formalización de la definición anterior en Lean es
 def limite : (ℕ → ℝ) → ℝ → Prop :=
 λ u c, ∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - c| ≤ ε
 \end{leancode}
+\index{limite}
 donde la notación para el valor absoluto se ha definido por
 \begin{leancode}
 notation `|`x`|` := abs x

@@ -25,6 +25,15 @@
 \newcommand{\teoria}[1]
   {\inputminted[mathescape]{lean}{../src/#1.lean}}
 
+\def\funauxiliar{\mbox{\rm funAuxiliar}}
+\def\Solucion{\mbox{\rm Solucion}}
+
+\newcommand{\indLema}[1]
+  {\index[lemas]{#1}}
+
+\newcommand{\tactica}[2]
+  {\href{https://leanprover-community.github.io/mathlib_docs/tactics.html\#{#1}}{#2}\index[tacticas]{#2}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% § Notas pendientes                                                 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,26 +1,22 @@
 \section{IMO 1962 Q4}
 
 En esta sección se va a detallar la solución al problema Q4
-correspondiente al año 1962. Realizaremos la demostración
-en lenguaje natural del problema y a su vez se presentará la
-correspondiente formalización en Lean.
+correspondiente al año 1962. Realizaremos la demostración en lenguaje
+natural del problema y a su vez se presentará la correspondiente
+formalización en Lean.
 
 La formalización que aquí se presenta ha sido inspirada en
 las que se proponen en \cite{KLHM} realizadas por Kevin Lacker y
 Healther Macbeth.
-
-
 
 \noindent
 \framebox{\parbox{\textwidth}{
   \textbf{Problema 2 (1962--Q4)}. Resolver la ecuación
   \[\cos²(x)+\cos²(2x)+\cos²(3x)=1\].}}
 
-\textbf{Solución:}
-
-Previo a la resolución como tal del problema, se van a
-introducir una serie de definiciones que nos servirán
-para llevar una notación más compacta:
+Previo a la resolución como tal del problema, se van a introducir una
+serie de definiciones que nos servirán para llevar una notación más
+compacta:
 
 \begin{definicion}\label{problema}
   De aquí en adelante usaremos la etiqueta \textbf{problema}
@@ -31,18 +27,21 @@ para llevar una notación más compacta:
   \end{equation}
 \end{definicion}
 
+\comentario{Indicar el contexto en el que se trabaja (teoría que se
+  importa, espacio de nombres, etc.}
+
 La formalización en Lean de esta definición es:
 \begin{leancode}
- def problema (x : ℝ) : Prop :=
- cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
+def problema (x : ℝ) : Prop :=
+cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
 \end{leancode}
+\index{problema}
 
 \begin{definicion}\label{funaux}
-  De aquí en adelante usaremos la etiqueta
-  \textbf{funauxiliar} para referirnos a la siguiente
-  expresión:
+  De aquí en adelante usaremos la etiqueta \textbf{funAuxiliar} para
+  referirnos a la siguiente expresión:
   \begin{equation*}
-    \cos(x)·(\cos²(x)-\frac{1}{2})·\cos(3x).
+    \cos(x)·\left(\cos²(x)-\frac{1}{2}\right)·\cos(3x).
   \end{equation*}
 \end{definicion}
 
@@ -51,50 +50,51 @@ La formalización en Lean en este caso sería:
 def funauxiliar (x : ℝ) : ℝ :=
 cos x * (cos x ^ 2 - 1/2) * cos (3 * x)
 \end{leancode}
+\index{funauxiliar}
 
 \subsection{Equivalencia de problemas}
-Una vez introducido estas dos definiciones, se va a proceder
-a demostrar que resolver problema es
-equivalente a resolver la expresión obtenida al igualar a
-cero la funauxiliar.
 
-Esta demostración se detallará a continuación, pero previo a
-ella se necesita de la demostración de un lema auxiliar:
+Una vez introducido estas dos definiciones, se va a proceder a demostrar
+que resolver problema es equivalente a resolver la expresión obtenida al
+igualar a cero la funAuxiliar.
+
+Esta demostración se detallará a continuación, pero previo a ella se
+necesita de la demostración de un lema auxiliar:
 
 \begin{lema}[Igualdad]\label{igualdadlema}
-  Para cualquier \(x\) perteneciente al conjunto de los
-  números reales, se verifica la siguiente igualdad:
+  Para cualquier \(x\) perteneciente al conjunto de los números reales,
+  se verifica la siguiente igualdad:
   \begin{equation}\label{lemaigualdad}
-    \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=\text{funauxiliar}(x).
+    \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=\funauxiliar(x).
   \end{equation}
 \end{lema}
+
 \begin{demostracion}
   En primer lugar, según la definición vista en \ref{funaux}, se
   tendría que la expresión (\ref{lemaigualdad}) se convierte en:
   \begin{equation}\label{igualdad}
     \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=
-    \cos(x)·(\cos²(x)-\frac{1}{2})·\cos(3x).
+    \cos(x)·\left(\cos²(x)-\frac{1}{2}\right)·\cos(3x).
   \end{equation}
-  
+
   Ahora bien, para llevar a cabo la demostración comenzaremos
-  introduciendo las conocidas definiciones del coseno del
-  ángulo doble y del coseno del ángulo triple, que son:
+  introduciendo las conocidas definiciones del coseno del ángulo doble y
+  del coseno del ángulo triple, que son:
   \begin{align}
     & \cos(2x)=2\cos²(x)-1\label{cos2}\\
     & \cos(3x)=4\cos³(x)-3\cos(x)\label{cos3},
   \end{align}
-  donde estas dos propiedades en Lean se formalizan con los
-  dos siguientes lemas:
+  donde estas dos propiedades en Lean se formalizan con los dos
+  siguientes lemas:
   \begin{itemize}
 \item \mint{lean}|cos_two_mul : cos (2 * x) = 2 * cos x ^ 2 - 1|
-  \index{\url{cos_two_mul}}
+  \indLema{cos\_two\_mul}
 \item \mint{lean}|cos_three_mul : cos (3 * x) = 4 * cos x ^ 3 - 3 * cos x|
-  \index{\url{cos_three_mul}}
+  \indLema{cos\_three\_mul}
 \end{itemize}
 
-A continuación, se van a desarrollar los dos términos de la
-igualdad (\ref{igualdad}). Comencemos por el primer término
-de los dos:
+A continuación, se van a desarrollar los dos términos de la igualdad
+(\ref{igualdad}). Comencemos por el primer término de los dos:
 \begin{align}\label{term1}
   \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}&=\frac{\cos²(x)+(2\cos²(x)-1)²}{4}\\
   &+\frac{(4\cos³(x)-3\cos(x))²-1}{4},
@@ -106,33 +106,35 @@ Desarrollando los cuadrados que aparecen en (\ref{term1}) y
 simplificando los términos, se acaba obteniendo que:
 \begin{equation}\label{term11}
   \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=
-  \cos(x)(\frac{3}{2}\cos(x)+4\cos⁵(x)-5\cos³(x))
+  \cos(x)\left(\frac{3}{2}\cos(x)+4\cos⁵(x)-5\cos³(x)\right)
 \end{equation}
 
 Por otro lado, desarrollando de manera totalmente análoga el
 segundo término de la igualdad (\ref{igualdad}), se tiene que:
 \begin{align}
-  \cos(x)·(\cos²(x)-\frac{1}{2})·\cos(3x)&\stackrel{(*)}{=}\cos(x)·
-                                           (\cos²(x)-\frac{1}{2})·
+  \cos(x)·\left(\cos²(x)-\frac{1}{2}\right)·\cos(3x)
+                                         &\stackrel{(*)}{=}\cos(x)·
+                                           \left(\cos²(x)-\frac{1}{2}\right)·
                                            (4\cos³(x)-3\cos(x)
                                            )\label{term2}\\
                                          &=\cos(x)·
-                                           (4\cos⁵(x)-5\cos³(x)
-                                           +\frac{3}{2}\cos(x))
+                                           \left(4\cos⁵(x)-5\cos³(x)
+                                           +\frac{3}{2}\cos(x)\right)
                                            \label{term21},
 \end{align}
 donde en (\ref{term2}) se ha hecho uso de las definiciones (\ref{cos2})
 y (\ref{cos3}).
 
-De manera que observando las expresiones (\ref{term11}) y (\ref{term21}),
-se puede concluir que la igualdad planteada en (\ref{igualdad}) es cierta.
-De esta forma, ya se tendría el lema demostrado.
+De manera que observando las expresiones (\ref{term11}) y
+(\ref{term21}), se puede concluir que la igualdad planteada en
+(\ref{igualdad}) es cierta.  De esta forma, ya se tendría el lema
+demostrado.
 \end{demostracion}
 
 Veamos la formalización en Lean de este lema:
 \begin{leancode}
 lemma Igualdad {x : ℝ} :
-(cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 - 1) / 4 = funauxiliar x :=
+  (cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 - 1) / 4 = funauxiliar x :=
 begin
   rw funauxiliar,
   rw real.cos_two_mul,
@@ -140,20 +142,27 @@ begin
   ring,
 end
 \end{leancode}
+\index{Igualdad}
+
+\comentario{Añadir lemas y tácticas usados.}
 
 Una vez se ha introducido este lema, se puede proceder a la demostración
 del lema que ya se adelantó y que consiste en probar que resolver la
-expresión \textbf{problema}, (\ref{expresionprob}), es equivalente a resolver
-la expresión obtenidad de igualar a cero \textbf{funauxiliar},
+expresión \textbf{problema}, (\ref{expresionprob}), es equivalente a
+resolver la expresión obtenida de igualar a cero \textbf{funauxiliar},
 (\ref{funaux}). Veámoslo:
 
 \begin{lema}[Equivalencia]\label{lemaequivalenciaprob}
-  Resolver la expresión (\ref{expresionprob}) es equivalente
-  a resolver la expresión
+  Resolver la expresión (\ref{expresionprob}) es equivalente a resolver
+  la expresión
   \begin{equation}\label{probaux}
-    \text{funauxiliar}(x)=0.
+    \funauxiliar(x) = 0.
   \end{equation}
 \end{lema}
+
+\comentario{He simplificado la demostración en Lean. Habría que
+  reflejarlo en la siguiente demostración.}
+
 \begin{demostracion}
   Esta demostración se trata de una doble implicación, por ello,
   separaremos las implicaciones:
@@ -162,165 +171,144 @@ la expresión obtenidad de igualar a cero \textbf{funauxiliar},
   \framebox{\longrightarrow}
   En primer lugar, comenzamos considerando el problema planteado
   por la siguiente expresión:
-  \begin{equation}\label{h1}\tag{h1}
-    \cos²(x)+\cos²(2x)+\cos²(3x)=1.
+  \begin{equation}\label{h1b}\tag{h1}
+    \cos²(x) + \cos²(2x) + \cos²(3x) = 1.
   \end{equation}
 
   Queremos demostrar que este problema planteado es equivalente a
   considerar el problema planteado en (\ref{probaux}).
 
-  Aplicando el Lema \ref{igualdadlema} sobre (\ref{probaux}), se
-  tiene que el objetivo a demostrar pasa a ser que el problema
-  (\ref{h1}) es equivalente al problema:
+  Aplicando el Lema \ref{igualdadlema} sobre (\ref{probaux}), se tiene
+  que el objetivo a demostrar pasa a ser que el problema (\ref{h1b}) es
+  equivalente al problema:
   \begin{equation}\label{h11}
-    \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=0.
+    \frac{\cos²(x) + \cos²(2x) + \cos²(3x) - 1}{4} = 0.
   \end{equation}
 
-  Observando esta expresión, donde tenemos una fracción igualada
-  a cero, se concluye que o bien el numerador o bien el denominador
-  ha de ser nulo. Entonces, se tiene que demostrar (\ref{h11}) es
-  equivalente a demostrar que
+  Observando esta expresión, donde tenemos una fracción igualada a cero,
+  se concluye que el numerador ha de ser nulo. Entonces, se tiene que
+  demostrar (\ref{h11}) es equivalente a demostrar que
   \begin{equation}
-    (\cos²(x)+\cos²(2x)+\cos²(3x)-1=0) \lor 4=0.
+    \cos²(x) + \cos²(2x) + \cos²(3x) - 1 = 0.
   \end{equation}
 
-  Como se trata de una disyunción, para concluir la prueba bastaría
-  con demostrar alguna de las dos igualdades y por ello, elegimos
-  la primera parte de la disyunción, esto es,
-  \begin{equation}\label{h12}
-    \cos²(x)+\cos²(2x)+\cos²(3x)-1=0.
-  \end{equation}
-
-  De esta forma ya se ha teminado esta implicación pues (\ref{h12})
-  es exactamente la hipótesis (\ref{h1}), basta con pasar el término
-  unidad al lado derecho de la igualdad.
-
+  De esta forma ya se ha teminado esta implicación pues es exactamente
+  la hipótesis (\ref{h1b}), basta con pasar el término unidad al lado
+  derecho de la igualdad.
 
   \noindent
   \framebox{\longleftarrow} A continuación, supongamos que se tiene
   el problema
-  \begin{equation}\label{h2}\tag{h2}
-    \text{funauxiliar}(x)=0.
+  \begin{equation}\label{h2b}\tag{h2}
+    \funauxiliar(x) = 0.
   \end{equation}
-  Queremos demostrar que plantear este problema es equivalente al
-  problema planteado en (\ref{expresionprob}).
+  Queremos demostrar que resolver este problema es equivalente a
+  resolver el problema planteado en (\ref{expresionprob}).
 
   En primer lugar, aplicamos el Lema \ref{igualdadlema} sobre la
-  hipótesis (\ref{h2}). De manera que se obtiene que la hipótesis
+  hipótesis (\ref{h2b}). De manera que se obtiene que la hipótesis
   se transforma en la siguiente:
   \begin{equation}
-    \frac{\cos²(x)+\cos²(2x)+\cos²(3x)-1}{4}=0.
-  \end{equation}
-  
-  Cuando se tiene una división igualda a cero, existen dos
-  posibilidades: la primera de ellas es que el numerador sea
-  cero, mientras que la segunda es o que lo sea el denominador.
-  De esta forma, se verifica que:
-  \begin{equation}
-    (\cos²(x)+\cos²(2x)+\cos²(3x)-1=0) \lor 4=0
+    \frac{\cos²(x) + \cos²(2x) + \cos²(3x) - 1}{4} = 0.
   \end{equation}
 
-  Ahora bien, como sabemos que en el caso que nos concierne el
-  denominador no puede ser nulo puesto que cuatro es distinto
-  de cero; se tiene que el problema (\ref{h2}) es equivalente a:
+  Como se tiene una división igualada a cero, el numerador ha de ser
+  cero. De esta forma, se verifica que:
   \begin{equation}
-    \cos²(x)+\cos²(2x)+\cos²(3x)-1=0.
+    \cos²(x) + \cos²(2x) + \cos²(3x) - 1 =0
   \end{equation}
 
   Para concluir esta implicación basta con pasar el término uno
   hacia el otro lado de la igualdad. De esta forma se obtiene que
   \begin{equation}
-    \cos²(x)+\cos²(2x)+\cos²(3x)=1,
+    \cos²(x) + \cos²(2x) + \cos²(3x) = 1,
   \end{equation}
   que era el resultado que deseábamos.
 \end{demostracion}
 
 La formalización en Lean de este Lema es la siguiente:
 \begin{leancode}
-lemma Equivalencia {x : ℝ} : problema x ↔ funauxiliar x = 0 :=
+lemma Equivalencia
+  {x : ℝ}
+  : problema x ↔ funauxiliar x = 0 :=
 begin
   split,
-  {intro h1,
-  rw problema at h1,
-  rw ← Igualdad,
-  rw div_eq_zero_iff,
-  left,
-  rw sub_eq_zero,
-  exact h1,},
-  {intro h2,
-  rw problema,
-  rw ← Igualdad at h2,
-  rw div_eq_zero_iff at h2,
-  norm_num at h2,
-  rw sub_eq_zero at h2,
-  exact h2,},
+  { intro h1,
+    rw problema at h1,
+    rw ← Igualdad,
+    rw div_eq_zero_iff,
+    norm_num,
+    rw sub_eq_zero,
+    exact h1, },
+  { intro h2,
+    rw problema,
+    rw ← Igualdad at h2,
+    rw div_eq_zero_iff at h2,
+    norm_num at h2,
+    rw sub_eq_zero at h2,
+    exact h2, },
 end
 \end{leancode}
+\index{Equivalencia}
 
 En la prueba del lema se han usado los siguientes lemas:
 \begin{itemize}
 \item \mint{lean}|div_eq_zero_iff : a / b = 0 ↔ a = 0 ∨ b = 0|
-  \index{\url{div_eq_zero_iff}}
+  \indLema{div\_eq\_zero\_iff}
 \item \mint{lean}|sub_eq_zero : a - b = 0 ↔ a = b |
-  \index{\url{sub_eq_zero}}
+  \indLema{sub\_eq\_zero}
 \end{itemize}
+y las tácticas
+\tactica{exact}{exact},
+\tactica{norm_num}{norm\_num} y
+\tactica{rw / rewrite}{rw}.
 
-Además se ha usado también la siguiente táctica:
-\begin{leancode}
-meta def norm_num (hs : parse simp_arg_list) (l : parse location) :
-tactic unit :=
-do f ← get_step, tactic.norm_num f hs l
-\end{leancode}
-
-En el caso de la prueba de nuestro lema, esta táctica ha sido
-usada para demostrar que cuatro es distinto de cero. Esta táctica
-prueba de manera directa este tipo de igualdades y desigualdades.
+En el caso de la prueba de nuestro lema, esta táctica ha sido usada para
+demostrar que cuatro es distinto de cero. Esta táctica prueba de manera
+directa este tipo de igualdades y desigualdades.
 
 \subsection{Resolución del problema equivalente}\label{secequiv}
+
 Una vez ya se ha demostrado que el problema (\ref{probaux}) es
-equivalente al problema que inicialmente queríamos demostrar, se
-va a proceder a encontrar los ceros de (\ref{probaux}). Para
-ello, se introducirán tres lemas auxiliares. El primero de ellos
-consistirá en ver para en qué dos casos se verifica el problema
-(\ref{probaux}); mientras que en los dos últimos lemas se detallará
-la forma de la solución para los dos casos que se obtendrán en el
-primer lema.
+equivalente al problema que inicialmente queríamos demostrar, se va a
+proceder a encontrar los ceros de (\ref{probaux}). Para ello, se
+introducirán tres lemas auxiliares. El primero de ellos consistirá en
+ver para en qué dos casos se verifica el problema (\ref{probaux});
+mientras que en los dos últimos lemas se detallará la forma de la
+solución para los dos casos que se obtendrán en el primer lema.
 
 \begin{lema}[CasosSolucion]\label{lemaCasosSolucion}
   El problema (\ref{probaux}) se verifica
   si y solamente si o bien el coseno al cuadrado de \(x\) es igual
   a un medio, o bien, el coseno del triple de \(x\) es nulo.
   Simbólicamente:
-  \begin{equation}\label{problema}
-    \text{funauxiliar}(x)=0 ⟺ \cos²(x)=\frac{1}{2} \lor
-    \cos(3x)=0.
+  \begin{equation}\label{problema1}
+    \funauxiliar(x) = 0 ⟺ \cos²(x) = \frac{1}{2} ∨ \cos(3x) = 0.
   \end{equation}
   \end{lema}
 \begin{demostracion}
   En primer lugar, previo a la demostración en sí del problema
-  (\ref{problema}), se va a proceder a la reescritura del mismo.
+  (\ref{problema1}), se va a proceder a la reescritura del mismo.
   Para ello, lo que hacemos es escribir la definición de
-  funauxiliar vista en la definición \ref{funaux}, es decir,
+  funAuxiliar vista en la definición \ref{funaux}, es decir,
   \begin{equation}\label{fun1}
-    \text{funauxiliar}(x)=\cos(x)·(\cos²(x)-\frac{1}{2})·\cos(3x).
+    \funauxiliar(x) = \cos(x)·\left(\cos²(x)-\frac{1}{2}\right)·\cos(3x).
   \end{equation}
 
   Aplicando ahora la propiedad asociativa de la multiplicaión,
   se tiene que (\ref{fun1}) es equivalente a
   \begin{equation}\label{fun2}
-    \cos(x)·((\cos²(x)-\frac{1}{2})·\cos(3x)).
+    \cos(x)·\left(\left(\cos²(x)-\frac{1}{2}\right)·\cos(3x)\right).
   \end{equation}
 
-  De esta forma como en el problema inicial se tiene que funaxiliar
-  está igualda a cero; se sabe que cuando un producto está igualado
+  De esta forma como en el problema inicial se tiene que funAuxiliar
+  está igualada a cero; se sabe que cuando un producto está igualado
   a cero uno de los dos términos ha de ser nulo. En el caso que a
   nosotros nos incumbe, esto se reescribe de la siguiente manera:
   \begin{align}
-    \cos(x)·((\cos²(x)-\frac{1}{2})·\cos(3x))=0 &⟺ \cos(x)=0
-                                                  \lor (\cos²(x)-
-                                                  \frac{1}{2})·
-                                                  \cos(3x)=0 \\
-    & ⟺ \cos(x)=0 \lor \cos²(x)=\frac{1}{2} \lor \cos(3x)=0,
+    \cos(x)·\left(\left(\cos²(x)-\frac{1}{2}\right)·\cos(3x)\right)=0
+    &⟺ \cos(x) = 0 ∨ \left(\cos²(x)-\frac{1}{2}\right)·\cos(3x)=0 \\
+    &⟺ \cos(x) = 0 ∨ \cos²(x)=\frac{1}{2} ∨ \cos(3x)=0,
   \end{align}
   donde hemos aplicado dos veces el resultado de que el producto
   de dos términos esté igualado a cero.
@@ -342,13 +330,13 @@ primer lema.
     \cos(x)=0 \lor \cos²(x)=\frac{1}{2} \lor \cos(3x)=0.
   \end{equation}
 
-  Entonces tenemos que demostrar que bajo la suposición (\ref{h1}),
+  Entonces tenemos que demostrar que bajo la suposición (\ref{h1b}),
   se verifica que
   \begin{equation}\label{CasosConc1}
      \cos²(x)=\frac{1}{2} \lor \cos(3x)=0.
   \end{equation}
 
-  La hipótesis (\ref{h1}) significa que alguna de las disyunciones
+  La hipótesis (\ref{h1b}) significa que alguna de las disyunciones
   ha de ser cierta. Por ello, considerar dicha hipótesis es
   equivalente a considerar dos posibles casos, que serían los
   siguientes:
@@ -366,21 +354,21 @@ primer lema.
 
   \begin{itemize}
   \item \textbf{Subproblema 1}
-    
+
     Con el objetivo de demostrar (\ref{CasosConc1}) suponiendo
     cierta la hipótesis (\ref{Casosh11}), basta con demostrar una
     de las dos disyunciones. En este caso se demostrará la segunda
     de ellas, es decir, se demostrará que el coseno del triple de
     \(x\) es nulo.
 
-    Para demostrar esto, basta con hacer uso de la definción del
+    Para demostrar esto, basta con hacer uso de la definición del
     ángulo triple. De esta forma se tiene que:
     \begin{equation}
       \cos(3x)=4\cos³(x)-3\cos(x)\stackrel{(*)}{=}0,
     \end{equation}
     donde en \((*)\) se ha hecho uso de la hipótesis
     (\ref{Casosh11}). Y ya se tendría el resultado.
-    
+
   \item \textbf{Subproblema 2}
 
     En este caso suponemos cierta la hipótesis (\ref{Casosh12})
@@ -408,8 +396,9 @@ primer lema.
 
 A continuación, se plantea la formalización en Lean de este lema:
 \begin{leancode}
-lemma CasosSolucion {x : ℝ} :
-funauxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0 :=
+lemma CasosSolucion
+  {x : ℝ}
+  : funauxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0 :=
 begin
   rw funauxiliar,
   rw mul_assoc,
@@ -417,71 +406,82 @@ begin
   rw mul_eq_zero,
   rw sub_eq_zero,
   split,
-  {intro h1,
-  cases h1 with h11 h12,
-  right,
-  rw cos_three_mul,
-  rw h11,
-  ring,
-  exact h12,},
-  {intro h2,
-  right,
-  exact h2,},
+  { intro h1,
+    cases h1 with h11 h12,
+    right,
+    rw cos_three_mul,
+    rw h11,
+    ring,
+    exact h12,},
+  { intro h2,
+    right,
+    exact h2,},
 end
 \end{leancode}
+\index{CasosSolucion}
 
 En la prueba del lema se han usado los siguientes lemas:
 \begin{itemize}
 \item \mint{lean}|cos_three_mul : cos (3 * x) = 4 * cos x ^ 3 - 3 * cos x|
-  \index{\url{cos_three_mul}}
-\item \mint{lean}|mul_assoc : ∀ a b c : G, a * b * c = a * (b * c) |
-  \index{\url{mul_assoc}}
+  \indLema{cos\_three\_mul}
+\item \mint{lean}|mul_assoc : (a * b) * c = a * (b * c) |
+  \indLema{mul\_assoc}
 \item \mint{lean}|mul_eq_zero : a * b = 0 ↔ a = 0 ∨ b = 0|
-  \index{\url{mul_eq_zero}}
+  \indLema{mul\_eq\_zero}
 \item \mint{lean}|sub_eq_zero : a - b = 0 ↔ a = b|
-  \index{\url{sub_eq_zero}}
+  \indLema{sub\_eq\_zero}
 \end{itemize}
+y las tácticas
+\tactica{exact}{exact},
+\tactica{left / right}{left},
+\tactica{left / right}{right},
+\tactica{ring}{ring},
+\tactica{rw / rewrite}{rw} y
+\tactica{split}{split}.
 
 \begin{lema}[SolucionCosenoCuadrado]\label{lemaCosenoCuadrado}
-  La expresión coseno al
-  cuadrado de \(x\) es igual a un medio si y solamente si
-  existe un \(k\) perteneciente al conjunto de los números
-  enteros tal que \(x\) es igual al producto de \(2k\) más
-  uno por \(π\) cuarto. Simbólicamente:
+  La expresión coseno al cuadrado de \(x\) es igual a un medio si y
+  solamente si existe un \(k\) perteneciente al conjunto de los números
+  enteros tal que \(x\) es igual al producto de \(2k\) más uno por \(π\)
+  cuarto. Simbólicamente:
   \begin{equation}\label{problema2}
-    \cos²(x)=\frac{1}{2} ⟺∃ k∈ℤ, x=(2k+1)⋅\frac{π}{4}.
+    \cos²(x) = \frac{1}{2} ⟺ ∃ k ∈ ℤ, x = (2k+1)⋅\frac{π}{4}.
   \end{equation}
 \end{lema}
+
+\comentario{He simplificado la demostración en Lean. Habría que
+  reflejarlo en la siguiente demostración.}
+
 \begin{demostracion}
   Se puede observar que se trata de una demostración de doble
   implicación. No obstante, previo a la demostración de las
   correspondientes implicaciones, reescribiremos el problema
-  (\ref{problema2}). Para ello, comenzaremos usando la definición
-  del cuadrado del coseno al cuadrado de un ángulo, es decir,
+  (\ref{problema2}). Para ello, comenzaremos usando la siguiente
+  relación
   \begin{equation}
-    \cos²(x)=\frac{1}{2}+\frac{\cos(2x)}{2}.
+    \cos²(x) = \frac{1}{2} + \frac{\cos(2x)}{2}.
   \end{equation}
 
-  De esta forma, el problema (\ref{problema2}), se puede reescribir
-  como sigue:
+  De esta forma, el problema (\ref{problema2}), se puede reescribir como
+  sigue:
   \begin{equation}
-    \frac{1}{2}+\frac{\cos(2x)}{2}=\frac{1}{2} ⟺∃ k∈ℤ, x=(2k+1)⋅
-    \frac{π}{4}.
+    \frac{1}{2} + \frac{\cos(2x)}{2} = \frac{1}{2} ⟺
+    ∃ k ∈ ℤ, x = (2k + 1) ⋅ \frac{π}{4}.
   \end{equation}
 
   Se puede observar que en la primera parte de la equivalencia, la
-  igualdad tiene el mismo término a derecha que a izquierda, de
-  manera que se puede eliminar. Obtenemos que
+  igualdad tiene el mismo término a derecha que a izquierda, de manera
+  que se puede eliminar. Obtenemos que
   \begin{equation}\label{problema21}
-    \frac{\cos(2x)}{2}=0 ⟺ ∃ k∈ℤ, x=(2k+1)⋅\frac{π}{4}.
+    \frac{\cos(2x)}{2} = 0 ⟺ ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
   \end{equation}
 
-  Por último, en (\ref{problema21}), se tiene una fracción igualada
-  a 0, esto significa que o el numerador es cero o bien lo es el
-  denominador. Por tanto, el problema que inicialmente planteamos,
-  (\ref{problema2}), quedaría reescrito de la siguiente manera:
+  Por último, en (\ref{problema21}), se tiene una fracción igualada a 0,
+  esto significa que el numerador es cero. Por tanto, el problema que
+  inicialmente planteamos, (\ref{problema2}), quedaría reescrito de la
+  siguiente manera:
   \begin{equation}\label{problema22}
-    \cos(2x)=0 \lor 2=0 ⟺∃ k, x=(2k+1)⋅\frac{π}{4}.
+    \cos(2x) = 0  ⟺ ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
   \end{equation}
 
   Procedamos ahora a la demostración por doble implicación del
@@ -490,12 +490,12 @@ En la prueba del lema se han usado los siguientes lemas:
   \noindent
   \framebox{\longrightarrow} Supongamos que se verifica que
   \begin{equation}\label{Dobleh2}\tag{h1}
-    \cos(2x)=0 \lor 2=0.
+    \cos(2x) = 0
   \end{equation}
 
   Entonces, se quiere demostrar que
   \begin{equation}\label{ConcDoble}
-    ∃ k,x=(2k+1)⋅\frac{π}{4}.
+    ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
   \end{equation}
   Al igual que en la demostración del lema anterior, al tener una
   hipótesis formada por una disyunción, se tiene que dicha hipótesis
@@ -517,7 +517,7 @@ En la prueba del lema se han usado los siguientes lemas:
     (\ref{ConcDoble}). Para ello, comenzaremos usando la
     caracterización de la solución del coseno de un ángulo
     igualado a cero. Esto es:
-    
+
     \begin{proposicion}\label{alpha}
       Sea \(θ\) un número perteneciente al conjunto de los
       números naturales. Entonces se tiene que se verifica la
@@ -534,9 +534,9 @@ En la prueba del lema se han usado los siguientes lemas:
     a continuación:
     \begin{leancode}
       theorem cos_eq_zero_iff {θ : ℝ} : cos θ = 0 ↔
-      ∃ k : ℤ, θ = (2 * k + 1) * π / 2 
+      ∃ k : ℤ, θ = (2 * k + 1) * π / 2
     \end{leancode}
-    
+
     Entonces, usando la propiedad \ref{alpha} sobre nuestra
     hipótesis (\ref{Dobleh11}), se tiene que
     \begin{equation}\label{Doble2h11}
@@ -614,72 +614,73 @@ En la prueba del lema se han usado los siguientes lemas:
     \end{equation}
 
     Finalmante, se puede concluir la demostración haciendo uso del
-    número entero \(k_2\) y de la hipótesis (\ref{hk2}). 
+    número entero \(k_2\) y de la hipótesis (\ref{hk2}).
     \end{demostracion}
 
 La formalización en Lean del lema anteriormente desarrollado es
 la que se presenta a continuación:
 \begin{leancode}
-lemma SolucionCosenoCuadrado {x : ℝ} : cos x ^ 2 = 1/2 ↔
-∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
+lemma CasosSolucion
+  {x : ℝ}
+  : funauxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0 :=
 begin
-  rw cos_square,
-  rw add_right_eq_self,
-  rw div_eq_zero_iff,
+  rw funauxiliar,
+  rw mul_assoc,
+  rw mul_eq_zero,
+  rw mul_eq_zero,
+  rw sub_eq_zero,
   split,
-  {intro h1,
-  cases h1 with h11 h12,
-  rw cos_eq_zero_iff at h11,
-  cases h11 with k1 hk1,
-  use k1,
-  linarith,
-  norm_num at h12,},
-  {intro h2, 
-  cases h2 with k2 hk2,
-  left,
-  rw cos_eq_zero_iff,
-  use k2,
-  linarith,},
+  { intro h1,
+    cases h1 with h11 h12,
+    right,
+    rw cos_three_mul,
+    rw h11,
+    ring,
+    exact h12,},
+  { intro h2,
+    right,
+    exact h2,},
 end
 \end{leancode}
+\index{CasosSolucion}
 
-Seguidamente, veámos los lemas auxiliares que se han utilizado
+\comentario{Comentar las elevaciones de enteros a reales.}
+
+Seguidamente, veamos los lemas auxiliares que se han utilizado
 para realizar la formalización de este lema son los siguiente:
 \begin{itemize}
 \item \mint{lean}|cos_square : cos x ^ 2 = 1 / 2 + cos (2 * x) / 2 |
-  \index{\url{cos_square}}
+  \indLema{cos\_square}
 \item \mint{lean}|add_right_eq_self : a + b = a ↔ a = 0|
-  \index{\url{add_right_eq_self}}
+  \indLema{add\_right\_eq\_self}
 \item \mint{lean}|div_eq_zero_iff : a / b = 0 ↔ a = 0 ∨ b = 0|
-  \index{\url{div_eq_zero_iff}}
+  \indLema{div\_eq\_zero\_iff}
 \end{itemize}
-
-Además, también se ha usado la formalización de la proposición
-\ref{alpha} que ya se detalló anteriormente. También se ha usado
-la siguiente táctica:
-\begin{leancode}
-meta def norm_num (hs : parse simp_arg_list) (l : parse location) :
-tactic unit :=
-do f ← get_step, tactic.norm_num f hs l
-\end{leancode}
+Se han usado las tácticas
+\tactica{cases}{cases},
+\tactica{exact}{exact},
+\tactica{intro / intros}{intro},
+\tactica{left / right}{right},
+\tactica{ring}{ring},
+\tactica{rw / rewrite}{rw} y
+\tactica{split}{split}.
 
 \begin{lema}[SolucionCosenoTriple]\label{lemaCosenoTriple}
-  La expresión coseno del
-  triple de \(x\) es igual a cero si y solamente si
-  existe un \(k\) perteneciente al conjunto de los números
-  enteros tal que \(x\) es igual al producto de \(2k\) más
-  uno por \(π\) sexto. Simbólicamente:
+  La expresión coseno del triple de \(x\) es igual a cero si y solamente
+  si existe un \(k\) perteneciente al conjunto de los números enteros
+  tal que \(x\) es igual al producto de \(2k\) más uno por \(π\)
+  sexto. Simbólicamente:
   \begin{equation}\label{problemaTriple}
-    \cos(3x)=0 ⟺ ∃k ∈ ℤ,x=\frac{(2k+1)π}{6}.
+    \cos(3x) = 0 ⟺ ∃ k ∈ ℤ, x = \frac{(2k+1)π}{6}.
   \end{equation}
 \end{lema}
+
 \begin{demostracion}
   Antes de comenzar con la demostración en sí del lema, vamos a
   reescribir el problema (\ref{problemaTriple}) haciendo uso de la
-  Proposición \ref{alpha}. Entonces, nos quedaría el siguiente
-  problema:
+  Proposición \ref{alpha}. Entonces, nos quedaría el siguiente problema:
   \begin{equation}
-    ∃k∈ ℤ,3x=\frac{(2k+1)π}{2}⟺ ∃k ∈ ℤ,x=\frac{(2k+1)π}{6}.
+    ∃ k ∈ ℤ, 3x = \frac{(2k+1)π}{2} ⟺ ∃ k ∈ ℤ, x = \frac{(2k+1)π}{6}.
   \end{equation}
 
   Ahora sí, se procederá a la demostración de las correspondientes
@@ -689,187 +690,175 @@ do f ← get_step, tactic.norm_num f hs l
   \framebox{\longrightarrow}
   Supongamos que se verifica la siguiente hipótesis:
   \begin{equation}\label{Tripleh1}\tag{h1}
-    ∃k∈ ℤ,3x=\frac{(2k+1)π}{2}.
+    ∃ k ∈ ℤ, 3x = \frac{(2k+1)π}{2}.
   \end{equation}
 
-  Se quiere demostrar, que entonces se verifica también la
-  siguiente afirmación:
+  Se quiere demostrar, que entonces se verifica también la siguiente
+  afirmación:
   \begin{equation}\label{ConTriple}
-     ∃k ∈ ℤ,x=\frac{(2k+1)π}{6}.
+     ∃k ∈ ℤ, x = \frac{(2k+1)π}{6}.
    \end{equation}
 
-   Al considerar la hipótesis (\ref{Tripleh1}) sabemos que existe
-   al menos un número entero verificando esa expresión. Sin
-   pérdida de generalidad podemos considerar que el número entero
-   que verifica (\ref{Tripleh1}) es \(k_1\). De manera que la
-   hipótesis pasa a ser:
+   Al considerar la hipótesis (\ref{Tripleh1}) sabemos que existe al
+   menos un número entero verificando esa expresión. Sin pérdida de
+   generalidad podemos considerar que el número entero que verifica
+   (\ref{Tripleh1}) es \(k_1\). De manera que la hipótesis pasa a ser:
    \begin{equation}\label{Triplehk1}\tag{hk1}
-    3x=\frac{(2k_1+1)π}{2}.
+    3x = \frac{(2k_1+1)π}{2}.
   \end{equation}
 
-  Con todo esto, la demostración de (\ref{ConTriple}) se tiene de
-  manera directa mediante el uso del número
-  entero \(k_1\) y la hipótesis (\ref{Triplehk1}).
+  Con todo esto, la demostración de (\ref{ConTriple}) se tiene de manera
+  directa mediante el uso del número entero \(k_1\) y la hipótesis
+  (\ref{Triplehk1}).
 
    \noindent
    \framebox{\longleftarrow}
    Supongamos que se verifica ahora la siguiente hipótesis:
    \begin{equation}\label{Tripleh2}\tag{h2}
-     ∃k ∈ ℤ,x=\frac{(2k+1)π}{6}.
+     ∃ k ∈ ℤ, x = \frac{(2k+1)π}{6}.
   \end{equation}
 
-  Se quiere demostrar que entonces, se verifica la siguiente
-  afirmación:
+  Se quiere demostrar que entonces, se verifica la siguiente afirmación:
   \begin{equation}\label{ConTriple2}
-    ∃k∈ ℤ,3x=\frac{(2k+1)π}{2}.
+    ∃ k ∈ ℤ, 3x = \frac{(2k+1)π}{2}.
   \end{equation}
 
-  De manera totalmente análoga a como se ha procedido en la
-  implicación anterior; sin pérdida de generalidad, en la
-  hipótesis (\ref{Tripleh2}), como sabemos que existe dicho número
-  entero, se puede denotar como \(k_2\) y la hipótesis pasa a ser:
+  De manera totalmente análoga a como se ha procedido en la implicación
+  anterior; sin pérdida de generalidad, en la hipótesis
+  (\ref{Tripleh2}), como sabemos que existe dicho número entero, se
+  puede denotar como \(k_2\) y la hipótesis pasa a ser:
   \begin{equation}\label{Triplehk2}\tag{hk2}
-     x=\frac{(2k_2+1)π}{6}.
+     x = \frac{(2k_2+1)π}{6}.
    \end{equation}
 
-   Entonces, ya se puede concluir la demostración, pues basta con
-   usar el mismo número entero, \(k_2\), en (\ref{ConTriple2}) y
-   usar la hipótesis (\ref{Triplehk2}).
+   Entonces, ya se puede concluir la demostración, pues basta con usar
+   el mismo número entero, \(k_2\), en (\ref{ConTriple2}) y usar la
+   hipótesis (\ref{Triplehk2}).
 \end{demostracion}
 
-A continuación, se presenta la correspondiente formalización
-en Lean de la demostración del lema que acabamos de detallar:
+A continuación, se presenta la correspondiente formalización en Lean de
+la demostración del lema que acabamos de detallar:
 \begin{leancode}
-lemma SolucionCosenoTriple {x : ℝ} : cos (3 * x) = 0 ↔ 
-∃ k : ℤ, x = (2 * k + 1) * π / 6 :=
+lemma SolucionCosenoTriple
+  {x : ℝ}
+  : cos (3 * x) = 0 ↔ ∃ k : ℤ, x = (2 * k + 1) * π / 6 :=
 begin
   rw cos_eq_zero_iff,
   split,
-  {intro h1,
-  cases h1 with k1 hk1,
-  use k1,
-  linarith,},
-  {intro h2,
-  cases h2 with k2 hk2,
-  use k2,
-  linarith,},
+  { intro h1,
+    cases h1 with k1 hk1,
+    use k1,
+    linarith,},
+  { intro h2,
+    cases h2 with k2 hk2,
+    use k2,
+    linarith,},
 end
 \end{leancode}
+\index{SolucionCosenoTriple}
 
-En la formalización de este lema en Lean sólo ha sido necesario
-el uso de un teorema y es el siguiente:
+En la formalización de este lema en Lean sólo ha sido necesario el uso
+de un teorema y es el siguiente:
 \begin{itemize}
-\item \mint{lean}|cos_eq_zero_iff :  cos θ = 0 ↔ ∃ k : ℤ, θ = (2 * k + 1) * π / 2|
-  \index{\url{cos_eq_zero}}
-\end{itemize} 
+\item \mint{lean}|cos_eq_zero_iff : cos θ = 0 ↔ ∃ k : ℤ, θ = (2 * k + 1) * π / 2|
+  \indLema{cos\_eq\_zero}
+\end{itemize}
+Además,se han usado las tácticas
+\tactica{cases}{cases},
+\tactica{intro / intros}{intro},
+\tactica{linarith}{linarith},
+\tactica{rw / rewrite}{rw},
+\tactica{split}{split} y
+\tactica{use}{use}.
 
 \subsection{Conclusión}
+
 Finalmente, una vez se ha demostrado tanto la equivalencia entre el
-problema original que queríamos resolver y el problema auxiliar,
-como las soluciones del problema auxiliar; se puede concluir el
-ejercicio.
+problema original que queríamos resolver y el problema auxiliar, como
+las soluciones del problema auxiliar; se puede concluir el ejercicio.
 
 En primer lugar, por lo que hemos visto en la subsección
 \ref{secequiv}, se sabe que el problema equivalente
 (y por tanto del problema original) tiene solución en dos
 siguientes casos:
 \begin{align}
-  &∃k∈ℤ, x=\frac{(2k+1)π}{4}\label{condicion1}\\
-  &∃k∈ℤ, x=\frac{(2k+1)π}{6}.\label{condicion2}
+  &∃ k ∈ ℤ, x = \frac{(2k+1)π}{4}  \label{condicion1}\\
+  &∃ k ∈ ℤ, x = \frac{(2k+1)π}{6}. \label{condicion2}
 \end{align}
 
-Esto nos permite definir el conjunto de soluciones del problema
-como el cojunto de los números reales, \(x\), tales que o bien
-verifiquen (\ref{condicion1}), o bien (\ref{condicion2}). De
-manera formal, podemos introducir el siguiente conjunto
-correspondiente a las soluciones del problema:
+Esto nos permite definir el conjunto de soluciones del problema como el
+cojunto de los números reales, \(x\), tales que o bien verifiquen
+(\ref{condicion1}), o bien (\ref{condicion2}). De manera formal, podemos
+introducir el siguiente conjunto correspondiente a las soluciones del
+problema:
 \begin{equation}\label{ConjuntoSolucion}
-  \text{Solucion}=\{x∈ ℝ | (∃k∈ℤ, x= \frac{(2k+1)π}{4})
-  \lor (∃k∈ℤ, x=\frac{(2k+1)π}{6}.) \}
+  \Solucion =
+  \left\{x ∈ ℝ \, | \, ∃ k ∈ ℤ, x = \frac{(2k+1)π}{4} ∨ x = \frac{(2k+1)π}{6}\right\}.
 \end{equation}
 
 La formalización en Lean de esta definición es la que se detalla
 a continuación:
 \begin{leancode}
-  def Solucion : set ℝ :={ x : ℝ | ∃ k : ℤ,
-    x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6 }
+def Solucion : set ℝ :=
+{x : ℝ | ∃ k : ℤ, x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6}
 \end{leancode}
+\index{Solucion}
 
-Por tanto, para concluir el problema basta con introducir un teorema
-que hará uso de los lemas auxiliares que se han demostrado a lo
-largo de la sección.
+Por tanto, para concluir el problema basta con introducir un teorema que
+hará uso de los lemas auxiliares que se han demostrado a lo largo de la
+sección.
 
 \begin{teorema}
-  Sea \(x\) perteneciente al conjunto de los números reales,
-  entonces \(x\) es solución la ecuación
+  Sea \(x\) perteneciente al conjunto de los números reales, entonces
+  \(x\) es solución la ecuación
   \begin{equation}\label{TeoremaCon}
-    \cos²(x)+\cos²(2x)+\cos²(3x)=1,
+    \cos²(x) + \cos²(2x) + \cos²(3x) = 1,
   \end{equation}
   si y solamente si \(x\) pertenece al conjunto descrito en
   (\ref{ConjuntoSolucion}).
 \end{teorema}
+
 \begin{demostracion}
-  En primer lugar, a través del Lema \ref{lemaequivalenciaprob}
-  se tiene que resolver el problema (\ref{TeoremaCon}) es
-  equivalente a resolver la expresión:
+  En primer lugar, a través del Lema \ref{lemaequivalenciaprob} se tiene
+  que resolver el problema (\ref{TeoremaCon}) es equivalente a resolver
+  la expresión:
   \begin{equation}\label{TeoremaPro}
-    \text{funauxiliar}(x)=\cos(x)·(\cos²-\frac{1}{2})·\cos(3x)=0.
+    \funauxiliar(x) = 0 ⟺ x ∈ \Solucion.
   \end{equation}
-  Entonces, el objetivo a demostrar pasa a ser:
-  \begin{equation}\label{Objetivo1}
-    \cos(x)·(\cos²-\frac{1}{2})·\cos(3x)=0 ⟺ x∈ \text{Solucion}.
+  y, por \ref{lemaCasosSolucion}, a
+  \begin{equation}\label{Objetivo2}
+   \cos²(x) = \frac{1}{2} ∨ \cos(3x) =0 ⟺ x ∈ \Solucion.
   \end{equation}
 
-  Seguidamente, aplicando el Lema \ref{lemaCasosSolucion},
-  se tiene que la expresión (\ref{TeoremaPro}) tiene solución
-  si y solamente si o bien el coseno al cuadrado de \(x\) es
-  igual a un medio, o bien el coseno de tres veces \(x\) es cero.
-  Tras la aplicación de este lema, el objetivo a demostrar
-  que antes era (\ref{Objetivo1}), ahora pasa a ser:
-  \begin{equation}\label{Objetivo2}
-   (\cos²(x)=\frac{1}{2})\lor (\cos(3x)=0) ⟺ x∈ \text{Solucion}.
-  \end{equation}
-  
   Entonces, sin más que hacer uso de los dos lemas auxiliares
-  \ref{lemaCosenoCuadrado} y \ref{lemaCosenoTriple}
-  que nos dan las condiciones necesarias y suficientes
-  para que el coseno al cuadrado de \(x\) sea un medio (en el caso
-  del primer lema) y para que el coseno del triple de \(x\) sea
-  nulo (en el caso del segundo). Se tiene que (\ref{Objetivo2})
-  pasa a ser:
+  \ref{lemaCosenoCuadrado} y \ref{lemaCosenoTriple} que nos dan las
+  condiciones necesarias y suficientes para que el coseno al cuadrado de
+  \(x\) sea un medio (en el caso del primer lema) y para que el coseno
+  del triple de \(x\) sea nulo (en el caso del segundo). Se tiene que
+  (\ref{Objetivo2}) pasa a ser:
   \begin{equation}
-    (∃k∈ℤ, x=\frac{(2k+1)π}{4}) \lor (∃k∈ℤ, x=\frac{(2k+1)π}{6})
+    \left(∃ k ∈ ℤ, x = \frac{(2k+1)π}{4}\right) ∨
+    \left(∃ k ∈ ℤ, x = \frac{(2k+1)π}{6}\right)
     ⟺ x∈ \text{Solucion}.
   \end{equation}
 
-  A continuación, para concluir la demostración del teorema, basta
-  con usar la siguiente propiedad:
-  \begin{teorema}\label{distri}
-    Sean \(p\) y \(q\) dos proposiciones cualesquiera. Entonces
-    existe \(x\) tal que se verifica la disyunción de \(p\) ó \(q\)
-    si y solamente si se verifica la disyunción de que existe un
-    \(x\) tal que se satisface \(p\), ó existe un \(x\) de manera
-    que se verifique \(q\). Simbólicamente:
-    \begin{equation}
-      ∃x, p(x) \lor q(x) ⟺(∃x, p(x))\lor(∃x, q(x)).
-    \end{equation}
-  \end{teorema}
-
-  La formalización en Lean de este teorema es:
-
+  A continuación, para concluir la demostración del teorema, basta con
+  usar la propiedad distributiva del existencial sobre la disyunción,
+  cuya formalización en Lean es
   \begin{leancode}
-    theorem exists_or_distrib : (∃ x, p x ∨ q x) ↔
-    (∃ x, p x) ∨ (∃ x, q x)
+    theorem exists_or_distrib :
+    (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x)
   \end{leancode}
-  
-  Finalmente, observando la definición del conjunto
-  (\ref{ConjuntoSolucion}) y haciendo uso del teorema \ref{distri}
-  se conluye el ejercicio.
+
+  Observando la definición del conjunto (\ref{ConjuntoSolucion}) y
+  haciendo uso de la propiedad anterior se conluye el ejercicio.
 \end{demostracion}
 
 Finalmente, la formalización en Lean de este lema es:
 \begin{leancode}
-theorem imo1962_q4 {x : ℝ} : problema x ↔ x ∈ Solucion :=
+theorem imo1962_q4
+  {x : ℝ}
+  : problema x ↔ x ∈ Solucion :=
 begin
   rw Equivalencia,
   rw CasosSolucion,
@@ -879,3 +868,8 @@ begin
   exact exists_or_distrib.symm,
 end
 \end{leancode}
+\index{imo1962\_q4}
+
+Se han usado las tácticas
+\tactica{rw / rewrite}{rw} y
+\tactica{exact}{exact}.
