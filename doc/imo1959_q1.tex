@@ -36,6 +36,7 @@ La correspondiente formalización en Lean de esta definición es:
 \begin{leancode}
   def coprime (a b : ℕ) : Prop := gcd a b = 1
 \end{leancode}
+\indLema{coprime}
 
 A continuación, se va a introducir un lema auxiliar, el cual nos dirá
 que si existe un número natural \(k\) que divide al numerador y al
@@ -132,14 +133,20 @@ begin
   exact h4,
 end
 \end{leancode}
+\index{Auxiliar}
 
 En la prueba del lema se han usado los siguientes lemas:
 \begin{itemize}
 \item \mint{lean}|dvd_mul_of_dvd_right: a ∣ b → ∀ c, a ∣ c * b|
-  \index{\url{dvd_mul_of_dvd_right}}
+  \indLema{dvd\_mul\_of\_dvd\_right}
 \item \mint{lean}|nat.dvd_add_right: ∀ {k m n : ℕ}, k ∣ m → (k ∣ m + n ↔ k ∣ n)|
-  \index{\url{nat.dvd_add_right}}
+  \indLema{nat.dvd\_add\_right}
 \end{itemize}
+y las tácticas
+\tactica{from}{from},
+\tactica{have}{have},
+\tactica{ring}{ring} y
+\tactica{rw / rewrite}{rw}.
 
 Finalmente, aplicando el Lema Auxiliar \ref{lema} se puede concluir que para
 cualquier número natural \(n\) se verifica que los números \(21⋅n+4\)
@@ -161,13 +168,19 @@ begin
   exact Auxiliar n k h1 h2,
 end
 \end{leancode}
+\index{imo1959\_q1}
 
 En la demostración del teorema se ha usado el siguiente lema:
 \begin{itemize}
 \item \mint{lean}|coprime_of_dvd' :
   (∀ k, prime k → k ∣ m → k ∣ n → k ∣ 1) → coprime m n|
-  \index{\url{coprime_of_dvd'}}
+  \indLema{coprime\_of\_dvd'}
 \end{itemize}
+y las tácticas
+\tactica{apply}{apply},
+\tactica{assume}{assume},
+\tactica{exact}{exact} y
+\tactica{intro / intros}{intros}.
 
 %%% Local Variables:
 %%% mode: latex

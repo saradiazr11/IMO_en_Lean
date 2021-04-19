@@ -48,8 +48,10 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 
-\usepackage{makeidx}               % Índice
+\usepackage{imakeidx}              % Índice
 \makeindex
+\makeindex[name=lemas, title=Índice de lemas de Lean]
+\makeindex[name=tacticas, title=Índice de tácticas]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% § Cabeceras                                                              %%
@@ -121,9 +123,14 @@
 %%  Índice                                                                  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\addcontentsline{toc}{chapter}{Indice de lemas}
-
+\addcontentsline{toc}{chapter}{Indice alfabético}
 \printindex
+
+\addcontentsline{toc}{chapter}{Indice de lemas de Lean}
+\printindex[lemas]
+
+\addcontentsline{toc}{chapter}{Índice de tácticas}
+\printindex[tacticas]
 
 % Tareas pendientes.
 \listoftodos
