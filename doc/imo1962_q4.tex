@@ -14,9 +14,11 @@ Healther Macbeth.
   \textbf{Problema 2 (1962--Q4)}. Resolver la ecuación
   \[\cos²(x)+\cos²(2x)+\cos²(3x)=1\].}}
 
-Previo a la resolución como tal del problema, se van a introducir una
-serie de definiciones que nos servirán para llevar una notación más
-compacta:
+
+
+Previo a la resolución como tal del problema, se van a introducir
+una serie de definiciones que nos servirán para llevar una notación
+más compacta:
 
 \begin{definicion}\label{problema}
   De aquí en adelante usaremos la etiqueta \textbf{problema}
@@ -27,10 +29,27 @@ compacta:
   \end{equation}
 \end{definicion}
 
-\comentario{Indicar el contexto en el que se trabaja (teoría que se
-  importa, espacio de nombres, etc.}
+Para llevar a cabo la formalización en Lean de este problema
+será necesario la importación de una serie de teorías y de
+espacios de números, entre ellos se han introducido:
+\begin{itemize}
+  \item El conjunto de funciones trigonométricas (coseno, seno,...).
+  \item El conjunto de los números reales.
+\end{itemize}
 
-La formalización en Lean de esta definición es:
+En lean importamos estas teorías como vemos a continuación:
+\begin{leancode}
+import analysis.special_functions.trigonometric
+
+open real
+open_locale real
+noncomputable theory
+\end{leancode}
+
+\comentario{No sé cómo comentar el tema de la noncomputable theory}
+
+De manera que la formalización en Lean de la definición
+(\ref{problema}) es:
 \begin{leancode}
 def problema (x : ℝ) : Prop :=
 cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
@@ -144,7 +163,16 @@ end
 \end{leancode}
 \index{Igualdad}
 
-\comentario{Añadir lemas y tácticas usados.}
+En la prueba del lema se han usado los siguientes lemas:
+\begin{itemize}
+\item \mint{lean}|cos_three_mul : cos (3 * x) = 4 * cos x ^ 3 - 3 * cos x|
+  \indLema{cos\_three\_mul}
+\item \mint{lean}|cos_two_mul : cos (2 * x) = 2 * cos x ^ 2 - 1 |
+  \indLema{cos\_two\_mul}
+\end{itemize}
+y las tácticas
+\tactica{ring}{ring} y
+\tactica{rw / rewrite}{rw}.
 
 Una vez se ha introducido este lema, se puede proceder a la demostración
 del lema que ya se adelantó y que consiste en probar que resolver la
@@ -160,8 +188,8 @@ resolver la expresión obtenida de igualar a cero \textbf{funauxiliar},
   \end{equation}
 \end{lema}
 
-\comentario{He simplificado la demostración en Lean. Habría que
-  reflejarlo en la siguiente demostración.}
+\comentario{No he tenido que cambiar nada de la demostración
+  ¿Ya estaba cambiado?}
 
 \begin{demostracion}
   Esta demostración se trata de una doble implicación, por ello,
@@ -449,9 +477,6 @@ y las tácticas
   \end{equation}
 \end{lema}
 
-\comentario{He simplificado la demostración en Lean. Habría que
-  reflejarlo en la siguiente demostración.}
-
 \begin{demostracion}
   Se puede observar que se trata de una demostración de doble
   implicación. No obstante, previo a la demostración de las
@@ -476,9 +501,10 @@ y las tácticas
     \frac{\cos(2x)}{2} = 0 ⟺ ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
   \end{equation}
 
-  Por último, en (\ref{problema21}), se tiene una fracción igualada a 0,
-  esto significa que el numerador es cero. Por tanto, el problema que
-  inicialmente planteamos, (\ref{problema2}), quedaría reescrito de la
+  Por último, en (\ref{problema21}), se tiene una fracción
+  igualada a 0, esto significa que el numerador de dicha fracción
+  ha de ser nulo. Por tanto, el problema que inicialmente
+  planteamos, (\ref{problema2}), quedaría reescrito de la
   siguiente manera:
   \begin{equation}\label{problema22}
     \cos(2x) = 0  ⟺ ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
@@ -497,75 +523,49 @@ y las tácticas
   \begin{equation}\label{ConcDoble}
     ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
   \end{equation}
-  Al igual que en la demostración del lema anterior, al tener una
-  hipótesis formada por una disyunción, se tiene que dicha hipótesis
-  puede ser separada en dos posibles casos:
-  \begin{align}
-    &\cos(2x)=0 \label{Dobleh11}\tag{h11}\\
-    &2=0. \label{Dobleh12}\tag{h12}
-  \end{align}
 
-  De manera análoga, para demostrar (\ref{ConcDoble}), ahora se
-  divide en dos subproblemas: el primero de ellos considerando
-  la hipótesis (\ref{Dobleh11}) y en el segundo considerando
-  (\ref{Dobleh12}).
+  Para ello, comenzaremos usando la caracterización de la solución
+  del coseno de un ángulo igualado a cero. Esto es:
 
-  \begin{itemize}
-  \item \textbf{Subproblema 1}
+  \begin{proposicion}\label{alpha}
+    Sea \(θ\) un número perteneciente al conjunto de los
+    números naturales. Entonces se tiene que se verifica la
+    expresión coseno de \(θ \) igual a cero si y solamente si
+    existe un número \(k\) perteneciente al conjunto de los
+    números enteros tal que \(θ \) es igual al producdo del
+    doble de \(k\) más uno por \(π \) medio. Simbólicamente:
+  \begin{equation}\label{alpha2}
+    \cos(θ)=0 ⟺∃ k ∈ℤ,  θ=\frac{(2k+1)π}{2}.
+  \end{equation}
+  \end{proposicion}
 
-    Supongamos (\ref{Dobleh11}), se ha de demostrar
-    (\ref{ConcDoble}). Para ello, comenzaremos usando la
-    caracterización de la solución del coseno de un ángulo
-    igualado a cero. Esto es:
+  La formalización en Lean de esta proposición es la planteada
+  a continuación:
+  \begin{leancode}
+    theorem cos_eq_zero_iff {θ : ℝ} : cos θ = 0 ↔
+    ∃ k : ℤ, θ = (2 * k + 1) * π / 2
+  \end{leancode}
 
-    \begin{proposicion}\label{alpha}
-      Sea \(θ\) un número perteneciente al conjunto de los
-      números naturales. Entonces se tiene que se verifica la
-      expresión coseno de \(θ \) igual a cero si y solamente si
-      existe un número \(k\) perteneciente al conjunto de los
-      números enteros tal que \(θ \) es igual al producdo del
-      doble de \(k\) más uno por \(π \) medio. Simbólicamente:
-    \begin{equation}\label{alpha2}
-      \cos(θ)=0 ⟺∃ k ∈ℤ,  θ=\frac{(2k+1)π}{2}.
-    \end{equation}
-    \end{proposicion}
+  Entonces, usando la propiedad \ref{alpha} sobre nuestra
+  hipótesis (\ref{Dobleh2}), se tiene que
+  \begin{equation}\label{Doble2h11}
+    ∃k∈ ℤ, 2x=\frac{(2k+1)π}{2}.
+  \end{equation}
 
-    La formalización en Lean de esta proposición es la planteada
-    a continuación:
-    \begin{leancode}
-      theorem cos_eq_zero_iff {θ : ℝ} : cos θ = 0 ↔
-      ∃ k : ℤ, θ = (2 * k + 1) * π / 2
-    \end{leancode}
+  A partir de la hipótesis (\ref{Doble2h11}), se sabe que existe
+  un número entero verificando dicha hipótesis. Sin pérdida de
+  generalidad, se puede considerar que dicho número entero es un
+  determinado número que denotaremos por \(k_1\) y de esta forma
+  la hipótesis (\ref{Doble2h11}) se convierte en:
+  \begin{equation}\label{Doblehk1}\tag{hk1}
+     2x=\frac{(2k_1+1)π}{2}.
+  \end{equation}
 
-    Entonces, usando la propiedad \ref{alpha} sobre nuestra
-    hipótesis (\ref{Dobleh11}), se tiene que
-    \begin{equation}\label{Doble2h11}
-      ∃k∈ ℤ, 2x=\frac{(2k+1)π}{2}.
-    \end{equation}
-
-    A partir de la hipótesis (\ref{Doble2h11}), se sabe que existe
-    un número entero verificando dicha hipótesis. Sin pérdida de
-    generalidad, se puede considerar que dicho número entero es un
-    determinado número que denotaremos por \(k_1\) y de esta forma
-    la hipótesis (\ref{Doble2h11}) se convierte en:
-    \begin{equation}\label{Doblehk1}\tag{hk1}
-       2x=\frac{(2k_1+1)π}{2}.
-    \end{equation}
-
-    Por tanto, para demostrar (\ref{ConcDoble}) basta con usar
-    el mismo número entero, \(k_1\), y la hipótesis
-    (\ref{Doblehk1}). Pasando el dos que se encuentra multiplicando
-    en la parte izquierda de la igualdad ya se tendría lo que
-    queremos demostrar.
-
-  \item \textbf{Subproblema 2}
-
-    En este caso, partimos de la hipótesis (\ref{Dobleh12}), lo cual
-    bien sabemos que es una hipótesis falsa. Entonces, se tendría
-    que partiendo de una hipótesis falsa cualquier afirmación es
-    cierta, y en concreto la que a nosotros nos interesa también,
-    (\ref{ConcDoble}).
-  \end{itemize}
+  Por tanto, para demostrar (\ref{ConcDoble}) basta con usar
+  el mismo número entero, \(k_1\), y la hipótesis
+  (\ref{Doblehk1}). Pasando el dos que se encuentra multiplicando
+  en la parte izquierda de la igualdad ya se tendría lo que
+  queremos demostrar.
 
   De manera que ya hemos terminado la primera implicación de la
   demostración.
@@ -590,14 +590,6 @@ y las tácticas
 
     Entonces se quiere demostrar que se verifica la siguiente
     expresión:
-    \begin{equation}\label{ConcDoble2}
-      \cos(2x)=0 \lor 2=0.
-    \end{equation}
-
-    Es más, como se trata de una disyunción, para concluir la
-    prueba basta con demostrar una de las dos posibilidades.
-    En nuestro caso, se demostrará que el coseno del ángulo doble
-    de \(x\) es nulo. Esto es,
     \begin{equation}\label{ConcDoble3}
       \cos(2x)=0.
     \end{equation}

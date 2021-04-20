@@ -10,13 +10,13 @@ noncomputable theory
 def problema (x : ℝ) : Prop :=
 cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
 
-def funauxiliar (x : ℝ) : ℝ :=
+def funAuxiliar (x : ℝ) : ℝ :=
 cos x * (cos x ^ 2 - 1/2) * cos (3 * x)
 
 lemma Igualdad {x : ℝ} :
-  (cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 - 1) / 4 = funauxiliar x :=
+  (cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 - 1) / 4 = funAuxiliar x :=
 begin
-  rw funauxiliar,
+  rw funAuxiliar,
   rw real.cos_two_mul,
   rw cos_three_mul,
   ring,
@@ -24,7 +24,7 @@ end
 
 lemma Equivalencia
   {x : ℝ}
-  : problema x ↔ funauxiliar x = 0 :=
+  : problema x ↔ funAuxiliar x = 0 :=
 begin
   split,
   { intro h1,
@@ -45,9 +45,9 @@ end
 
 lemma CasosSolucion
   {x : ℝ}
-  : funauxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0 :=
+  : funAuxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0 :=
 begin
-  rw funauxiliar,
+  rw funAuxiliar,
   rw mul_assoc,
   rw mul_eq_zero,
   rw mul_eq_zero,
