@@ -14,7 +14,25 @@ Healther Macbeth.
   \textbf{Problema 2 (1962--Q4)}. Resolver la ecuación
   \[\cos²(x)+\cos²(2x)+\cos²(3x)=1\].}}
 
+Para llevar a cabo la formalización en Lean de este problema se va a
+importar la teoría
+\href{https://github.com/leanprover-community/mathlib/blob/master/src/analysis/special_functions/trigonometric.lean}{analysis.special\_functions.trigonometric}
+(sobre funciones trigonométicas) y habilitar el
+\href{https://leanprover.github.io/reference/other_commands.html#namespaces}{espacio
+de nombre} de los números reales (para simplificar la notación, por
+ejemplo escribiendo \texttt{cos} en lugar de \texttt{real.cos}). Además,
+se indica con \texttt{noncomputable theory} que se van a usar funciones
+no computables (es decir, funciones para las que Lean no generará código
+evaluable).
 
+Todo lo anterior se expresa en Lean por
+\begin{leancode}
+import analysis.special_functions.trigonometric
+
+open real
+open_locale real
+noncomputable theory
+\end{leancode}
 
 Previo a la resolución como tal del problema, se van a introducir
 una serie de definiciones que nos servirán para llevar una notación
@@ -28,25 +46,6 @@ más compacta:
     \cos²(x)+\cos²(2x)+\cos²(3x)=1.
   \end{equation}
 \end{definicion}
-
-Para llevar a cabo la formalización en Lean de este problema
-será necesario la importación de una serie de teorías y de
-espacios de números, entre ellos se han introducido:
-\begin{itemize}
-  \item El conjunto de funciones trigonométricas (coseno, seno,...).
-  \item El conjunto de los números reales.
-\end{itemize}
-
-En lean importamos estas teorías como vemos a continuación:
-\begin{leancode}
-import analysis.special_functions.trigonometric
-
-open real
-open_locale real
-noncomputable theory
-\end{leancode}
-
-\comentario{No sé cómo comentar el tema de la noncomputable theory}
 
 De manera que la formalización en Lean de la definición
 (\ref{problema}) es:
@@ -188,9 +187,6 @@ resolver la expresión obtenida de igualar a cero \textbf{funauxiliar},
   \end{equation}
 \end{lema}
 
-\comentario{No he tenido que cambiar nada de la demostración
-  ¿Ya estaba cambiado?}
-
 \begin{demostracion}
   Esta demostración se trata de una doble implicación, por ello,
   separaremos las implicaciones:
@@ -313,7 +309,8 @@ solución para los dos casos que se obtendrán en el primer lema.
   \begin{equation}\label{problema1}
     \funauxiliar(x) = 0 ⟺ \cos²(x) = \frac{1}{2} ∨ \cos(3x) = 0.
   \end{equation}
-  \end{lema}
+\end{lema}
+
 \begin{demostracion}
   En primer lugar, previo a la demostración en sí del problema
   (\ref{problema1}), se va a proceder a la reescritura del mismo.
@@ -501,11 +498,10 @@ y las tácticas
     \frac{\cos(2x)}{2} = 0 ⟺ ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
   \end{equation}
 
-  Por último, en (\ref{problema21}), se tiene una fracción
-  igualada a 0, esto significa que el numerador de dicha fracción
-  ha de ser nulo. Por tanto, el problema que inicialmente
-  planteamos, (\ref{problema2}), quedaría reescrito de la
-  siguiente manera:
+  Por último, en (\ref{problema21}), se tiene una fracción igualada a 0,
+  esto significa que el numerador de dicha fracción ha de ser nulo. Por
+  tanto, el problema que inicialmente planteamos, (\ref{problema2}),
+  quedaría reescrito de la siguiente manera:
   \begin{equation}\label{problema22}
     \cos(2x) = 0  ⟺ ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
   \end{equation}
@@ -524,119 +520,116 @@ y las tácticas
     ∃ k ∈ ℤ, x = (2k+1) ⋅ \frac{π}{4}.
   \end{equation}
 
-  Para ello, comenzaremos usando la caracterización de la solución
-  del coseno de un ángulo igualado a cero. Esto es:
+  Para ello, comenzaremos usando la caracterización de la solución del
+  coseno de un ángulo igualado a cero. Esto es:
 
   \begin{proposicion}\label{alpha}
     Sea \(θ\) un número perteneciente al conjunto de los
     números naturales. Entonces se tiene que se verifica la
-    expresión coseno de \(θ \) igual a cero si y solamente si
+    expresión coseno de \(θ\) igual a cero si y solamente si
     existe un número \(k\) perteneciente al conjunto de los
-    números enteros tal que \(θ \) es igual al producdo del
-    doble de \(k\) más uno por \(π \) medio. Simbólicamente:
+    números enteros tal que \(θ\) es igual al producdo del
+    doble de \(k\) más uno por \(π\) medio. Simbólicamente:
   \begin{equation}\label{alpha2}
-    \cos(θ)=0 ⟺∃ k ∈ℤ,  θ=\frac{(2k+1)π}{2}.
+    \cos(θ) = 0 ⟺ ∃ k ∈ ℤ,  θ = \frac{(2k+1)π}{2}.
   \end{equation}
   \end{proposicion}
 
   La formalización en Lean de esta proposición es la planteada
   a continuación:
   \begin{leancode}
-    theorem cos_eq_zero_iff {θ : ℝ} : cos θ = 0 ↔
-    ∃ k : ℤ, θ = (2 * k + 1) * π / 2
+    theorem cos_eq_zero_iff
+      {θ : ℝ}
+      : cos θ = 0 ↔ ∃ k : ℤ, θ = (2 * k + 1) * π / 2
   \end{leancode}
 
-  Entonces, usando la propiedad \ref{alpha} sobre nuestra
-  hipótesis (\ref{Dobleh2}), se tiene que
+  Entonces, usando la propiedad \ref{alpha} sobre nuestra hipótesis
+  (\ref{Dobleh2}), se tiene que
   \begin{equation}\label{Doble2h11}
-    ∃k∈ ℤ, 2x=\frac{(2k+1)π}{2}.
+    ∃k ∈ ℤ, 2x = \frac{(2k+1)π}{2}.
   \end{equation}
 
-  A partir de la hipótesis (\ref{Doble2h11}), se sabe que existe
-  un número entero verificando dicha hipótesis. Sin pérdida de
-  generalidad, se puede considerar que dicho número entero es un
-  determinado número que denotaremos por \(k_1\) y de esta forma
-  la hipótesis (\ref{Doble2h11}) se convierte en:
+  A partir de la hipótesis (\ref{Doble2h11}), se sabe que existe un
+  número entero verificando dicha hipótesis. Sin pérdida de generalidad,
+  se puede considerar que dicho número entero es un determinado número
+  que denotaremos por \(k_1\) y de esta forma la hipótesis
+  (\ref{Doble2h11}) se convierte en:
   \begin{equation}\label{Doblehk1}\tag{hk1}
-     2x=\frac{(2k_1+1)π}{2}.
+     2x = \frac{(2k_1+1)π}{2}.
   \end{equation}
 
-  Por tanto, para demostrar (\ref{ConcDoble}) basta con usar
-  el mismo número entero, \(k_1\), y la hipótesis
-  (\ref{Doblehk1}). Pasando el dos que se encuentra multiplicando
-  en la parte izquierda de la igualdad ya se tendría lo que
-  queremos demostrar.
+  Por tanto, para demostrar (\ref{ConcDoble}) basta con usar el mismo
+  número entero, \(k_1\), y la hipótesis (\ref{Doblehk1}). Pasando el
+  dos que se encuentra multiplicando en la parte izquierda de la
+  igualdad ya se tendría lo que queremos demostrar.
 
   De manera que ya hemos terminado la primera implicación de la
   demostración.
 
    \noindent
    \framebox{\longleftarrow} Supongamos ahora que existe \(k\)
-   perteneciente al conjunto de los números enteros, a partir del
-   cual \(x\) se puede escribir como el producto de el doble de
-   \(k \) más uno, por \( π \) medio. Simbólicamente
+   perteneciente al conjunto de los números enteros, a partir del cual
+   \(x\) se puede escribir como el producto de el doble de \(k \) más
+   uno, por \( π\) medio. Simbólicamente,
    \begin{equation}\label{CosDobleh2}\tag{h2}
-      ∃ k ∈ ℤ, x=\frac{(2k+1)π}{4}.
+      ∃ k ∈ ℤ, x = \frac{(2k+1)π}{4}.
     \end{equation}
 
-    Sin pérdida de generalidad, la hipótesis (\ref{CosDobleh2}) se
-    puede reescribir considerarando que el número entero que la
-    verifica es un determinado número entero que denotaremos
-    por \(k_2\).
-    Entonces la hiótesis (\ref{CosDobleh2}) pasa a ser:
+    Sin pérdida de generalidad, la hipótesis (\ref{CosDobleh2}) se puede
+    reescribir considerarando que el número entero que la verifica es un
+    determinado número entero que denotaremos por \(k_2\).  Entonces la
+    hiótesis (\ref{CosDobleh2}) pasa a ser:
     \begin{equation}\label{hk2}\tag{hk2}
-       x=\frac{(2k_2+1)π}{4}.
+       x = \frac{(2k_2+1)π}{4}.
     \end{equation}
 
-    Entonces se quiere demostrar que se verifica la siguiente
-    expresión:
+    Entonces se quiere demostrar que se verifica la siguiente expresión:
     \begin{equation}\label{ConcDoble3}
-      \cos(2x)=0.
+      \cos(2x) = 0.
     \end{equation}
 
     Análogamente a como hicimos en la implicación anterior,
     sustituiremos la expresión del coseno igualada a cero por la
-    descrita en la Proposición \ref{alpha}. Entonces, si se lo
-    aplicamos a (\ref{ConcDoble3}), se obtiene que el objetivo
-    a probar pasa a ser que exista un número entero \(k\) tal que
-    el ángulo \(2x\) se pueda escribir como se describió en
-    (\ref{alpha2}). Simbólicamente:
+    descrita en la Proposición \ref{alpha}. Entonces, si se lo aplicamos
+    a (\ref{ConcDoble3}), se obtiene que el objetivo a probar pasa a ser
+    que exista un número entero \(k\) tal que el ángulo \(2x\) se pueda
+    escribir como se describió en (\ref{alpha2}). Simbólicamente:
     \begin{equation}
-      ∃k∈ ℤ, 2x=\frac{(2k+1)π}{2}.
+      ∃ k∈ ℤ, 2x = \frac{(2k+1)π}{2}.
     \end{equation}
 
     Finalmante, se puede concluir la demostración haciendo uso del
     número entero \(k_2\) y de la hipótesis (\ref{hk2}).
-    \end{demostracion}
+\end{demostracion}
 
 La formalización en Lean del lema anteriormente desarrollado es
 la que se presenta a continuación:
 \begin{leancode}
-lemma CasosSolucion
+lemma SolucionCosenoCuadrado
   {x : ℝ}
-  : funauxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0 :=
+  : cos x ^ 2 = 1/2 ↔ ∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
 begin
-  rw funauxiliar,
-  rw mul_assoc,
-  rw mul_eq_zero,
-  rw mul_eq_zero,
-  rw sub_eq_zero,
+  rw cos_square,
+  rw add_right_eq_self,
+  rw div_eq_zero_iff,
+  norm_num,
   split,
   { intro h1,
-    cases h1 with h11 h12,
-    right,
-    rw cos_three_mul,
-    rw h11,
-    ring,
-    exact h12,},
+    rw cos_eq_zero_iff at h1,
+    cases h1 with k1 hk1,
+    use k1,
+    linarith, },
   { intro h2,
-    right,
-    exact h2,},
+    cases h2 with k2 hk2,
+    rw cos_eq_zero_iff,
+    use k2,
+    linarith,},
 end
 \end{leancode}
-\index{CasosSolucion}
+\index{SolucionCosenoCuadrado}
 
-\comentario{Comentar las elevaciones de enteros a reales.}
+\comentario{Comentar el significado de ↑k en el desarrollo de la
+  prueba. Ver \href{https://bit.ly/3dzxd2o}{Coercions}.}
 
 Seguidamente, veamos los lemas auxiliares que se han utilizado
 para realizar la formalización de este lema son los siguiente:
