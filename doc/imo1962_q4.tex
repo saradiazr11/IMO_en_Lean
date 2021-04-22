@@ -607,7 +607,7 @@ la que se presenta a continuación:
 \begin{leancode}
 lemma SolucionCosenoCuadrado
   {x : ℝ}
-  : cos x ^ 2 = 1/2 ↔ ∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 :=
+  : cos x ^ 2 = 1/2 ↔ ∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
 begin
   rw cos_square,
   rw add_right_eq_self,
@@ -628,12 +628,12 @@ end
 \end{leancode}
 \index{SolucionCosenoCuadrado}
 
-Se puede observar que en la demostración en Lean aparece el número entero
-\(k\) representado por \textit{↑k}. Esto es debido a lo que en Lean se
-conoce como coerción, en nuestro caso, entre el conjunto de los
-números reales y el conjunto de los números enteros. Realmente, esto no es
-más que todo número entero se puede ver como un número real en el
-caso de que sea necesario. 
+Se puede observar que en la demostración en Lean aparece el número
+entero \(k\) representado por \textit{↑k}. Esto es debido a lo que en
+Lean se conoce como coerción (o inmersión), en nuestro caso, entre el
+conjunto de los números reales y el conjunto de los números
+enteros. Realmente, esto no es más que todo número entero se puede ver
+como un número real en el caso de que sea necesario.
 
 Seguidamente, veamos los lemas auxiliares que se han utilizado
 para realizar la formalización de este lema son los siguiente:
@@ -730,7 +730,7 @@ la demostración del lema que acabamos de detallar:
 \begin{leancode}
 lemma SolucionCosenoTriple
   {x : ℝ}
-  : cos (3 * x) = 0 ↔ ∃ k : ℤ, x = (2 * ↑k + 1) * π / 6 :=
+  : cos (3 * x) = 0 ↔ ∃ k : ℤ, x = (2 * k + 1) * π / 6 :=
 begin
   rw cos_eq_zero_iff,
   split,
@@ -789,7 +789,7 @@ La formalización en Lean de esta definición es la que se detalla
 a continuación:
 \begin{leancode}
 def Solucion : set ℝ :=
-{x : ℝ | ∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 ∨ x = (2 * ↑k + 1) * π / 6}
+{x : ℝ | ∃ k : ℤ, x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6}
 \end{leancode}
 \index{Solucion}
 

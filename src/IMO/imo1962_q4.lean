@@ -67,7 +67,7 @@ end
 
 lemma SolucionCosenoCuadrado
   {x : ℝ}
-  : cos x ^ 2 = 1/2 ↔ ∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 :=
+  : cos x ^ 2 = 1/2 ↔ ∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
 begin
   rw cos_square,
   rw add_right_eq_self,
@@ -88,7 +88,7 @@ end
 
 lemma SolucionCosenoTriple
   {x : ℝ}
-  : cos (3 * x) = 0 ↔ ∃ k : ℤ, x = (2 * ↑k + 1) * π / 6 :=
+  : cos (3 * x) = 0 ↔ ∃ k : ℤ, x = (2 * k + 1) * π / 6 :=
 begin
   rw cos_eq_zero_iff,
   split,
@@ -103,7 +103,7 @@ begin
 end
 
 def Solucion : set ℝ :=
-{x : ℝ | ∃ k : ℤ, x = (2 * ↑k + 1) * π / 4 ∨ x = (2 * ↑k + 1) * π / 6}
+{x : ℝ | ∃ k : ℤ, x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6}
 
 theorem imo1962_q4
   {x : ℝ}
