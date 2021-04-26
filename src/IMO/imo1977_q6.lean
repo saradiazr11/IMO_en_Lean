@@ -1,8 +1,3 @@
-/-
-Copyright (c) 2021 Tian Chen. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Tian Chen
--/
 import data.pnat.basic
 
 /-!
@@ -12,31 +7,40 @@ Prove that `f(n) = n` for all `n`.
 We first prove the problem statement for `f : ℕ → ℕ`
 then we use it to prove the statement for positive naturals.
 -/
-
-theorem imo1977_q6_nat (f : ℕ → ℕ) (h : ∀ n, f (f n) < f (n + 1)) :
+theorem imo1977_q6_nat2 (f : ℕ → ℕ) (h1 : ∀ n, f (f n) < f (n + 1)) :
   ∀ n, f n = n :=
 begin
-  have h' : ∀ (k n : ℕ), k ≤ n → k ≤ f n,
-  { intro k,
+  have h2: ∀ (k n : ℕ), k ≤ n → k ≤ f n,
+  {intro k,
     induction k with k h_ind,
-    { intros, exact nat.zero_le _ },
-    { intros n hk,
-      apply nat.succ_le_of_lt,
-      calc k ≤ f (f (n - 1)) : h_ind _ (h_ind (n - 1) (nat.le_sub_right_of_add_le hk))
-         ... < f n           : nat.sub_add_cancel
-        (le_trans (nat.succ_le_succ (nat.zero_le _)) hk) ▸ h _ } },
-  have hf : ∀ n, n ≤ f n := λ n, h' n n rfl.le,
-  have hf_mono : strict_mono f := strict_mono.nat (λ _, lt_of_le_of_lt (hf _) (h _)),
-  intro,
-  exact nat.eq_of_le_of_lt_succ (hf _) (hf_mono.lt_iff_lt.mp (h _))
+    {intros n hn,
+     exact nat.zero_le (f n)},
+     intros n hk,
+     apply nat.succ_le_of_lt,
+     rw nat.succ_eq_add_one at hk,
+     have hk1: k ≤ n-1:= nat.le_sub_right_of_add_le hk, 
+     have hk2: k ≤ f (n-1):= h_ind (n-1) hk1,
+     have hk3: k ≤ f(f(n-1)) := h_ind (f(n-1)) hk2,
+     have h11: f (f (n-1)) < f(n-1+1):= h1 (n-1), 
+     rw nat.sub_add_cancel at h11,
+     {calc k ≤ f(f(n-1)): hk3
+         ...< f(n): h11,},
+     have hk0: 1 ≤ k+1:=nat.succ_le_succ(nat.zero_le k),
+     exact (le_trans hk0 hk),},
+  have hf: ∀ n, n ≤ f n := λ n, h2 n n rfl.le,
+  have mon: ∀ n, f n < f(n+1):= λ n, lt_of_le_of_lt (hf (f n)) (h1 n),
+  have f_mon: strict_mono f:= strict_mono.nat(mon),
+  intro n,
+  exact nat.eq_of_le_of_lt_succ (hf n) (f_mon.lt_iff_lt.mp (h1 n)) 
 end
 
-theorem imo1977_q6 (f : ℕ+ → ℕ+) (h : ∀ n, f (f n) < f (n + 1)) :
+theorem imo1977_q62 (f : ℕ+ → ℕ+) (h : ∀ n, f (f n) < f (n + 1)) :
   ∀ n, f n = n :=
 begin
   intro n,
-  simpa using imo1977_q6_nat (λ m, if 0 < m then f m.to_pnat' else 0) _ n,
-  { intro x, cases x,
-    { simp },
-    { simpa using h _ } }
+  simpa using imo1977_q6_nat2 (λ m, if 0 < m then f m.to_pnat' else 0) _ n,
+  intro x,
+  cases x,
+  {simp},
+  {simpa using h _},
 end
