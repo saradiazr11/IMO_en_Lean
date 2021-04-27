@@ -1,3 +1,4 @@
+
 \section{IMO 1977 Q6}
 
 En esta sección se va a detallar la solución al problema Q6 que se
@@ -18,8 +19,188 @@ Destacar que la formalización original del problema se ha obtenido de
     natural positivo \(n\) se verifica que
   \[f(n)=n.\]}}
 
-\textbf{Solución:}
+Para llevar a cabo la formalizaciṕon en Lean del problema que
+se ha planteado, se va a importar la teoría
+\href{https://github.com/leanprover-community/mathlib/blob/
+  master/src/data/pnat/basic.lean}{data.pnat.basic} sobre el conjunto
+formado por los números naturales que son positivos.
 
+En Lean esto lo expresamod como sigue:
+\begin{leancode}
+import data.pnat.basic
+\end{leancode}
+
+Para llevar a cabo la resolución del problema que se nos plantea,
+se va introducir un teorema auxiliar, el cual consistirá en
+demostrar el mismo resultado que se nos plantea pero para una
+función que está definida en todo el conjunto de los números
+naturales. Enunciemos dicho teorema:
+
+\begin{teorema}[Extension]\label{extension}
+  Sea \(f:ℕ → ℕ\) una función satisfaciendo que
+  \begin{equation}
+    f(f(n))<f(n+1)
+  \end{equation}
+  para cualquier número natural \(n\). Entonces se tiene que
+  para todo número natural \(n\) se verifica que
+  \begin{equation}
+    f(n)=n.
+  \end{equation}
+\end{teorema}
+\begin{demostracion}
+  Suponiendo que se tiene una función definida entre el conjunto
+  de los números naturales, es decir, \(f: ℕ → ℕ\), verificando
+  que
+  \begin{equation}\label{h1}\tag{h1}
+     f(f(n))<f(n+1);
+  \end{equation}
+  se tiene que demostrar que para cualquier número natural se cumple
+  que \(f(n)\) es igual a \(n\). Simbólicamente:
+  \begin{equation}
+    ∀ n, f(n)=n.
+  \end{equation}
+
+  Previo a la demostración en sí de este resultado, se va a probar
+  un resultado auxiliar que nos será necesario para la conclusión
+  del primero. Destacar que este teorema auxiliar se va a demostrar
+  bajo las condiciones que se encuentra el problema.
+
+  Hay que demostrar que dados dos números naturales cualesquiera
+  \(k,n\) tales que \(k\) es menor o igual que \(n\). Entonces
+  se tiene que \(k\) es menor o igual que \(f(n)\). Simbólicamente:
+  \begin{equation}\label{h2}\tag{h2}
+    ∀ k, n ∈ ℕ, k≤ n ⟶ k ≤ f(n).
+  \end{equation}
+
+  Para demostrar (\ref{h2}), aplicaremos el método de inducción
+  en el número natural \(k\):
+
+  Probar por inducción en \(k\) el resultado consiste en demostrar
+  que para el caso en el que \(k\) es nulo y que suponiendo que se
+  verifica para \(k\), entonces se verifica para \(k\) más uno.
+  Distingamos entonces los casos:
+  
+  \begin{itemize}
+    \item \textbf{Caso \(k=0\).}
+
+      En este caso, hay que demostrar que
+      \begin{equation}\label{dem}
+        0≤f(n),
+      \end{equation}
+      bajo las hipótesis (\ref{h1}) y que para todo número natural
+      \(n\) se verifica que
+      \begin{equation}
+        0≤ n. 
+      \end{equation}
+
+      Para demostrar (\ref{dem}) basta con aplicar que por
+      definición todo número natural es mayor igual que cero.
+      Entonces, como consecuencia de que la función \(f\) está
+      definida entre el conjunto de los números naturales, se tiene
+      que \(f(n)\) siempre va a ser mayor o igual que cero para
+      cualquier \(n\) natural.
+      
+    \item \textbf{Caso \(k+1\).}
+    
+      En este caso, asumiendo como cierta la hipótesis de inducción,
+      es decir, suponiendo que se verifica que
+      \begin{equation}\label{hind}\tag{h\(\_\)ind}
+        ∀ n ∈ ℕ, k≤ n ⟶ k ≤ f(n),
+      \end{equation}
+      hay que demostrar que para todo número natural \(n\) tal que
+      sea mayor o igual que \(k+1\), entonces se verifica que
+      \begin{equation}\label{hind2}
+        k+1 ≤ f(n).
+      \end{equation}
+
+      Ahora bien, demostrar (\ref{hind2}) es equivalente a demostrar
+      que \(k\) sea menor entricto que \(f(n)\), esto es:
+      \begin{equation}
+        k<f(n).
+      \end{equation}
+
+      A continuación, se va a deducir una serie de hipótesis que se
+      tienen de manera casi directa y que nos ayudarán a la
+      resolución del problema principal.
+    \end{itemize}
+    Hola
+\end{demostracion}
+
+La formalización en Lean de este teorema sería la siguiente:
+\begin{leancode}
+theorem Extension
+  (f : ℕ → ℕ)
+  (h1 : ∀ n, f (f n) < f (n + 1))
+  : ∀ n, f n = n :=
+begin
+  have h2: ∀ (k n : ℕ), k ≤ n → k ≤ f n,
+  { intro k,
+     induction k with k h_ind,
+     { intros n hn,
+       exact nat.zero_le (f n), },
+     { intros n hk,
+       apply nat.succ_le_of_lt,
+       rw nat.succ_eq_add_one at hk,
+       have hk1: k ≤ n-1 := nat.le_sub_right_of_add_le hk,
+       have hk2: k ≤ f (n-1):= h_ind (n-1) hk1,
+       have hk3: k ≤ f(f(n-1)) := h_ind (f(n-1)) hk2,
+       have h11: f (f (n-1)) < f(n-1+1):= h1 (n-1),
+       rw nat.sub_add_cancel at h11,
+       { calc k ≤ f(f(n-1)) : hk3
+            ... < f(n)      : h11,},
+       have hk0: 1 ≤ k+1 := nat.succ_le_succ (nat.zero_le k),
+       exact (le_trans hk0 hk), }},
+  have hf: ∀ n, n ≤ f n,
+    { intro n,
+      apply h2 n n,
+      exact le_rfl, },
+  have mon: ∀ n, f n < f(n+1),
+    { intro n,
+      exact lt_of_le_of_lt (hf (f n)) (h1 n), },
+  have f_mon: strict_mono f := strict_mono.nat mon,
+  intro n,
+  apply nat.eq_of_le_of_lt_succ (hf n),
+  exact (f_mon.lt_iff_lt.mp (h1 n)),
+end
+\end{leancode}
+
+Una vez ya se ha demostrado el teorema \ref{extension}, se va a
+introducir el teorema con el cual el problema estaría resuleto.
+El teorema que introduciremos a continuación, no es más que un caso3
+particular del anterior.
+
+<<<<<<< HEAD
+\begin{teorema}[imo1977\(\_ \)q62]
+  Sea \(f:ℕ⁺ → ℕ⁺\) una función satisfaciendo que
+  \begin{equation}
+    f(f(n))<f(n+1)
+  \end{equation}
+  para cualquier número natural positivo \(n\). Entonces se tiene
+  que para todo número natural positivo \(n\) se verifica que
+  \begin{equation}
+    f(n)=n.
+  \end{equation}
+\end{teorema}
+\begin{demostracion}
+hola
+\end{demostracion}
+
+Finalmente, la formalización en Lean de este teorema nos quedaría:
+\begin{leancode}
+theorem imo1977_q62 (f : ℕ+ → ℕ+) (h : ∀ n, f (f n) < f (n + 1)) :
+  ∀ n, f n = n :=
+begin
+  intro n,
+  simpa using Extension (λ m, if 0 < m then f m.to_pnat' else 0) _ n,
+  intro x,
+  cases x,
+  {simp},
+  {simpa using h _},
+end
+\end{leancode}
+
+=======
+>>>>>>> 3d1f684c8187cde8e50e0b8b66086ff7a9052140
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "IMO_en_Lean"
