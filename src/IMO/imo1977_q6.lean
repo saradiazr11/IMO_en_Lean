@@ -4,7 +4,11 @@ import data.pnat.basic
 --    Sea `f : ℕ+ → ℕ+` tal que `f(f(n)) < f(n + 1)` para todo
 --    `n`. Demostrar que `f(n) = n` para todo `n`.
 
+<<<<<<< HEAD
+theorem Extension
+=======
 theorem imo1977_q6_nat2
+>>>>>>> 3d1f684c8187cde8e50e0b8b66086ff7a9052140
   (f : ℕ → ℕ)
   (h1 : ∀ n, f (f n) < f (n + 1))
   : ∀ n, f n = n :=
@@ -45,9 +49,13 @@ theorem imo1977_q62
   : ∀ n, f n = n :=
 begin
   intro n,
-  simpa using imo1977_q6_nat2 (λ m, if 0 < m then f m.to_pnat' else 0) _ n,
+  simpa using Extension (λ m, if 0 < m then f m.to_pnat' else 0) _ n,
   intro x,
   cases x,
   { simp },
   { simpa using h _},
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> 3d1f684c8187cde8e50e0b8b66086ff7a9052140
