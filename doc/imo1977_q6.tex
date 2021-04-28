@@ -113,17 +113,164 @@ naturales. Enunciemos dicho teorema:
         k+1 ≤ f(n).
       \end{equation}
 
+      Una vez ya se ha introducido la hipótesis de inducción, se va
+      a denotar la hipótesis de que para cualquiero número natural
+      \(n\) sea mayor igual que \(k+1\) como:
+      \begin{equation}\label{hk}\tag{hk}
+        k+1≤n.
+      \end{equation}
+
       Ahora bien, demostrar (\ref{hind2}) es equivalente a demostrar
       que \(k\) sea menor entricto que \(f(n)\), esto es:
-      \begin{equation}
+      \begin{equation}\label{hind3}
         k<f(n).
       \end{equation}
 
-      A continuación, se va a deducir una serie de hipótesis que se
+      A continuación, se van a deducir una serie de hipótesis que se
       tienen de manera casi directa y que nos ayudarán a la
       resolución del problema principal.
+      \begin{itemize}
+      \item A partir de la hipótesis (\ref{hk}), se tiene de manera
+        directa que pasando restando el uno de una parte de la
+        desigualdad a otra, se tiene que
+        \begin{equation}\label{hk1}\tag{hk1}
+          k≤n-1.
+        \end{equation}
+        
+      \item Haciendo uso ahora de la hipótesis de inducción,
+        (\ref{hind}), y de la hipótesis anteriormente deducida,
+        (\ref{hk1}), se puede deducir que
+        \begin{equation}\label{hk2}\tag{hk2}
+          k≤f(n-1).
+        \end{equation}
+
+      \item De manera totalmente análoga en como se ha deducido
+        la hipótesis (\ref{hk2}), se puede deducir que
+        \begin{equation}\label{hk3}\tag{hk3}
+          k≤f(f(n-1)),
+        \end{equation}
+        sin más que aplicar la hipótesis de inducción, (\ref{hind}),
+        y el resultado anteriormente deducido, (\ref{hk2}).
+
+      \item La última hipótesis que introduciremos en este apartado,
+        será haciendo uso de la hipótesis principal del teorema,
+        es decir, (\ref{h1}). Se particularizará para el caso en el
+        que se considera \(n-1\), de esta forma se tendría:
+        \begin{equation}\label{exph11}
+          f(f(n-1))<f(n-1+1).
+        \end{equation}
+
+        Ahora bien, la expresión (\ref{exph11}) se puede reescribir
+        como
+        \begin{equation}\label{h11}\tag{h11}
+          f(f(n-1))<f(n).
+        \end{equation}
+        Esta reescritura se ha llevado a cabo mediante el uso de
+        la cancelación en la suma de los números naturales, esto es:
+
+        \begin{proposicion}\label{sumanat}
+          Sean \(m\) y \(n\) dos números pertenecientes al conjunto
+          de los números naturales tales que \(m\) es menor o igual
+          que \(n\). Entonces se tiene que si al número \(n\) le
+          restamos y sumamos el número \(m\) el resultado que se
+          obtiene es \(n\). Simbólicamente:
+          \begin{equation}
+            ∀n,m ∈ ℕ, m≤n ⟶ n-m+m=n.
+          \end{equation}
+        \end{proposicion}
+
+        La formalización en Lean de esta proposición es la que se
+        presente a continuación:
+        \begin{leancode}
+          theorem sub_add_cancel {n m : ℕ} (h : m ≤ n) : n - m + m = n 
+        \end{leancode}
+      \end{itemize}
+
+      De esta forma, al haber hecho uso de la proposición \ref{sumanat}, el objetivo a demostrar que antes era (\ref{hind3}), ahora se
+      le añade otro nuevo objetivo y es demostrar que además se
+      cumple que el número natural \(n\) es mayor o igual que \(1\),
+      esto es:
+      \begin{equation}\label{n1}
+        n≥1.
+      \end{equation}
+
+      Por claridad en la notación, estos dos objetivos mencionados
+      se van a dividir en dos problemas diferentes:
+      \begin{enumerate}
+      \item \textbf{Problema 1}
+
+        Demostrar (\ref{hind3}) es bastante sencillo con ayuda de
+        las hipótesis deducidas anteoriormente. Veámoslo:
+        \begin{equation}
+          k\stackrel{(*)}{≤}f(f(n-1))\stackrel{(**)}{<}f(n),
+        \end{equation}
+        donde en \((*)\) se ha hecho uso de la hipótesis (\ref{hk3})
+        y en \((**)\) se ha usado la hipótesis (\ref{h11}).
+
+      \item \textbf{Problema 2}
+
+        Ahora se tiene que demostrar (\ref{n1}) también bajo todas
+        las hipótesis que se han deducido posteriormente. Aunque
+        realmente para probar este resultado no son necesarias,
+        sólo se necesitan los dos siguientes resultados generales
+        de los números naturales:
+
+        \begin{lema}\label{lemaNatCero}
+          Sea \(n\) un número natural cualquiera, entonces dicho
+          número \(n\) es mayor o igual que cero.
+        \end{lema}
+
+        Cuya formalización en Lean es:
+        \begin{leancode}
+          lemma zero_le : ∀ (n : ℕ), 0 ≤ n
+        \end{leancode}
+
+        \begin{lema}\label{lemaNatSuc}
+          Sean \(n\) y \(m\) dos números naturales tales que \(n\)
+          es menor o igual que \(m\). Entonces se tiene que el
+          número natural sucesor de \(n\) (es decir, \(n+1\)) es
+          menor o igual que el sucesor de \(m\). Simbólicamente:
+          \begin{equation}
+            ∀n,m ∈ ℕ, n≤m ⟶ n+1≤m+1.
+          \end{equation}
+        \end{lema}
+
+        Y la formalización en Lean de este lema es la siguiente:
+        \begin{leancode}
+          lemma succ_le_succ {n m : ℕ} : n ≤ m → succ n ≤ succ m
+        \end{leancode}
+
+        De esta forma se tendría que si consideramos un número
+        natural \(k\), haciendo uso del lema \ref{lemaNatCero}, se
+        tiene que
+        \begin{equation}\label{k0}
+          k≥0.
+        \end{equation}
+
+        Si además, ahora se hace uso del lema \ref{lemaNatSuc}
+        considerando los números naturales \(k\) y \(0\) y la
+        hipótesis (\ref{k0}), se puede concluir que
+        \begin{equation}\label{hk0}\tag{hk0}
+          1≤k+1
+        \end{equation}
+
+        Ahora bien, para finalizar la prueba de este problema basta
+        con aplicar la transitividad de las relaciones menor o igual
+        y menor sobre las hipótesis (\ref{hk}) y (\ref{hk0}).
+
+      \end{enumerate}
+
+    Una vez ya se han demostrado los objetivos (\ref{hind3}) y
+    (\ref{n1}), se tiene que ya se ha probado el caso \(k+1\) del
+    método de inducción.
     \end{itemize}
-    Hola
+
+  De esta forma, tras haber terminado la prueba de la hipótesis
+  (\ref{h2}) por el método de inducción, se procederá a la
+  continuación de la prueba. 
+
+  Para ello, se continuará demostrarando que para cualquier número
+  natural \(n\)
 \end{demostracion}
 
 La formalización en Lean de este teorema sería la siguiente:
@@ -169,7 +316,7 @@ introducir el teorema con el cual el problema estaría resuleto.
 El teorema que introduciremos a continuación, no es más que un caso3
 particular del anterior.
 
-<<<<<<< HEAD
+
 \begin{teorema}[imo1977\(\_ \)q62]
   Sea \(f:ℕ⁺ → ℕ⁺\) una función satisfaciendo que
   \begin{equation}
@@ -199,8 +346,7 @@ begin
 end
 \end{leancode}
 
-=======
->>>>>>> 3d1f684c8187cde8e50e0b8b66086ff7a9052140
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "IMO_en_Lean"
