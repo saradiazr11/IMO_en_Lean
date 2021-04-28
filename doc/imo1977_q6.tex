@@ -57,17 +57,22 @@ naturales. Enunciemos dicho teorema:
   se tiene que demostrar que para cualquier número natural se cumple
   que \(f(n)\) es igual a \(n\). Simbólicamente:
   \begin{equation}
-    ∀ n, f(n)=n.
+    ∀ n∈ ℕ, f(n)=n.
   \end{equation}
 
-  Previo a la demostración en sí de este resultado, se va a probar
-  un resultado auxiliar que nos será necesario para la conclusión
-  del primero. Destacar que este teorema auxiliar se va a demostrar
-  bajo las condiciones que se encuentra el problema.
+  Previo a la demostración en sí de este resultado, se van a probar
+  una serie de resultados auxiliares que nos serán necesarion para
+  la conclusión del primero. Destacar que estos teoremas auxiliares
+  que se van a demostrar se encuentran bajo las mismas condiciones
+  que el problema principal.
+  
+  \noindent
+  \textbf{\underline{Hipótesis h2}}
 
-  Hay que demostrar que dados dos números naturales cualesquiera
-  \(k,n\) tales que \(k\) es menor o igual que \(n\). Entonces
-  se tiene que \(k\) es menor o igual que \(f(n)\). Simbólicamente:
+  Comenzaremos demostrando que dados dos números naturales
+  cualesquiera \(k,n\) tales que \(k\) es menor o igual que \(n\).
+  Entonces se tiene que \(k\) es menor o igual que \(f(n)\).
+  Simbólicamente:
   \begin{equation}\label{h2}\tag{h2}
     ∀ k, n ∈ ℕ, k≤ n ⟶ k ≤ f(n).
   \end{equation}
@@ -269,8 +274,122 @@ naturales. Enunciemos dicho teorema:
   (\ref{h2}) por el método de inducción, se procederá a la
   continuación de la prueba. 
 
-  Para ello, se continuará demostrarando que para cualquier número
-  natural \(n\)
+  \noindent
+  \textbf{\underline{Hipótesis hf}}
+  
+  Proseguiremos con la demostración de que para cualquier número
+  natural \(n\) se verifica que dicho número \(n\) es menor o igual
+  que \(f(n)\). Simbólicamente:
+  \begin{equation}\label{hf}\tag{hf}
+    ∀n∈ ℕ n≤f(n).
+  \end{equation}
+
+  Fijando un número natural \(n\) cualesquiera, se tiene que le
+  podemos aplicar la hipótesis (\ref{h2}) considerando que los dos
+  números naturales que aparecen en el enunciado de esa hipótesis
+  son el mismo \(n\).
+
+  Como consecuencia de que sabemos que cualquier número es menor
+  o igual que sí mismo, se tiene que la condición de (\ref{h2}) se
+  verifica y por tanto se concluye que
+  \begin{equation}
+    n≤f(n),
+  \end{equation}
+  que era lo que queríamos demostrar.
+
+  \noindent
+  \textbf{\underline{Hipótesis mon}}
+
+  El enunciado de la esta hipótesis que queremos demostrar que se
+  verifica en nuestro problema es que para cualquier número natural
+  \(n\) se verifica que \(f(n)\) es menor estrictamente que \(f(n+1)\).
+  Simbólicamente:
+  \begin{equation}\label{mon}\tag{mon}
+    ∀n∈ ℕ, f(n)<f(n+1).
+  \end{equation}
+
+  Para demostrar que (\ref{mon}) es cierto bajo las hipótesis de nuestro
+  problema, comenzamos fijando un número natural \(n\).
+
+  Ahora bien, por un lado se tiene que aplicando la hipótesis (\ref{h1})
+  a dicho número natural \(n\) resulta que
+  \begin{equation}\label{mon1}
+    f(f(n))<f(n+1).
+  \end{equation}
+
+  Por otro lado, se sabe que la imagen de aplicar la función \(f\) a un
+  número natural \(n\) es un número natural, es decir, \(f(n)\) pertenece
+  al conjunto de los número naturales. Entonces, si aplicamos la
+  hipótesis (\ref{hf}) a \(f(n\)) se tiene que
+  \begin{equation}\label{mon2}
+    f(n)≤f(f(n)).
+  \end{equation}
+
+  De manera que utilizando la transitividad de las relaciones menor o
+  igual que y menor que en los resultados obtenidos en (\ref{mon1}) y
+  (\ref{mon2}) ya se tendría el resultado deseado, (\ref{mon}).
+
+  \noindent
+  \textbf{\underline{Hipótesis f\(\_\)mon}}
+
+  Este va a ser el último resultado que vamos a demostrar previo a la
+  conclusión en sí del teorema y consiste en demostrar que la función
+  \(f\) que se está considerando es estrictamente monótona.
+
+  \begin{definicion}\label{def:mono}
+    Se dice que una función \(f\) es estrictamente monótona si para
+    cualesquiera \(a\) y \(b\) tales que \(a\) es menor estrictamente que
+    \(b\), se tiene que \(f(a)\) es también menor estrictamente que
+    \(f(b)\). Simbólicamente:
+    \begin{equation}
+      ∀a,b, a<b ⟶ f(a)<f(b).
+    \end{equation}
+  \end{definicion}
+
+  Esta definición en Lean tiene la siguiente formalización:
+  \begin{leancode}
+    def strict_mono [has_lt α] [has_lt β] (f : α → β) : Prop :=
+    ∀ ⦃a b⦄, a < b → f a < f b
+  \end{leancode}
+
+  En el caso de nuestra función, que se encuentra definida en el conjunto
+  de los números naturales, existe un lema el cual nos da las condiciones
+  para qye la función sea estrictamente monótona.
+
+  \begin{lema}\label{lem:mono}
+    Sea \(f\) una función que tiene como conjunto de salida el conjunto
+    de los números naturales y sea el conjunto de llegada un conjunto
+    cualquiera que sea preorden, es decir, \(f:ℕ → β\) donde se ha
+    denotado \(β\) como el preorden. Se tiene que si para cualquier
+    número natural \(n\) se verifica que \(f(n)\) es menor estrictamente
+    que \(f(n+1)\), entonces \(f\) es una función estrictamente monótona.
+  \end{lema}
+
+  Y su correspondiente formalización en Lean sería:
+  \begin{leancode}
+    lemma nat {β} [preorder β] {f : ℕ → β} (h : ∀n, f n < f (n+1)) :
+    strict_mono f
+  \end{leancode}
+
+  De esta forma, como nuestra función \(f\) verifica la hipótesis
+  (\ref{hf}), al hacer uso del lema \ref{lem:mono} se tendría ya que la
+  función de nuestro problema es estrictamente monótona.
+
+  Una vez ya se han introducido todos los resultados auxiliares que eran
+  necesarios, recordemos que el objetivo a demostrar era que dada la
+  función \(f\) definida entre el conjunto de los números naturales tal
+  que se verificaba la hipótesis (\ref{h1}). Había que demostrar que
+  para cualquier número natural \(n\) se verifica que \(f(n)\) es igual
+  a \(n\). Simbólicamente era:
+  \begin{equation}\label{objetivo}
+    ∀n, f(n)=n.
+  \end{equation}
+
+  Para demostrar (\ref{onjetivo}), fijamos un número natural \(n\),
+  entonces se tiene que demostrar que se verifica la igualdad
+  \begin{equation}\label{objetivo2}
+    f(n)=n.
+  \end{equation}
 \end{demostracion}
 
 La formalización en Lean de este teorema sería la siguiente:
