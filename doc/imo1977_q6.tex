@@ -385,11 +385,27 @@ naturales. Enunciemos dicho teorema:
     ∀n, f(n)=n.
   \end{equation}
 
-  Para demostrar (\ref{onjetivo}), fijamos un número natural \(n\),
-  entonces se tiene que demostrar que se verifica la igualdad
+  Para demostrar (\ref{objetivo}), fijamos un número natural \(n\),
+  entonces se tiene que probar que se verifica la igualdad
   \begin{equation}\label{objetivo2}
     f(n)=n.
   \end{equation}
+
+  Haciendo uso de la hipótesis (\ref{hf}) para el número natural \(n\) que
+  estamos considerando se tiene entonces que
+  \begin{equation}
+    n≤f(n).
+  \end{equation}
+
+  Por tanto, haciendo uso de esto, el (\ref{objetivo2}) pasa a convertirse
+  en
+  \begin{equation}\label{objetivo3}
+    f(n)<n+1.
+  \end{equation}
+
+  Para concluir la demostración basta con probar (\ref{objetivo3}); esto se
+  puede hacer de manera directa con la hipótesis principal del problema,
+  (\ref{h1}), y la monotonía de la función \(f\), hipótesis (\ref{def:mono})
 \end{demostracion}
 
 La formalización en Lean de este teorema sería la siguiente:
@@ -429,6 +445,40 @@ begin
   exact (f_mon.lt_iff_lt.mp (h1 n)),
 end
 \end{leancode}
+
+En la formalización de este lema en Lean sólo han sido necesarios el uso
+de los siguiente lemas y teoremas:
+\begin{itemize}
+\item \mint{lean}|nat.zero_le : ∀ (n: ℕ), 0≤n|
+  \indLema{zero\_le}
+\item \mint{lean}|succ_le_of_lt {a b : ℕ} (h : a < b) : succ a ≤ b|
+  \indLema{succ\_le\_of\_lt}
+\item \mint{lean}|succ_eq_add_one (n : ℕ) : succ n = n + 1|
+  \indLema{succ\_eq\_add\_one}
+\item \mint{lean}|le_sub_right_of_add_le (h : m + k ≤ n) : m ≤ n - k|
+  \indLema{le\_sub\_right\_of\_add\_le}
+\item \mint{lean}|sub_add_cancel {n m : ℕ} (h : m ≤ n) : n - m + m = n|
+  \indLema{sub\_add\_cancel}
+\item \mint{lean}|succ_le_succ {n m : ℕ} : n ≤ m → succ n ≤ succ m |
+  \indLema{succ\_le\_succ}
+\item \mint{lean}|le_trans : ∀ {a b c : α}, a ≤ b → b ≤ c → a ≤ c|
+  \indLema{le\_trans}
+\item \mint{lean}|le_rfl [preorder α] {x : α} : x ≤ x |
+  \indLema{le\_rfl}
+\item \mint{lean}|lt_of_le_of_lt : ∀ {a b c : α}, a ≤ b → b < c → a < c |
+  \indLema{lt\_of\_le\_of\_lt}
+\item \mint{lean}|nat {β} [preorder β] {f : ℕ → β} (h : ∀n, f n < f (n+1)) :  strict_mono f |
+  \indLema{strict\_mono.nat}
+\item \mint{lean}|eq_of_le_of_lt_succ {n m : ℕ} (h₁ : n ≤ m) (h₂ : m < n + 1) : m = n |
+  \indLema{eq\_of\_le\_of\_lt\_succ}
+\end{itemize}
+Además,se han usado las tácticas
+\tactica{have}{have},
+\tactica{intro}{intro},
+\tactica{exact}{exact},
+\tactica{rw / rewrite}{rw},
+\tactica{induction}{induction} y
+\tactica{apply}{apply}.
 
 Una vez ya se ha demostrado el teorema \ref{extension}, se va a
 introducir el teorema con el cual el problema estaría resuleto.
