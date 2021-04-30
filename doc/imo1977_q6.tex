@@ -1,4 +1,3 @@
-
 \section{IMO 1977 Q6}
 
 En esta sección se va a detallar la solución al problema Q6 que se
@@ -14,10 +13,12 @@ Destacar que la formalización original del problema se ha obtenido de
 \framebox{\parbox{\textwidth}{
     \textbf{Problema 1 (1977--Q6)}. Consideremos la función
     \(f:ℕ⁺ → ℕ⁺\) satisfaciendo que
-    \[f(f(n))<f(n+1)\]
+    \[f(f(n)) < f(n+1)\]
     para cualquier número \(n\). Probar que para todo número
     natural positivo \(n\) se verifica que
-  \[f(n)=n.\]}}
+    \[f(n) = n.\]}}
+
+\comentario{Comentar el significado de N⁺}
 
 Para llevar a cabo la formalización en Lean del problema que
 se ha planteado, se va a importar la teoría
@@ -39,81 +40,80 @@ naturales. Enunciemos dicho teorema:
 \begin{teorema}[Extension]\label{extension}
   Sea \(f:ℕ → ℕ\) una función satisfaciendo que
   \begin{equation}
-    f(f(n))<f(n+1)
+    f(f(n)) < f(n+1)
   \end{equation}
   para cualquier número natural \(n\). Entonces se tiene que
   para todo número natural \(n\) se verifica que
   \begin{equation}
-    f(n)=n.
+    f(n) = n.
   \end{equation}
 \end{teorema}
+
 \begin{demostracion}
-  Suponiendo que se tiene una función definida entre el conjunto
-  de los números naturales, es decir, \(f: ℕ → ℕ\), verificando
+  Suponiendo que se tiene una función \(f\) definida entre el conjunto
+  de los números naturales; es decir, \(f: ℕ → ℕ\), verificando
   que
-  \begin{equation}\label{h1}\tag{h1}
-     f(f(n))<f(n+1);
+  \begin{equation}\label{h77_1}\tag{h1}
+     f(f(n)) < f(n+1);
   \end{equation}
   se tiene que demostrar que para cualquier número natural se cumple
   que \(f(n)\) es igual a \(n\). Simbólicamente:
   \begin{equation}
-    ∀ n∈ ℕ, f(n)=n.
+    ∀ n ∈ ℕ, f(n) = n.
   \end{equation}
 
-  Previo a la demostración en sí de este resultado, se van a probar
-  una serie de resultados auxiliares que nos serán necesarion para
-  la conclusión del primero. Destacar que estos resultados auxiliares
-  que se van a demostrar se encuentran bajo las mismas condiciones
-  que el problema principal.
-  
+  Previo a la demostración en sí de este resultado, se van a probar una
+  serie de resultados auxiliares que nos serán necesarios para la
+  conclusión del primero. Destacar que estos resultados auxiliares que
+  se van a demostrar se encuentran bajo las mismas condiciones que el
+  problema principal.
+
   \noindent
   \textbf{\underline{Hipótesis h2}}
 
-  Comenzaremos demostrando que dados dos números naturales
-  cualesquiera \(k,n\) tales que \(k\) es menor o igual que \(n\).
-  Entonces se tiene que \(k\) es menor o igual que \(f(n)\).
-  Simbólicamente:
-  \begin{equation}\label{h2}\tag{h2}
-    ∀ k, n ∈ ℕ, k≤ n ⟶ k ≤ f(n).
+  Comenzaremos demostrando que dados dos números naturales cualesquiera
+  \(k,n\) tales que \(k\) es menor o igual que \(n\).  Entonces se tiene
+  que \(k\) es menor o igual que \(f(n)\).  Simbólicamente:
+  \begin{equation}\label{h77_2}\tag{h2}
+    ∀ k, n ∈ ℕ, k ≤ n ⟶ k ≤ f(n).
   \end{equation}
 
-  Para demostrar (\ref{h2}), aplicaremos el método de inducción
-  en el número natural \(k\):
+  Para demostrar (\ref{h77_2}), aplicaremos el método de inducción en el
+  número natural \(k\):
 
-  Probar por inducción en \(k\) el resultado consiste en demostrar
-  que para el caso en el que \(k\) es nulo y que suponiendo que se
+  Probar por inducción en \(k\) el resultado consiste en demostrarlo
+  para el caso en el que \(k\) es nulo y que suponiendo que se
   verifica para \(k\), entonces se verifica para \(k\) más uno.
   Distingamos entonces los casos:
-  
+
   \begin{itemize}
     \item \textbf{Caso \(k=0\).}
 
       En este caso, hay que demostrar que
       \begin{equation}\label{dem}
-        ∀n,0≤f(n),
+        ∀n, 0 ≤ f(n),
       \end{equation}
-      bajo las hipótesis (\ref{h1}) y que para todo número natural
+      bajo las hipótesis (\ref{h77_1}) y que para todo número natural
       \(n\) se verifica que
       \begin{equation}
-        0≤ n. 
+        0 ≤ n.
       \end{equation}
 
-      Para demostrar (\ref{dem}) basta con aplicar que por
-      definición todo número natural es mayor igual que cero.
-      Entonces, como consecuencia de que la función \(f\) está
-      definida del conjunto de los números naturales en sí mismo, se tiene
-      que \(f(n)\) siempre va a ser mayor o igual que cero para
-      cualquier \(n\) natural.
-      
+      Para demostrar (\ref{dem}) basta con aplicar que por definición
+      todo número natural es mayor o igual que cero. Entonces, como
+      consecuencia de que la función \(f\) está definida del conjunto de
+      los números naturales en sí mismo, se tiene que \(f(n)\) siempre
+      va a ser mayor o igual que cero para cualquier \(n\) natural.
+
     \item \textbf{Caso \(k+1\).}
-    
+
       En este caso, asumiendo como cierta la hipótesis de inducción,
       es decir, suponiendo que se verifica que
       \begin{equation}\label{hind}\tag{h\(\_\)ind}
-        ∀ n ∈ ℕ, k≤ n ⟶ k ≤ f(n),
+        ∀ n ∈ ℕ, k ≤ n ⟶ k ≤ f(n),
       \end{equation}
-      hay que demostrar que para todo número natural \(n\) tal que
-      sea mayor o igual que \(k+1\), entonces se verifica que
+      hay que demostrar que para todo número natural \(n\) que
+      sea mayor o igual que \(k+1\), se verifica que
       \begin{equation}\label{hind2}
         k+1 ≤ f(n).
       \end{equation}
@@ -122,13 +122,13 @@ naturales. Enunciemos dicho teorema:
       a denotar la hipótesis de que para cualquier número natural
       \(n\) sea mayor igual que \(k+1\) como:
       \begin{equation}\label{hk}\tag{hk}
-        k+1≤n.
+        k+1 ≤ n.
       \end{equation}
 
       Ahora bien, demostrar (\ref{hind2}) es equivalente a demostrar
-      que \(k\) sea menor entricto que \(f(n)\), esto es:
+      que \(k\) sea menor estricto que \(f(n)\), esto es:
       \begin{equation}\label{hind3}
-        k<f(n).
+        k < f(n).
       \end{equation}
 
       A continuación, se van a deducir una serie de hipótesis que se
@@ -138,36 +138,36 @@ naturales. Enunciemos dicho teorema:
         directa que pasando restando el uno de una parte de la
         desigualdad a otra, se tiene que
         \begin{equation}\label{hk1}\tag{hk1}
-          k≤n-1.
+          k ≤ n-1.
         \end{equation}
-        
+
       \item Haciendo uso ahora de la hipótesis de inducción,
         (\ref{hind}), y de la hipótesis anteriormente deducida,
         (\ref{hk1}), se puede deducir que
-        \begin{equation}\label{hk2}\tag{hk2}
-          k≤f(n-1).
+        \begin{equation}\label{h77_k2}\tag{hk2}
+          k ≤ f(n-1).
         \end{equation}
 
       \item De manera totalmente análoga en como se ha deducido
-        la hipótesis (\ref{hk2}), se puede deducir que
+        la hipótesis (\ref{h77_k2}), se puede deducir que
         \begin{equation}\label{hk3}\tag{hk3}
-          k≤f(f(n-1)),
+          k ≤ f(f(n-1)),
         \end{equation}
         sin más que aplicar la hipótesis de inducción, (\ref{hind}),
-        y el resultado anteriormente deducido, (\ref{hk2}).
+        y el resultado anteriormente deducido, (\ref{h77_k2}).
 
       \item La última hipótesis que introduciremos en este apartado,
         será haciendo uso de la hipótesis principal del teorema,
-        es decir, (\ref{h1}). Se particularizará para el caso en el
+        es decir, (\ref{h77_1}). Se particularizará para el caso en el
         que se considera \(n-1\), de esta forma se tendría:
         \begin{equation}\label{exph11}
-          f(f(n-1))<f(n-1+1).
+          f(f(n-1)) < f(n-1+1).
         \end{equation}
 
         Ahora bien, la expresión (\ref{exph11}) se puede reescribir
         como
-        \begin{equation}\label{h11}\tag{h11}
-          f(f(n-1))<f(n).
+        \begin{equation}\label{h77_11}\tag{h11}
+          f(f(n-1)) < f(n).
         \end{equation}
         Esta reescritura se ha llevado a cabo mediante el uso de
         la cancelación en la suma de los números naturales, esto es:
@@ -179,23 +179,23 @@ naturales. Enunciemos dicho teorema:
           restamos y sumamos el número \(m\) el resultado que se
           obtiene es \(n\). Simbólicamente:
           \begin{equation}
-            ∀n,m ∈ ℕ, m≤n ⟶ n-m+m=n.
+            ∀ n,m ∈ ℕ, m ≤ n ⟶ n-m+m = n.
           \end{equation}
         \end{proposicion}
 
         La formalización en Lean de esta proposición es la que se
         presente a continuación:
         \begin{leancode}
-          theorem sub_add_cancel {n m : ℕ} (h : m ≤ n) : n - m + m = n 
+          theorem sub_add_cancel {n m : ℕ} (h : m ≤ n) : n - m + m = n
         \end{leancode}
       \end{itemize}
 
-      De esta forma, al haber hecho uso de la proposición \ref{sumanat}, el objetivo a demostrar que antes era (\ref{hind3}), ahora se
-      le añade otro nuevo objetivo y es demostrar que además se
-      cumple que el número natural \(n\) es mayor o igual que \(1\),
-      esto es:
+      De esta forma, al haber hecho uso de la proposición \ref{sumanat},
+      el objetivo a demostrar que antes era (\ref{hind3}), ahora se le
+      añade otro nuevo objetivo y es demostrar que además se cumple que
+      el número natural \(n\) es mayor o igual que \(1\), esto es:
       \begin{equation}\label{n1}
-        n≥1.
+        n ≥ 1.
       \end{equation}
 
       Por claridad en la notación, estos dos objetivos mencionados
@@ -209,7 +209,7 @@ naturales. Enunciemos dicho teorema:
           k\stackrel{(*)}{≤}f(f(n-1))\stackrel{(**)}{<}f(n),
         \end{equation}
         donde en \((*)\) se ha hecho uso de la hipótesis (\ref{hk3})
-        y en \((**)\) se ha usado la hipótesis (\ref{h11}).
+        y en \((**)\) se ha usado la hipótesis (\ref{h77_11}).
 
       \item \textbf{Problema 2}
 
@@ -235,7 +235,7 @@ naturales. Enunciemos dicho teorema:
           número natural sucesor de \(n\) (es decir, \(n+1\)) es
           menor o igual que el sucesor de \(m\). Simbólicamente:
           \begin{equation}
-            ∀n,m ∈ ℕ, n≤m ⟶ n+1≤m+1.
+            ∀n, m ∈ ℕ, n ≤ m ⟶ n+1 ≤ m+1.
           \end{equation}
         \end{lema}
 
@@ -248,14 +248,14 @@ naturales. Enunciemos dicho teorema:
         natural \(k\), haciendo uso del lema \ref{lemaNatCero}, se
         tiene que
         \begin{equation}\label{k0}
-          k≥0.
+          k ≥ 0.
         \end{equation}
 
         Si además, ahora se hace uso del lema \ref{lemaNatSuc}
         considerando los números naturales \(k\) y \(0\) y la
         hipótesis (\ref{k0}), se puede concluir que
         \begin{equation}\label{hk0}\tag{hk0}
-          1≤k+1
+          1 ≤ k+1
         \end{equation}
 
         Ahora bien, para finalizar la prueba de este problema basta
@@ -270,29 +270,29 @@ naturales. Enunciemos dicho teorema:
     \end{itemize}
 
   De esta forma, tras haber terminado la prueba de la hipótesis
-  (\ref{h2}) por el método de inducción, se procederá a la
-  continuación de la prueba. 
+  (\ref{h77_2}) por el método de inducción, se procederá a la
+  continuación de la prueba.
 
   \noindent
   \textbf{\underline{Hipótesis hf}}
-  
+
   Proseguiremos con la demostración de que para cualquier número
   natural \(n\) se verifica que dicho número \(n\) es menor o igual
   que \(f(n)\). Simbólicamente:
   \begin{equation}\label{hf}\tag{hf}
-    ∀n∈ ℕ, n≤f(n).
+    ∀n∈ ℕ, n ≤ f(n).
   \end{equation}
 
   Fijando un número natural \(n\) cualesquiera, se tiene que le
-  podemos aplicar la hipótesis (\ref{h2}) considerando que los dos
+  podemos aplicar la hipótesis (\ref{h77_2}) considerando que los dos
   números naturales que aparecen en el enunciado de esa hipótesis
   son el mismo \(n\).
 
   Como consecuencia de que sabemos que cualquier número es menor
-  o igual que sí mismo, se tiene que la condición de (\ref{h2}) se
+  o igual que sí mismo, se tiene que la condición de (\ref{h77_2}) se
   verifica y por tanto se concluye que
   \begin{equation}
-    n≤f(n),
+    n ≤ f(n),
   \end{equation}
   que era lo que queríamos demostrar.
 
@@ -304,24 +304,24 @@ naturales. Enunciemos dicho teorema:
   \(n\) se verifica que \(f(n)\) es menor estrictamente que \(f(n+1)\).
   Simbólicamente:
   \begin{equation}\label{mon}\tag{mon}
-    ∀n∈ ℕ, f(n)<f(n+1).
+    ∀n ∈ ℕ, f(n) < f(n+1).
   \end{equation}
 
   Para demostrar que (\ref{mon}) es cierto bajo las hipótesis de nuestro
   problema, comenzamos fijando un número natural \(n\).
 
-  Ahora bien, por un lado se tiene que aplicando la hipótesis (\ref{h1})
+  Ahora bien, por un lado se tiene que aplicando la hipótesis (\ref{h77_1})
   a dicho número natural \(n\) resulta que
   \begin{equation}\label{mon1}
-    f(f(n))<f(n+1).
+    f(f(n)) < f(n+1).
   \end{equation}
 
   Por otro lado, se sabe que la imagen de aplicar la función \(f\) a un
-  número natural \(n\) es un número natural, es decir, \(f(n)\) pertenece
+  número natural \(n\) es un número natural; es decir, \(f(n)\) pertenece
   al conjunto de los número naturales. Entonces, si aplicamos la
   hipótesis (\ref{hf}) a \(f(n\)) se tiene que
   \begin{equation}\label{mon2}
-    f(n)≤f(f(n)).
+    f(n) ≤ f(f(n)).
   \end{equation}
 
   De manera que utilizando la transitividad de las relaciones menor o
@@ -341,7 +341,7 @@ naturales. Enunciemos dicho teorema:
     \(b\), se tiene que \(f(a)\) es también menor estrictamente que
     \(f(b)\). Simbólicamente:
     \begin{equation}
-      ∀a,b, a<b ⟶ f(a)<f(b).
+      ∀a,b, a < b ⟶ f(a) < f(b).
     \end{equation}
   \end{definicion}
 
@@ -353,7 +353,7 @@ naturales. Enunciemos dicho teorema:
 
   En el caso de nuestra función, que se encuentra definida en el conjunto
   de los números naturales, existe un lema el cual nos da las condiciones
-  para qye la función sea estrictamente monótona.
+  para que la función sea estrictamente monótona.
 
   \begin{lema}\label{lem:mono}
     Sea \(f\) una función que tiene como conjunto de salida el conjunto
@@ -361,7 +361,8 @@ naturales. Enunciemos dicho teorema:
     cualquiera que sea preorden, es decir, \(f:ℕ → β\) donde se ha
     denotado \(β\) como el preorden. Se tiene que si para cualquier
     número natural \(n\) se verifica que \(f(n)\) es menor estrictamente
-    que \(f(n+1)\), entonces \(f\) es una función estrictamente monótona.
+    que \(f(n+1)\), entonces \(f\) es una función estrictamente
+    monótona.
   \end{lema}
 
   Y su correspondiente formalización en Lean sería:
@@ -377,34 +378,34 @@ naturales. Enunciemos dicho teorema:
   Una vez ya se han introducido todos los resultados auxiliares que eran
   necesarios, recordemos que el objetivo a demostrar era que dada la
   función \(f\) definida entre el conjunto de los números naturales tal
-  que se verificaba la hipótesis (\ref{h1}). Había que demostrar que
+  que se verificaba la hipótesis (\ref{h77_1}). Había que demostrar que
   para cualquier número natural \(n\) se verifica que \(f(n)\) es igual
   a \(n\). Simbólicamente era:
   \begin{equation}\label{objetivo}
-    ∀n, f(n)=n.
+    ∀n, f(n) = n.
   \end{equation}
 
   Para demostrar (\ref{objetivo}), fijamos un número natural \(n\),
   entonces se tiene que probar que se verifica la igualdad
   \begin{equation}\label{objetivo2}
-    f(n)=n.
+    f(n) = n.
   \end{equation}
 
   Haciendo uso de la hipótesis (\ref{hf}) para el número natural \(n\) que
   estamos considerando se tiene entonces que
   \begin{equation}
-    n≤f(n).
+    n ≤ f(n).
   \end{equation}
 
   Por tanto, haciendo uso de esto, el objetivo (\ref{objetivo2}) pasa a
   convertirse en
   \begin{equation}\label{objetivo3}
-    f(n)<n+1.
+    f(n) < n+1.
   \end{equation}
 
   Para concluir la demostración basta con probar (\ref{objetivo3}); esto se
   puede hacer de manera directa con la hipótesis principal del problema,
-  (\ref{h1}), y la monotonía de la función \(f\), hipótesis (\ref{def:mono})
+  (\ref{h77_1}), y la monotonía de la función \(f\), hipótesis (\ref{def:mono})
 \end{demostracion}
 
 La formalización en Lean de este teorema sería la siguiente:
@@ -472,12 +473,12 @@ de los siguiente lemas y teoremas:
   \indLema{eq\_of\_le\_of\_lt\_succ}
 \end{itemize}
 Además,se han usado las tácticas
-\tactica{have}{have},
-\tactica{intro}{intro},
-\tactica{exact}{exact},
-\tactica{rw / rewrite}{rw},
-\tactica{induction}{induction} y
 \tactica{apply}{apply}.
+\tactica{exact}{exact},
+\tactica{have}{have},
+\tactica{induction}{induction},
+\tactica{intro}{intro} y
+\tactica{rw / rewrite}{rw}.
 
 Una vez ya se ha demostrado el teorema \ref{extension}, se va a
 introducir el teorema con el cual el problema estaría resuelto. El
@@ -493,19 +494,20 @@ naturales positivos en sí mismo. Veámoslo:
 \begin{teorema}[imo1977\(\_ \)q6]
   Sea \(f:ℕ⁺ → ℕ⁺\) una función satisfaciendo que
   \begin{equation}
-    f(f(n))<f(n+1)
+    f(f(n)) < f(n+1)
   \end{equation}
   para cualquier número natural positivo \(n\). Entonces se tiene
   que para todo número natural positivo \(n\) se verifica que
   \begin{equation}\label{objf}
-    f(n)=n.
+    f(n) = n.
   \end{equation}
 \end{teorema}
+
 \begin{demostracion}
   Considerando la función \(f\) definida del conjunto de los números
   naturales positivos en sí mismo verificando que
   \begin{equation}\label{h}\tag{h}
-    ∀ n ∈ℕ⁺,  f(f(n))<f(n+1).
+    ∀ n ∈ ℕ⁺, f(f(n)) < f(n+1).
   \end{equation}
   Entonces, se quiere probar que para cualquier número natural positivo
   \(n\) se cumple (\ref{objf}).
@@ -536,13 +538,13 @@ naturales positivos en sí mismo. Veámoslo:
   forma poder concluir la demostración, faltaría probar que se verifica
   la hipótesis del problema. Esto es:
   \begin{equation}
-    ∀x∈ ℕ, f_1(f_1(x))<f_1(x+1),
+    ∀x∈ ℕ, f_1(f_1(x)) < f_1(x+1),
   \end{equation}
 
   Para ello, comenzaremos fijando un número natural \(x\) arbitrario. De
   esta forma, se tiene que probar que
   \begin{equation}\label{probar}
-    f_1(f_1(x))<f_1(x+1),
+    f_1(f_1(x)) <f_1(x+1),
   \end{equation}
 
   Como consecuencia de como se ha definido la función \(f_1\), (\ref{f1}),
@@ -550,27 +552,27 @@ naturales positivos en sí mismo. Veámoslo:
   distintos:
   \begin{itemize}
   \item \textbf{Caso \(m=0\)}
-    
+
     En este caso la expresión a demostrar (\ref{probar}), se convierte en
     \begin{equation}\label{probar2}
-      f_1(f_1(0))<f_1(0+1).
+      f_1(f_1(0)) < f_1(0+1).
     \end{equation}
 
     Sin más que aplicar la definición de la función, (\ref{f1}), se tiene
     que demostrar (\ref{probar2}) se convierte en
     \begin{equation}
-      0<f(1).
+      0 < f(1).
     \end{equation}
 
     Este resultado se tiene de manera inmediata pues el conjunto imagen
-    de la función \(f\) es el conjunto de los números naturales postivos. 
+    de la función \(f\) es el conjunto de los números naturales positivos.
 
   \item \textbf{Caso \(m>0\)}
 
     En este caso, se tiene que por la definición de \(f_1\), probar
     (\ref{probar}) se convierte en
     \begin{equation}\label{probar3}
-    f(f(x))<f(x+1).
+    f(f(x)) < f(x+1).
     \end{equation}
 
     Pero este resultado es inmediato haciendo uso de la hipótesis
@@ -602,11 +604,10 @@ de la siguiente aplicación:
 \begin{leancode}
 def to_pnat' (n : ℕ) : ℕ+ := succ_pnat (pred n)
 \end{leancode}
-
 Además,se han usado las tácticas
+\tactica{cases}{cases},
 \tactica{intro}{intro},
-\tactica{simpa}{simpa},
-\tactica{cases}{cases} y
+\tactica{simpa}{simpa} y
 \tactica{simp}{simp}.
 
 %%% Local Variables:
