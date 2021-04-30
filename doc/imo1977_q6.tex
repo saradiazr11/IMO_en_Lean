@@ -5,7 +5,7 @@ En esta sección se va a detallar la solución al problema Q6 que se
 propuso en el año 1977. Comenzaremos presentando el enunciado de dicho
 problema y su correspondiente solución en lenguaje
 natural. Posteriormente se presentará la formalización en Lean de dicho
-problema y el análisis de ésta.
+problema y el análisis de la misma.
 
 Destacar que la formalización original del problema se ha obtenido de
 \cite{TC} y fue propuesta por Tian Chen.
@@ -19,13 +19,13 @@ Destacar que la formalización original del problema se ha obtenido de
     natural positivo \(n\) se verifica que
   \[f(n)=n.\]}}
 
-Para llevar a cabo la formalizaciṕon en Lean del problema que
+Para llevar a cabo la formalización en Lean del problema que
 se ha planteado, se va a importar la teoría
 \href{https://github.com/leanprover-community/mathlib/blob/
   master/src/data/pnat/basic.lean}{data.pnat.basic} sobre el conjunto
 formado por los números naturales que son positivos.
 
-En Lean esto lo expresamod como sigue:
+En Lean esto lo expresamos como sigue:
 \begin{leancode}
 import data.pnat.basic
 \end{leancode}
@@ -62,7 +62,7 @@ naturales. Enunciemos dicho teorema:
 
   Previo a la demostración en sí de este resultado, se van a probar
   una serie de resultados auxiliares que nos serán necesarion para
-  la conclusión del primero. Destacar que estos teoremas auxiliares
+  la conclusión del primero. Destacar que estos resultados auxiliares
   que se van a demostrar se encuentran bajo las mismas condiciones
   que el problema principal.
   
@@ -90,7 +90,7 @@ naturales. Enunciemos dicho teorema:
 
       En este caso, hay que demostrar que
       \begin{equation}\label{dem}
-        0≤f(n),
+        ∀n,0≤f(n),
       \end{equation}
       bajo las hipótesis (\ref{h1}) y que para todo número natural
       \(n\) se verifica que
@@ -101,7 +101,7 @@ naturales. Enunciemos dicho teorema:
       Para demostrar (\ref{dem}) basta con aplicar que por
       definición todo número natural es mayor igual que cero.
       Entonces, como consecuencia de que la función \(f\) está
-      definida entre el conjunto de los números naturales, se tiene
+      definida del conjunto de los números naturales en sí mismo, se tiene
       que \(f(n)\) siempre va a ser mayor o igual que cero para
       cualquier \(n\) natural.
       
@@ -119,7 +119,7 @@ naturales. Enunciemos dicho teorema:
       \end{equation}
 
       Una vez ya se ha introducido la hipótesis de inducción, se va
-      a denotar la hipótesis de que para cualquiero número natural
+      a denotar la hipótesis de que para cualquier número natural
       \(n\) sea mayor igual que \(k+1\) como:
       \begin{equation}\label{hk}\tag{hk}
         k+1≤n.
@@ -132,8 +132,7 @@ naturales. Enunciemos dicho teorema:
       \end{equation}
 
       A continuación, se van a deducir una serie de hipótesis que se
-      tienen de manera casi directa y que nos ayudarán a la
-      resolución del problema principal.
+      tienen de manera casi directa.
       \begin{itemize}
       \item A partir de la hipótesis (\ref{hk}), se tiene de manera
         directa que pasando restando el uno de una parte de la
@@ -260,8 +259,8 @@ naturales. Enunciemos dicho teorema:
         \end{equation}
 
         Ahora bien, para finalizar la prueba de este problema basta
-        con aplicar la transitividad de las relaciones menor o igual
-        y menor sobre las hipótesis (\ref{hk}) y (\ref{hk0}).
+        con aplicar la transitividad de las relaciones menor o igual que
+        y menor que sobre las hipótesis (\ref{hk}) y (\ref{hk0}).
 
       \end{enumerate}
 
@@ -281,7 +280,7 @@ naturales. Enunciemos dicho teorema:
   natural \(n\) se verifica que dicho número \(n\) es menor o igual
   que \(f(n)\). Simbólicamente:
   \begin{equation}\label{hf}\tag{hf}
-    ∀n∈ ℕ n≤f(n).
+    ∀n∈ ℕ, n≤f(n).
   \end{equation}
 
   Fijando un número natural \(n\) cualesquiera, se tiene que le
@@ -397,8 +396,8 @@ naturales. Enunciemos dicho teorema:
     n≤f(n).
   \end{equation}
 
-  Por tanto, haciendo uso de esto, el (\ref{objetivo2}) pasa a convertirse
-  en
+  Por tanto, haciendo uso de esto, el objetivo (\ref{objetivo2}) pasa a
+  convertirse en
   \begin{equation}\label{objetivo3}
     f(n)<n+1.
   \end{equation}
@@ -446,7 +445,7 @@ begin
 end
 \end{leancode}
 
-En la formalización de este lema en Lean sólo han sido necesarios el uso
+En la formalización de este teorema Lean han sido necesarios el uso
 de los siguiente lemas y teoremas:
 \begin{itemize}
 \item \mint{lean}|nat.zero_le : ∀ (n: ℕ), 0≤n|
@@ -481,40 +480,134 @@ Además,se han usado las tácticas
 \tactica{apply}{apply}.
 
 Una vez ya se ha demostrado el teorema \ref{extension}, se va a
-introducir el teorema con el cual el problema estaría resuleto.
-El teorema que introduciremos a continuación, no es más que un caso3
-particular del anterior.
+introducir el teorema con el cual el problema estaría resuelto. El
+teorema que se va a presentar a continuación no es más que un caso
+particular del teorema \ref{extension}, ya probado.
 
+La diferencia entre estos dos teoremas es que mientras que en
+\ref{extension} se consideraba que la función \(f\) estaba definida
+del conjunto de los números naturales en sí mismo; en el siguiente
+teorema, dicha función estará definida del conjunto de los números
+naturales positivos en sí mismo. Veámoslo:
 
-\begin{teorema}[imo1977\(\_ \)q62]
+\begin{teorema}[imo1977\(\_ \)q6]
   Sea \(f:ℕ⁺ → ℕ⁺\) una función satisfaciendo que
   \begin{equation}
     f(f(n))<f(n+1)
   \end{equation}
   para cualquier número natural positivo \(n\). Entonces se tiene
   que para todo número natural positivo \(n\) se verifica que
-  \begin{equation}
+  \begin{equation}\label{objf}
     f(n)=n.
   \end{equation}
 \end{teorema}
 \begin{demostracion}
-hola
+  Considerando la función \(f\) definida del conjunto de los números
+  naturales positivos en sí mismo verificando que
+  \begin{equation}\label{h}\tag{h}
+    ∀ n ∈ℕ⁺,  f(f(n))<f(n+1).
+  \end{equation}
+  Entonces, se quiere probar que para cualquier número natural positivo
+  \(n\) se cumple (\ref{objf}).
+
+  En primer lugar, fijemos un número natural positivo arbitrario \(n\). A
+  continuación, se hace uso del teorema \ref{extension}, el cual está
+  definido sobre el conjunto de los números naturales. Aplicamos este
+  teorema sobre una función que está definida sobre el conjunto de los
+  número naturales, de manera que si consideramos un número \(m\) natural
+  se distinguen dos casos:
+  \begin{enumerate}
+  \item Que el número natural \(m\) sea positivo. En esta situación,
+    la función se define como \(f(m)\), donde \(f\) es la definida en el
+    enunciado de este teorema.
+  \item Que el número natural \(m\) sea nulo. En este caso la aplicación
+    definida nos lleva éste número al cero.
+  \end{enumerate}
+
+  Si denotamos esta función por \(f_1\), simbólicamente se tendría:
+  \begin{equation}\label{f1}
+    f_1(m)=\left\lbrace\begin{array}{ll}
+                         f(m), & \text{si } m>0, \\
+                         0, & \text{si } m=0.
+                       \end{array}\right.
+  \end{equation}
+
+  Ahora bien, para poder aplicar el teorema \ref{extension} y de esta
+  forma poder concluir la demostración, faltaría probar que se verifica
+  la hipótesis del problema. Esto es:
+  \begin{equation}
+    ∀x∈ ℕ, f_1(f_1(x))<f_1(x+1),
+  \end{equation}
+
+  Para ello, comenzaremos fijando un número natural \(x\) arbitrario. De
+  esta forma, se tiene que probar que
+  \begin{equation}\label{probar}
+    f_1(f_1(x))<f_1(x+1),
+  \end{equation}
+
+  Como consecuencia de como se ha definido la función \(f_1\), (\ref{f1}),
+  para demostrar (\ref{probar}) vamos a dividir la prueba en dos casos
+  distintos:
+  \begin{itemize}
+  \item \textbf{Caso \(m=0\)}
+    
+    En este caso la expresión a demostrar (\ref{probar}), se convierte en
+    \begin{equation}\label{probar2}
+      f_1(f_1(0))<f_1(0+1).
+    \end{equation}
+
+    Sin más que aplicar la definición de la función, (\ref{f1}), se tiene
+    que demostrar (\ref{probar2}) se convierte en
+    \begin{equation}
+      0<f(1).
+    \end{equation}
+
+    Este resultado se tiene de manera inmediata pues el conjunto imagen
+    de la función \(f\) es el conjunto de los números naturales postivos. 
+
+  \item \textbf{Caso \(m>0\)}
+
+    En este caso, se tiene que por la definición de \(f_1\), probar
+    (\ref{probar}) se convierte en
+    \begin{equation}\label{probar3}
+    f(f(x))<f(x+1).
+    \end{equation}
+
+    Pero este resultado es inmediato haciendo uso de la hipótesis
+    (\ref{h}) y de esta forma se tendría también demostrado este caso.
+  \end{itemize}
+
+  Concluyendo, tras la demostración de estos dos casos, ya se tendría
+  la prueba del teorema que buscábamos.
 \end{demostracion}
 
-Finalmente, la formalización en Lean de este teorema nos quedaría:
+Finalmente, la formalización en Lean de este teorema sería:
 \begin{leancode}
-theorem imo1977_q62 (f : ℕ+ → ℕ+) (h : ∀ n, f (f n) < f (n + 1)) :
-  ∀ n, f n = n :=
+theorem imo1977_q6
+  (f : ℕ+ → ℕ+)
+  (h : ∀ n, f (f n) < f (n + 1))
+  : ∀ n, f n = n :=
 begin
   intro n,
   simpa using Extension (λ m, if 0 < m then f m.to_pnat' else 0) _ n,
   intro x,
   cases x,
-  {simp},
-  {simpa using h _},
+  { simp },
+  { simpa using h _},
 end
 \end{leancode}
 
+En la formalización en Lean de este teorema sólo ha sido necesario el uso
+de la siguiente aplicación:
+\begin{leancode}
+def to_pnat' (n : ℕ) : ℕ+ := succ_pnat (pred n)
+\end{leancode}
+
+Además,se han usado las tácticas
+\tactica{intro}{intro},
+\tactica{simpa}{simpa},
+\tactica{cases}{cases} y
+\tactica{simp}{simp}.
 
 %%% Local Variables:
 %%% mode: latex
