@@ -19,7 +19,7 @@ begin
   rw funAuxiliar,
   rw real.cos_two_mul,
   rw cos_three_mul,
-  ring,
+  ring_nf,
 end
 
 lemma Equivalencia
@@ -69,7 +69,7 @@ lemma SolucionCosenoCuadrado
   {x : ℝ}
   : cos x ^ 2 = 1/2 ↔ ∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
 begin
-  rw cos_square,
+  rw cos_sq,
   rw add_right_eq_self,
   rw div_eq_zero_iff,
   norm_num,
