@@ -157,7 +157,7 @@ begin
   rw funauxiliar,
   rw real.cos_two_mul,
   rw cos_three_mul,
-  ring,
+  ring_nf,
 end
 \end{leancode}
 \index{Igualdad}
@@ -609,7 +609,7 @@ lemma SolucionCosenoCuadrado
   {x : ℝ}
   : cos x ^ 2 = 1/2 ↔ ∃ k : ℤ, x = (2 * k + 1) * π / 4 :=
 begin
-  rw cos_square,
+  rw cos_sq,
   rw add_right_eq_self,
   rw div_eq_zero_iff,
   norm_num,
@@ -638,8 +638,8 @@ como un número real en el caso de que sea necesario.
 Seguidamente, veamos los lemas auxiliares que se han utilizado
 para realizar la formalización de este lema son los siguiente:
 \begin{itemize}
-\item \mint{lean}|cos_square : cos x ^ 2 = 1 / 2 + cos (2 * x) / 2 |
-  \indLema{cos\_square}
+\item \mint{lean}|cos_sq : cos x ^ 2 = 1 / 2 + cos (2 * x) / 2 |
+  \indLema{cos\_sq}
 \item \mint{lean}|add_right_eq_self : a + b = a ↔ a = 0|
   \indLema{add\_right\_eq\_self}
 \item \mint{lean}|div_eq_zero_iff : a / b = 0 ↔ a = 0 ∨ b = 0|
