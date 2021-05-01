@@ -18,7 +18,11 @@ Destacar que la formalización original del problema se ha obtenido de
     natural positivo \(n\) se verifica que
     \[f(n) = n.\]}}
 
-\comentario{Comentar el significado de N⁺}
+\begin{nota}
+  En el enunciado del problema anterior se observa que la función \(f\) está
+  definida del conjunto \(ℕ⁺\) en sí mismo; dicho conjunto se define como
+  el conjunto de los números naturales positivos.
+\end{nota}
 
 Para llevar a cabo la formalización en Lean del problema que
 se ha planteado, se va a importar la teoría
@@ -445,6 +449,7 @@ begin
   exact (f_mon.lt_iff_lt.mp (h1 n)),
 end
 \end{leancode}
+\index{Extension}
 
 En la formalización de este teorema Lean han sido necesarios el uso
 de los siguiente lemas y teoremas:
@@ -598,6 +603,7 @@ begin
   { simpa using h _},
 end
 \end{leancode}
+\index{imo1977\_q6}
 
 En la formalización en Lean de este teorema sólo ha sido necesario el uso
 de la siguiente aplicación:
