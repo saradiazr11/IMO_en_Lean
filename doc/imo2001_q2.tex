@@ -7,4 +7,120 @@ luego su correspondiente formalización en Lean.
 
 La formalización en Lean de este problema se ha basado en la que
 recientemente propuso Tian Chen y que se puede  encontrar en
-\cite{TCC}
+\cite{TCC}.
+
+\noindent
+\framebox{\parbox{\textwidth}{
+    \textbf{Problema 4 (2001--Q2)}. Consideremos \(a\), \(b\) y
+    \(c\) tres números reales y positivos cualesquieras. Demostrar
+    que
+    \begin{equation*}
+      \frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
+      \frac{c}{\sqrt{c²+8ab}}≥1.
+    \end{equation*}
+  }}
+
+Para llevar a cabo la formalización en Lean de este problema, es
+necesario la importación de la teoría
+\href{https://github.com/leanprover-community/mathlib/blob/master/src/analysis/special_functions/pow.lean}
+{analysis.special\_functions.pow} (sobre las potencias) y también
+habilitar el \href{https://leanprover.github.io/reference/other_commands.html#namespaces}
+{espacio de nombre} de los números reales (para la simplificación
+de notación de algunas funciones).
+
+En Lean todo lo detallado se formaliza como sigue:
+\begin{leancode}
+import analysis.special_functions.pow
+
+open real
+\end{leancode}
+
+Además, se han de introducir las variables \(a\), \(b\) y \(c\) que
+en este problema pertenecen al conjunto de los números reales (la
+condición de que son positivos se introducirán como hipótesis).
+En Lean esto se formaliza de la siguiente forma:
+\begin{leancode}
+variables {a b c : ℝ}
+\end{leancode}
+
+\subsection{Resultados auxiliares}
+Para llevar a cabo la resolución de este problema, se van a utilizar
+una serie de lemas y teoremas auxiliares.
+
+El primer resultado auxiliar es el que se presenta a continuación:
+
+\begin{lema}[suma\(\_\)pos]
+  Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
+  \begin{align}
+    &0<a, \label{haq2}\tag{ha}\\
+    &0<b, \label{hbq2}\tag{hb}\\
+    &0<c. \label{hcq2}\tag{hc}
+  \end{align}
+  Entonces, se tiene que la suma de \(a\) elevado a la cuarta, \(b\)
+  elevado a la cuarta y \(c\) elevado a la cuarta es positiva.
+  Simbólicamente:
+  \begin{equation}
+    0<a⁴+b⁴+c⁴.
+  \end{equation}
+\end{lema}
+\begin{demostracion}
+  La demostración de este lema es bastante sencilla, se comienza
+  usando el resultado de que la potencia de cualquier número
+  positivo es también positiva. Utilizando esto sobre las hipótesis
+  (\ref{haq2}), (\ref{hbq2}) y (\ref{hcq2}), se tienen las tres
+  siguientes consecuencias:
+  \begin{align}
+    &0<a⁴, \label{ha4q2}\tag{ha1}\\
+    &0<b⁴, \label{hb4q2}\tag{hb1}\\
+    &0<c⁴. \label{hc4q2}\tag{hc1}
+  \end{align}
+
+  Ya para finalizar, basta con usar dos veces el resultado que nos
+  dice que la suma de dos números postivos es positiva. Esto supone
+  que, si usamos este resultado sobre las hipótesis (\ref{ha4q2})
+  y (\ref{hb4q2}) se tiene que
+  \begin{equation}\label{sum1q2}\tag{sum1}
+    0<a⁴+b⁴.
+  \end{equation}
+  Reiteramos este procedimiento ahora usando dicho resultado sobre
+  las hipótesis (\ref{sum1q2}) y (\ref{hc4q2}) y se obtiene:
+  \begin{equation}\tag{sum2}
+    0<a⁴+b⁴+c⁴.
+  \end{equation}
+
+  De esta forma, ya se tendría el resultado deseado.
+\end{demostracion}
+
+La formalización en Lean de este lema es la siguiente:
+\begin{leancode}
+lemma suma_pos (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+0 < a ^ 4 + b ^ 4 + c ^ 4 :=
+begin
+  have ha1: 0 < a ^ 4:=pow_pos ha 4,
+  have hb1: 0 < b ^ 4:=pow_pos hb 4,
+  have hc1: 0 < c ^ 4:=pow_pos hc 4,
+  have sum1: 0< a ^ 4 + b ^ 4 := add_pos ha1 hb1,
+  have sum2: 0< a ^ 4 + b ^ 4 + c ^ 4 := add_pos sum1 hc1,
+  exact sum2,
+end
+\end{leancode}
+\index{suma\_pos}
+
+Para la formalización en Lean de este lema se han utilizado los
+siguientes lemas auxiliares:
+\begin{itemize}
+\item \mint{lean}|pow_pos {a : R} (H : 0 < a) : ∀ (n : ℕ), 0 < a ^ n|
+  \indLema{pow\_pos}
+\item \mint{lean}|add_pos {a b : α} (h: 0 < a) (h': 0 < b), 0 < a + b|
+  \indLema{add\_pos}
+\end{itemize}
+
+Además, las únicas dos tácticas que se han usado son
+\tactica{exact}{exact} y
+\tactica{have}{have}.
+
+
+\subsection{Conclusión del problema}
+Una vez ya se han introducido y formalizado los tres resultados
+axiliares, se procederá a la formalización en sí de la resolución
+como tal del problema.
