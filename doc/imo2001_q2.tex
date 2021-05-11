@@ -119,13 +119,57 @@ Además, las únicas dos tácticas que se han usado son
 \tactica{exact}{exact} y
 \tactica{have}{have}.
 
+Para proseguir con la resolución del problema se va a introducir el
+segundo resultado auxiliar. Éste consiste en demostrar una cota que
+nos resultará de gran utilidad más adelante.
 
-El segundo resultado auxiliar que se va a presentar es el siguiente:
+\begin{lema}\label{lemacota}
+  Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
+  \begin{align}
+    &0<a, \label{haq22}\tag{ha}\\
+    &0<b, \label{hbq22}\tag{hb}\\
+    &0<c. \label{hcq22}\tag{hc}
+  \end{align}
+  Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
+  verifica la siguiente desigualdad:
+  \begin{equation}\label{eqcota}
+    \frac{a⁴}{a⁴+b⁴+c⁴} ≤ \frac{a³}{\sqrt{(a³)²+8b³c³}}.
+  \end{equation}
+\end{lema}
 
-Enunciado del lema
+\begin{demostracion}
+  La demostración consiste en que bajo las hipótesis de que los
+  tres números que estamos considerando son positivos, es decir,
+  (\ref{haq22}), (\ref{hbq22}) y (\ref{hcq22}); se tiene que probar
+  la expresión (\ref{eqcota}).
+
+  Para llevar a cabo tal prueba, se comenzarán una serie de hipótesis
+  que se pueden deducir fácilmente:
+  \begin{itemize}
+  \item Por la hipótesis (\ref{haq22}) se tiene que \(a\) es un
+    número positivo, entonces cualquier potencia de él lo es y en
+    concreto:
+    \begin{equation}\label{ha3}\tag{ha3}
+      0<a³.
+    \end{equation}
+
+  \item Se tiene que cualquier número elevado a la segunda potencia
+    es siempre mayor o igual que cero. El caso particular que nos
+    interesa es:
+    \begin{equation}\label{ha32}\tag{ha32}
+      0≤(a³)².
+    \end{equation}
+
+    \item 
+  \end{itemize}
+
+  De esta manera, 
+\end{demostracion}
+
+Veámos la formalización en Lean de este lema:
 
 \begin{leancode}
-  lemma cota (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+lemma cota (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
   a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) ≤
   a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) :=
 begin
@@ -133,8 +177,10 @@ begin
   have ha32: 0 ≤  (a ^ 3) ^ 2:= pow_two_nonneg (a ^ 3),
   have hb8: 0 < 8 * b ^ 3 := mul_pos (bit0_pos zero_lt_four) (pow_pos hb 3),
   have hbc: 0 < 8 * b ^ 3 * c ^ 3 := mul_pos hb8 (pow_pos hc 3),
-  have hdenom1: 0 < (a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3 := add_pos_of_nonneg_of_pos ha32 hbc,
-  have hsqrt: 0 < sqrt((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) := sqrt_pos.mpr hdenom1,
+  have hdenom1: 0 < (a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3 := 
+    add_pos_of_nonneg_of_pos ha32 hbc,
+  have hsqrt: 0 < sqrt((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) := 
+    sqrt_pos.mpr hdenom1,
   have hdenom2 := suma_pos ha hb hc,
   have hdenom3: 0 ≤ a ^ 4 + b ^ 4 + c ^ 4 := hdenom2.le,
   rw div_le_div_iff hdenom2 hsqrt,
@@ -146,14 +192,17 @@ begin
   rw mul_pow,
   rw sq_sqrt hdenom1.le,
   rw ← sub_nonneg,
-  have desarrollo: (a ^ 4 + b ^ 4 + c ^ 4) ^ 2 - a ^ 2 * ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3)
+  have desarrollo: (a ^ 4 + b ^ 4 + c ^ 4) ^ 2 - 
+      a ^ 2 * ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3)
       = 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 + (b ^ 4 - c ^ 4) ^ 2 +
-        (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2 := by ring,
+      (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2 := by ring,
   rw desarrollo,
   have h1: 0 ≤ (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 := pow_two_nonneg _,
-  have h1': 0 ≤ 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2:= mul_nonneg zero_le_two h1,
+  have h1': 0 ≤ 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2:= 
+    mul_nonneg zero_le_two h1,
   have h2: 0 ≤ (b ^ 4 - c ^ 4) ^ 2:= pow_two_nonneg _,
-  have h3: 0 ≤ (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2:= pow_two_nonneg _,
+  have h3: 0 ≤ (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2:= 
+    pow_two_nonneg _,
   have aux1:= add_nonneg h2 h3,
   have tesis:= add_nonneg h1' aux1,
   rw add_assoc,
@@ -161,11 +210,32 @@ begin
 end
 \end{leancode}
 
-Por último, el tercer resultado auxiliar para resolver el ejercicio es el que
-se presenta a continuación:
+Por último, el tercer resultado auxiliar para resolver el ejercicio
+se trata de un teorema que será la herramienta principal para
+resolver el problema y que hará uso de los dos lemas auxiliares
+que se han presentado anteriormente. El teorema es el siguiente:
+\begin{teorema}
+  Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
+  \begin{align}
+    &0<a, \label{haq2t}\tag{ha}\\
+    &0<b, \label{hbq2t}\tag{hb}\\
+    &0<c. \label{hcq2t}\tag{hc}
+  \end{align}
+  Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
+  verifica la siguiente desigualdad:
+  \begin{equation}
+    1≤\frac{a³}{\sqrt{(a³)²}+8b³c³}+\frac{b³}{\sqrt{(b³)²+8c³a³}}+
+    \frac{c³}{\sqrt{(c³)²+8a³b³}}.
+  \end{equation}
+\end{teorema}
+
+\begin{demostracion}
+  Aquí se presentará la demostración del teorema auxiliar en lenguaje
+  natural.
+\end{demostracion}
 
 \begin{leancode}
-  theorem imo2001_q2_aux (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+theorem imo2001_q2_aux (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
   1 ≤ a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
       b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
       c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
@@ -176,18 +246,21 @@ begin
   have h2: c ^ 4 + a ^ 4 + b ^ 4 = a ^4 + b ^ 4 + c ^ 4,
   {rw add_assoc,
    rw add_comm,},
-   have h3: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) ≤  
+   have h3: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) ≤  
     a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) + 
     b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3):= 
     add_le_add (cota ha hb hc) (cota hb hc ha),
-    have h4: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) 
-    + c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) ≤  
+    have h4: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
+    c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) ≤  
     a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) + 
     b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
     c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
     add_le_add h3 (cota hc ha hb),
-    have igualdad: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) 
-    + c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) = 1,
+    have igualdad: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
+    c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) = 1,
     {rw h1,
      rw h2,
      rw ← add_div,
@@ -204,4 +277,49 @@ end
 \subsection{Conclusión del problema}
 Una vez ya se han introducido y formalizado los tres resultados
 axiliares, se procederá a la formalización en sí de la resolución
-como tal del problema.
+como tal del problema.Para llevar a cabo tal resolución se hará uso
+de un teorema que demuestra el resultado que nos interesa.
+
+\begin{teorema}
+  Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
+  \begin{align}
+    &0<a, \label{haq2te}\tag{ha}\\
+    &0<b, \label{hbq2te}\tag{hb}\\
+    &0<c. \label{hcq2te}\tag{hc}
+  \end{align}
+  Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
+  verifica la siguiente desigualdad:
+  \begin{equation}
+    1≤\frac{a}{\sqrt{a²}+8bc}+\frac{b}{\sqrt{b²+8ca}}+
+    \frac{c}{\sqrt{c²+8ab}}.
+  \end{equation}
+\end{teorema}
+
+\begin{demostracion}
+  Aquí se presentará la demostración del teorema en lenguaje
+  natural.
+\end{demostracion}
+
+La formalización en Lean de este resultado es la siguiente:
+
+\begin{leancode}
+theorem imo2001_q2 (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+  1 ≤ a / sqrt (a ^ 2 + 8 * b * c) +
+      b / sqrt (b ^ 2 + 8 * c * a) +
+      c / sqrt (c ^ 2 + 8 * a * b) :=
+begin
+  have h: ∀ {x : ℝ}, 0 < x → (x ^ (3 : ℝ)⁻¹) ^ 3 = x,
+  {intros x hx,
+  have h1: 0 < 3 := zero_lt_three, 
+  have h2: ↑3 = (3 : ℝ):= by norm_num,
+  have htesis: (x ^ (↑3)⁻¹) ^ 3 = x := rpow_nat_inv_pow_nat hx.le h1,
+  rw h2 at htesis,
+  exact htesis,},
+  have aux:= imo2001_q2_aux (rpow_pos_of_pos ha 3⁻¹) 
+  (rpow_pos_of_pos hb 3⁻¹) (rpow_pos_of_pos hc 3⁻¹),
+  rw h ha at aux,
+  rw h hb at aux,
+  rw h hc at aux,
+  exact aux,
+end
+\end{leancode}
