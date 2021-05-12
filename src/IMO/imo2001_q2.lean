@@ -49,7 +49,6 @@ begin
       a ^ 2 * ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3)
       = 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 + (b ^ 4 - c ^ 4) ^ 2 +
       (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2 := by ring,
-  rw desarrollo,
   have h1: 0 ≤ (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 := pow_two_nonneg _,
   have h1': 0 ≤ 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2:= 
     mul_nonneg zero_le_two h1,
@@ -58,6 +57,7 @@ begin
     pow_two_nonneg _,
   have aux1:= add_nonneg h2 h3,
   have tesis:= add_nonneg h1' aux1,
+  rw desarrollo,
   rw add_assoc,
   exact tesis,
 end
@@ -74,19 +74,19 @@ begin
   have h2: c ^ 4 + a ^ 4 + b ^ 4 = a ^4 + b ^ 4 + c ^ 4,
   {rw add_assoc,
    rw add_comm,},
-   have h3: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+  have h3: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
     b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) ≤  
     a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) + 
     b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3):= 
     add_le_add (cota ha hb hc) (cota hb hc ha),
-    have h4: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+  have h4: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
     b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
     c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) ≤  
     a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) + 
     b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
     c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
     add_le_add h3 (cota hc ha hb),
-    have igualdad: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+  have igualdad: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
     b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
     c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) = 1,
     {rw h1,
@@ -96,8 +96,8 @@ begin
      rw div_self,
      apply ne_of_gt,
      exact suma_pos ha hb hc,},
-     rw igualdad at h4,
-     exact h4,
+  rw igualdad at h4,
+  exact h4,
 end
 
 theorem imo2001_q2 (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :

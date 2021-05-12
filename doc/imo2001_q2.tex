@@ -49,7 +49,7 @@ una serie de lemas y teoremas auxiliares.
 
 El primer resultado auxiliar es el que se presenta a continuación:
 
-\begin{lema}[suma\(\_\)pos]
+\begin{lema}[suma\(\_\)pos]\label{lemasuma}
   Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
   \begin{align}
     &0<a, \label{haq2}\tag{ha}\\
@@ -160,10 +160,182 @@ nos resultará de gran utilidad más adelante.
       0≤(a³)².
     \end{equation}
 
-    \item 
+  \item Análogamente a como se ha procedido en la hipótesis (\ref{ha3}),
+    se tiene que al multiplicar la potencia de un número positivo por
+    cualquier número positivo, el resultado también es positivo. En nuestro
+    caso considerando la tercera potencia de \(b\) y el número ocho:
+    \begin{equation}\label{hb8}\tag{hb8}
+      0<8b³.
+    \end{equation}
+
+  \item Ahora bien, se sabe que al multiplicar dos números positivos, el
+    resultado es también un número positivo. Por tanto, si aplicamos dicho
+    resultado a la hipótesis anterior, (\ref{hb8}), y a la tercera potencia
+    de \(c\) (que también es positivo por analogía con la hipótesis
+    (\ref{ha3})), se tiene que:
+    \begin{equation}\label{hbc}\tag{hbc}
+      0<8b³c³.
+    \end{equation}
+
+  \item Haciendo uso del resultado que nos dice que la suma de dos
+    números positivos es positiva sobre las hipótesis (\ref{ha32}) y
+    (\ref{hbc}), se obtiene el siguiente resultado:
+    \begin{equation}\label{hdenom1}\tag{hdenom1}
+       0<(a³)²+8b³c³
+     \end{equation}
+
+   \item Como sabemos que la raiz cuadrada de un número es positiva si
+     y solamente si dicho número es positivo, si usamos esto sobre
+     (\ref{hbc}), se tiene que:
+     \begin{equation}\label{hsqrt}\tag{hsqrt}
+       0<\sqrt{(a³)²+8b³c³}.
+     \end{equation}
+
+   \item Usando el lema \ref{lemasuma} sobre los números \(a\), \(b\) y
+     \(c\), puesto que se satisfacen las hipótesis (\ref{haq22}),
+     (\ref{hbq22}) y (\ref{hcq22}); se tiene que:
+     \begin{equation}\label{hdenom2}\tag{hdenom2}
+       0<a⁴+b⁴+c⁴.
+     \end{equation}
+
+   \item Por último, de manera inmediata se tiene que si un número es
+     positivo, entonces dicho número es mayor o igual que cero. Aplicando
+     esto sobre el número (\ref{hdenom2}), se obtiene que:
+     \begin{equation}\label{hdenom3}\tag{hdenom3}
+       0≤a⁴+b⁴+c⁴.
+     \end{equation}
   \end{itemize}
 
-  De esta manera, 
+  De esta manera, una vez se han introducido estas hipótesis, recordemos
+  que el objetivo a demostrar era (\ref{eqcota}). A continuación, como
+  consecuencia de que los dos denominadores de dicha desigualdad son
+  positivos (probado en (\ref{hdenom2}) y (\ref{hsqrt})), se tiene que
+  podemos pasar multiplicando los denominadores sin que se cambie de
+  sentido la desigualdad. Esto es:
+  \begin{equation}\label{eqcota2}
+    a⁴ \sqrt{(a³)²+8b³c³}≤ a³ (a⁴+b⁴+c⁴).
+  \end{equation}
+
+  La expresión (\ref{eqcota2}) puede ser reescrita haciendo uso de la
+  propiedad asociativa de la multiplicación y separando la potencia a la
+  cuarta de \(a\) como el producto de la potencia tercera de \(a\) por
+  \(a\). De esta forma se obtendría:
+  \begin{equation}\label{eqcota3}
+    a³(a \sqrt{(a³)²+8b³c³})≤ a³ (a⁴+b⁴+c⁴).
+  \end{equation}
+
+  Aplicando ahora que como la potencia al cubo de \(a\) es un número mayor
+  o igual que cero (porque ya se ha visto en la hipótesis (\ref{ha3}) que es
+  un número positivo), se puede simplificar la expresión (\ref{eqcota3})
+  puesto que ambos lados de la igualdad están multiplicados por \(a\) al
+  cubo. De esta forma:
+  \begin{equation}\label{eqcota4}
+    a \sqrt{(a³)²+8b³c³}≤a⁴+b⁴+c⁴.
+  \end{equation}
+
+  Proseguimos trabajando con la expresión (\ref{eqcota4}); procedemos a
+  aplicar que cuando se tiene una desigualdad cuyos términos son mayores
+  o iguales que cero, como es nuestro caso, se mantiene la desigualdad al
+  elevar ambos términos a la misma potencia (siempre y cuando el número de
+  la potencia sea mayor estricto que cero). Entonces, aplicando esto sobre
+  la expresión (\ref{eqcota4}) y elevando al cuadrado, se tiene que:
+  \begin{equation}\label{eqcota5}
+    (a \sqrt{(a³)²+8b³c³})²≤(a⁴+b⁴+c⁴)².
+  \end{equation}
+
+  Para finalizar esta parte de la demostración, aplicaremos los siguientes
+  resultados:
+  \begin{enumerate}
+  \item El producto de dos números elevado a cualquier potencia es el
+    producto del primer término a dicha potencia por el segundo también a la
+    misma potencia.
+  \item El resultado de la potencia al cuadrado de la raiz cuadrada de un
+    número es dicho número.
+  \end{enumerate}
+  Además de estos dos resultados, pasaremos restando el primer término de la
+  desigualdad al segundo. De manera que se tendría que (\ref{eqcota5}) se
+  reescribiría como sigue:
+  \begin{equation}\label{eqcota6}
+    0≤ (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³).
+  \end{equation}
+
+  A continuación, para poder seguir con el desarrollo de la expresión a
+  demostrar, es decir, (\ref{eqcota6}) se van a introducir otra serie de
+  hipótesis al igual que hicimos al principio de la demostración.
+  \begin{itemize}
+  \item \textbf{Hipótesis desarrollo}
+
+    Esta hipótesis consiste en que para cualesquiera números reales \(a\),
+    \(b\) ó \(c\), se tiene que:
+    \begin{align*}\label{desarrollo}\tag{desarrollo}
+      (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³)&=2(a²(b²-c²))²+(b⁴-c⁴)²\\
+      &+(2(a²bc-b²c²))².
+    \end{align*}
+    Para demostrar esta hipótesis desarrollaremos los dos términos de la
+    igualdad y veremos que se obtiene lo mismo.
+
+    \underline{Término 1:}
+    \begin{align*}
+      (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³)&=(a⁴+b⁴)²+(c⁴)²+2(a⁴+b⁴)c⁴-a⁸\\
+      &-8a²b³c³\\
+                                 &=a⁸+b⁸+2a⁴b⁴+c⁸+2a⁴c⁴+2b⁴c⁴-a⁸\\
+                                   &-8a²b³c³\\
+      &=b⁸+c⁸+2a⁴b⁴+2a⁴c⁴+2b⁴c⁴-8a²b³c³.
+    \end{align*}
+
+    \underline{Término 2:}
+    \begin{align*}
+      2(a²(b²-c²))²+(b⁴-c⁴)²+(2(a²bc&-b²c²))²=2a⁴(b⁴+c⁴-2b²c²)+b⁸+c⁸\\
+                                         &-2b⁴c⁴+4(a⁴b²c²-b⁴c⁴-2a²b³c³)\\
+                                         &=2a⁴b⁴+2a⁴c⁴-4a⁴b²c²+b⁸+c⁸\\
+                                         &-2b⁴c⁴+4a⁴b²c²+4b⁴c⁴-8a²b³c³\\
+                                    &=b⁸+c⁸+2a⁴b⁴+2a⁴c⁴+2b⁴c⁴-8a²b³c³.
+    \end{align*}
+
+    De esta forma, ya se tendría demostrada la igualdad (\ref{desarrollo}).
+
+  \item Como ya usamos en la hipótesis (\ref{ha32}), cualquier número
+    elevado al cuadrado es siempre mayor o igual que cero. En nuestro caso
+    aplicaremos este resultado para tres números diferentes obteniendo
+    así las tres siguientes hipótesis:
+    \begin{align}
+      &0≤(a²(b²-c²))²,\label{h1cota}\tag{h1}\\ 
+      &0≤(b⁴-c⁴)², \label{h2cota}\tag{h2}\\
+      &0≤(2(a²bc-b²c²))².\label{h3cota}\tag{h3}
+    \end{align}
+
+  \item Además, en el caso de la hipótesis (\ref{h1cota}), nos interesa
+    tener que dicho término multiplicado por dos es también mayor o igual
+    que cero. Lo cual se tiene de manera inmediata porque ambos términos
+    son mayores o iguales que cero. Entonces:
+    \begin{equation}
+      0≤2(a²(b²-c²))².\label{h12cota}\tag{h1'}
+    \end{equation}                      
+  \end{itemize}
+
+  De esta forma, se tiene que ya se puede terminar la demostración del
+  problema. Para ello, apliquemos el resultado de que la suma de dos
+  números no negativos es también mayor igual que cero sobre las hipótesis
+  (\ref{h2cota}) y (\ref{h3cota}). Obteniendo así:
+  \begin{equation}\label{aux1}\tag{aux1}
+    0≤(b⁴-c⁴)²+(2(a²bc-b²c²))².
+  \end{equation}
+
+  Aplicando de nuevo este mismo resultado sobre (\ref{h12cota}) y el que
+  se acaba de obtener, (\ref{aux1}), se tiene que:
+  \begin{equation}\label{tesis}\tag{tesis}
+    0≤2(a²(b²-c²))²+(b⁴-c⁴)²+(2(a²bc-b²c²))².
+  \end{equation}
+
+  Entonces, finalmente se vuelve a la expresión (\ref{eqcota6}), que era
+  el objetivo a demostrar, y usamos la hipótesis (\ref{desarrollo}). De
+  esta forma el objetivo a demostrar se convierte en:
+  \begin{equation}
+    0≤2(a²(b²-c²))²+((b⁴-c⁴)²+(2(a²bc-b²c²))²).
+  \end{equation}
+
+  Usando la propiedad asociativa de la suma, se tendría que el objetivo a
+  demostrar es (\ref{tesis}), lo cual ya nos probaría el lema.
 \end{demostracion}
 
 Veámos la formalización en Lean de este lema:
@@ -196,7 +368,6 @@ begin
       a ^ 2 * ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3)
       = 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 + (b ^ 4 - c ^ 4) ^ 2 +
       (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2 := by ring,
-  rw desarrollo,
   have h1: 0 ≤ (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 := pow_two_nonneg _,
   have h1': 0 ≤ 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2:= 
     mul_nonneg zero_le_two h1,
@@ -205,14 +376,63 @@ begin
     pow_two_nonneg _,
   have aux1:= add_nonneg h2 h3,
   have tesis:= add_nonneg h1' aux1,
+  rw desarrollo,
   rw add_assoc,
   exact tesis,
 end
 \end{leancode}
 
+
+En la formalización de este teorema Lean han sido necesarios el uso
+de los siguiente lemas y teoremas:
+\begin{itemize}
+\item \mint{lean}|pow_pos {a : R} (H : 0 < a) : ∀ (n : ℕ), 0 < a ^ n|
+  \indLema{pow\_pos}
+\item \mint{lean}|pow_two_nonneg {a : R} 0 ≤ a ^ 2|
+  \indLema{pow\_two\_nonneg}
+\item \mint{lean}|mul_pos (ha : 0 < a) (hb : 0 < b) : 0 < a * b |
+  \indLema{mul\_pos}
+\item \mint{lean}|add_pos_of_nonneg_of_pos ∀ {α : Type} {a b : α}
+  (ha : 0 ≤ a) (hb : 0 < b) : 0 < a + b|
+  \indLema{add\_pos\_of\_nonneg\_of\_pos}
+\item \mint{lean}|sqrt_pos : 0 < sqrt x ↔ 0 < x |
+  \indLema{sqrt\_pos}
+\item \mint{lean}|div_le_div_iff (b0 : 0 < b) (d0 : 0 < d) : a / b ≤ c / d ↔ a * d ≤ c * b|
+  \indLema{div\_le\_div\_iff}
+\item \mint{lean}|pow_succ' (a : M) (n : ℕ) : a^(n+1) = a^n * a |
+  \indLema{pow\_succ'}
+\item \mint{lean}|mul_assoc : ∀ a b c : G, a * b * c = a * (b * c) |
+  \indLema{mul\_assoc}
+\item \mint{lean}|mul_le_mul_of_nonneg_left (h₁ : a ≤ b) (h₂ : 0 ≤ c) : c * a ≤ c * b|
+  \indLema{mul\_le\_mul\_of\_nonneg\_left}
+\item \mint{lean}|le_of_pow_le_pow {a b : R} (n : ℕ) (hb : 0 ≤ b) (hn : 0 < n)
+  (h : a ^ n ≤ b ^ n) : a ≤ b|
+  \indLema{le\_of\_pow\_le\_pow}
+\item \mint{lean}|mul_pow (a b : M) (n : ℕ) : (a * b)^n = a^n * b^n |
+  \indLema{mul\_pow}
+\item \mint{lean}|sq_sqrt (h : 0 ≤ x) : sqrt x ^ 2 = x |
+  \indLema{sq\_sqrt}
+\item \mint{lean}|sub_nonneg : 0 ≤ a - b ↔ b ≤ a|
+  \indLema{sub\_nonneg}
+\item \mint{lean}|mul_nonneg (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a * b |
+  \indLema{mul\_nonneg}
+\item \mint{lean}|add_nonneg ∀ {α : Type} {a b : α} (ha : 0 ≤ a) (hb : 0 ≤ b) :
+  0 ≤ a + b|
+  \indLema{add\_nonneg}
+\item \mint{lean}|add_assoc ∀ {G : Type} {a b c : G}, a + b + c = a + (b + c)|
+  \indLema{add\_assoc}
+\end{itemize}
+\comentario{No sé cómo poner en dos renglones los lemas que son muy largos}
+Además,se han usado las tácticas
+\tactica{apply}{apply}.
+\tactica{exact}{exact},
+\tactica{have}{have} y
+\tactica{rw / rewrite}{rw}.
+
+
 Por último, el tercer resultado auxiliar para resolver el ejercicio
 se trata de un teorema que será la herramienta principal para
-resolver el problema y que hará uso de los dos lemas auxiliares
+resolver el problema en sí y que hará uso de los dos lemas auxiliares
 que se han presentado anteriormente. El teorema es el siguiente:
 \begin{teorema}
   Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
@@ -246,19 +466,19 @@ begin
   have h2: c ^ 4 + a ^ 4 + b ^ 4 = a ^4 + b ^ 4 + c ^ 4,
   {rw add_assoc,
    rw add_comm,},
-   have h3: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+  have h3: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
     b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) ≤  
     a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) + 
     b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3):= 
     add_le_add (cota ha hb hc) (cota hb hc ha),
-    have h4: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+  have h4: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
     b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
     c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) ≤  
     a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) + 
     b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
     c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
     add_le_add h3 (cota hc ha hb),
-    have igualdad: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
+  have igualdad: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
     b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
     c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) = 1,
     {rw h1,
@@ -268,8 +488,8 @@ begin
      rw div_self,
      apply ne_of_gt,
      exact suma_pos ha hb hc,},
-     rw igualdad at h4,
-     exact h4,
+  rw igualdad at h4,
+  exact h4,
 end
 \end{leancode}
 
