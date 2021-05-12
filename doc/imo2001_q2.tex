@@ -434,7 +434,7 @@ Por último, el tercer resultado auxiliar para resolver el ejercicio
 se trata de un teorema que será la herramienta principal para
 resolver el problema en sí y que hará uso de los dos lemas auxiliares
 que se han presentado anteriormente. El teorema es el siguiente:
-\begin{teorema}
+\begin{teorema}\label{teoremaaux}
   Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
   \begin{align}
     &0<a, \label{haq2t}\tag{ha}\\
@@ -639,7 +639,7 @@ Además,se han usado las tácticas
 \subsection{Conclusión del problema}
 Una vez ya se han introducido y formalizado los tres resultados
 axiliares, se procederá a la formalización en sí de la resolución
-como tal del problema.Para llevar a cabo tal resolución se hará uso
+como tal del problema. Para llevar a cabo tal resolución se hará uso
 de un teorema que demuestra el resultado que nos interesa.
 
 \begin{teorema}
@@ -651,18 +651,125 @@ de un teorema que demuestra el resultado que nos interesa.
   \end{align}
   Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
-  \begin{equation}
+  \begin{equation}\label{eqfinal}
     1≤\frac{a}{\sqrt{a²}+8bc}+\frac{b}{\sqrt{b²+8ca}}+
     \frac{c}{\sqrt{c²+8ab}}.
   \end{equation}
 \end{teorema}
 
 \begin{demostracion}
-  Aquí se presentará la demostración del teorema en lenguaje
-  natural.
+  Al igual que en los resultados anteriores, las hipótesis a considerar son
+  (\ref{haq2te}), (\ref{hbq2te}) y (\ref{hcq2te}). En este caso, el
+  objetivo a demostrar es la expresión (\ref{eqfinal}).
+
+  Para llevar a cabo la prueba, se comenzarán demostrando dos hipótesis
+  a partir de las cuales se tendrá de manera inmediata el resultado
+  deseado.
+  \begin{itemize}
+  \item \textbf{Hipótesis h:}
+    \begin{equation}\label{hfinal}\tag{h}
+      ∀x∈ ℝ, x>0 ⟶((x³)⁻¹)³ =x.
+    \end{equation}
+
+    Para demostrar esta hipótesis, comencemos fijando un número real \(x\),
+    a continuación, a la hipótesis de que este número es positivo la
+    denotaremos como sigue:
+    \begin{equation}\label{hxfinal}\tag{hx}
+      0<x.
+    \end{equation}
+
+    Además, se tiene de manera trivial las dos siguientes afirmaciones:
+    \begin{align}
+      &0<3,\label{h1final}\tag{h1}\\
+      &3∈ℕ. \label{h2final}\tag{h2}
+    \end{align}
+
+    Introduzcamos ahora el siguiente lema:
+    \begin{lema}\label{lemafinal}
+      Sean \(x\) un número no negativo perteneciente al conjunto de los
+      números reales y \(n\) un número perteneciente al conjunto de los
+      números naturales mayor estricto que cero. Entonces se tiene que
+      se verifica la siguiente igualdad:
+      \begin{equation}
+        (x^{n^{-1}})^n=x,
+      \end{equation}
+      donde en esa expresión \(n^{-1} \) es considerado como un número
+      natural.
+    \end{lema}
+    La formalización en Lean de este resultado es la siguiente:
+    \begin{leancode}
+      lemma rpow_nat_inv_pow_nat {x : ℝ} (hx : 0 ≤ x) {n : ℕ} (hn : 0 < n) :
+      (x ^ (n⁻¹ : ℝ)) ^ n = x
+    \end{leancode}
+
+    Entonces, se tiene que haciendo uso del lema \ref{lemafinal}, teniendo
+    en cuenta las hipótesis (\ref{h1final}) y (\ref{h2final}) y sabiendo
+    que como el \(x\) considerado es mayor estrictamente que cero,
+    (\ref{hxfinal}), entonces éste es mayor o igual que cero; se demuestra
+    (\ref{hfinal}).    
+    
+  \item \textbf{Hipótesis aux:}
+
+    En esta nueva hipótesis se hará uso del teorema auxiliar
+    \ref{teoremaaux}. No obstante, previo a ello usaremos un resultado
+    y es el siguiente:
+    \begin{lema}\label{lemapotencia}
+      Sean \(x\) e \(y\) dos números pertenecientes al conjunto de los
+      números reales y donde además \(x\) es un número mayor que cero.
+      Entonces se tiene que la potencia de \(x\) elevado a \(y\) es también
+      mayor estrictamente que cero. Simbólicamente:
+      \begin{equation}
+        ∀x,y∈ ℝ, x>0 ⟶ x^{y}>0.
+      \end{equation}
+    \end{lema}
+    Cuya formalización en Lean es:
+
+    \begin{leancode}
+    lemma rpow_pos_of_pos {x : ℝ} (hx : 0 < x) (y : ℝ) : 0 < x ^ y 
+    \end{leancode}
+
+    De esta manera, se tiene que si aplicamos el lema \ref{lemapotencia}
+    considerando como \(x\) al número real \(a\) que por hipótesis es
+    positivo, (\ref{haq2te}), y como número \(y\) al número real
+    \(3^{-1} \). De esta forma se tendría que:
+    \begin{equation}\label{x1}
+      a^{3^{-1}}>0.
+    \end{equation}
+
+    Si en lugar de considerar como \(x\) al número \(a\), consideramos los
+    números \(b\) y \(c\), respectivamente se obtiene lo siguiente:
+    \begin{align}
+      &b^{3^{-1}}>0,\label{x2}\\
+      &c^{3^{-1}}>0.\label{x3}
+    \end{align}
+
+    Entonces, teniendo estas tres hipótesis, (\ref{x1}) (\ref{x2}) y
+    (\ref{x3}), se puede aplicar el teorema auxiliar \ref{teoremaaux}
+    sobre los números reales \(a^{3^{-1}}\), \(b^{3^{-1}}\) y \(c^{3^{-1}}\).
+    Se obtendría entonces la hipótesis aux:
+    \begin{align*}\label{auxfinal}\tag{aux}
+      1≤\frac{(a^{3^{-1}})³}{\sqrt{((a^{3^{-1}})³)²+8(b^{3^{-1}})³(c^{3^{-1}})³}}
+      &+\frac{(b^{3^{-1}})³}{\sqrt{((b^{3^{-1}})³)²+8(c^{3^{-1}})³(a^{3^{-1}})³}}\\
+        &+\frac{c³}{\sqrt{((c^{3^{-1}})³)²+8(a^{3^{-1}})³(b^{3^{-1}})³}}.
+    \end{align*}
+  \end{itemize}
+
+  De forma que, una vez tenemos ya probadas estas dos hipótesis, es bastante
+  sencilla la resolución del problema original.
+
+  Como consecuencia de que los números reales en consideración son mayor que
+  cero por hipótesis, (\ref{haq2te}) (\ref{hbq2te}) y (\ref{hcq2tb}), se
+  tiene que podemos aplicar la hipótesis (\ref{hfinal}) en los diferentes
+  términos que aparecen en la expresión de la hipótesis (\ref{auxfinal}).
+  De esta forma se obtendría que:
+  \begin{equation}
+    1≤\frac{a}{\sqrt{a²}+8bc}+\frac{b}{\sqrt{b²+8ca}}+
+    \frac{c}{\sqrt{c²+8ab}},
+  \end{equation}
+  que era el resultado deseado.
 \end{demostracion}
 
-La formalización en Lean de este resultado es la siguiente:
+A continuación, presentemos la formalización en Lean de este resultado:
 
 \begin{leancode}
 theorem imo2001_q2 (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
@@ -674,9 +781,9 @@ begin
   {intros x hx,
   have h1: 0 < 3 := zero_lt_three, 
   have h2: ↑3 = (3 : ℝ):= by norm_num,
-  have htesis: (x ^ (↑3)⁻¹) ^ 3 = x := rpow_nat_inv_pow_nat hx.le h1,
-  rw h2 at htesis,
-  exact htesis,},
+  have h3: (x ^ (↑3)⁻¹) ^ 3 = x := rpow_nat_inv_pow_nat hx.le h1,
+  rw h2 at h3,
+  exact h3,},
   have aux:= imo2001_q2_aux (rpow_pos_of_pos ha 3⁻¹) 
   (rpow_pos_of_pos hb 3⁻¹) (rpow_pos_of_pos hc 3⁻¹),
   rw h ha at aux,
@@ -685,3 +792,23 @@ begin
   exact aux,
 end
 \end{leancode}
+
+Para la formalización en Lean de este teorema han sido necesarios los
+siguientes lemas y teoremas auxiliares:
+\begin{itemize}
+\item \mint{lean}|zero_lt_three : 0 < (3:α) |
+  \indLema{zero\_lt\_three}
+\item \mint{lean}|rpow_nat_inv_pow_nat {x : ℝ} (hx : 0 ≤ x) {n : ℕ} (hn : 0 < n) :
+  (x ^ (n⁻¹ : ℝ)) ^ n = x|
+  \indLema{rpow\_nat\_inv\_pow\_nat}
+\item \mint{lean}|rpow_pos_of_pos {x : ℝ} (hx : 0 < x) (y : ℝ) : 0 < x ^ y |
+  \indLema{rpow\_pos\_of\_pos}
+\end{itemize}
+\comentario{Mismo problema que en los anteriores}
+
+Además,se han usado las tácticas
+\tactica{intros}{intros}.
+\tactica{exact}{exact},
+\tactica{have}{have},
+\tactica{norm_num}{norm\_num} y
+\tactica{rw / rewrite}{rw}.
