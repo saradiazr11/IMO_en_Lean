@@ -443,15 +443,133 @@ que se han presentado anteriormente. El teorema es el siguiente:
   \end{align}
   Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
-  \begin{equation}
+  \begin{equation}\label{eqteorema}
     1≤\frac{a³}{\sqrt{(a³)²}+8b³c³}+\frac{b³}{\sqrt{(b³)²+8c³a³}}+
     \frac{c³}{\sqrt{(c³)²+8a³b³}}.
   \end{equation}
 \end{teorema}
 
 \begin{demostracion}
-  Aquí se presentará la demostración del teorema auxiliar en lenguaje
-  natural.
+  Bajo las hipótesis (\ref{haq2t}), (\ref{hbq2t}) y (\ref{hcq2t}), se va a
+  demostrar que se tiene la desigualdad (\ref{eqteorema}).
+
+  Para ello, se van a demostrar cinco hipótesis mediante las cuales se
+  tendrá de manera inmediate el resultado:
+  \begin{itemize}
+  \item \textbf{Hipótesis h1:}
+
+    Esta hipótesis consiste en que aplicando las propiedades conmutativa
+    y asociativa de la suma, se tiene el siguiente resultado:
+    \begin{equation}\label{h1teor}\tag{h1}
+      b⁴+c⁴+a⁴=a⁴+b⁴+c⁴.
+    \end{equation}
+
+  \item \textbf{Hipótesis h2:}
+
+    De manera totalmente análoga al resultado anterior, (\ref{h1teor}), se
+    tiene que:
+    \begin{equation}\label{h2teor}\tag{h2}
+      c⁴+a⁴+b⁴=a⁴+b⁴+c⁴.
+    \end{equation}
+
+  \item \textbf{Hipótesis h3:}
+
+    Esta hipótesis consiste en que para cualesquiera tres números reales
+    \(a\), \(b\) y \(c\) que sean positivos, se verifica la siguiente
+    desigualdad:
+    \begin{equation}\label{h3teor}\tag{h3}
+      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴}≤
+      \frac{a³}{\sqrt{(a³)²+8b³c³}}+\frac{b³}{\sqrt{(b³)²+c³a³}}
+    \end{equation}
+
+    Para ver que se verifica esta igualdad se hará uso del lema auxiliar
+    \ref{lemacota}. Si aplicamos dicho lema sobre los números \(a\), \(b\)
+    y \(c\) teniendo en cuenta las hipótesis (\ref{haq2t}), (\ref{hbq2t})
+    y (\ref{hcq2t}), se tiene:
+    \begin{equation}\label{h3teor1}
+      \frac{a⁴}{a⁴+b⁴+c⁴}≤
+      \frac{a³}{\sqrt{(a³)²+8b³c³}}.
+    \end{equation}
+
+    Mientras que si se lo aplicamos a los números \(b\), \(c\) y \(a\) (en
+    ese orden) teniendo en cuenta las mismas hipótesis; se verifica la
+    siguiente desigualdad:
+    \begin{equation}\label{h3teor2}
+      \frac{b⁴}{b⁴+c⁴+a⁴}≤\frac{b³}{\sqrt{(b³)²+c³a³}}
+    \end{equation}
+
+    Aplicando ahora que al tener estas dos desigualdades, se tiene que si
+    sumamos los dos términos que son menores de (\ref{h3teor1}) y de
+    (\ref{h3teor2}) serán menor o igual que la suma de los dos términos
+    mayores de las mismas desigualdades. Es decir, se tendría probado
+    (\ref{h3teor}).
+
+  \item \textbf{Hipótesis h4:}
+
+    Esta hipótesis consiste en demostrar que para cualesquiera tres números
+    reales \(a\), \(b\) y \(c\) que sean positivos, se verifica la
+    siguiente desigualdad:
+    \begin{align*}\label{h4teor}\tag{h4}
+      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴}+\frac{c⁴}{c⁴+a⁴+b⁴}&≤
+      \frac{a³}{\sqrt{(a³)²+8b³c³}}\\+&\frac{b³}{\sqrt{(b³)²+c³a³}}+
+      \frac{c³}{\sqrt{(c³)²+a³b³}}.
+    \end{align*}
+
+    Para ello, se procederá de manera análoga a como se hizo en la
+    hipótesis (\ref{h3teor}). En primer lugar, aplicando el lema auxiliar
+    \ref{lemacota} sobre los números reales \(c\), \(a\) y \(b\) (en dicho
+    orden) y teniendo en cuenta las hipótesis (\ref{hcq2t}), (\ref{haq2t})
+    y (\ref{hbq2t}), se tendría:
+    \begin{equation}\label{h4teor1}
+      \frac{c⁴}{c⁴+a⁴+b⁴}≤
+      \frac{c³}{\sqrt{(c³)²+8a³b³}}.
+    \end{equation}
+
+    Por tanto, procediendo de manera totalmente análoga a como se hizo en
+    la hipótesis anterior, pero ahora en este caso con las desigualdades
+    (\ref{h3teor}) y (\ref{h4teor1}), se obtiene (\ref{h4teor}).
+
+  \item \textbf{Hipótesis igualdad:}
+
+    La última hipótesis a demostrar consiste en que para cualesquiera
+    tres números reales y positivos \(a\), \(b\) y \(c\), se ha de
+    verificar la siguiente igualdad:
+    \begin{equation}\label{h5teor}\tag{igualdad}
+      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴}+\frac{c⁴}{c⁴+a⁴+b⁴}=1.
+    \end{equation}
+
+    En primer lugar, utilizamos las hipótesis (\ref{h1teor}) y
+    (\ref{h2teor}) para reescribir los denominadores de la segunda y
+    tercera fracción, respectivamente. Se obtiene que el objetivo a
+    demostrar que antes era (\ref{h5teor}), ahora es:
+    \begin{equation}\label{h5teor1}
+      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{a⁴+b⁴+c⁴}+\frac{c⁴}{a⁴+b⁴+c⁴}=1.
+    \end{equation}
+
+    A continuación, se utilizará el resultado que nos dice que
+    cuando tenemos la suma de dos fracciones divididas por el mismo
+    número, se puede sacar denominador común y el numerador sería la suma
+    de los dos numeradores iniciales. Entonces aplicando dicho resultado
+    dos veces, se tendría:
+    \begin{equation}\label{h5teor2}
+      \frac{a⁴+b⁴+c⁴}{a⁴+b⁴+c⁴}=1.
+    \end{equation}
+
+    Como tenemos que el numerador y el denominador de (\ref{h5teor2}) es
+    el mismo, se tendría que esa fracción es uno, siempre y cuando el
+    número que aparece sea distinto de cero. Es decir, se ha de verificar
+    que
+    \begin{equation}
+      0<a⁴+b⁴+c⁴.
+    \end{equation}
+
+    Lo cual se tiene de manera inmediate a través del lema \ref{lemasuma}.
+  \end{itemize}
+
+  De esta forma, una vez se han introducido estas cinco hipótesis se puede
+  concluir la demostración del teorema muy fácilmente. Bastaría con
+  introducir la expresión (\ref{h5teor}) en la hipótesis (\ref{h4teor})
+  y ya se tendría el resultado, es decir, se tendría (\ref{eqteorema}).
 \end{demostracion}
 
 \begin{leancode}
@@ -492,6 +610,30 @@ begin
   exact h4,
 end
 \end{leancode}
+
+Para llevar a cabo la formalización de este teorema en Lean han sido
+necesarios el uso de los siguiente lemas y teoremas:
+\begin{itemize}
+\item \mint{lean}|add_assoc ∀ {G : Type} {a b c : G}, a + b + c = a + (b + c)|
+  \indLema{add\_assoc}
+\item \mint{lean}|add_comm ∀ {G : Type} {a b c : G}, a + b  = b + a|
+  \indLema{add\_comm}
+\item \mint{lean}|add_le_add ∀ {α : Type} {a b c d : α} (h₁ : a ≤ b) (h₂ : c ≤ d) : a + c ≤ b + d|
+  \indLema{add\_le\_add}
+\item \mint{lean}|add_div (a b c : K) : (a + b) / c = a / c + b / c|
+  \indLema{add\_div}
+\item \mint{lean}|div_self {a : G₀} (h : a ≠ 0) : a / a = 1 |
+  \indLema{div\_self}
+\item \mint{lean}|ne_of_gt {a b : α} (h : b < a) : a ≠ b |
+  \indLema{ne\_of\_gt}
+\end{itemize}
+\comentario{Mismo problema que en el anterior lema}
+
+Además,se han usado las tácticas
+\tactica{apply}{apply}.
+\tactica{exact}{exact},
+\tactica{have}{have} y
+\tactica{rw / rewrite}{rw}.
 
 
 \subsection{Conclusión del problema}
