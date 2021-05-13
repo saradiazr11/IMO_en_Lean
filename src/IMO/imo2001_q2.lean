@@ -96,57 +96,66 @@ begin
   exact tesis,
 end
 
-theorem imo2001_q2_aux (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
-  1 ≤ a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
-      b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
-      c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
+theorem imo2001_q2_aux
+  (ha : 0 < a)
+  (hb : 0 < b)
+  (hc : 0 < c)
+  : 1 ≤ a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
+        b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
+        c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
 begin
   have h1 : b ^ 4 + c ^ 4 + a ^ 4 = a ^ 4 + b ^ 4 + c ^ 4,
-  {rw add_comm,
-   rw ← add_assoc,},
+    by ring,
   have h2 : c ^ 4 + a ^ 4 + b ^ 4 = a ^4 + b ^ 4 + c ^ 4,
-  {rw add_assoc,
-   rw add_comm,},
+    by ring,
   have h3 : a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) +
-    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) ≤
-    a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
-    b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) :=
+            b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) ≤
+            a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
+            b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) :=
     add_le_add (cota ha hb hc) (cota hb hc ha),
   have h4 : a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) +
-    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
-    c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) ≤
-    a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
-    b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
-    c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
+            b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
+            c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) ≤
+            a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
+            b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
+            c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
     add_le_add h3 (cota hc ha hb),
   have igualdad : a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) +
-    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
-    c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) = 1,
-    {rw h1,
-     rw h2,
-     rw ← add_div,
-     rw ← add_div,
-     rw div_self,
-     apply ne_of_gt,
-     exact suma_pos ha hb hc,},
+                  b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
+                  c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) = 1,
+    { rw h1,
+      rw h2,
+      rw ← add_div,
+      rw ← add_div,
+      rw div_self,
+      apply ne_of_gt,
+      exact suma_pos ha hb hc,},
   rw igualdad at h4,
   exact h4,
 end
 
-theorem imo2001_q2 (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
-  1 ≤ a / sqrt (a ^ 2 + 8 * b * c) +
-      b / sqrt (b ^ 2 + 8 * c * a) +
-      c / sqrt (c ^ 2 + 8 * a * b) :=
+theorem imo2001_q2
+  (ha : 0 < a)
+  (hb : 0 < b)
+  (hc : 0 < c)
+  : 1 ≤ a / sqrt (a ^ 2 + 8 * b * c) +
+        b / sqrt (b ^ 2 + 8 * c * a) +
+        c / sqrt (c ^ 2 + 8 * a * b) :=
 begin
   have h : ∀ {x : ℝ}, 0 < x → (x ^ (3 : ℝ)⁻¹) ^ 3 = x,
-  {intros x hx,
-  have h1 : 0 < 3 := zero_lt_three,
-  have h2 : ↑3 = (3 : ℝ) := by norm_num,
-  have htesis : (x ^ (↑3)⁻¹) ^ 3 = x := rpow_nat_inv_pow_nat hx.le h1,
-  rw h2 at htesis,
-  exact htesis,},
-  have aux := imo2001_q2_aux (rpow_pos_of_pos ha 3⁻¹)
-  (rpow_pos_of_pos hb 3⁻¹) (rpow_pos_of_pos hc 3⁻¹),
+    { intros x hx,
+      have h1 : 0 < 3 :=
+        zero_lt_three,
+      have h2 : ↑3 = (3 : ℝ) :=
+        by norm_num,
+      have htesis : (x ^ (↑3)⁻¹) ^ 3 = x :=
+        rpow_nat_inv_pow_nat (le_of_lt hx) h1,
+      rw h2 at htesis,
+      exact htesis,},
+  have aux :=
+    imo2001_q2_aux (rpow_pos_of_pos ha 3⁻¹)
+                   (rpow_pos_of_pos hb 3⁻¹)
+                   (rpow_pos_of_pos hc 3⁻¹),
   rw h ha at aux,
   rw h hb at aux,
   rw h hc at aux,
