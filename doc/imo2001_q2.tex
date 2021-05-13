@@ -12,7 +12,7 @@ recientemente propuso Tian Chen y que se puede  encontrar en
 \noindent
 \framebox{\parbox{\textwidth}{
     \textbf{Problema 4 (2001--Q2)}. Consideremos \(a\), \(b\) y
-    \(c\) tres números reales y positivos cualesquieras. Demostrar
+    \(c\) tres números reales y positivos cualesquiera. Demostrar
     que
     \begin{equation*}
       \frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
@@ -75,14 +75,14 @@ El primer resultado auxiliar es el que se presenta a continuación:
     &0<c⁴. \label{hc4q2}\tag{hc1}
   \end{align}
 
-  Ya para finalizar, basta con usar dos veces el resultado que nos
+  Para finalizar, basta con usar dos veces el resultado que nos
   dice que la suma de dos números postivos es positiva. Esto supone
   que, si usamos este resultado sobre las hipótesis (\ref{ha4q2})
   y (\ref{hb4q2}) se tiene que
   \begin{equation}\label{sum1q2}\tag{sum1}
     0<a⁴+b⁴.
   \end{equation}
-  Reiteramos este procedimiento ahora usando dicho resultado sobre
+  Reiteramos este procedimiento ahora usando el mismo resultado sobre
   las hipótesis (\ref{sum1q2}) y (\ref{hc4q2}) y se obtiene:
   \begin{equation}\tag{sum2}
     0<a⁴+b⁴+c⁴.
@@ -120,10 +120,11 @@ Además, las únicas dos tácticas que se han usado son
 \tactica{have}{have}.
 
 Para proseguir con la resolución del problema se va a introducir el
-segundo resultado auxiliar. Éste consiste en demostrar una cota que
-nos resultará de gran utilidad más adelante.
+segundo resultado auxiliar. Éste consiste en demostrar que para
+cualqesquiera tres números reales positivos \(a\), \(b\) y \(c\), se
+verifica una cota que nos resultará de gran utilidad más adelante.
 
-\begin{lema}\label{lemacota}
+\begin{lema}[cota]\label{lemacota}
   Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
   \begin{align}
     &0<a, \label{haq22}\tag{ha}\\
@@ -148,7 +149,7 @@ nos resultará de gran utilidad más adelante.
   \begin{itemize}
   \item Por la hipótesis (\ref{haq22}) se tiene que \(a\) es un
     número positivo, entonces cualquier potencia de él lo es y en
-    concreto:
+    particular:
     \begin{equation}\label{ha3}\tag{ha3}
       0<a³.
     \end{equation}
@@ -184,9 +185,23 @@ nos resultará de gran utilidad más adelante.
        0<(a³)²+8b³c³
      \end{equation}
 
-   \item Como sabemos que la raiz cuadrada de un número es positiva si
-     y solamente si dicho número es positivo, si usamos esto sobre
-     (\ref{hbc}), se tiene que:
+   \item Para la deducción de esta hipótesis se hará uso del siguiente
+     teorema:
+     \begin{teorema}
+       Sea \(x\) un número cualquiera. Entonces se tiene que la raíz
+       cuadrada de \(x\) es positiva si y solamente si \(x\) es positivo.
+       Simbólicamente:
+       \begin{equation}
+         \sqrt{x}>0⟺x>0.
+       \end{equation}
+     \end{teorema}
+     Cuya formalización en Lean es:
+     \begin{leancode}
+     theorem sqrt_pos : 0 < sqrt x ↔ 0 < x 
+     \end{leancode}
+
+     Entonces se tiene que aplicando dicho resultado sobre (\ref{hbc}),
+     se obtiene la hipótesis buscada:
      \begin{equation}\label{hsqrt}\tag{hsqrt}
        0<\sqrt{(a³)²+8b³c³}.
      \end{equation}
@@ -228,7 +243,7 @@ nos resultará de gran utilidad más adelante.
   o igual que cero (porque ya se ha visto en la hipótesis (\ref{ha3}) que es
   un número positivo), se puede simplificar la expresión (\ref{eqcota3})
   puesto que ambos lados de la igualdad están multiplicados por \(a\) al
-  cubo. De esta forma:
+  cubo. De manera que el objetivo a demostrar se convierte en:
   \begin{equation}\label{eqcota4}
     a \sqrt{(a³)²+8b³c³}≤a⁴+b⁴+c⁴.
   \end{equation}
@@ -253,8 +268,8 @@ nos resultará de gran utilidad más adelante.
     número es dicho número.
   \end{enumerate}
   Además de estos dos resultados, pasaremos restando el primer término de la
-  desigualdad al segundo. De manera que se tendría que (\ref{eqcota5}) se
-  reescribiría como sigue:
+  desigualdad al segundo. De manera que aplicando los tres resultados de
+  manera conjunta sobre (\ref{eqcota5}) se tendría la siguiente expresión:
   \begin{equation}\label{eqcota6}
     0≤ (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³).
   \end{equation}
@@ -294,7 +309,9 @@ nos resultará de gran utilidad más adelante.
 
     De esta forma, ya se tendría demostrada la igualdad (\ref{desarrollo}).
 
-  \item Como ya usamos en la hipótesis (\ref{ha32}), cualquier número
+  \item \textbf{Hipótesis h1, h2 y h3:}
+
+    Como ya usamos en la hipótesis (\ref{ha32}), cualquier número
     elevado al cuadrado es siempre mayor o igual que cero. En nuestro caso
     aplicaremos este resultado para tres números diferentes obteniendo
     así las tres siguientes hipótesis:
@@ -304,7 +321,9 @@ nos resultará de gran utilidad más adelante.
       &0≤(2(a²bc-b²c²))².\label{h3cota}\tag{h3}
     \end{align}
 
-  \item Además, en el caso de la hipótesis (\ref{h1cota}), nos interesa
+  \item\textbf{Hipótesis h1':}
+
+    Además, en el caso de la hipótesis (\ref{h1cota}), nos interesa
     tener que dicho término multiplicado por dos es también mayor o igual
     que cero. Lo cual se tiene de manera inmediata porque ambos términos
     son mayores o iguales que cero. Entonces:
@@ -327,9 +346,9 @@ nos resultará de gran utilidad más adelante.
     0≤2(a²(b²-c²))²+(b⁴-c⁴)²+(2(a²bc-b²c²))².
   \end{equation}
 
-  Entonces, finalmente se vuelve a la expresión (\ref{eqcota6}), que era
-  el objetivo a demostrar, y usamos la hipótesis (\ref{desarrollo}). De
-  esta forma el objetivo a demostrar se convierte en:
+  Entonces, finalmente volviendo a la expresión (\ref{eqcota6}), que era
+  el objetivo a demostrar, y usando la hipótesis (\ref{desarrollo}), se
+  tiene que el objetivo a demostrar se convierte en:
   \begin{equation}
     0≤2(a²(b²-c²))²+((b⁴-c⁴)²+(2(a²bc-b²c²))²).
   \end{equation}
@@ -381,7 +400,7 @@ begin
   exact tesis,
 end
 \end{leancode}
-
+\index{cota}
 
 En la formalización de este teorema Lean han sido necesarios el uso
 de los siguiente lemas y teoremas:
@@ -526,8 +545,9 @@ que se han presentado anteriormente. El teorema es el siguiente:
     \end{equation}
 
     Por tanto, procediendo de manera totalmente análoga a como se hizo en
-    la hipótesis anterior, pero ahora en este caso con las desigualdades
-    (\ref{h3teor}) y (\ref{h4teor1}), se obtiene (\ref{h4teor}).
+    la hipótesis anterior y aplicando el resultado sobre la suma de las
+    desigualdades, pero ahora en este caso con (\ref{h3teor}) y
+    (\ref{h4teor1}), se obtiene (\ref{h4teor}).
 
   \item \textbf{Hipótesis igualdad:}
 
@@ -546,11 +566,21 @@ que se han presentado anteriormente. El teorema es el siguiente:
       \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{a⁴+b⁴+c⁴}+\frac{c⁴}{a⁴+b⁴+c⁴}=1.
     \end{equation}
 
-    A continuación, se utilizará el resultado que nos dice que
-    cuando tenemos la suma de dos fracciones divididas por el mismo
-    número, se puede sacar denominador común y el numerador sería la suma
-    de los dos numeradores iniciales. Entonces aplicando dicho resultado
-    dos veces, se tendría:
+    Introduzcamos el siguiente lema:
+    \begin{lema}
+      Supongamos que tenemos la suma de dos fracciones divididas por el
+      mismo denominador. Entonces se tiene que se puede sacar denominador
+      común y que el numerador sería la suma de los dos numeradores
+      iniciales.
+    \end{lema}
+
+    Cuya formalización en Lean es:
+    \begin{leancode}
+    lemma add_div (a b c : K) : (a + b) / c = a / c + b / c 
+    \end{leancode}
+
+    A continuación, aplicando dicho resultado dos veces en (\ref{h5teor1})
+    (pues tenemos la suma de tres fracciones), se tendría que:
     \begin{equation}\label{h5teor2}
       \frac{a⁴+b⁴+c⁴}{a⁴+b⁴+c⁴}=1.
     \end{equation}
@@ -563,7 +593,8 @@ que se han presentado anteriormente. El teorema es el siguiente:
       0<a⁴+b⁴+c⁴.
     \end{equation}
 
-    Lo cual se tiene de manera inmediate a través del lema \ref{lemasuma}.
+    Lo cual se tiene de manera inmediate a través del primer lema que
+    se ha demostrado en esta sección, es decir, el lema \ref{lemasuma}.
   \end{itemize}
 
   De esta forma, una vez se han introducido estas cinco hipótesis se puede
@@ -610,6 +641,7 @@ begin
   exact h4,
 end
 \end{leancode}
+\index{imo2001\_q2\_aux}
 
 Para llevar a cabo la formalización de este teorema en Lean han sido
 necesarios el uso de los siguiente lemas y teoremas:
@@ -652,7 +684,7 @@ de un teorema que demuestra el resultado que nos interesa.
   Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
   \begin{equation}\label{eqfinal}
-    1≤\frac{a}{\sqrt{a²}+8bc}+\frac{b}{\sqrt{b²+8ca}}+
+    1≤\frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
     \frac{c}{\sqrt{c²+8ab}}.
   \end{equation}
 \end{teorema}
@@ -688,13 +720,13 @@ de un teorema que demuestra el resultado que nos interesa.
     \begin{lema}\label{lemafinal}
       Sean \(x\) un número no negativo perteneciente al conjunto de los
       números reales y \(n\) un número perteneciente al conjunto de los
-      números naturales mayor estricto que cero. Entonces se tiene que
-      se verifica la siguiente igualdad:
+      números naturales mayor estrictamente que cero. Entonces, se tiene
+      que se verifica la siguiente igualdad:
       \begin{equation}
         (x^{n^{-1}})^n=x,
       \end{equation}
       donde en esa expresión \(n^{-1} \) es considerado como un número
-      natural.
+      real.
     \end{lema}
     La formalización en Lean de este resultado es la siguiente:
     \begin{leancode}
@@ -758,12 +790,12 @@ de un teorema que demuestra el resultado que nos interesa.
   sencilla la resolución del problema original.
 
   Como consecuencia de que los números reales en consideración son mayor que
-  cero por hipótesis, (\ref{haq2te}) (\ref{hbq2te}) y (\ref{hcq2tb}), se
+  cero por hipótesis, (\ref{haq2te}) (\ref{hbq2te}) y (\ref{hcq2te}), se
   tiene que podemos aplicar la hipótesis (\ref{hfinal}) en los diferentes
   términos que aparecen en la expresión de la hipótesis (\ref{auxfinal}).
   De esta forma se obtendría que:
   \begin{equation}
-    1≤\frac{a}{\sqrt{a²}+8bc}+\frac{b}{\sqrt{b²+8ca}}+
+    1≤\frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
     \frac{c}{\sqrt{c²+8ab}},
   \end{equation}
   que era el resultado deseado.
@@ -792,6 +824,7 @@ begin
   exact aux,
 end
 \end{leancode}
+\index{imo2001\_q2}
 
 Para la formalización en Lean de este teorema han sido necesarios los
 siguientes lemas y teoremas auxiliares:
