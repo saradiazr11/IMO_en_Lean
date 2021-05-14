@@ -1,13 +1,13 @@
 \section{IMO 2001 Q2}
-En esta nueva sección, se va a detallar la resolución del problema
-Q2 propuesto en el año 2001. Como en el resto de planteamientos
-anteoriores que se han detallado en el capítulo, se comenzará
-presentado la demostración en lenguaje natural del problema y
-luego su correspondiente formalización en Lean.
+
+En esta nueva sección, se va a detallar la resolución del problema Q2
+propuesto en el año 2001. Como en el resto de planteamientos anteoriores
+que se han detallado en el capítulo, se comenzará presentado la
+demostración en lenguaje natural del problema y luego su correspondiente
+formalización en Lean.
 
 La formalización en Lean de este problema se ha basado en la que
-recientemente propuso Tian Chen y que se puede  encontrar en
-\cite{TCC}.
+recientemente propuso Tian Chen y que se puede encontrar en \cite{TCC}.
 
 \noindent
 \framebox{\parbox{\textwidth}{
@@ -15,8 +15,9 @@ recientemente propuso Tian Chen y que se puede  encontrar en
     \(c\) tres números reales y positivos cualesquiera. Demostrar
     que
     \begin{equation*}
-      \frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
-      \frac{c}{\sqrt{c²+8ab}}≥1.
+      \frac{a}{\sqrt{a²+8bc}} +
+      \frac{b}{\sqrt{b²+8ca}} +
+      \frac{c}{\sqrt{c²+8ab}} ≥ 1.
     \end{equation*}
   }}
 
@@ -24,9 +25,10 @@ Para llevar a cabo la formalización en Lean de este problema, es
 necesario la importación de la teoría
 \href{https://github.com/leanprover-community/mathlib/blob/master/src/analysis/special_functions/pow.lean}
 {analysis.special\_functions.pow} (sobre las potencias) y también
-habilitar el \href{https://leanprover.github.io/reference/other_commands.html#namespaces}
-{espacio de nombre} de los números reales (para la simplificación
-de notación de algunas funciones).
+habilitar el
+\href{https://leanprover.github.io/reference/other_commands.html#namespaces}
+{espacio de nombre} de los números reales (para la simplificación de
+notación de algunas funciones).
 
 En Lean todo lo detallado se formaliza como sigue:
 \begin{leancode}
@@ -35,15 +37,16 @@ import analysis.special_functions.pow
 open real
 \end{leancode}
 
-Además, se han de introducir las variables \(a\), \(b\) y \(c\) que
-en este problema pertenecen al conjunto de los números reales (la
-condición de que son positivos se introducirán como hipótesis).
-En Lean esto se formaliza de la siguiente forma:
+Además, se han de introducir las variables \(a\), \(b\) y \(c\) que en
+este problema pertenecen al conjunto de los números reales (la condición
+de que son positivos se introducirán como hipótesis). En Lean esto se
+formaliza de la siguiente forma:
 \begin{leancode}
 variables {a b c : ℝ}
 \end{leancode}
 
 \subsection{Resultados auxiliares}
+
 Para llevar a cabo la resolución de este problema, se van a utilizar
 una serie de lemas y teoremas auxiliares.
 
@@ -52,40 +55,40 @@ El primer resultado auxiliar es el que se presenta a continuación:
 \begin{lema}[suma\(\_\)pos]\label{lemasuma}
   Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
   \begin{align}
-    &0<a, \label{haq2}\tag{ha}\\
-    &0<b, \label{hbq2}\tag{hb}\\
-    &0<c. \label{hcq2}\tag{hc}
+    &0 < a, \label{haq2}\tag{ha}\\
+    &0 < b, \label{hbq2}\tag{hb}\\
+    &0 < c. \label{hcq2}\tag{hc}
   \end{align}
-  Entonces, se tiene que la suma de \(a\) elevado a la cuarta, \(b\)
-  elevado a la cuarta y \(c\) elevado a la cuarta es positiva.
+  Entonces, se tiene que
   Simbólicamente:
   \begin{equation}
-    0<a⁴+b⁴+c⁴.
+    0 < a⁴+b⁴+c⁴.
   \end{equation}
 \end{lema}
+
 \begin{demostracion}
-  La demostración de este lema es bastante sencilla, se comienza
-  usando el resultado de que la potencia de cualquier número
-  positivo es también positiva. Utilizando esto sobre las hipótesis
-  (\ref{haq2}), (\ref{hbq2}) y (\ref{hcq2}), se tienen las tres
-  siguientes consecuencias:
+  La demostración de este lema es bastante sencilla, se comienza usando
+  el resultado de que la potencia de cualquier número positivo es
+  también positiva. Utilizando esto sobre las hipótesis (\ref{haq2}),
+  (\ref{hbq2}) y (\ref{hcq2}), se tienen las tres siguientes
+  consecuencias:
   \begin{align}
-    &0<a⁴, \label{ha4q2}\tag{ha1}\\
-    &0<b⁴, \label{hb4q2}\tag{hb1}\\
-    &0<c⁴. \label{hc4q2}\tag{hc1}
+    &0 < a⁴, \label{ha4q2}\tag{ha1}\\
+    &0 < b⁴, \label{hb4q2}\tag{hb1}\\
+    &0 < c⁴. \label{hc4q2}\tag{hc1}
   \end{align}
 
-  Para finalizar, basta con usar dos veces el resultado que nos
-  dice que la suma de dos números postivos es positiva. Esto supone
-  que, si usamos este resultado sobre las hipótesis (\ref{ha4q2})
-  y (\ref{hb4q2}) se tiene que
+  Para finalizar, basta con usar dos veces el resultado que nos dice que
+  la suma de dos números postivos es positiva. Esto supone que, si
+  usamos este resultado sobre las hipótesis (\ref{ha4q2}) y
+  (\ref{hb4q2}) se tiene que
   \begin{equation}\label{sum1q2}\tag{sum1}
-    0<a⁴+b⁴.
+    0 < a⁴+b⁴.
   \end{equation}
   Reiteramos este procedimiento ahora usando el mismo resultado sobre
   las hipótesis (\ref{sum1q2}) y (\ref{hc4q2}) y se obtiene:
   \begin{equation}\tag{sum2}
-    0<a⁴+b⁴+c⁴.
+    0 < a⁴+b⁴+c⁴.
   \end{equation}
 
   De esta forma, ya se tendría el resultado deseado.
@@ -93,15 +96,17 @@ El primer resultado auxiliar es el que se presenta a continuación:
 
 La formalización en Lean de este lema es la siguiente:
 \begin{leancode}
-lemma suma_pos (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
-0 < a ^ 4 + b ^ 4 + c ^ 4 :=
+lemma suma_pos
+  (ha : 0 < a)
+  (hb : 0 < b)
+  (hc : 0 < c)
+  : 0 < a ^ 4 + b ^ 4 + c ^ 4 :=
 begin
-  have ha1: 0 < a ^ 4:=pow_pos ha 4,
-  have hb1: 0 < b ^ 4:=pow_pos hb 4,
-  have hc1: 0 < c ^ 4:=pow_pos hc 4,
-  have sum1: 0< a ^ 4 + b ^ 4 := add_pos ha1 hb1,
-  have sum2: 0< a ^ 4 + b ^ 4 + c ^ 4 := add_pos sum1 hc1,
-  exact sum2,
+  have ha1 : 0 < a ^ 4          := pow_pos ha 4,
+  have hb1 : 0 < b ^ 4          := pow_pos hb 4,
+  have hc1 : 0 < c ^ 4          := pow_pos hc 4,
+  have sum1 : 0 < a ^ 4 + b ^ 4 := add_pos ha1 hb1,
+  exact (add_pos sum1 hc1),
 end
 \end{leancode}
 \index{suma\_pos}
@@ -121,15 +126,15 @@ Además, las únicas dos tácticas que se han usado son
 
 Para proseguir con la resolución del problema se va a introducir el
 segundo resultado auxiliar. Éste consiste en demostrar que para
-cualqesquiera tres números reales positivos \(a\), \(b\) y \(c\), se
+cualesquiera tres números reales positivos \(a\), \(b\) y \(c\), se
 verifica una cota que nos resultará de gran utilidad más adelante.
 
 \begin{lema}[cota]\label{lemacota}
   Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
   \begin{align}
-    &0<a, \label{haq22}\tag{ha}\\
-    &0<b, \label{hbq22}\tag{hb}\\
-    &0<c. \label{hcq22}\tag{hc}
+    &0 < a, \label{haq22}\tag{ha}\\
+    &0 < b, \label{hbq22}\tag{hb}\\
+    &0 < c. \label{hcq22}\tag{hc}
   \end{align}
   Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
@@ -139,10 +144,10 @@ verifica una cota que nos resultará de gran utilidad más adelante.
 \end{lema}
 
 \begin{demostracion}
-  La demostración consiste en que bajo las hipótesis de que los
-  tres números que estamos considerando son positivos, es decir,
-  (\ref{haq22}), (\ref{hbq22}) y (\ref{hcq22}); se tiene que probar
-  la expresión (\ref{eqcota}).
+  La demostración consiste en que bajo las hipótesis de que los tres
+  números que estamos considerando son positivos, es decir,
+  (\ref{haq22}), (\ref{hbq22}) y (\ref{hcq22}); se tiene que probar la
+  expresión (\ref{eqcota}).
 
   Para llevar a cabo tal prueba, se comenzarán una serie de hipótesis
   que se pueden deducir fácilmente:
@@ -151,14 +156,14 @@ verifica una cota que nos resultará de gran utilidad más adelante.
     número positivo, entonces cualquier potencia de él lo es y en
     particular:
     \begin{equation}\label{ha3}\tag{ha3}
-      0<a³.
+      0 < a³.
     \end{equation}
 
   \item Se tiene que cualquier número elevado a la segunda potencia
     es siempre mayor o igual que cero. El caso particular que nos
     interesa es:
     \begin{equation}\label{ha32}\tag{ha32}
-      0≤(a³)².
+      0 ≤ (a³)².
     \end{equation}
 
   \item Análogamente a como se ha procedido en la hipótesis (\ref{ha3}),
@@ -166,7 +171,7 @@ verifica una cota que nos resultará de gran utilidad más adelante.
     cualquier número positivo, el resultado también es positivo. En nuestro
     caso considerando la tercera potencia de \(b\) y el número ocho:
     \begin{equation}\label{hb8}\tag{hb8}
-      0<8b³.
+      0 < 8b³.
     \end{equation}
 
   \item Ahora bien, se sabe que al multiplicar dos números positivos, el
@@ -175,14 +180,14 @@ verifica una cota que nos resultará de gran utilidad más adelante.
     de \(c\) (que también es positivo por analogía con la hipótesis
     (\ref{ha3})), se tiene que:
     \begin{equation}\label{hbc}\tag{hbc}
-      0<8b³c³.
+      0 < 8b³c³.
     \end{equation}
 
   \item Haciendo uso del resultado que nos dice que la suma de dos
     números positivos es positiva sobre las hipótesis (\ref{ha32}) y
     (\ref{hbc}), se obtiene el siguiente resultado:
     \begin{equation}\label{hdenom1}\tag{hdenom1}
-       0<(a³)²+8b³c³
+       0 < (a³)²+8b³c³
      \end{equation}
 
    \item Para la deducción de esta hipótesis se hará uso del siguiente
@@ -192,32 +197,32 @@ verifica una cota que nos resultará de gran utilidad más adelante.
        cuadrada de \(x\) es positiva si y solamente si \(x\) es positivo.
        Simbólicamente:
        \begin{equation}
-         \sqrt{x}>0⟺x>0.
+         \sqrt{x} > 0 ⟺ x > 0.
        \end{equation}
      \end{teorema}
      Cuya formalización en Lean es:
      \begin{leancode}
-     theorem sqrt_pos : 0 < sqrt x ↔ 0 < x 
+     theorem sqrt_pos : 0 < sqrt x ↔ 0 < x
      \end{leancode}
 
      Entonces se tiene que aplicando dicho resultado sobre (\ref{hbc}),
      se obtiene la hipótesis buscada:
      \begin{equation}\label{hsqrt}\tag{hsqrt}
-       0<\sqrt{(a³)²+8b³c³}.
+       0 < \sqrt{(a³)²+8b³c³}.
      \end{equation}
 
    \item Usando el lema \ref{lemasuma} sobre los números \(a\), \(b\) y
      \(c\), puesto que se satisfacen las hipótesis (\ref{haq22}),
      (\ref{hbq22}) y (\ref{hcq22}); se tiene que:
      \begin{equation}\label{hdenom2}\tag{hdenom2}
-       0<a⁴+b⁴+c⁴.
+       0 < a⁴+b⁴+c⁴.
      \end{equation}
 
    \item Por último, de manera inmediata se tiene que si un número es
      positivo, entonces dicho número es mayor o igual que cero. Aplicando
      esto sobre el número (\ref{hdenom2}), se obtiene que:
      \begin{equation}\label{hdenom3}\tag{hdenom3}
-       0≤a⁴+b⁴+c⁴.
+       0 ≤ a⁴+b⁴+c⁴.
      \end{equation}
   \end{itemize}
 
@@ -228,7 +233,7 @@ verifica una cota que nos resultará de gran utilidad más adelante.
   podemos pasar multiplicando los denominadores sin que se cambie de
   sentido la desigualdad. Esto es:
   \begin{equation}\label{eqcota2}
-    a⁴ \sqrt{(a³)²+8b³c³}≤ a³ (a⁴+b⁴+c⁴).
+    a⁴ \sqrt{(a³)²+8b³c³} ≤ a³ (a⁴+b⁴+c⁴).
   \end{equation}
 
   La expresión (\ref{eqcota2}) puede ser reescrita haciendo uso de la
@@ -236,7 +241,7 @@ verifica una cota que nos resultará de gran utilidad más adelante.
   cuarta de \(a\) como el producto de la potencia tercera de \(a\) por
   \(a\). De esta forma se obtendría:
   \begin{equation}\label{eqcota3}
-    a³(a \sqrt{(a³)²+8b³c³})≤ a³ (a⁴+b⁴+c⁴).
+    a³(a \sqrt{(a³)²+8b³c³}) ≤ a³ (a⁴+b⁴+c⁴).
   \end{equation}
 
   Aplicando ahora que como la potencia al cubo de \(a\) es un número mayor
@@ -245,7 +250,7 @@ verifica una cota que nos resultará de gran utilidad más adelante.
   puesto que ambos lados de la igualdad están multiplicados por \(a\) al
   cubo. De manera que el objetivo a demostrar se convierte en:
   \begin{equation}\label{eqcota4}
-    a \sqrt{(a³)²+8b³c³}≤a⁴+b⁴+c⁴.
+    a \sqrt{(a³)²+8b³c³} ≤ a⁴+b⁴+c⁴.
   \end{equation}
 
   Proseguimos trabajando con la expresión (\ref{eqcota4}); procedemos a
@@ -255,7 +260,7 @@ verifica una cota que nos resultará de gran utilidad más adelante.
   la potencia sea mayor estricto que cero). Entonces, aplicando esto sobre
   la expresión (\ref{eqcota4}) y elevando al cuadrado, se tiene que:
   \begin{equation}\label{eqcota5}
-    (a \sqrt{(a³)²+8b³c³})²≤(a⁴+b⁴+c⁴)².
+    (a \sqrt{(a³)²+8b³c³})² ≤ (a⁴+b⁴+c⁴)².
   \end{equation}
 
   Para finalizar esta parte de la demostración, aplicaremos los siguientes
@@ -271,7 +276,7 @@ verifica una cota que nos resultará de gran utilidad más adelante.
   desigualdad al segundo. De manera que aplicando los tres resultados de
   manera conjunta sobre (\ref{eqcota5}) se tendría la siguiente expresión:
   \begin{equation}\label{eqcota6}
-    0≤ (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³).
+    0 ≤ (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³).
   \end{equation}
 
   A continuación, para poder seguir con el desarrollo de la expresión a
@@ -283,28 +288,26 @@ verifica una cota que nos resultará de gran utilidad más adelante.
     Esta hipótesis consiste en que para cualesquiera números reales \(a\),
     \(b\) ó \(c\), se tiene que:
     \begin{align*}\label{desarrollo}\tag{desarrollo}
-      (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³)&=2(a²(b²-c²))²+(b⁴-c⁴)²\\
-      &+(2(a²bc-b²c²))².
+      & (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³) \\
+      & = 2(a²(b²-c²))²+(b⁴-c⁴)²+(2(a²bc-b²c²))².
     \end{align*}
     Para demostrar esta hipótesis desarrollaremos los dos términos de la
     igualdad y veremos que se obtiene lo mismo.
 
     \underline{Término 1:}
     \begin{align*}
-      (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³)&=(a⁴+b⁴)²+(c⁴)²+2(a⁴+b⁴)c⁴-a⁸\\
-      &-8a²b³c³\\
-                                 &=a⁸+b⁸+2a⁴b⁴+c⁸+2a⁴c⁴+2b⁴c⁴-a⁸\\
-                                   &-8a²b³c³\\
-      &=b⁸+c⁸+2a⁴b⁴+2a⁴c⁴+2b⁴c⁴-8a²b³c³.
+      & (a⁴+b⁴+c⁴)²-a²((a³)²+8b³c³)\\
+      & = (a⁴+b⁴)²+(c⁴)²+2(a⁴+b⁴)c⁴-a⁸-8a²b³c³\\
+      & = a⁸+b⁸+2a⁴b⁴+c⁸+2a⁴c⁴+2b⁴c⁴-a⁸-8a²b³c³\\
+      & = b⁸+c⁸+2a⁴b⁴+2a⁴c⁴+2b⁴c⁴-8a²b³c³.
     \end{align*}
 
     \underline{Término 2:}
     \begin{align*}
-      2(a²(b²-c²))²+(b⁴-c⁴)²+(2(a²bc&-b²c²))²=2a⁴(b⁴+c⁴-2b²c²)+b⁸+c⁸\\
-                                         &-2b⁴c⁴+4(a⁴b²c²-b⁴c⁴-2a²b³c³)\\
-                                         &=2a⁴b⁴+2a⁴c⁴-4a⁴b²c²+b⁸+c⁸\\
-                                         &-2b⁴c⁴+4a⁴b²c²+4b⁴c⁴-8a²b³c³\\
-                                    &=b⁸+c⁸+2a⁴b⁴+2a⁴c⁴+2b⁴c⁴-8a²b³c³.
+      & 2(a²(b²-c²))²+(b⁴-c⁴)²+(2(a²bc-b²c²))² \\
+      & = 2a⁴(b⁴+c⁴-2b²c²)+b⁸+c⁸-2b⁴c⁴+4(a⁴b²c²-b⁴c⁴-2a²b³c³)\\
+      & = 2a⁴b⁴+2a⁴c⁴-4a⁴b²c²+b⁸+c⁸-2b⁴c⁴+4a⁴b²c²+4b⁴c⁴-8a²b³c³\\
+      & = b⁸+c⁸+2a⁴b⁴+2a⁴c⁴+2b⁴c⁴-8a²b³c³.
     \end{align*}
 
     De esta forma, ya se tendría demostrada la igualdad (\ref{desarrollo}).
@@ -316,9 +319,9 @@ verifica una cota que nos resultará de gran utilidad más adelante.
     aplicaremos este resultado para tres números diferentes obteniendo
     así las tres siguientes hipótesis:
     \begin{align}
-      &0≤(a²(b²-c²))²,\label{h1cota}\tag{h1}\\ 
-      &0≤(b⁴-c⁴)², \label{h2cota}\tag{h2}\\
-      &0≤(2(a²bc-b²c²))².\label{h3cota}\tag{h3}
+      &0 ≤ (a²(b²-c²))²,\label{h1cota}\tag{h1}\\
+      &0 ≤ (b⁴-c⁴)², \label{h2cota}\tag{h2}\\
+      &0 ≤ (2(a²bc-b²c²))².\label{h3cota}\tag{h3}
     \end{align}
 
   \item\textbf{Hipótesis h1':}
@@ -328,8 +331,8 @@ verifica una cota que nos resultará de gran utilidad más adelante.
     que cero. Lo cual se tiene de manera inmediata porque ambos términos
     son mayores o iguales que cero. Entonces:
     \begin{equation}
-      0≤2(a²(b²-c²))².\label{h12cota}\tag{h1'}
-    \end{equation}                      
+      0 ≤ 2(a²(b²-c²))².\label{h12cota}\tag{h1'}
+    \end{equation}
   \end{itemize}
 
   De esta forma, se tiene que ya se puede terminar la demostración del
@@ -337,64 +340,82 @@ verifica una cota que nos resultará de gran utilidad más adelante.
   números no negativos es también mayor igual que cero sobre las hipótesis
   (\ref{h2cota}) y (\ref{h3cota}). Obteniendo así:
   \begin{equation}\label{aux1}\tag{aux1}
-    0≤(b⁴-c⁴)²+(2(a²bc-b²c²))².
+    0 ≤ (b⁴-c⁴)²+(2(a²bc-b²c²))².
   \end{equation}
 
   Aplicando de nuevo este mismo resultado sobre (\ref{h12cota}) y el que
   se acaba de obtener, (\ref{aux1}), se tiene que:
   \begin{equation}\label{tesis}\tag{tesis}
-    0≤2(a²(b²-c²))²+(b⁴-c⁴)²+(2(a²bc-b²c²))².
+    0 ≤ 2(a²(b²-c²))²+(b⁴-c⁴)²+(2(a²bc-b²c²))².
   \end{equation}
 
   Entonces, finalmente volviendo a la expresión (\ref{eqcota6}), que era
   el objetivo a demostrar, y usando la hipótesis (\ref{desarrollo}), se
   tiene que el objetivo a demostrar se convierte en:
   \begin{equation}
-    0≤2(a²(b²-c²))²+((b⁴-c⁴)²+(2(a²bc-b²c²))²).
+    0 ≤ 2(a²(b²-c²))²+((b⁴-c⁴)²+(2(a²bc-b²c²))²).
   \end{equation}
 
   Usando la propiedad asociativa de la suma, se tendría que el objetivo a
   demostrar es (\ref{tesis}), lo cual ya nos probaría el lema.
 \end{demostracion}
 
-Veámos la formalización en Lean de este lema:
+Veamos la formalización en Lean de este lema:
 
 \begin{leancode}
-lemma cota (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
-  a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) ≤
-  a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) :=
+lemma cota
+  (ha : 0 < a)
+  (hb : 0 < b)
+  (hc : 0 < c)
+  : a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) ≤
+    a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) :=
 begin
-  have ha3: 0 < a ^ 3:= pow_pos ha 3,
-  have ha32: 0 ≤  (a ^ 3) ^ 2:= pow_two_nonneg (a ^ 3),
-  have hb8: 0 < 8 * b ^ 3 := mul_pos (bit0_pos zero_lt_four) (pow_pos hb 3),
-  have hbc: 0 < 8 * b ^ 3 * c ^ 3 := mul_pos hb8 (pow_pos hc 3),
-  have hdenom1: 0 < (a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3 := 
+  have ha3 : 0 < a ^ 3 :=
+    pow_pos ha 3,
+  have ha32 : 0 ≤ (a ^ 3) ^ 2 :=
+    pow_two_nonneg (a ^ 3),
+  have hb8 : 0 < 8 * b ^ 3 :=
+    mul_pos (by norm_num) (pow_pos hb 3),
+  have hbc : 0 < 8 * b ^ 3 * c ^ 3 :=
+    mul_pos hb8 (pow_pos hc 3),
+  have hdenom1 : 0 < (a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3 :=
     add_pos_of_nonneg_of_pos ha32 hbc,
-  have hsqrt: 0 < sqrt((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) := 
+  have hsqrt : 0 < sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) :=
     sqrt_pos.mpr hdenom1,
-  have hdenom2 := suma_pos ha hb hc,
-  have hdenom3: 0 ≤ a ^ 4 + b ^ 4 + c ^ 4 := hdenom2.le,
+  have hdenom2 : 0 < a ^ 4 + b ^ 4 + c ^ 4 :=
+    suma_pos ha hb hc,
+  have hdenom3 : 0 ≤ a ^ 4 + b ^ 4 + c ^ 4 :=
+    le_of_lt hdenom2,
   rw div_le_div_iff hdenom2 hsqrt,
   rw pow_succ',
   rw mul_assoc,
-  apply mul_le_mul_of_nonneg_left _ ha3.le,
+  apply mul_le_mul_of_nonneg_left _ (le_of_lt ha3),
   rw ← pow_succ',
   apply le_of_pow_le_pow _ hdenom3 zero_lt_two,
   rw mul_pow,
-  rw sq_sqrt hdenom1.le,
+  rw sq_sqrt (le_of_lt hdenom1),
   rw ← sub_nonneg,
-  have desarrollo: (a ^ 4 + b ^ 4 + c ^ 4) ^ 2 - 
-      a ^ 2 * ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3)
-      = 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 + (b ^ 4 - c ^ 4) ^ 2 +
-      (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2 := by ring,
-  have h1: 0 ≤ (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 := pow_two_nonneg _,
-  have h1': 0 ≤ 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2:= 
-    mul_nonneg zero_le_two h1,
-  have h2: 0 ≤ (b ^ 4 - c ^ 4) ^ 2:= pow_two_nonneg _,
-  have h3: 0 ≤ (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2:= 
+  have desarrollo :
+    (a ^ 4 + b ^ 4 + c ^ 4) ^ 2 -
+       a ^ 2 * ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3)
+    = 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 + (b ^ 4 - c ^ 4) ^ 2 +
+      (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2 :=
+    by ring,
+  have h1 : 0 ≤ (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 :=
     pow_two_nonneg _,
-  have aux1:= add_nonneg h2 h3,
-  have tesis:= add_nonneg h1' aux1,
+  have h1' : 0 ≤ 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2:=
+    mul_nonneg zero_le_two h1,
+  have h2 : 0 ≤ (b ^ 4 - c ^ 4) ^ 2:=
+    pow_two_nonneg _,
+  have h3 : 0 ≤ (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2 :=
+    pow_two_nonneg _,
+  have aux1 : 0 ≤ (b ^ 4 - c ^ 4) ^ 2 +
+                  (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2 :=
+    add_nonneg h2 h3,
+  have tesis : 0 ≤ 2 * (a ^ 2 * (b ^ 2 - c ^ 2)) ^ 2 +
+                   ((b ^ 4 - c ^ 4) ^ 2 +
+                    (2 * (a ^ 2 * b * c - b ^ 2 * c ^ 2)) ^ 2) :=
+    add_nonneg h1' aux1,
   rw desarrollo,
   rw add_assoc,
   exact tesis,
@@ -405,49 +426,51 @@ end
 En la formalización de este teorema Lean han sido necesarios el uso
 de los siguiente lemas y teoremas:
 \begin{itemize}
-\item \mint{lean}|pow_pos {a : R} (H : 0 < a) : ∀ (n : ℕ), 0 < a ^ n|
+\item \mint{lean}|pow_pos : 0 < a → ∀ (n : ℕ), 0 < a ^ n|
   \indLema{pow\_pos}
-\item \mint{lean}|pow_two_nonneg {a : R} 0 ≤ a ^ 2|
+\item \mint{lean}|pow_two_nonneg : (∀ a : R), 0 ≤ a ^ 2|
   \indLema{pow\_two\_nonneg}
-\item \mint{lean}|mul_pos (ha : 0 < a) (hb : 0 < b) : 0 < a * b |
+\item \mint{lean}|mul_pos : 0 < a → 0 < b → 0 < a * b |
   \indLema{mul\_pos}
-\item \mint{lean}|add_pos_of_nonneg_of_pos ∀ {α : Type} {a b : α}
-  (ha : 0 ≤ a) (hb : 0 < b) : 0 < a + b|
+\item \mint{lean}|add_pos_of_nonneg_of_pos : 0 ≤ a → 0 < b → 0 < a + b|
   \indLema{add\_pos\_of\_nonneg\_of\_pos}
 \item \mint{lean}|sqrt_pos : 0 < sqrt x ↔ 0 < x |
   \indLema{sqrt\_pos}
-\item \mint{lean}|div_le_div_iff (b0 : 0 < b) (d0 : 0 < d) : a / b ≤ c / d ↔ a * d ≤ c * b|
+\item \mint{lean}|div_le_div_iff 0 < b → 0 < d → (a / b ≤ c / d ↔ a * d ≤ c * b)|
   \indLema{div\_le\_div\_iff}
 \item \mint{lean}|pow_succ' (a : M) (n : ℕ) : a^(n+1) = a^n * a |
   \indLema{pow\_succ'}
-\item \mint{lean}|mul_assoc : ∀ a b c : G, a * b * c = a * (b * c) |
+\item \mint{lean}|mul_assoc : a * b * c = a * (b * c) |
   \indLema{mul\_assoc}
-\item \mint{lean}|mul_le_mul_of_nonneg_left (h₁ : a ≤ b) (h₂ : 0 ≤ c) : c * a ≤ c * b|
+\item \mint{lean}|mul_le_mul_of_nonneg_left : a ≤ b → 0 ≤ c → c * a ≤ c * b|
   \indLema{mul\_le\_mul\_of\_nonneg\_left}
-\item \mint{lean}|le_of_pow_le_pow {a b : R} (n : ℕ) (hb : 0 ≤ b) (hn : 0 < n)
-  (h : a ^ n ≤ b ^ n) : a ≤ b|
+\item \mint{lean}|le_of_pow_le_pow : ∀ (n : ℕ), 0 ≤ b → 0 < n → a ^ n ≤ b ^ n → a ≤ b|
   \indLema{le\_of\_pow\_le\_pow}
 \item \mint{lean}|mul_pow (a b : M) (n : ℕ) : (a * b)^n = a^n * b^n |
   \indLema{mul\_pow}
-\item \mint{lean}|sq_sqrt (h : 0 ≤ x) : sqrt x ^ 2 = x |
+\item \mint{lean}|sq_sqrt : 0 ≤ x → sqrt x ^ 2 = x |
   \indLema{sq\_sqrt}
 \item \mint{lean}|sub_nonneg : 0 ≤ a - b ↔ b ≤ a|
   \indLema{sub\_nonneg}
-\item \mint{lean}|mul_nonneg (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a * b |
+\item \mint{lean}|mul_nonneg : 0 ≤ a → 0 ≤ b → 0 ≤ a * b |
   \indLema{mul\_nonneg}
-\item \mint{lean}|add_nonneg ∀ {α : Type} {a b : α} (ha : 0 ≤ a) (hb : 0 ≤ b) :
-  0 ≤ a + b|
+\item \mint{lean}|add_nonneg : 0 ≤ a → 0 ≤ b → 0 ≤ a + b|
   \indLema{add\_nonneg}
-\item \mint{lean}|add_assoc ∀ {G : Type} {a b c : G}, a + b + c = a + (b + c)|
+\item \mint{lean}|add_assoc : a + b + c = a + (b + c)|
   \indLema{add\_assoc}
 \end{itemize}
+
 \comentario{No sé cómo poner en dos renglones los lemas que son muy largos}
+
+\comentario{Usando condicionales en lugar de hipótesis se escriben en
+  una línea. Para usar varias líneas se usa el entorno leancode en lugar
+  de la orden mint.}
+
 Además,se han usado las tácticas
-\tactica{apply}{apply}.
+\tactica{apply}{apply},
 \tactica{exact}{exact},
 \tactica{have}{have} y
 \tactica{rw / rewrite}{rw}.
-
 
 Por último, el tercer resultado auxiliar para resolver el ejercicio
 se trata de un teorema que será la herramienta principal para
@@ -456,14 +479,14 @@ que se han presentado anteriormente. El teorema es el siguiente:
 \begin{teorema}\label{teoremaaux}
   Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
   \begin{align}
-    &0<a, \label{haq2t}\tag{ha}\\
-    &0<b, \label{hbq2t}\tag{hb}\\
-    &0<c. \label{hcq2t}\tag{hc}
+    &0 < a, \label{haq2t}\tag{ha}\\
+    &0 < b, \label{hbq2t}\tag{hb}\\
+    &0 < c. \label{hcq2t}\tag{hc}
   \end{align}
   Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
   \begin{equation}\label{eqteorema}
-    1≤\frac{a³}{\sqrt{(a³)²}+8b³c³}+\frac{b³}{\sqrt{(b³)²+8c³a³}}+
+    1 ≤ \frac{a³}{\sqrt{(a³)²}+8b³c³}+\frac{b³}{\sqrt{(b³)²+8c³a³}}+
     \frac{c³}{\sqrt{(c³)²+8a³b³}}.
   \end{equation}
 \end{teorema}
@@ -473,14 +496,14 @@ que se han presentado anteriormente. El teorema es el siguiente:
   demostrar que se tiene la desigualdad (\ref{eqteorema}).
 
   Para ello, se van a demostrar cinco hipótesis mediante las cuales se
-  tendrá de manera inmediate el resultado:
+  tendrá de manera inmediata el resultado:
   \begin{itemize}
   \item \textbf{Hipótesis h1:}
 
-    Esta hipótesis consiste en que aplicando las propiedades conmutativa
-    y asociativa de la suma, se tiene el siguiente resultado:
+    Esta hipótesis consiste en que aplicando las de los anillos, se
+    tiene el siguiente resultado:
     \begin{equation}\label{h1teor}\tag{h1}
-      b⁴+c⁴+a⁴=a⁴+b⁴+c⁴.
+      b⁴+c⁴+a⁴ = a⁴+b⁴+c⁴.
     \end{equation}
 
   \item \textbf{Hipótesis h2:}
@@ -488,7 +511,7 @@ que se han presentado anteriormente. El teorema es el siguiente:
     De manera totalmente análoga al resultado anterior, (\ref{h1teor}), se
     tiene que:
     \begin{equation}\label{h2teor}\tag{h2}
-      c⁴+a⁴+b⁴=a⁴+b⁴+c⁴.
+      c⁴+a⁴+b⁴ = a⁴+b⁴+c⁴.
     \end{equation}
 
   \item \textbf{Hipótesis h3:}
@@ -497,31 +520,29 @@ que se han presentado anteriormente. El teorema es el siguiente:
     \(a\), \(b\) y \(c\) que sean positivos, se verifica la siguiente
     desigualdad:
     \begin{equation}\label{h3teor}\tag{h3}
-      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴}≤
+      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴} ≤
       \frac{a³}{\sqrt{(a³)²+8b³c³}}+\frac{b³}{\sqrt{(b³)²+c³a³}}
     \end{equation}
 
-    Para ver que se verifica esta igualdad se hará uso del lema auxiliar
+    Para ver que se verifica esta desigualdad se hará uso del lema auxiliar
     \ref{lemacota}. Si aplicamos dicho lema sobre los números \(a\), \(b\)
     y \(c\) teniendo en cuenta las hipótesis (\ref{haq2t}), (\ref{hbq2t})
     y (\ref{hcq2t}), se tiene:
     \begin{equation}\label{h3teor1}
-      \frac{a⁴}{a⁴+b⁴+c⁴}≤
-      \frac{a³}{\sqrt{(a³)²+8b³c³}}.
+      \frac{a⁴}{a⁴+b⁴+c⁴} ≤ \frac{a³}{\sqrt{(a³)²+8b³c³}}.
     \end{equation}
 
     Mientras que si se lo aplicamos a los números \(b\), \(c\) y \(a\) (en
     ese orden) teniendo en cuenta las mismas hipótesis; se verifica la
     siguiente desigualdad:
     \begin{equation}\label{h3teor2}
-      \frac{b⁴}{b⁴+c⁴+a⁴}≤\frac{b³}{\sqrt{(b³)²+c³a³}}
+      \frac{b⁴}{b⁴+c⁴+a⁴} ≤ \frac{b³}{\sqrt{(b³)²+c³a³}}
     \end{equation}
 
-    Aplicando ahora que al tener estas dos desigualdades, se tiene que si
-    sumamos los dos términos que son menores de (\ref{h3teor1}) y de
-    (\ref{h3teor2}) serán menor o igual que la suma de los dos términos
-    mayores de las mismas desigualdades. Es decir, se tendría probado
-    (\ref{h3teor}).
+    A partir de estas dos desigualdades, se tiene que si sumamos los dos
+    términos que son menores de (\ref{h3teor1}) y de (\ref{h3teor2})
+    serán menor o igual que la suma de los dos términos mayores de las
+    mismas desigualdades. Es decir, se tendría probado (\ref{h3teor}).
 
   \item \textbf{Hipótesis h4:}
 
@@ -529,9 +550,9 @@ que se han presentado anteriormente. El teorema es el siguiente:
     reales \(a\), \(b\) y \(c\) que sean positivos, se verifica la
     siguiente desigualdad:
     \begin{align*}\label{h4teor}\tag{h4}
-      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴}+\frac{c⁴}{c⁴+a⁴+b⁴}&≤
-      \frac{a³}{\sqrt{(a³)²+8b³c³}}\\+&\frac{b³}{\sqrt{(b³)²+c³a³}}+
-      \frac{c³}{\sqrt{(c³)²+a³b³}}.
+      & \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴}+\frac{c⁴}{c⁴+a⁴+b⁴} \\
+      & ≤ \frac{a³}{\sqrt{(a³)²+8b³c³}}+\frac{b³}{\sqrt{(b³)²+c³a³}}+
+          \frac{c³}{\sqrt{(c³)²+a³b³}}.
     \end{align*}
 
     Para ello, se procederá de manera análoga a como se hizo en la
@@ -540,8 +561,7 @@ que se han presentado anteriormente. El teorema es el siguiente:
     orden) y teniendo en cuenta las hipótesis (\ref{hcq2t}), (\ref{haq2t})
     y (\ref{hbq2t}), se tendría:
     \begin{equation}\label{h4teor1}
-      \frac{c⁴}{c⁴+a⁴+b⁴}≤
-      \frac{c³}{\sqrt{(c³)²+8a³b³}}.
+      \frac{c⁴}{c⁴+a⁴+b⁴} ≤ \frac{c³}{\sqrt{(c³)²+8a³b³}}.
     \end{equation}
 
     Por tanto, procediendo de manera totalmente análoga a como se hizo en
@@ -555,7 +575,7 @@ que se han presentado anteriormente. El teorema es el siguiente:
     tres números reales y positivos \(a\), \(b\) y \(c\), se ha de
     verificar la siguiente igualdad:
     \begin{equation}\label{h5teor}\tag{igualdad}
-      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴}+\frac{c⁴}{c⁴+a⁴+b⁴}=1.
+      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{b⁴+c⁴+a⁴}+\frac{c⁴}{c⁴+a⁴+b⁴} = 1.
     \end{equation}
 
     En primer lugar, utilizamos las hipótesis (\ref{h1teor}) y
@@ -563,7 +583,7 @@ que se han presentado anteriormente. El teorema es el siguiente:
     tercera fracción, respectivamente. Se obtiene que el objetivo a
     demostrar que antes era (\ref{h5teor}), ahora es:
     \begin{equation}\label{h5teor1}
-      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{a⁴+b⁴+c⁴}+\frac{c⁴}{a⁴+b⁴+c⁴}=1.
+      \frac{a⁴}{a⁴+b⁴+c⁴}+\frac{b⁴}{a⁴+b⁴+c⁴}+\frac{c⁴}{a⁴+b⁴+c⁴} = 1.
     \end{equation}
 
     Introduzcamos el siguiente lema:
@@ -576,7 +596,7 @@ que se han presentado anteriormente. El teorema es el siguiente:
 
     Cuya formalización en Lean es:
     \begin{leancode}
-    lemma add_div (a b c : K) : (a + b) / c = a / c + b / c 
+    lemma add_div (a b c : K) : (a + b) / c = a / c + b / c
     \end{leancode}
 
     A continuación, aplicando dicho resultado dos veces en (\ref{h5teor1})
@@ -590,7 +610,7 @@ que se han presentado anteriormente. El teorema es el siguiente:
     número que aparece sea distinto de cero. Es decir, se ha de verificar
     que
     \begin{equation}
-      0<a⁴+b⁴+c⁴.
+      0 < a⁴+b⁴+c⁴.
     \end{equation}
 
     Lo cual se tiene de manera inmediate a través del primer lema que
@@ -600,43 +620,44 @@ que se han presentado anteriormente. El teorema es el siguiente:
   De esta forma, una vez se han introducido estas cinco hipótesis se puede
   concluir la demostración del teorema muy fácilmente. Bastaría con
   introducir la expresión (\ref{h5teor}) en la hipótesis (\ref{h4teor})
-  y ya se tendría el resultado, es decir, se tendría (\ref{eqteorema}).
+  y ya se tendría el resultado; es decir, se tendría (\ref{eqteorema}).
 \end{demostracion}
 
 \begin{leancode}
-theorem imo2001_q2_aux (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
-  1 ≤ a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
-      b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
-      c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
+theorem imo2001_q2_aux
+  (ha : 0 < a)
+  (hb : 0 < b)
+  (hc : 0 < c)
+  : 1 ≤ a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
+        b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
+        c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
 begin
-  have h1: b ^ 4 + c ^ 4 + a ^ 4 = a ^ 4 + b ^ 4 + c ^ 4,
-  {rw add_comm,
-   rw ← add_assoc,},
-  have h2: c ^ 4 + a ^ 4 + b ^ 4 = a ^4 + b ^ 4 + c ^ 4,
-  {rw add_assoc,
-   rw add_comm,},
-  have h3: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
-    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) ≤  
-    a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) + 
-    b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3):= 
+  have h1 : b ^ 4 + c ^ 4 + a ^ 4 = a ^ 4 + b ^ 4 + c ^ 4,
+    by ring,
+  have h2 : c ^ 4 + a ^ 4 + b ^ 4 = a ^4 + b ^ 4 + c ^ 4,
+    by ring,
+  have h3 : a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) +
+            b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) ≤
+            a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
+            b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) :=
     add_le_add (cota ha hb hc) (cota hb hc ha),
-  have h4: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
-    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
-    c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) ≤  
-    a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) + 
-    b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
-    c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
+  have h4 : a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) +
+            b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
+            c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) ≤
+            a ^ 3 / sqrt ((a ^ 3) ^ 2 + 8 * b ^ 3 * c ^ 3) +
+            b ^ 3 / sqrt ((b ^ 3) ^ 2 + 8 * c ^ 3 * a ^ 3) +
+            c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3) :=
     add_le_add h3 (cota hc ha hb),
-  have igualdad: a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) + 
-    b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
-    c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) = 1,
-    {rw h1,
-     rw h2,
-     rw ← add_div,
-     rw ← add_div,
-     rw div_self,
-     apply ne_of_gt,
-     exact suma_pos ha hb hc,},
+  have igualdad : a ^ 4 / (a ^ 4 + b ^ 4 + c ^ 4) +
+                  b ^ 4 / (b ^ 4 + c ^ 4 + a ^ 4) +
+                  c ^ 4 / (c ^ 4 + a ^ 4 + b ^ 4) = 1,
+    { rw h1,
+      rw h2,
+      rw ← add_div,
+      rw ← add_div,
+      rw div_self,
+      apply ne_of_gt,
+      exact suma_pos ha hb hc,},
   rw igualdad at h4,
   exact h4,
 end
@@ -659,33 +680,35 @@ necesarios el uso de los siguiente lemas y teoremas:
 \item \mint{lean}|ne_of_gt {a b : α} (h : b < a) : a ≠ b |
   \indLema{ne\_of\_gt}
 \end{itemize}
+
 \comentario{Mismo problema que en el anterior lema}
+\comentario{Misms solución que en el anterior lema}
 
 Además,se han usado las tácticas
-\tactica{apply}{apply}.
+\tactica{apply}{apply},
 \tactica{exact}{exact},
 \tactica{have}{have} y
 \tactica{rw / rewrite}{rw}.
 
-
 \subsection{Conclusión del problema}
+
 Una vez ya se han introducido y formalizado los tres resultados
-axiliares, se procederá a la formalización en sí de la resolución
-como tal del problema. Para llevar a cabo tal resolución se hará uso
-de un teorema que demuestra el resultado que nos interesa.
+axiliares, se procederá a la formalización en sí de la resolución como
+tal del problema. Para llevar a cabo tal resolución se hará uso de un
+teorema que demuestra el resultado que nos interesa.
 
 \begin{teorema}
   Sean \(a\), \(b\) y \(c\) tres números reales y positivos, esto es:
   \begin{align}
-    &0<a, \label{haq2te}\tag{ha}\\
-    &0<b, \label{hbq2te}\tag{hb}\\
-    &0<c. \label{hcq2te}\tag{hc}
+    &0 < a, \label{haq2te}\tag{ha}\\
+    &0 < b, \label{hbq2te}\tag{hb}\\
+    &0 < c. \label{hcq2te}\tag{hc}
   \end{align}
   Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
   \begin{equation}\label{eqfinal}
-    1≤\frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
-    \frac{c}{\sqrt{c²+8ab}}.
+    1 ≤ \frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
+        \frac{c}{\sqrt{c²+8ab}}.
   \end{equation}
 \end{teorema}
 
@@ -700,34 +723,33 @@ de un teorema que demuestra el resultado que nos interesa.
   \begin{itemize}
   \item \textbf{Hipótesis h:}
     \begin{equation}\label{hfinal}\tag{h}
-      ∀x∈ ℝ, x>0 ⟶((x³)⁻¹)³ =x.
+      ∀x ∈ ℝ, x > 0 ⟶((x³)⁻¹)³ = x.
     \end{equation}
 
     Para demostrar esta hipótesis, comencemos fijando un número real \(x\),
     a continuación, a la hipótesis de que este número es positivo la
     denotaremos como sigue:
     \begin{equation}\label{hxfinal}\tag{hx}
-      0<x.
+      0 < x.
     \end{equation}
 
     Además, se tiene de manera trivial las dos siguientes afirmaciones:
     \begin{align}
-      &0<3,\label{h1final}\tag{h1}\\
-      &3∈ℕ. \label{h2final}\tag{h2}
+      &0 < 3,\label{h1final}\tag{h1}\\
+      &3 ∈ ℕ. \label{h2final}\tag{h2}
     \end{align}
 
     Introduzcamos ahora el siguiente lema:
     \begin{lema}\label{lemafinal}
-      Sean \(x\) un número no negativo perteneciente al conjunto de los
-      números reales y \(n\) un número perteneciente al conjunto de los
-      números naturales mayor estrictamente que cero. Entonces, se tiene
-      que se verifica la siguiente igualdad:
+      Sean \(x\) un número real no negativo y \(n\) un número natural
+      positivo. Entonces, se verifica la siguiente igualdad:
       \begin{equation}
-        (x^{n^{-1}})^n=x,
+        (x^{n^{-1}})^n = x,
       \end{equation}
       donde en esa expresión \(n^{-1} \) es considerado como un número
       real.
     \end{lema}
+
     La formalización en Lean de este resultado es la siguiente:
     \begin{leancode}
       lemma rpow_nat_inv_pow_nat {x : ℝ} (hx : 0 ≤ x) {n : ℕ} (hn : 0 < n) :
@@ -738,26 +760,25 @@ de un teorema que demuestra el resultado que nos interesa.
     en cuenta las hipótesis (\ref{h1final}) y (\ref{h2final}) y sabiendo
     que como el \(x\) considerado es mayor estrictamente que cero,
     (\ref{hxfinal}), entonces éste es mayor o igual que cero; se demuestra
-    (\ref{hfinal}).    
-    
+    (\ref{hfinal}).
+
   \item \textbf{Hipótesis aux:}
 
     En esta nueva hipótesis se hará uso del teorema auxiliar
     \ref{teoremaaux}. No obstante, previo a ello usaremos un resultado
     y es el siguiente:
+
     \begin{lema}\label{lemapotencia}
-      Sean \(x\) e \(y\) dos números pertenecientes al conjunto de los
-      números reales y donde además \(x\) es un número mayor que cero.
-      Entonces se tiene que la potencia de \(x\) elevado a \(y\) es también
-      mayor estrictamente que cero. Simbólicamente:
+      Sean \(x\) e \(y\) dos números reales tal que \(x\) es positivo.
+      Entonces, \(x^{y}\) es positivo. Simbólicamente:
       \begin{equation}
-        ∀x,y∈ ℝ, x>0 ⟶ x^{y}>0.
+        ∀x, y ∈ ℝ, x > 0 ⟶ x^{y}> 0.
       \end{equation}
     \end{lema}
     Cuya formalización en Lean es:
 
     \begin{leancode}
-    lemma rpow_pos_of_pos {x : ℝ} (hx : 0 < x) (y : ℝ) : 0 < x ^ y 
+    lemma rpow_pos_of_pos {x : ℝ} (hx : 0 < x) (y : ℝ) : 0 < x ^ y
     \end{leancode}
 
     De esta manera, se tiene que si aplicamos el lema \ref{lemapotencia}
@@ -765,14 +786,14 @@ de un teorema que demuestra el resultado que nos interesa.
     positivo, (\ref{haq2te}), y como número \(y\) al número real
     \(3^{-1} \). De esta forma se tendría que:
     \begin{equation}\label{x1}
-      a^{3^{-1}}>0.
+      a^{3^{-1}} > 0.
     \end{equation}
 
-    Si en lugar de considerar como \(x\) al número \(a\), consideramos los
-    números \(b\) y \(c\), respectivamente se obtiene lo siguiente:
+    Si en lugar de considerar como \(x\) al número \(a\), consideramos
+    los números \(b\) y \(c\), respectivamente se obtiene lo siguiente:
     \begin{align}
-      &b^{3^{-1}}>0,\label{x2}\\
-      &c^{3^{-1}}>0.\label{x3}
+      &b^{3^{-1}} > 0,\label{x2}\\
+      &c^{3^{-1}} > 0.\label{x3}
     \end{align}
 
     Entonces, teniendo estas tres hipótesis, (\ref{x1}) (\ref{x2}) y
@@ -780,9 +801,9 @@ de un teorema que demuestra el resultado que nos interesa.
     sobre los números reales \(a^{3^{-1}}\), \(b^{3^{-1}}\) y \(c^{3^{-1}}\).
     Se obtendría entonces la hipótesis aux:
     \begin{align*}\label{auxfinal}\tag{aux}
-      1≤\frac{(a^{3^{-1}})³}{\sqrt{((a^{3^{-1}})³)²+8(b^{3^{-1}})³(c^{3^{-1}})³}}
-      &+\frac{(b^{3^{-1}})³}{\sqrt{((b^{3^{-1}})³)²+8(c^{3^{-1}})³(a^{3^{-1}})³}}\\
-        &+\frac{c³}{\sqrt{((c^{3^{-1}})³)²+8(a^{3^{-1}})³(b^{3^{-1}})³}}.
+      1 ≤ & \frac{(a^{3^{-1}})³}{\sqrt{((a^{3^{-1}})³)²+8(b^{3^{-1}})³(c^{3^{-1}})³}} \\
+          & + \frac{(b^{3^{-1}})³}{\sqrt{((b^{3^{-1}})³)²+8(c^{3^{-1}})³(a^{3^{-1}})³}}\\
+          & + \frac{c³}{\sqrt{((c^{3^{-1}})³)²+8(a^{3^{-1}})³(b^{3^{-1}})³}}.
     \end{align*}
   \end{itemize}
 
@@ -795,8 +816,8 @@ de un teorema que demuestra el resultado que nos interesa.
   términos que aparecen en la expresión de la hipótesis (\ref{auxfinal}).
   De esta forma se obtendría que:
   \begin{equation}
-    1≤\frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
-    \frac{c}{\sqrt{c²+8ab}},
+    1 ≤ \frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
+        \frac{c}{\sqrt{c²+8ab}},
   \end{equation}
   que era el resultado deseado.
 \end{demostracion}
@@ -804,20 +825,28 @@ de un teorema que demuestra el resultado que nos interesa.
 A continuación, presentemos la formalización en Lean de este resultado:
 
 \begin{leancode}
-theorem imo2001_q2 (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
-  1 ≤ a / sqrt (a ^ 2 + 8 * b * c) +
-      b / sqrt (b ^ 2 + 8 * c * a) +
-      c / sqrt (c ^ 2 + 8 * a * b) :=
+theorem imo2001_q2
+  (ha : 0 < a)
+  (hb : 0 < b)
+  (hc : 0 < c)
+  : 1 ≤ a / sqrt (a ^ 2 + 8 * b * c) +
+        b / sqrt (b ^ 2 + 8 * c * a) +
+        c / sqrt (c ^ 2 + 8 * a * b) :=
 begin
-  have h: ∀ {x : ℝ}, 0 < x → (x ^ (3 : ℝ)⁻¹) ^ 3 = x,
-  {intros x hx,
-  have h1: 0 < 3 := zero_lt_three, 
-  have h2: ↑3 = (3 : ℝ):= by norm_num,
-  have h3: (x ^ (↑3)⁻¹) ^ 3 = x := rpow_nat_inv_pow_nat hx.le h1,
-  rw h2 at h3,
-  exact h3,},
-  have aux:= imo2001_q2_aux (rpow_pos_of_pos ha 3⁻¹) 
-  (rpow_pos_of_pos hb 3⁻¹) (rpow_pos_of_pos hc 3⁻¹),
+  have h : ∀ {x : ℝ}, 0 < x → (x ^ (3 : ℝ)⁻¹) ^ 3 = x,
+    { intros x hx,
+      have h1 : 0 < 3 :=
+        zero_lt_three,
+      have h2 : ↑3 = (3 : ℝ) :=
+        by norm_num,
+      have htesis : (x ^ (↑3)⁻¹) ^ 3 = x :=
+        rpow_nat_inv_pow_nat (le_of_lt hx) h1,
+      rw h2 at htesis,
+      exact htesis,},
+  have aux :=
+    imo2001_q2_aux (rpow_pos_of_pos ha 3⁻¹)
+                   (rpow_pos_of_pos hb 3⁻¹)
+                   (rpow_pos_of_pos hc 3⁻¹),
   rw h ha at aux,
   rw h hb at aux,
   rw h hc at aux,
@@ -837,11 +866,14 @@ siguientes lemas y teoremas auxiliares:
 \item \mint{lean}|rpow_pos_of_pos {x : ℝ} (hx : 0 < x) (y : ℝ) : 0 < x ^ y |
   \indLema{rpow\_pos\_of\_pos}
 \end{itemize}
-\comentario{Mismo problema que en los anteriores}
+
+\comentario{Mismo problema que en los anteriores.}
+
+\comentario{Misma solución que en los anteriores.}
 
 Además,se han usado las tácticas
-\tactica{intros}{intros}.
 \tactica{exact}{exact},
 \tactica{have}{have},
+\tactica{intros}{intros},
 \tactica{norm_num}{norm\_num} y
 \tactica{rw / rewrite}{rw}.
