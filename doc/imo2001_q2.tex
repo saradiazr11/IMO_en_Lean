@@ -59,8 +59,8 @@ El primer resultado auxiliar es el que se presenta a continuación:
     &0 < b, \label{hbq2}\tag{hb}\\
     &0 < c. \label{hcq2}\tag{hc}
   \end{align}
-  Entonces, se tiene que
-  Simbólicamente:
+  Entonces, se tiene que para estos tres números se verifica la siguiente
+  desigualdad:
   \begin{equation}
     0 < a⁴+b⁴+c⁴.
   \end{equation}
@@ -87,7 +87,7 @@ El primer resultado auxiliar es el que se presenta a continuación:
   \end{equation}
   Reiteramos este procedimiento ahora usando el mismo resultado sobre
   las hipótesis (\ref{sum1q2}) y (\ref{hc4q2}) y se obtiene:
-  \begin{equation}\tag{sum2}
+  \begin{equation}
     0 < a⁴+b⁴+c⁴.
   \end{equation}
 
@@ -136,7 +136,7 @@ verifica una cota que nos resultará de gran utilidad más adelante.
     &0 < b, \label{hbq22}\tag{hb}\\
     &0 < c. \label{hcq22}\tag{hc}
   \end{align}
-  Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
+  Entonces, se tiene que para estos números \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
   \begin{equation}\label{eqcota}
     \frac{a⁴}{a⁴+b⁴+c⁴} ≤ \frac{a³}{\sqrt{(a³)²+8b³c³}}.
@@ -460,12 +460,6 @@ de los siguiente lemas y teoremas:
   \indLema{add\_assoc}
 \end{itemize}
 
-\comentario{No sé cómo poner en dos renglones los lemas que son muy largos}
-
-\comentario{Usando condicionales en lugar de hipótesis se escriben en
-  una línea. Para usar varias líneas se usa el entorno leancode en lugar
-  de la orden mint.}
-
 Además,se han usado las tácticas
 \tactica{apply}{apply},
 \tactica{exact}{exact},
@@ -483,10 +477,10 @@ que se han presentado anteriormente. El teorema es el siguiente:
     &0 < b, \label{hbq2t}\tag{hb}\\
     &0 < c. \label{hcq2t}\tag{hc}
   \end{align}
-  Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
+  Entonces, se tiene que para estos números \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
   \begin{equation}\label{eqteorema}
-    1 ≤ \frac{a³}{\sqrt{(a³)²}+8b³c³}+\frac{b³}{\sqrt{(b³)²+8c³a³}}+
+    1 ≤ \frac{a³}{\sqrt{(a³)²+8b³c³}}+\frac{b³}{\sqrt{(b³)²+8c³a³}}+
     \frac{c³}{\sqrt{(c³)²+8a³b³}}.
   \end{equation}
 \end{teorema}
@@ -671,7 +665,7 @@ necesarios el uso de los siguiente lemas y teoremas:
   \indLema{add\_assoc}
 \item \mint{lean}|add_comm ∀ {G : Type} {a b c : G}, a + b  = b + a|
   \indLema{add\_comm}
-\item \mint{lean}|add_le_add ∀ {α : Type} {a b c d : α} (h₁ : a ≤ b) (h₂ : c ≤ d) : a + c ≤ b + d|
+\item \mint{lean}|add_le_add : a ≤ b → c ≤ d → a + c ≤ b + d|
   \indLema{add\_le\_add}
 \item \mint{lean}|add_div (a b c : K) : (a + b) / c = a / c + b / c|
   \indLema{add\_div}
@@ -680,9 +674,6 @@ necesarios el uso de los siguiente lemas y teoremas:
 \item \mint{lean}|ne_of_gt {a b : α} (h : b < a) : a ≠ b |
   \indLema{ne\_of\_gt}
 \end{itemize}
-
-\comentario{Mismo problema que en el anterior lema}
-\comentario{Misms solución que en el anterior lema}
 
 Además,se han usado las tácticas
 \tactica{apply}{apply},
@@ -704,7 +695,7 @@ teorema que demuestra el resultado que nos interesa.
     &0 < b, \label{hbq2te}\tag{hb}\\
     &0 < c. \label{hcq2te}\tag{hc}
   \end{align}
-  Entonces, se tiene que para cualesquiera \(a\), \(b\) y \(c\) se
+  Entonces, se tiene que para estos números \(a\), \(b\) y \(c\) se
   verifica la siguiente desigualdad:
   \begin{equation}\label{eqfinal}
     1 ≤ \frac{a}{\sqrt{a²+8bc}}+\frac{b}{\sqrt{b²+8ca}}+
@@ -860,16 +851,12 @@ siguientes lemas y teoremas auxiliares:
 \begin{itemize}
 \item \mint{lean}|zero_lt_three : 0 < (3:α) |
   \indLema{zero\_lt\_three}
-\item \mint{lean}|rpow_nat_inv_pow_nat {x : ℝ} (hx : 0 ≤ x) {n : ℕ} (hn : 0 < n) :
-  (x ^ (n⁻¹ : ℝ)) ^ n = x|
+\item \mint{lean}|rpow_nat_inv_pow_nat : ∀ (n : ℕ), 0 ≤ x → 0 < n →
+(x ^ (n⁻¹: ℝ)) ^ n = x|
   \indLema{rpow\_nat\_inv\_pow\_nat}
 \item \mint{lean}|rpow_pos_of_pos {x : ℝ} (hx : 0 < x) (y : ℝ) : 0 < x ^ y |
   \indLema{rpow\_pos\_of\_pos}
 \end{itemize}
-
-\comentario{Mismo problema que en los anteriores.}
-
-\comentario{Misma solución que en los anteriores.}
 
 Además,se han usado las tácticas
 \tactica{exact}{exact},
