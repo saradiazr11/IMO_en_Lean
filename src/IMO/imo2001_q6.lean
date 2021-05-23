@@ -13,10 +13,10 @@
 --    problema.
 
 import data.int.basic
-import tactic.ring
-import data.int.parity
-import algebra.associated
+/-import data.int.parity-/
 import tactic
+/-import tactic.ring-/
+import algebra.associated
 
 variables {a b c d : ℤ}
 

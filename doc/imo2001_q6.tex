@@ -19,6 +19,224 @@ solución en lenguaje natural del problema en cuestión que aparece en ???.
     Demostrar que \(ab+cd\) no es primo.
   }}
 
+Para llevar a cabo la formalización en Lean de la resolución de este
+problema, ha sido necesaria la importación de las siguientes teorías:
+\begin{itemize}
+\item \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/int/basic.lean}{data.int.basic}, para poder trabajar con el conjunto
+  de los números enteros.
+\item \href{https://github.com/leanprover-community/mathlib/blob/master/src/algebra/associated.lean}{algebra.associated}, para trabajar con las
+  definición de número primo.
+\item \href{https://github.com/leanprover-community/mathlib/tree/master/src/tactic}{tactic}, para poder acceder a las diferentes tácticas.
+\end{itemize}
+
+La importación en Lean de todas estas teorías se formaliza como sigue:
+\begin{leancode}
+import data.int.basic
+import algebra.associated
+import tactic
+\end{leancode}
+
+Además, en este problema hay que definir las variables \(a\), \(b\), \(c\) y
+\(d\) que pertenecen al conjunto de los números enteros. Las diferentes
+desigualdades que verifican se enunciarán en los lemas en los que sean
+necesarias dichas condiciones. En Lean esto se formaliza de la siguiente
+manera:
+\begin{leancode}
+variables {a b c d : ℤ}
+\end{leancode}
+
+A continuación, se va a dividir en dos partes esta sección: en la primera
+parte probaremos cuatro resultados auxiliares que han sido necesarios para
+la formalización del problema y en la segunda parte se formalizará el
+teorema final que nos da el resultado deseado.
+
+\subsection{Resultados auxiliares}
+Como ya se ha dicho anteriormente, en esta sección del problema se van
+a formalizar cuatro resultados auxiliares. Veámos estos lemas con sus
+correspondientes formalizaciones en Lean:
+
+\begin{lema}[sumas\_equivalentes]\label{q601lemasuma}
+  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que 
+    \begin{equation}\label{q601hipsum}\tag{h}
+      ac+bd = (a+b-c+d)(-a+b+c+d).
+    \end{equation}
+    Entonces se tiene que se verifica que
+    \begin{equation}\label{q601objsum}
+      b²+bd+d²=a²-ac+c².
+    \end{equation}
+\end{lema}
+
+\begin{demostracion}
+  Para demostrar (\ref{q601objsum}) se comenzará desarrollando la segunda
+  parte de la igualdad de la hipótesis (\ref{q601hipsum}), obteniendo el
+  siguiente resultado:
+  \begin{equation}\tag{h1}\label{q601h1sum}
+    (a+b-c+d)(-a+b+c+d)=-a²+b²+ac-c²+bd+d²+ac+bd.
+  \end{equation}
+
+  A continuación, reescribimos el segundo término de la hipótesis
+  (\ref{q601hipsum}) como se ha descrito en (\ref{q601h1sum}). De esta
+  forma se llega a la siguiente igualdad:
+  \begin{equation}\label{q601hip2sum}
+    ac+bd=-a²+b²+ac-c²+bd+d²+ac+bd.
+  \end{equation}
+
+  La conclusión de la prueba ya se tiene de manera trivial. Sin más que
+  simplificar la ecuación (\ref{q601hip2sum}) y redistribuyendo los términos
+  se obtiene (\ref{q601objsum}).
+\end{demostracion}
+
+Este resultado se formaliza en Lean como a continuación se plantea:
+\begin{leancode}
+lemma sumas_equivalentes
+  (h : a*c + b*d = (a + b - c + d) * (-a + b + c + d))
+  : b^2 + b*d + d^2 = a^2 - a*c + c^2 :=
+begin
+  have h1: (a + b - c + d) * (-a + b + c + d) =
+           -a^2  + b^2  + a*c - c^2 + b*d + d^2 + a*c + b*d,
+    by ring,
+  rw h1 at h,
+  by nlinarith,
+end
+\end{leancode}
+
+Prosigamos con la demostración del problema, para ello el lema que se
+presenta a continuación nos dará la igualdad de dos productos que será
+de gran utilidad en la conclusión del problema.
+
+\begin{lema}[peoductos\_equivalentes]\label{q601lemaprod}
+    Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros verificando que 
+    \begin{equation}\label{q601hipprod}\tag{h}
+      ac+bd = (a+b-c+d)(-a+b+c+d).
+    \end{equation}
+    Entonces se tiene que se verifica la siguiente igualdad
+    \begin{equation}\label{q601objprod}
+      (ac+bd)(b²+bd+d²)=(ab+cd)(ad+bc).
+    \end{equation}
+\end{lema}
+
+\begin{demostracion}
+  Para llevar a cabo la prueba de este resultado, se van a desarrollar los
+  dos lados de la igualdad que se quiere demostrar, (\ref{q601objprod}),
+  y se va a comprobar que son iguales.
+
+  Comencemos desarrollando la parte izquierda de (\ref{q601objprod}):
+  \begin{equation}\label{q601h1prod}\tag{h1}
+    (ac+bd)(b²+bd+d²)=ac(b²+bd+b²)+bd(b²+bd+b²).
+  \end{equation}
+
+  Ahora bien, haciendo uso del lema que hemos demostrado antes, es decir,
+  el lema \ref{q601lemasuma} sobre el segundo término que aparece sobre
+  el que se puede aplicar, se tiene que
+  \begin{equation}\label{q601h2prod}\tag{h2}
+    ac(b²+bd+b²)+bd(b²+bd+b²)=ac(b²+bd+b²)+bd(a²-ac+c²).
+  \end{equation}
+
+  De esta forma, introduciendo el resultado obtenido en (\ref{q601h2prod})
+  en (\ref{q601h1prod}), se llega a que:
+  \begin{equation}\label{q601pr1}
+     (ac+bd)(b²+bd+d²)=ac(b²+bd+b²)+bd(a²-ac+c²).
+  \end{equation}
+
+  Ahora bien, si seguimos desarrollando la segunda parte de la igualdad
+  (\ref{q601pr1}), se llega a que:
+  \begin{equation}\label{q601pr2}
+     (ac+bd)(b²+bd+d²)= acb²+acd²+a²bd+bcd².
+  \end{equation}
+
+   Si desarrollamos el lado derecho de la ecuación que queremos demostrar,
+   es decir, de (\ref{q601objprod}), se llega a:
+   \begin{equation}\label{q601pr3}
+     (ab+cd)(ad+bc)= acb²+acd²+a²bd+bcd².
+   \end{equation}
+
+   Se puede comprobar a través de las expresiones (\ref{q601pr2}) y
+   (\ref{q601pr3}) que llegamos a lo mismo al desarrollar los dos términos
+   de la expresión (\ref{q601objprod}). Por tanto, ya se tendría la
+   prueba del lema.
+\end{demostracion}
+
+En este caso, la formalización en Lean es:
+\begin{leancode}
+lemma productos_equivalentes
+  (h : a*c + b*d = (a + b - c + d) * (-a + b + c + d))
+  : (a*c + b*d) * (b^2 + b*d + d^2) = (a*b + c*d) * (a*d + b*c) :=
+begin
+  have h1: (a*c + b*d) * (b^2 + b*d + d^2) =
+           a*c * (b^2 + b*d + d^2) + b*d * (b^2 + b*d + d^2),
+    by ring,
+  have h2: a*c * (b^2 + b*d + d^2) + b*d * (b^2 + b*d + d^2) =
+           a*c * (b^2 + b*d + d^2) + b*d * (a^2 - a*c + c^2),
+    by rw sumas_equivalentes h,
+  rw h2 at h1,
+  by nlinarith,
+end
+\end{leancode}
+
+
+\subsection{Conclusión del problema}
+Conluiremos el problema en esta sección haciendo uso de los lemas auxiliares
+probados anteriormente. Para resolver el problema que nos interesa, se
+enunciará el siguiente teorema:
+
+\begin{teorema}[imo2001q6]
+  Sean \(a\), \(b\), \(c\) y \(d\) cuatro
+  números enteros tales que \(a > b > c > d > 0\). Además, supongamos que
+  estos números enteros verifican que
+    \begin{equation}
+      ac+bd = (a+b-c+d)(-a+b+c+d).
+    \end{equation}
+    Entonces se tiene que \(ab+cd\) no es primo.
+\end{teorema}
+\begin{demostracion}
+  Aquí se detallará la demostración del teorema.
+\end{demostracion}
+
+La formalización en Lean de este teorema sería:
+\begin{leancode}
+theorem imo2001q6
+  (hd  : 0 < d)
+  (hdc : d < c)
+  (hcb : c < b)
+  (hba : b < a)
+  (h : a*c + b*d = (a + b - c + d)*(-a + b + c + d))
+  : ¬ prime (a*b + c*d) :=
+begin
+  intro h1,
+  have ha : 0 < a,
+    by linarith,
+  have hb : 0 < b,
+    by linarith,
+  have hc : 0 < c,
+    by linarith,
+  have h2 : (a*c + b*d) * (b^2 + b*d + d^2) =
+            (a*b + c*d) * (a*d + b*c),
+    from productos_equivalentes h,
+  have h3 : a*c + b*d ∣ (a*b + c*d) * (a*d + b*c),
+    from division h,
+  have h4: (a*b + c*d ∣ a*c + b*d) ∨ (a*c + b*d  ∣ a*d + b*c),
+    from left_dvd_or_dvd_right_of_dvd_prime_mul h1 h3,
+  cases h4 with hj hk,
+  { have hj1: a*b + c*d > a*c + b*d,
+      from desigualdad_auxiliar1 hba hcb hdc h,
+    have hpj: 0 < a*c + b*d,
+      from add_pos (mul_pos ha hc) (mul_pos hb hd),
+    have hj2: a*b + c*d ≤ a*c + b*d,
+      from int.le_of_dvd hpj hj,
+    have hj3: ¬ (a*b + c*d ≤ a*c + b*d),
+      from not_le.mpr hj1,
+    exact hj3 hj2, },
+  { have hk1: a*c + b*d > a*d + b*c,
+      from desigualdad_auxiliar2 hba hdc h,
+    have hpk: 0 < a*d + b*c,
+      from add_pos (mul_pos ha hd) (mul_pos hb hc),
+    have hk2: a*c + b*d ≤ a*d + b*c,
+      from int.le_of_dvd hpk hk,
+    have hk3: ¬ (a*c+b*d ≤  a*d+b*c),
+      from not_le.mpr hk1,
+    exact hk3 hk2, },
+end
+\end{leancode}
 
 %%% Local Variables:
 %%% mode: latex
