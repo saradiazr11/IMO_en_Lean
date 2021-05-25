@@ -46,13 +46,13 @@ variables {a b c d : ℤ}
 \end{leancode}
 
 A continuación, se va a dividir en dos partes esta sección: en la primera
-parte probaremos cuatro resultados auxiliares que han sido necesarios para
+parte probaremos cinco resultados auxiliares que han sido necesarios para
 la formalización del problema y en la segunda parte se formalizará el
 teorema final que nos da el resultado deseado.
 
 \subsection{Resultados auxiliares}
 Como ya se ha dicho anteriormente, en esta sección del problema se van
-a formalizar cuatro resultados auxiliares. Veámos estos lemas con sus
+a formalizar cinco resultados auxiliares. Veámos estos lemas con sus
 correspondientes formalizaciones en Lean:
 
 \begin{lema}[sumas\_equivalentes]\label{q601lemasuma}
@@ -99,12 +99,20 @@ begin
   by nlinarith,
 end
 \end{leancode}
+\index{sumas\_equivalentes}
+
+Para levar a cabo la formalización de este lema no hemos hecho uso de
+ningún lema auxiliar. No obstante, sí se han utilizado las tácticas de
+\tactica{have}{have},
+\tactica{rw / rewrite}{rw},
+\tactica{ring}{ring} y 
+\tactica{nlinarith}{nlinarith}.
 
 Prosigamos con la demostración del problema, para ello el lema que se
 presenta a continuación nos dará la igualdad de dos productos que será
 de gran utilidad en la conclusión del problema.
 
-\begin{lema}[peoductos\_equivalentes]\label{q601lemaprod}
+\begin{lema}[productos\_equivalentes]\label{q601lemaprod}
     Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros verificando que 
     \begin{equation}\label{q601hipprod}\tag{h}
       ac+bd = (a+b-c+d)(-a+b+c+d).
@@ -172,12 +180,100 @@ begin
   by nlinarith,
 end
 \end{leancode}
+\index{productos\_equivalentes}
 
+A continuación, se van a probar dos lemas muy parecidos (pues ambos nos
+afirman la veracidad de una desigualdad), que su vez son muy sencillos de
+formalizar en Lean bajo las hipótesis del problema.
+
+\begin{lema}[desigualdad\_auxiliar1]\label{lemades1}
+  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
+  \(a > b > c > d \). Además, supongamos que
+  estos números enteros verifican que
+    \begin{equation}
+      ac+bd = (a+b-c+d)(-a+b+c+d).
+    \end{equation}
+    Entonces se tiene que \(ac+bd\) es menor que \(ab+cd\). Simbólicamente:
+    \begin{equation}\label{q601objdes1}
+      ac+bd<ab+cd
+    \end{equation}
+\end{lema}
+
+\begin{demostracion}
+    En primer lugar, denotemos las hipótesis del enunciado como sigue:
+  \begin{align}
+    &b<a,\tag{hba}\label{hba01des1}\\
+    &c<b,\tag{hcb}\label{hcb01des1}\\
+    &d<c.\tag{hdc}\label{hdc01des1}
+  \end{align}
+
+  Por otro lado, se tiene qye demostrar (\ref{q601objdes1}) es equivalente
+  a demostrar la siguiente desigualdad:
+  \begin{equation}\label{q601objdes12}
+      0<ab+cd-(ac+bd).
+  \end{equation}
+
+  Sin embargo, desarrollando la resta de (\ref{q601objdes12}), se obtiene
+  que el objetivo a probar se convierte en:
+  \begin{equation}\label{q601objdes13}
+      0<(a-d)(b-c).
+  \end{equation}
+
+  No obstante, este resultado es inmediato a partir de las desigualdades
+  que tenemos de hipótesis, es decir, (\ref{hba01des1}), (\ref{hcb01des1})
+  y (\ref{hdc01des1}).
+\end{demostracion}
+
+Formalizar este lema en Lean es bastante sencillo y directo ya que existe
+una táctica que a través de las desigualdades que se tienen por hipótesis,
+deduce el resultado. La formalización sería:
+\begin{leancode}
+lemma desigualdad_auxiliar1
+  (hba : b < a)
+  (hcb : c < b)
+  (hdc : d < c)
+  (h : a*c + b*d = (a + b - c + d) * (-a + b + c + d))
+  : a*c + b*d < a*b + c*d:=
+by nlinarith
+\end{leancode}
+\index{desigualdad\_auxiliar1}
+
+En la demostración de este lema sólo ha sido necesario el uso de la táctica
+\tactica{nlinarith}{nlinarith}.
+
+\begin{lema}[desigualdad\_auxiliar2]\label{lemades2}
+  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
+  \(a > b\) y \( c > d \). Además, supongamos que
+  estos números enteros verifican que
+    \begin{equation}
+      ac+bd = (a+b-c+d)(-a+b+c+d).
+    \end{equation}
+    Entonces se tiene que \(ad+bc\) es menor que \(ac+bd\). Simbólicamente:
+    \begin{equation}
+      ad+bc<ac+bd
+    \end{equation}
+\end{lema}
+
+\begin{demostracion}
+  Se detallará la prueba del lema.
+\end{demostracion}
+
+Análogamente al lema anterior, \ref{lemades1}, la formalización en Lean de
+este lema sería inmediata:
+\begin{leancode}
+lemma desigualdad_auxiliar2
+  (hba : b < a)
+  (hdc : d < c)
+  (h : a*c + b*d = (a + b - c + d)*(-a + b + c + d))
+  : a*d + b*c < a*c + b*d:=
+by nlinarith
+\end{leancode}
+\index{desigualdad\_auxiliar2}
 
 \subsection{Conclusión del problema}
-Conluiremos el problema en esta sección haciendo uso de los lemas auxiliares
-probados anteriormente. Para resolver el problema que nos interesa, se
-enunciará el siguiente teorema:
+Conluiremos el problema en esta sección, para ello se hará uso de los lemas
+auxiliares probados anteriormente. Para resolver el problema que nos
+interesa, se enunciará el siguiente teorema:
 
 \begin{teorema}[imo2001q6]
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro
