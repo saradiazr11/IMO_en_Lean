@@ -53,7 +53,11 @@ teorema final que nos da el resultado deseado.
 \subsection{Resultados auxiliares}
 Como ya se ha dicho anteriormente, en esta sección del problema se van
 a formalizar cinco resultados auxiliares. Veámos estos lemas con sus
-correspondientes formalizaciones en Lean:
+correspondientes formalizaciones en Lean.
+
+Destacar que en los lemas auxiliares que se van a presentar a continuación
+no siempre es necesario usar todas las hipótesis del teorema en sí. Es por eso,
+que los resultados se han probado de la manera más general posible.
 
 \begin{lema}[sumas\_equivalentes]\label{q601lemasuma}
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que 
@@ -190,7 +194,7 @@ formalizar en Lean bajo las hipótesis del problema.
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
   \(a > b > c > d \). Además, supongamos que
   estos números enteros verifican que
-    \begin{equation}
+    \begin{equation}\tag{h}
       ac+bd = (a+b-c+d)(-a+b+c+d).
     \end{equation}
     Entonces se tiene que \(ac+bd\) es menor que \(ab+cd\). Simbólicamente:
@@ -207,7 +211,7 @@ formalizar en Lean bajo las hipótesis del problema.
     &d<c.\tag{hdc}\label{hdc01des1}
   \end{align}
 
-  Por otro lado, se tiene qye demostrar (\ref{q601objdes1}) es equivalente
+  Por otro lado, se tiene que demostrar (\ref{q601objdes1}) es equivalente
   a demostrar la siguiente desigualdad:
   \begin{equation}\label{q601objdes12}
       0<ab+cd-(ac+bd).
@@ -242,20 +246,39 @@ En la demostración de este lema sólo ha sido necesario el uso de la táctica
 \tactica{nlinarith}{nlinarith}.
 
 \begin{lema}[desigualdad\_auxiliar2]\label{lemades2}
-  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
-  \(a > b\) y \( c > d \). Además, supongamos que
-  estos números enteros verifican que
-    \begin{equation}
+  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que \(a\) es
+  mayor que \(b\) y \(c\) mayor que \(d\). Es decir, 
+  \begin{align}
+    &b<a,\tag{hba}\label{hba01des2}\\
+    &d<c.\tag{hdc}\label{hdc01des2}
+  \end{align}
+  Además, los números enteros en consideración verifican la siguiente relación:
+    \begin{equation}\tag{h}
       ac+bd = (a+b-c+d)(-a+b+c+d).
     \end{equation}
     Entonces se tiene que \(ad+bc\) es menor que \(ac+bd\). Simbólicamente:
-    \begin{equation}
+    \begin{equation}\label{des2q601}
       ad+bc<ac+bd
     \end{equation}
 \end{lema}
 
 \begin{demostracion}
-  Se detallará la prueba del lema.
+  En primer lugar, se tiene que demostrar (\ref{des2q601}) es equivalente a
+  probar la siguiente expresión:
+  \begin{equation}\label{des2q601obj}
+      0<ac+bd-(ad+bc),
+  \end{equation}
+  donde simplemente se ha pasado el término de la izquierda hacia la parte
+  derecha de la desigualdad.
+
+  Desarrollando la resta que se puede observar en (\ref{des2q601obj}), se
+  obtiene lo siguiente:
+  \begin{equation}
+    0<(a-b)(c-d).
+  \end{equation}
+
+  No obstante, este reultado se tiene de manera inmediate a partir de las
+  hipótesis (\ref{hba01des2}) y (\ref{hdc01des2}).
 \end{demostracion}
 
 Análogamente al lema anterior, \ref{lemades1}, la formalización en Lean de
@@ -269,6 +292,64 @@ lemma desigualdad_auxiliar2
 by nlinarith
 \end{leancode}
 \index{desigualdad\_auxiliar2}
+
+Al igual que en el lema auxiliar anterior, sólo ha sido necesario el uso de
+la táctica \tactica{nlinarith}{nlinarith} para su formalización.
+
+Finalmente, introduzcamos el último lema auxiliar antes de llevar a cabo la
+formalización del problema como tal.
+
+\begin{lema}[division]
+  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
+  verifican la siguiente relación:
+    \begin{equation}\tag{h}
+      ac+bd = (a+b-c+d)(-a+b+c+d).
+    \end{equation}
+    Entonces se tiene que
+    \begin{equation}
+      ac+bd ∣ (ab+cd)(ad+bc).
+    \end{equation}
+\end{lema}
+
+\begin{demostracion}
+  Previo a la demostración como tal del resultado, recordemos qué significa que
+  un número entero divida a otro.
+  \begin{definicion}\label{defdiventeros}
+    Sean \(a\) y \(b\) dos números pertenecientes al conjunto de los números
+    enteros. Se dirá que  \(a\) \textbf{divide a} \(b\) si y
+    solamente si existe otro número entero \(k\) tal que \(b = a · k\).
+    Simbólicamente,
+    \begin{equation}
+    a|b ⟺ ∃ k ∈ ℤ, b = a · k.
+    \end{equation}
+  \end{definicion}
+
+  Por tanto, se tiene que haciendo uso de la definición \ref{defdiventeros},
+  la prueba del lema consiste en probar que existe un número entero \(k\)
+  verificando que
+  \begin{equation}
+    (ab+cd)(ad+bc)=(ac+bd)k.
+  \end{equation}
+  
+  Usando como número entero \(k\) el que viene dado por la suma \(b²+bd+d²\),
+  se tendría que para obtener el resultado que se quería demostrar, bastaría con
+  hacer uso del Lema \label{q601lemaprod}.
+\end{demostracion}
+
+La formalización en Lean de este problema sería:
+\begin{leancode}
+lemma division
+  (h : a*c + b*d = (a + b - c + d) * (-a + b + c + d))
+  : a*c + b*d ∣ (a*b+c*d) * (a*d+b*c):=
+begin
+  use (b^2 + b*d +d^2),
+  by nlinarith [productos_equivalentes h],
+end
+\end{leancode}
+\index{division}
+
+Para la formalización de este último lema auxiliar sólo han sido necesario el
+uso de dos tácticas: \tactica{nlinarith}{nlinarith} y \tactica{use}{use}.
 
 \subsection{Conclusión del problema}
 Conluiremos el problema en esta sección, para ello se hará uso de los lemas
