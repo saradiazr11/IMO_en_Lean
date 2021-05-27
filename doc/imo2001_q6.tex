@@ -2,12 +2,9 @@
 
 En esta nueva sección, se va a detallar la resolución del problema Q6
 propuesto en el año 2001. Como en el resto de planteamientos anteoriores
-que se han detallado en el capítulo anterior, se comenzará presentado la
+que se han detallado en el capítulo previo, se comenzará presentado la
 demostración en lenguaje natural del problema y luego su correspondiente
 formalización en Lean.
-
-Para la realización de esta formalización, se ha hecho uso de la propuesta de
-solución en lenguaje natural del problema en cuestión que aparece en ???.
 
 \noindent
 \framebox{\parbox{\textwidth}{
@@ -35,6 +32,7 @@ import data.int.basic
 import algebra.associated
 import tactic
 \end{leancode}
+\comentario{He simplicado las importaciones de librerías}
 
 Además, en este problema hay que definir las variables \(a\), \(b\), \(c\) y
 \(d\) que pertenecen al conjunto de los números enteros. Las diferentes
@@ -57,7 +55,8 @@ correspondientes formalizaciones en Lean.
 
 Destacar que en los lemas auxiliares que se van a presentar a continuación
 no siempre es necesario usar todas las hipótesis del teorema en sí. Es por eso,
-que los resultados se han probado de la manera más general posible.
+que los resultados se han probado usando el menor número de hipótesis posible,
+haciendo el resultado lo más general posible.
 
 \begin{lema}[sumas\_equivalentes]\label{q601lemasuma}
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que 
@@ -137,7 +136,7 @@ de gran utilidad en la conclusión del problema.
     (ac+bd)(b²+bd+d²)=ac(b²+bd+b²)+bd(b²+bd+b²).
   \end{equation}
 
-  Ahora bien, haciendo uso del lema que hemos demostrado antes, es decir,
+  Ahora bien, haciendo uso del lema que hemos demostrado antes, es decir, 
   el lema \ref{q601lemasuma} sobre el segundo término que aparece sobre
   el que se puede aplicar, se tiene que
   \begin{equation}\label{q601h2prod}\tag{h2}
@@ -156,16 +155,16 @@ de gran utilidad en la conclusión del problema.
      (ac+bd)(b²+bd+d²)= acb²+acd²+a²bd+bcd².
   \end{equation}
 
-   Si desarrollamos el lado derecho de la ecuación que queremos demostrar,
-   es decir, de (\ref{q601objprod}), se llega a:
-   \begin{equation}\label{q601pr3}
-     (ab+cd)(ad+bc)= acb²+acd²+a²bd+bcd².
-   \end{equation}
+  Por otro lado, se tiene que reescribiendo la parte derecha de la ecuación
+  que queremos demostrar,es decir, de (\ref{q601objprod}), se llega a:
+  \begin{equation}\label{q601pr3}
+    (ab+cd)(ad+bc)= acb²+acd²+a²bd+bcd².
+  \end{equation}
 
-   Se puede comprobar a través de las expresiones (\ref{q601pr2}) y
-   (\ref{q601pr3}) que llegamos a lo mismo al desarrollar los dos términos
-   de la expresión (\ref{q601objprod}). Por tanto, ya se tendría la
-   prueba del lema.
+  Se puede comprobar a través de las expresiones (\ref{q601pr2}) y
+  (\ref{q601pr3}) que llegamos a lo mismo al desarrollar los dos términos
+  de la expresión (\ref{q601objprod}). Por tanto, ya se tendría la
+  prueba del lema.
 \end{demostracion}
 
 En este caso, la formalización en Lean es:
@@ -186,8 +185,8 @@ end
 \end{leancode}
 \index{productos\_equivalentes}
 
-A continuación, se van a probar dos lemas muy parecidos (pues ambos nos
-afirman la veracidad de una desigualdad), que su vez son muy sencillos de
+A continuación, se van a probar dos lemas muy parecidos (puesto que ambos nos
+afirman la veracidad de una desigualdad), que a su vez son muy sencillos de
 formalizar en Lean bajo las hipótesis del problema.
 
 \begin{lema}[desigualdad\_auxiliar1]\label{lemades1}
@@ -293,19 +292,25 @@ by nlinarith
 \end{leancode}
 \index{desigualdad\_auxiliar2}
 
-Al igual que en el lema auxiliar anterior, sólo ha sido necesario el uso de
+\comentario{Las demostraciones de los lemas desigualdad-auxiliar1(2) no se
+  corresponden demasiado con la formalización en Lean, pero no veo forma de
+  hacer que se parezcan si no es diciendo que se hace a partir de las
+  propias hipótesis}
+
+Al igual que en el lema \ref{lemades1}, sólo ha sido necesario el uso de
 la táctica \tactica{nlinarith}{nlinarith} para su formalización.
 
 Finalmente, introduzcamos el último lema auxiliar antes de llevar a cabo la
 formalización del problema como tal.
 
-\begin{lema}[division]
+\begin{lema}[division]\label{lemadivisionq6}
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
   verifican la siguiente relación:
     \begin{equation}\tag{h}
       ac+bd = (a+b-c+d)(-a+b+c+d).
     \end{equation}
-    Entonces se tiene que
+    Entonces se tiene que el número entero \(ac+bd\) divide al producto de
+    los números enteros \(ab+cd\) y \(ad+bd\). Simbólicamente:
     \begin{equation}
       ac+bd ∣ (ab+cd)(ad+bc).
     \end{equation}
@@ -332,11 +337,11 @@ formalización del problema como tal.
   \end{equation}
   
   Usando como número entero \(k\) el que viene dado por la suma \(b²+bd+d²\),
-  se tendría que para obtener el resultado que se quería demostrar, bastaría con
-  hacer uso del Lema \label{q601lemaprod}.
+  se tendría que para obtener el resultado que se quería demostrar, bastaría
+  con hacer uso del Lema \ref{q601lemaprod}.
 \end{demostracion}
 
-La formalización en Lean de este problema sería:
+La formalización en Lean de este resultado sería:
 \begin{leancode}
 lemma division
   (h : a*c + b*d = (a + b - c + d) * (-a + b + c + d))
@@ -357,16 +362,186 @@ auxiliares probados anteriormente. Para resolver el problema que nos
 interesa, se enunciará el siguiente teorema:
 
 \begin{teorema}[imo2001q6]
-  Sean \(a\), \(b\), \(c\) y \(d\) cuatro
-  números enteros tales que \(a > b > c > d > 0\). Además, supongamos que
-  estos números enteros verifican que
-    \begin{equation}
+  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
+  \(a > b > c > d > 0\). Además, supongamos que estos números enteros
+  verifican que
+    \begin{equation}\tag{h}\label{h01q6teor}
       ac+bd = (a+b-c+d)(-a+b+c+d).
     \end{equation}
-    Entonces se tiene que \(ab+cd\) no es primo.
+    Entonces se tiene que \(ab+cd\) no es un número primo.
 \end{teorema}
 \begin{demostracion}
-  Aquí se detallará la demostración del teorema.
+  En primer lugar, a parte de la hipótesis (\ref{h01q6teor}) enunciada,
+  denotemos el resto de hipótesis del teorema como sigue:
+  \begin{align}
+    &0<d,\tag{hd}\label{hd01q6teor}\\
+    &d<c,\tag{hdc}\label{hdc01q6teor}\\
+    &c<b,\tag{hcb}\label{hcb01q6teor}\\
+    &b<a.\tag{hba}\label{hba01q6teor}
+  \end{align}
+
+  A continuación, la prueba del resultado se va a hacer mediante la
+  \textbf{introducción de la negación}. Esto es, como el objetivo es demostrar
+  que el número \(ab+cd\) no es un número primo, supondremos que sí lo es y
+  buscaremos llegar a una contradicción.
+
+  Comencemos introduciendo la hipótesis de que \(ab+cd\) es un número primo:
+  \begin{equation}\tag{h1}\label{h101q6teor}
+    \text{primo}(ab+dc)
+  \end{equation}
+
+  Encadenando las desigualdades que tenemos como hipótesis, es decir,
+  (\ref{hd01q6teor}), (\ref{hdc01q6teor}), (\ref{hcb01q6teor}) y
+  (\ref{hba01q6teor}), se puede llegar fácilmente a los siguientes tres
+  resultados:
+  \begin{align}
+    &0<a,\tag{ha}\label{ha01q6teor}\\
+    &0<b,\tag{hb}\label{hb01q6teor}\\
+    &0<c.\tag{hc}\label{hc01q6teor}
+  \end{align}
+
+  Ahora bien, haciendo uso del lema \ref{q601lemaprod} (lo cual es posible
+  pues tenemos como hipótesis (\ref{h01q6teor})), se obtiene la siguiente
+  expresión:
+  \begin{equation}\tag{h2}
+    (ac+bd)(b²+bd+d²)=(ab+cd)(ad+bc).
+  \end{equation}
+
+  Asimismo, haciendo uso del lema \ref{lemadivisionq6}, se llega a que
+  \begin{equation}\tag{h3}\label{h301q6teor}
+    (ac+bd)|(ab+cd)(ad+bc).
+  \end{equation}
+
+  Para proseguir con la prueba del teorema es necesario introducir un
+  resultado auxiliar y que es el siguiente:
+  \begin{lema}\label{lemaprimo}
+    Sean \(a\), \(b\) y \(p\) tres números cualquiera, verificando que \(p\)
+    es un número primo y que \(a\) divide al producto de \(p\) y \(b\).
+    Entonces se tiene que o bien \(p\) divide a \(a\) ó \(a\) divide a \(b\).
+    Simbólicamente:
+    \begin{equation}
+      ∀ a,b,p, \ \text{primo}(p), a∣pb ⟶ p∣a \lor a∣b 
+    \end{equation}
+  \end{lema}
+
+  Cuya formalización en Lean es la siguiente:
+  \begin{leancode}
+  lemma left_dvd_or_dvd_right_of_dvd_prime_mul
+  [comm_cancel_monoid_with_zero α] {a : α} :
+  ∀ {b p : α}, prime p → a ∣ p * b → p ∣ a ∨ a ∣ b 
+  \end{leancode}
+
+  Entonces, como nosotros tenemos las hipótesis (\ref{h101q6teor}) y
+  (\ref{h301q6teor}), podemos hacer uso del lema \ref{lemaprimo} y se tendría
+  que ha de verificarse la siguiente disyunción:
+  \begin{equation}\tag{h4}\label{h401q6teor}
+    (ab+cd\ |\ ac+db) \lor (ac+bd\ |\ ad+bc).
+  \end{equation}
+
+  Con el objetivo de llegar a la contradicción que buscamos, vamos a separar
+  la disyunción (\ref{h401q6teor}) y consideraremos los dos casos posibles.
+  Se va a comprobar que en ambos casos llegamos a una contradicción.
+  \begin{itemize}
+  \item \textbf{Primer caso}
+    
+    Supongamos que se verifica la primera parte de la disyunción, es decir,
+    que tenemos que
+    \begin{equation}\tag{hj}\label{hj01q6teor}
+      ab+cd\ |\ ac+db.
+    \end{equation}
+
+    En primer lugar, haciendo uso del lema \ref{lemades1}, probado en la
+    sección anterior, se tiene que
+    \begin{equation}\tag{hj1}\label{hj101q6}
+      ab+cd > ac+bd.
+    \end{equation}
+    
+    Además, haciendo uso de que la multiplicación de numeros positivos es
+    positiva y la suma también, se tiene el siguiente resultado:
+    \begin{equation}\label{hpj01q6}\tag{hpj}
+      0 < ac+bd.
+    \end{equation}
+
+    A continuación, introduzcamos el siguiente teorema:
+    \begin{teorema}\label{teoremaleq}
+      Sean \(a\) y \(b\) dos números pertenecientes al conjunto de los
+      números enteros tales que \(b\) es estrictamente mayor que cero y
+      \(a\) divide a \(b\). Entonces, se tiene que \(a\) es un número menor
+      o igual que \(b\). Simbólicamente:
+      \begin{equation}
+        a,b ∈ ℤ, b>0,\ a|b ⟶ a≤b.
+      \end{equation}
+    \end{teorema}
+
+    Cuya formalización en Lean es la siguiente
+    \begin{leancode}
+    theorem le_of_dvd {a b : ℤ}
+    (bpos : 0 < b)
+    (H : a ∣ b) :
+    a ≤ b 
+    \end{leancode}
+
+    Entonces, se tiene que haciendo uso del teorema \ref{teoremaleq} sobre
+    los números enteros \(ab+cd\), \(ac+bd\) y las hipótesis (\ref{hpj01q6})
+    y (\ref{hj101q6}), se llega a que
+    \begin{equation}\tag{hj2}\label{hj201q6}
+      ab+cd≤ac+bd.
+    \end{equation}
+
+    Ahora bien, se sabe que la hipótesis (\ref{hj101q6}) es equivalente a
+    esta otra:
+    \begin{equation}\tag{hj3}\label{hj301q6}
+      ¬(ab+cd≤ac+bd).
+    \end{equation}
+
+    De esta forma, si vemos las hipótesis (\ref{hj201q6}) y (\ref{hj301q6}),
+    se puede observar que hemos llegado a una contradicción, que era lo
+    deseado.
+
+  \item \textbf{Segundo caso}
+    
+    Supongamos ahora que se verifica la segunda parte de la disyunción, es
+    decir, que tenemos que
+    \begin{equation}\tag{hk}\label{hk01q6teor}
+      ac+bd\ |\ ad+bc
+    \end{equation}
+
+    Se va a proceder de manera totalmente análoga a como se ha hecho en el
+    caso anterior.
+
+    Comenzamos haciendo uso del lema auxliar \ref{lemades2}, a partir del
+    cual se obtiene que
+     \begin{equation}\tag{hk1}\label{hk101q6}
+      ac+bd > ad+bc.
+    \end{equation}
+
+    Asimismo, como consecuencia de que el producto de números positivos
+    es positivo y la suma de los mismos también es positiva, se puede
+    afirmar que se verifica el siguiente resultado:
+    \begin{equation}
+      0<ad+bc.
+    \end{equation}
+
+    Por otro lado, se tiene que haciendo uso del teorema \ref{teoremaleq},
+    visto anteriormente, se llega a que
+    \begin{equation}\tag{hk2}\label{hk201q6}
+      ac+bd≤ad+bc.
+    \end{equation}
+
+    Ahora bien, se tiene que la hipótesis (\ref{hk101q6}) puede ser
+    reescrita de la siguiente manera:
+    \begin{equation}\tag{hk3}\label{hk301q6}
+      ¬(ac+bd≤ad+bc).
+    \end{equation}
+
+    Entonces, observando las hipótesis (\ref{hk201q6}) y (\ref{hk301q6}) se
+    llega de nuevo a contradicción.
+  \end{itemize}
+
+  De esta forma, al haber llegado a contradicción en los dos casos que se
+  diferenciaban en la disyunción (\ref{h401q6teor}), se tendría que la
+  hipótesis que se llevó a cabo al principio de que el número \(ab+cd\) era
+  primo es falsa, concluyendo así la prueba.
 \end{demostracion}
 
 La formalización en Lean de este teorema sería:
@@ -414,6 +589,29 @@ begin
     exact hk3 hk2, },
 end
 \end{leancode}
+\index{imo2001q6}
+
+Para la formalización de este teorema en Lean han sido necesarios los
+siguiente lemas y teoremas auxiliares:
+\begin{itemize}
+\item \mint{lean}|left_dvd_or_dvd_right_of_dvd_prime_mul: prime p → a ∣ p*b → p∣a ∨ a∣b |
+  \indLema{left\_dvd\_or\_dvd\_right\_of\_dvd\_prime\_mul}
+\item \mint{lean}|add_pos {a b : α} (h: 0 < a) (h': 0 < b), 0 < a + b|
+  \indLema{add\_pos}
+\item \mint{lean}|mul_pos : 0 < a → 0 < b → 0 < a * b |
+  \indLema{mul\_pos}
+\item \mint{lean}|le_of_dvd {a b : ℤ} (bpos : 0 < b) (H : a ∣ b) : a ≤ b  |
+  \indLema{le\_of\_dvd}
+\item \mint{lean}| not_le {a b : α} : ¬ a ≤ b ↔ b < a |
+  \indLema{not\_le} 
+\end{itemize}
+
+Además, se han usado las tácticas
+\tactica{exact}{exact},
+\tactica{have}{have},
+\tactica{intro}{intro},
+\tactica{cases}{cases} y
+\tactica{linarith}{linarith}.
 
 %%% Local Variables:
 %%% mode: latex
