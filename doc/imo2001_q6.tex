@@ -19,11 +19,15 @@ formalización en Lean.
 Para llevar a cabo la formalización en Lean de la resolución de este
 problema, ha sido necesaria la importación de las siguientes teorías:
 \begin{itemize}
-\item \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/int/basic.lean}{data.int.basic}, para poder trabajar con el conjunto
-  de los números enteros.
-\item \href{https://github.com/leanprover-community/mathlib/blob/master/src/algebra/associated.lean}{algebra.associated}, para trabajar con las
-  definición de número primo.
-\item \href{https://github.com/leanprover-community/mathlib/tree/master/src/tactic}{tactic}, para poder acceder a las diferentes tácticas.
+\item
+  \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/int/basic.lean}{data.int.basic},
+  para poder trabajar con el conjunto de los números enteros.
+\item
+  \href{https://github.com/leanprover-community/mathlib/blob/master/src/algebra/associated.lean}{algebra.associated},
+  para trabajar con las definición de número primo.
+\item
+  \href{https://github.com/leanprover-community/mathlib/tree/master/src/tactic}{tactic},
+  para poder acceder a las diferentes tácticas.
 \end{itemize}
 
 La importación en Lean de todas estas teorías se formaliza como sigue:
@@ -32,61 +36,62 @@ import data.int.basic
 import algebra.associated
 import tactic
 \end{leancode}
-\comentario{He simplicado las importaciones de librerías}
 
-Además, en este problema hay que definir las variables \(a\), \(b\), \(c\) y
-\(d\) que pertenecen al conjunto de los números enteros. Las diferentes
-desigualdades que verifican se enunciarán en los lemas en los que sean
-necesarias dichas condiciones. En Lean esto se formaliza de la siguiente
-manera:
+Además, en este problema hay que definir las variables \(a\), \(b\),
+\(c\) y \(d\) que pertenecen al conjunto de los números enteros. Las
+diferentes desigualdades que verifican se enunciarán en los lemas en los
+que sean necesarias dichas condiciones. En Lean esto se formaliza de la
+siguiente manera:
 \begin{leancode}
 variables {a b c d : ℤ}
 \end{leancode}
 
-A continuación, se va a dividir en dos partes esta sección: en la primera
-parte probaremos cinco resultados auxiliares que han sido necesarios para
-la formalización del problema y en la segunda parte se formalizará el
-teorema final que nos da el resultado deseado.
+A continuación, se va a dividir en dos partes esta sección: en la
+primera parte probaremos cinco resultados auxiliares que han sido
+necesarios para la formalización del problema y en la segunda parte se
+formalizará el teorema final que nos da el resultado deseado.
 
 \subsection{Resultados auxiliares}
-Como ya se ha dicho anteriormente, en esta sección del problema se van
-a formalizar cinco resultados auxiliares. Veámos estos lemas con sus
+
+Como ya se ha dicho anteriormente, en esta sección del problema se van a
+formalizar cinco resultados auxiliares. Veamos estos lemas con sus
 correspondientes formalizaciones en Lean.
 
-Destacar que en los lemas auxiliares que se van a presentar a continuación
-no siempre es necesario usar todas las hipótesis del teorema en sí. Es por eso,
-que los resultados se han probado usando el menor número de hipótesis posible,
-haciendo el resultado lo más general posible.
+Destacar que en los lemas auxiliares que se van a presentar a
+continuación no siempre es necesario usar todas las hipótesis del
+teorema en sí. Es por eso, que los resultados se han probado usando el
+menor número de hipótesis posible, haciendo el resultado lo más general
+posible.
 
 \begin{lema}[sumas\_equivalentes]\label{q601lemasuma}
-  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que 
-    \begin{equation}\label{q601hipsum}\tag{h}
-      ac+bd = (a+b-c+d)(-a+b+c+d).
-    \end{equation}
-    Entonces se tiene que se verifica que
-    \begin{equation}\label{q601objsum}
-      b²+bd+d²=a²-ac+c².
-    \end{equation}
+  Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
+  \begin{equation}\label{q601hipsum}\tag{h}
+    ac+bd = (a+b-c+d)(-a+b+c+d).
+  \end{equation}
+  Entonces se verifica que
+  \begin{equation}\label{q601objsum}
+    b²+bd+d² = a²-ac+c².
+  \end{equation}
 \end{lema}
 
 \begin{demostracion}
-  Para demostrar (\ref{q601objsum}) se comenzará desarrollando la segunda
-  parte de la igualdad de la hipótesis (\ref{q601hipsum}), obteniendo el
-  siguiente resultado:
+  Para demostrar (\ref{q601objsum}) se comenzará desarrollando la
+  segunda parte de la igualdad de la hipótesis (\ref{q601hipsum}),
+  obteniendo el siguiente resultado:
   \begin{equation}\tag{h1}\label{q601h1sum}
-    (a+b-c+d)(-a+b+c+d)=-a²+b²+ac-c²+bd+d²+ac+bd.
+    (a+b-c+d)(-a+b+c+d) = -a²+b²+ac-c²+bd+d²+ac+bd.
   \end{equation}
 
   A continuación, reescribimos el segundo término de la hipótesis
   (\ref{q601hipsum}) como se ha descrito en (\ref{q601h1sum}). De esta
   forma se llega a la siguiente igualdad:
   \begin{equation}\label{q601hip2sum}
-    ac+bd=-a²+b²+ac-c²+bd+d²+ac+bd.
+    ac+bd = -a²+b²+ac-c²+bd+d²+ac+bd.
   \end{equation}
 
-  La conclusión de la prueba ya se tiene de manera trivial. Sin más que
-  simplificar la ecuación (\ref{q601hip2sum}) y redistribuyendo los términos
-  se obtiene (\ref{q601objsum}).
+  La conclusión de la prueba ya se tiene, de manera trivial, sin más que
+  simplificar la ecuación (\ref{q601hip2sum}) y redistribuir los
+  términos se obtiene (\ref{q601objsum}).
 \end{demostracion}
 
 Este resultado se formaliza en Lean como a continuación se plantea:
@@ -108,7 +113,7 @@ Para levar a cabo la formalización de este lema no hemos hecho uso de
 ningún lema auxiliar. No obstante, sí se han utilizado las tácticas de
 \tactica{have}{have},
 \tactica{rw / rewrite}{rw},
-\tactica{ring}{ring} y 
+\tactica{ring}{ring} y
 \tactica{nlinarith}{nlinarith}.
 
 Prosigamos con la demostración del problema, para ello el lema que se
@@ -116,55 +121,55 @@ presenta a continuación nos dará la igualdad de dos productos que será
 de gran utilidad en la conclusión del problema.
 
 \begin{lema}[productos\_equivalentes]\label{q601lemaprod}
-    Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros verificando que 
+    Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros verificando que
     \begin{equation}\label{q601hipprod}\tag{h}
       ac+bd = (a+b-c+d)(-a+b+c+d).
     \end{equation}
-    Entonces se tiene que se verifica la siguiente igualdad
+    Entonces se verifica que
     \begin{equation}\label{q601objprod}
-      (ac+bd)(b²+bd+d²)=(ab+cd)(ad+bc).
+      (ac+bd)(b²+bd+d²) = (ab+cd)(ad+bc).
     \end{equation}
 \end{lema}
 
 \begin{demostracion}
-  Para llevar a cabo la prueba de este resultado, se van a desarrollar los
-  dos lados de la igualdad que se quiere demostrar, (\ref{q601objprod}),
-  y se va a comprobar que son iguales.
+  Para llevar a cabo la prueba de este resultado, se van a desarrollar
+  los dos lados de la igualdad que se quiere demostrar,
+  (\ref{q601objprod}), y se va a comprobar que son iguales.
 
   Comencemos desarrollando la parte izquierda de (\ref{q601objprod}):
   \begin{equation}\label{q601h1prod}\tag{h1}
-    (ac+bd)(b²+bd+d²)=ac(b²+bd+b²)+bd(b²+bd+b²).
+    (ac+bd)(b²+bd+d²) = ac(b²+bd+b²)+bd(b²+bd+b²).
   \end{equation}
 
-  Ahora bien, haciendo uso del lema que hemos demostrado antes, es decir, 
+  Ahora bien, haciendo uso del lema que hemos demostrado antes, es decir,
   el lema \ref{q601lemasuma} sobre el segundo término que aparece sobre
   el que se puede aplicar, se tiene que
   \begin{equation}\label{q601h2prod}\tag{h2}
-    ac(b²+bd+b²)+bd(b²+bd+b²)=ac(b²+bd+b²)+bd(a²-ac+c²).
+    ac(b²+bd+b²)+bd(b²+bd+b²) = ac(b²+bd+b²)+bd(a²-ac+c²).
   \end{equation}
 
   De esta forma, introduciendo el resultado obtenido en (\ref{q601h2prod})
   en (\ref{q601h1prod}), se llega a que:
   \begin{equation}\label{q601pr1}
-     (ac+bd)(b²+bd+d²)=ac(b²+bd+b²)+bd(a²-ac+c²).
+     (ac+bd)(b²+bd+d²) = ac(b²+bd+b²)+bd(a²-ac+c²).
   \end{equation}
 
   Ahora bien, si seguimos desarrollando la segunda parte de la igualdad
   (\ref{q601pr1}), se llega a que:
   \begin{equation}\label{q601pr2}
-     (ac+bd)(b²+bd+d²)= acb²+acd²+a²bd+bcd².
+     (ac+bd)(b²+bd+d²) = acb²+acd²+a²bd+bcd².
   \end{equation}
 
   Por otro lado, se tiene que reescribiendo la parte derecha de la ecuación
   que queremos demostrar,es decir, de (\ref{q601objprod}), se llega a:
   \begin{equation}\label{q601pr3}
-    (ab+cd)(ad+bc)= acb²+acd²+a²bd+bcd².
+    (ab+cd)(ad+bc) = acb²+acd²+a²bd+bcd².
   \end{equation}
 
   Se puede comprobar a través de las expresiones (\ref{q601pr2}) y
-  (\ref{q601pr3}) que llegamos a lo mismo al desarrollar los dos términos
-  de la expresión (\ref{q601objprod}). Por tanto, ya se tendría la
-  prueba del lema.
+  (\ref{q601pr3}) que llegamos a lo mismo al desarrollar los dos
+  términos de la expresión (\ref{q601objprod}). Por tanto, ya se tendría
+  la prueba del lema.
 \end{demostracion}
 
 En este caso, la formalización en Lean es:
@@ -185,9 +190,9 @@ end
 \end{leancode}
 \index{productos\_equivalentes}
 
-A continuación, se van a probar dos lemas muy parecidos (puesto que ambos nos
-afirman la veracidad de una desigualdad), que a su vez son muy sencillos de
-formalizar en Lean bajo las hipótesis del problema.
+A continuación, se van a probar dos lemas muy parecidos (puesto que
+ambos nos afirman la veracidad de una desigualdad), que a su vez son muy
+sencillos de formalizar en Lean bajo las hipótesis del problema.
 
 \begin{lema}[desigualdad\_auxiliar1]\label{lemades1}
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
@@ -196,9 +201,9 @@ formalizar en Lean bajo las hipótesis del problema.
     \begin{equation}\tag{h}
       ac+bd = (a+b-c+d)(-a+b+c+d).
     \end{equation}
-    Entonces se tiene que \(ac+bd\) es menor que \(ab+cd\). Simbólicamente:
+    Entonces se tiene que
     \begin{equation}\label{q601objdes1}
-      ac+bd<ab+cd
+      ac+bd < ab+cd
     \end{equation}
 \end{lema}
 
@@ -227,9 +232,9 @@ formalizar en Lean bajo las hipótesis del problema.
   y (\ref{hdc01des1}).
 \end{demostracion}
 
-Formalizar este lema en Lean es bastante sencillo y directo ya que existe
-una táctica que a través de las desigualdades que se tienen por hipótesis,
-deduce el resultado. La formalización sería:
+Formalizar este lema en Lean es bastante sencillo y directo ya que
+existe una táctica que a través de las desigualdades que se tienen por
+hipótesis, deduce el resultado. La formalización sería:
 \begin{leancode}
 lemma desigualdad_auxiliar1
   (hba : b < a)
@@ -241,12 +246,12 @@ by nlinarith
 \end{leancode}
 \index{desigualdad\_auxiliar1}
 
-En la demostración de este lema sólo ha sido necesario el uso de la táctica
-\tactica{nlinarith}{nlinarith}.
+En la demostración de este lema sólo ha sido necesario el uso de la
+táctica \tactica{nlinarith}{nlinarith}.
 
 \begin{lema}[desigualdad\_auxiliar2]\label{lemades2}
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que \(a\) es
-  mayor que \(b\) y \(c\) mayor que \(d\). Es decir, 
+  mayor que \(b\) y \(c\) mayor que \(d\). Es decir,
   \begin{align}
     &b<a,\tag{hba}\label{hba01des2}\\
     &d<c.\tag{hdc}\label{hdc01des2}
@@ -255,9 +260,9 @@ En la demostración de este lema sólo ha sido necesario el uso de la táctica
     \begin{equation}\tag{h}
       ac+bd = (a+b-c+d)(-a+b+c+d).
     \end{equation}
-    Entonces se tiene que \(ad+bc\) es menor que \(ac+bd\). Simbólicamente:
+    Entonces se tiene que
     \begin{equation}\label{des2q601}
-      ad+bc<ac+bd
+      ad+bc < ac+bd
     \end{equation}
 \end{lema}
 
@@ -297,11 +302,14 @@ by nlinarith
   hacer que se parezcan si no es diciendo que se hace a partir de las
   propias hipótesis}
 
+\comentario{Está bien como lo ha escrito,quizas resaltar que la táctica
+  nlinarith automatiza todos los pasos de la demostración de los lemas.}
+
 Al igual que en el lema \ref{lemades1}, sólo ha sido necesario el uso de
 la táctica \tactica{nlinarith}{nlinarith} para su formalización.
 
-Finalmente, introduzcamos el último lema auxiliar antes de llevar a cabo la
-formalización del problema como tal.
+Finalmente, introduzcamos el último lema auxiliar antes de llevar a cabo
+la formalización del problema como tal.
 
 \begin{lema}[division]\label{lemadivisionq6}
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
@@ -320,12 +328,11 @@ formalización del problema como tal.
   Previo a la demostración como tal del resultado, recordemos qué significa que
   un número entero divida a otro.
   \begin{definicion}\label{defdiventeros}
-    Sean \(a\) y \(b\) dos números pertenecientes al conjunto de los números
-    enteros. Se dirá que  \(a\) \textbf{divide a} \(b\) si y
-    solamente si existe otro número entero \(k\) tal que \(b = a · k\).
-    Simbólicamente,
+    Sean \(a\) y \(b\) dos números enteros. Se dirá que \(a\)
+    \textbf{divide a} \(b\) si y solamente si existe otro número entero
+    \(k\) tal que \(b = a · k\).  Simbólicamente,
     \begin{equation}
-    a|b ⟺ ∃ k ∈ ℤ, b = a · k.
+    a \mid b ⟺ ∃ k ∈ ℤ, b = a · k.
     \end{equation}
   \end{definicion}
 
@@ -335,7 +342,7 @@ formalización del problema como tal.
   \begin{equation}
     (ab+cd)(ad+bc)=(ac+bd)k.
   \end{equation}
-  
+
   Usando como número entero \(k\) el que viene dado por la suma \(b²+bd+d²\),
   se tendría que para obtener el resultado que se quería demostrar, bastaría
   con hacer uso del Lema \ref{q601lemaprod}.
@@ -357,9 +364,10 @@ Para la formalización de este último lema auxiliar sólo han sido necesario el
 uso de dos tácticas: \tactica{nlinarith}{nlinarith} y \tactica{use}{use}.
 
 \subsection{Conclusión del problema}
-Conluiremos el problema en esta sección, para ello se hará uso de los lemas
-auxiliares probados anteriormente. Para resolver el problema que nos
-interesa, se enunciará el siguiente teorema:
+
+Conluiremos el problema en esta sección, para ello se hará uso de los
+lemas auxiliares probados anteriormente. Para resolver el problema que
+nos interesa, se enunciará el siguiente teorema:
 
 \begin{teorema}[imo2001q6]
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
@@ -404,12 +412,12 @@ interesa, se enunciará el siguiente teorema:
   pues tenemos como hipótesis (\ref{h01q6teor})), se obtiene la siguiente
   expresión:
   \begin{equation}\tag{h2}
-    (ac+bd)(b²+bd+d²)=(ab+cd)(ad+bc).
+    (ac+bd)(b²+bd+d²) = (ab+cd)(ad+bc).
   \end{equation}
 
   Asimismo, haciendo uso del lema \ref{lemadivisionq6}, se llega a que
   \begin{equation}\tag{h3}\label{h301q6teor}
-    (ac+bd)|(ab+cd)(ad+bc).
+    (ac+bd) | (ab+cd)(ad+bc).
   \end{equation}
 
   Para proseguir con la prueba del teorema es necesario introducir un
@@ -420,7 +428,7 @@ interesa, se enunciará el siguiente teorema:
     Entonces se tiene que o bien \(p\) divide a \(a\) ó \(a\) divide a \(b\).
     Simbólicamente:
     \begin{equation}
-      ∀ a,b,p, \ \text{primo}(p), a∣pb ⟶ p∣a \lor a∣b 
+      ∀ a,b,p, \ \text{primo}(p), a∣pb ⟶ p∣a \lor a∣b
     \end{equation}
   \end{lema}
 
@@ -428,7 +436,7 @@ interesa, se enunciará el siguiente teorema:
   \begin{leancode}
   lemma left_dvd_or_dvd_right_of_dvd_prime_mul
   [comm_cancel_monoid_with_zero α] {a : α} :
-  ∀ {b p : α}, prime p → a ∣ p * b → p ∣ a ∨ a ∣ b 
+  ∀ {b p : α}, prime p → a ∣ p * b → p ∣ a ∨ a ∣ b
   \end{leancode}
 
   Entonces, como nosotros tenemos las hipótesis (\ref{h101q6teor}) y
@@ -443,7 +451,7 @@ interesa, se enunciará el siguiente teorema:
   Se va a comprobar que en ambos casos llegamos a una contradicción.
   \begin{itemize}
   \item \textbf{Primer caso}
-    
+
     Supongamos que se verifica la primera parte de la disyunción, es decir,
     que tenemos que
     \begin{equation}\tag{hj}\label{hj01q6teor}
@@ -455,7 +463,7 @@ interesa, se enunciará el siguiente teorema:
     \begin{equation}\tag{hj1}\label{hj101q6}
       ab+cd > ac+bd.
     \end{equation}
-    
+
     Además, haciendo uso de que la multiplicación de numeros positivos es
     positiva y la suma también, se tiene el siguiente resultado:
     \begin{equation}\label{hpj01q6}\tag{hpj}
@@ -464,13 +472,10 @@ interesa, se enunciará el siguiente teorema:
 
     A continuación, introduzcamos el siguiente teorema:
     \begin{teorema}\label{teoremaleq}
-      Sean \(a\) y \(b\) dos números pertenecientes al conjunto de los
-      números enteros tales que \(b\) es estrictamente mayor que cero y
-      \(a\) divide a \(b\). Entonces, se tiene que \(a\) es un número menor
-      o igual que \(b\). Simbólicamente:
-      \begin{equation}
-        a,b ∈ ℤ, b>0,\ a|b ⟶ a≤b.
-      \end{equation}
+      Sean \(a\) y \(b\) dos números enteros tales que \(b\) es
+      estrictamente mayor que cero y \(a\) divide a \(b\). Entonces, se
+      tiene que \(a\) es un número menor o igual que
+      \(b\).
     \end{teorema}
 
     Cuya formalización en Lean es la siguiente
@@ -478,7 +483,7 @@ interesa, se enunciará el siguiente teorema:
     theorem le_of_dvd {a b : ℤ}
     (bpos : 0 < b)
     (H : a ∣ b) :
-    a ≤ b 
+    a ≤ b
     \end{leancode}
 
     Entonces, se tiene que haciendo uso del teorema \ref{teoremaleq} sobre
@@ -499,7 +504,7 @@ interesa, se enunciará el siguiente teorema:
     deseado.
 
   \item \textbf{Segundo caso}
-    
+
     Supongamos ahora que se verifica la segunda parte de la disyunción, es
     decir, que tenemos que
     \begin{equation}\tag{hk}\label{hk01q6teor}
@@ -594,16 +599,16 @@ end
 Para la formalización de este teorema en Lean han sido necesarios los
 siguiente lemas y teoremas auxiliares:
 \begin{itemize}
-\item \mint{lean}|left_dvd_or_dvd_right_of_dvd_prime_mul: prime p → a ∣ p*b → p∣a ∨ a∣b |
+\item \mint{lean}|left_dvd_or_dvd_right_of_dvd_prime_mul: prime p → a ∣ p*b → p∣a ∨ a∣b|
   \indLema{left\_dvd\_or\_dvd\_right\_of\_dvd\_prime\_mul}
-\item \mint{lean}|add_pos {a b : α} (h: 0 < a) (h': 0 < b), 0 < a + b|
+\item \mint{lean}|add_pos : 0 < a → 0 < b → 0 < a + b|
   \indLema{add\_pos}
-\item \mint{lean}|mul_pos : 0 < a → 0 < b → 0 < a * b |
+\item \mint{lean}|mul_pos : 0 < a → 0 < b → 0 < a * b|
   \indLema{mul\_pos}
-\item \mint{lean}|le_of_dvd {a b : ℤ} (bpos : 0 < b) (H : a ∣ b) : a ≤ b  |
+\item \mint{lean}|le_of_dvd : 0 < b → a ∣ b → a ≤ b|
   \indLema{le\_of\_dvd}
-\item \mint{lean}| not_le {a b : α} : ¬ a ≤ b ↔ b < a |
-  \indLema{not\_le} 
+\item \mint{lean}| not_le : ¬ a ≤ b ↔ b < a |
+  \indLema{not\_le}
 \end{itemize}
 
 Además, se han usado las tácticas

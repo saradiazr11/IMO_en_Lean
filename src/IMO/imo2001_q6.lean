@@ -13,9 +13,7 @@
 --    problema.
 
 import data.int.basic
-/-import data.int.parity-/
 import tactic
-/-import tactic.ring-/
 import algebra.associated
 
 variables {a b c d : ℤ}
