@@ -249,6 +249,9 @@ by nlinarith
 En la demostración de este lema sólo ha sido necesario el uso de la
 táctica \tactica{nlinarith}{nlinarith}.
 
+Destacar que la la táctica \tactica{nlinarith}{nlinarith} automatiza todos
+los pasos que se han realizado en la demostración en lenguaje natural.
+
 \begin{lema}[desigualdad\_auxiliar2]\label{lemades2}
   Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que \(a\) es
   mayor que \(b\) y \(c\) mayor que \(d\). Es decir,
@@ -297,16 +300,9 @@ by nlinarith
 \end{leancode}
 \index{desigualdad\_auxiliar2}
 
-\comentario{Las demostraciones de los lemas desigualdad-auxiliar1(2) no se
-  corresponden demasiado con la formalización en Lean, pero no veo forma de
-  hacer que se parezcan si no es diciendo que se hace a partir de las
-  propias hipótesis}
-
-\comentario{Está bien como lo ha escrito,quizas resaltar que la táctica
-  nlinarith automatiza todos los pasos de la demostración de los lemas.}
-
 Al igual que en el lema \ref{lemades1}, sólo ha sido necesario el uso de
-la táctica \tactica{nlinarith}{nlinarith} para su formalización.
+la táctica \tactica{nlinarith}{nlinarith} para su formalización. Al igual
+que antes, esta táctica prueba de manera automática el resultado.
 
 Finalmente, introduzcamos el último lema auxiliar antes de llevar a cabo
 la formalización del problema como tal.
