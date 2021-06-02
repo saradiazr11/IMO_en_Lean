@@ -614,20 +614,77 @@ pruebas que queremos realizar en dos lemas diferentes:
   Una vez se ha conseguido a dar un paso en la demostración, se propone de nuevo
   el uso de la táctica \tactica{library_search}{library\_search}.
   \begin{leancode}
-  
+  lemma h2 
+  (n: ℕ)
+  (m: ℕ)
+  (p: ℕ)
+  (m = n.factorial + 1)
+  (p = m.min_fac)
+  (hp: prime p)
+  (h: ¬p ≥ n)
+  (h1: p ∣ n.factorial + 1)
+  : p ∣ factorial n:=
+  begin
+    refine hp.dvd_factorial.mpr _,
+    by library_search,
+  end
   \end{leancode}
 
   En este caso, sí ha sido capaz de culminar la prueba de la hipótesis
   (\ref{h2intro}) y la solución propuesta es la que presentamos a continuación:
+  \begin{leancode}
+  lemma h2 
+  (n: ℕ)
+  (m: ℕ)
+  (p: ℕ)
+  (m = n.factorial + 1)
+  (p = m.min_fac)
+  (hp: prime p)
+  (h: ¬p ≥ n)
+  (h1: p ∣ n.factorial + 1)
+  : p ∣ factorial n:=
+  begin
+    refine hp.dvd_factorial.mpr _,
+    exact le_of_not_ge h,
+  end
+  \end{leancode}
 
+  Lean nos ha propuesto el uso del siguiente lema para culminar la prueba
+  de la hipótesis (\ref{h2intro}):
+  \begin{lema}
+    Sean \(a\) y \(b\) dos números cualesquiera tales que verifican que
+    \[¬ a ≥ b.\]
+    Entonces se tiene que \(a\) es menor o igual que \(b\).
+  \end{lema}
 
+  Cuya correspondiente formalización en Lean es:
+  \begin{leancode}
+  lemma le_of_not_ge {a b : α} : ¬ a ≥ b → a ≤ b
+  \end{leancode}
   
-
-  
-
 \item \textbf{Demostración y formalización de la hipótesis hp}
   
-  Segundo lema
+  Para concluir la demostración del teorema, bastaría con demostrar la
+  hipótesis de que \(p\) es un número primo. Al igual que antes, como la táctica
+  \tactica{library_search}{library\_search} no fue capaz de ofrecernos una
+  solución, crearemos un lema auxiliar y probaremos con la táctica
+  \tectica{suggest}{suggest}.
+
+  El enunciado del lema auxiliar sería:
+  \begin{leancode}
+  lemma hp
+  (n: ℕ)
+  (m: ℕ)
+  (p: ℕ)
+  (m = n.factorial + 1)
+  (p = m.min_fac)
+  : prime p:=
+  begin
+    sorry,
+  end
+  \end{leancode}
+
+  A
 \end{itemize}
 
 

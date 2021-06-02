@@ -1,6 +1,7 @@
 import data.nat.factorial
 import data.nat.prime
 
+
 open nat
 
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
@@ -9,7 +10,11 @@ begin
 
   let m:= factorial n + 1,
   let p:= min_fac m,
-  have hp: prime p := sorry,
+  have hp: prime p := 
+  begin
+    refine min_fact_prime _,
+    sorry,
+  end,
 
   use p,
   split,
@@ -32,5 +37,15 @@ lemma h2
 (h1: p ∣ n.factorial + 1)
 : p ∣ factorial n:=
 begin
-  by refine hp.dvd_factorial.mpr _,
+  refine hp.dvd_factorial.mpr _,
+  exact le_of_not_ge h,
 end
+
+  lemma hp
+  (n: ℕ)
+  (m= n.factorial + 1)
+  (p = m.min_fac)
+  : prime p:=
+  begin
+    sorry,
+  end
