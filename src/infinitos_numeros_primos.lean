@@ -43,10 +43,11 @@ begin
 end
 
 lemma hp
-  (n : ℕ)
+  (n: ℕ)
   (m = factorial n + 1)
   (p = min_fac m)
   : prime p:=
 begin
+  refine min_fac_prime _,
   sorry,
 end

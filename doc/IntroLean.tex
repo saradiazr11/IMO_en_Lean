@@ -210,8 +210,6 @@ p: ℕ := m.min_fac
 ⊢ ∃ (p : ℕ) (H : p ≥ n), prime p
 \end{leancode}
 
-\comentario{He añadido lo siguiente sobre la notación}
-
 En el estado anterior se observa que, por defecto, Lean usa la notación
 de puntos escribiendo, peso se puede cambiar la opción añadiendo
 \begin{leancode}
@@ -293,16 +291,14 @@ p : ℕ := min_fac m
 ⊢ prime p
 \end{leancode}
 
-\comentario{La siguiente explicación no es clara.}
+De esta manera, se pueden observar los dos objetivos a demostrar que faltarían
+para concluir la prueba. Ahora bien, para demostrar el primero de los objetivos,
+es necesario usar el segundo resultado de los que hay que demostrar. Es por eso,
+que lo que proponemos es demostrar antes que el número \(p\) es primo (que es
+el resultado que necesitamos para demostrar el primer objetivo).
 
-Se tiene que el segundo problema en los que se ha dividido el problema inicial
-es demostrar que \(p\) es primo. Es entonces cuando se presenta el problema de
-que la hipótesis de que \(p\) es primo ha de usarse para probar la primera
-parte, es decir, para probar que \(p\) es mayor o igual que \(n\).
+Para ello introduciremos una hipótesis de la siguiente manera:
 
-Por lo tanto, para poder usar la hipótesis de que \(p\) es primo para resolver
-el primr problema, introducimos dicha hipótesis tras la definición de los
-números \(m\) y \(p\). Esto es:
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
@@ -319,12 +315,20 @@ begin
 end
 \end{leancode}
 
-Para introducir el hecho de que \(p\) es un número primo se ha hecho
-uso de la táctica \tactica{have}{have}. En este hecho también hemos
-añadido la \tactica{sorry}{sorry} porque luego realizaremos la prueba de
-dicho hecho. En el estado del problema el único cambio que ha habido
-respecto al último presentado es que se ha incluido el hecho
-mencionado, es decir:
+Denotemos la hipótesis de que \(p\) sea primo de la siguiente manera:
+\begin{equation}\tag{hp}\label{hpintro}
+  \text{primo}(p)
+\end{equation}
+
+Se puede observar que al haber introducido la hipótesis (\ref{hpintro}) tras
+la definición del propio número \(p\), dicha hipótesis puede ser utilizada
+a partir de ahí.
+
+Para introducir la hipótesis (\ref{hpintro}) se ha hecho uso de la táctica
+\tactica{have}{have}. En este resultado también hemos añadido la \tactica{sorry}
+{sorry} porque la prueba se realizará luego. En el estado del problema el único
+cambio que ha habido respecto al último presentado es que se ha incluido la
+hipótesis (\ref{hpintro}) en los dos sub-problemas:
 \begin{leancode}
 n : ℕ
 m : ℕ := factorial n + 1
@@ -340,7 +344,7 @@ hp : prime p
 \end{leancode}
 
 Recordemos que el número \(p\) se ha definido como el mínimo factor primo de
-\(m\) que sea distinto de uno. Por tanto, se tiene que la prueba de que\(p\)
+\(m\) que sea distinto de uno. Por tanto, se tiene que la prueba de que \(p\)
 es primo será directa y la dejaremos para el final.
 
 Nos centraremos en la prueba de que el número \(p\) es mayor o igual que
@@ -659,9 +663,3 @@ h1 : p ∣ factorial n + 1
   Segundo lema
 \end{itemize}
 
-\section{Tácticas}
-
-En esta última sección se van a detallar las tácticas que han sido
-usadas en la memoria para la resolución de los diferentes problemas.
-
-\subsection{Táctica sorry}
