@@ -1,42 +1,46 @@
 \chapter{Prueba de teoremas con Lean}
-En este primer capítulo del trabajo se hace una introducción al uso de Lean
-y mathlib de manera que sea posible la correcta comprensión del resto del
-trabajo. Estas herramientas han sido usadas con el objetivo de probar diversos
-resultados matemáticos; es por eso que, previo al estudio detallado de la
-estructura de una prueba y cómo realizarla, comnzaremos introduciendo los
-términos de Lean y mathlib.
+
+En este primer capítulo del trabajo se hace una introducción al uso de
+Lean y mathlib de manera que sea posible la correcta comprensión del
+resto del trabajo. Estas herramientas han sido usadas con el objetivo de
+probar diversos resultados matemáticos; es por eso que, previo al
+estudio detallado de la estructura de una prueba y cómo realizarla,
+comenzaremos introduciendo los términos de Lean y mathlib.
 
 \section{Introducción a Lean y mathlib}
 
-
-
 \section{Formalización de las demostraciones con Lean}
-En esta sección del trabajo se va a explicar de manera detallada el la
-estructura de las pruebas que en el resto del trabajo se plantean y el
-mecanismo mediante el cual se han llebado a cabo. Con el objetivo de que sea
-más fácil e intuitivo de seguir la explicación, se va a realizar con el
-desarrollo de un ejemplo muy visual que ya propuso Scott Morrison en el
-vídeo \ref{video}.
 
-Dividiremos en tres partes principales el procedimiento mediante el cual
-se llegará a la formalización final. La primera parte se corresponderá con el
-planteamiento inicial del problema. La segunda con el desarrollo principal
-de la prueba y la tercera parte con la finalización o conclusión de la misma.
+En esta sección del trabajo se va a explicar de manera detallada la
+estructura de las pruebas que en el resto del trabajo se plantean y el
+mecanismo mediante el cual se han llebado a cabo. Con el objetivo de que
+sea más fácil e intuitivo de seguir la explicación, se va a realizar con
+el desarrollo de un ejemplo muy visual que ya propuso Scott Morrison en
+el vídeo \ref{video} en el Congreso
+\href{https://leanprover-community.github.io/lftcm2020/}
+     {Lean for the Curious Mathematician 2020}\footnote{\url{https://leanprover-community.github.io/lftcm2020/}}
+
+Dividiremos en tres partes principales el procedimiento mediante el
+cual se llegará a la formalización final. La primera parte se
+corresponderá con el planteamiento inicial del problema. La segunda
+con el desarrollo principal de la prueba y la tercera parte con la
+finalización o conclusión de la misma.
 
 \subsection{Planteamiento del problema}
+
 En primer lugar, se va a enunciar en lenguaje natural el problema que se
 desea formalizar en Lean. En nuestro caso es el siguiente:
+
 \begin{teorema}[infinito\_numeros\_primos]\label{infi}
-  En el conjunto de los números enteros existen infinitos números enteros.
-  Esto es equivalente a decir que para todo número natural \(n\), existe
-  otro número natural \(p\) mayor o igual que \(n\) tal que dicho número
-  \(p\) es primo.
+  Existen infinitos números primos; es decir que para todo número
+  natural \(n\), existe un número primo \(p\) mayor o igual que
+  \(n\).
 \end{teorema}
 
-Para llevar a cabo la formalización en Lean de este resultado,
-es indispensable importar la(s) librería(s) que se necesitan. En estas librerías
-hay diferentes conceptos, definiciones o lemas auxiliares que ya son conocidos
-para Lean y que resultan necesarios para la prueba.
+Para llevar a cabo la formalización en Lean de este resultado, es
+indispensable importar la librería que se necesitan. En estas
+librerías hay diferentes conceptos, definiciones o lemas auxiliares que
+ya son conocidos para Lean y que resultan útiles para la prueba.
 
 En el caso del problema que se va a planear, inicialmente sólo es necesario
 una teoría y es
@@ -46,18 +50,20 @@ como sigue:
 \begin{leancode}
 import data.nat.prime
 \end{leancode}
+
 \begin{nota}
   Destacar que en el proceso de realización de una prueba no siempre se sabe
   desde un principio cuáles son las librerías necesarias que habrá que importar.
   Es por eso que esto se puede hacer en cualquiero momento de la formalización
-  aunque es recomendable escribirlo al comienzo del programa.
+  aunque es necesario escribirlo al comienzo del fichero.
 \end{nota}
 
-A continuación, se va a habilitar el \href{https://leanprover.github.io/reference/other_commands.html#namespaces}
-{espacio de nombre} de los números naturales en este caso. Esto se hace con el
-objetivo de simplificar la notación; por ejemplo, escribiendo \texttt{prime}
-en lugar de \texttt{nat.prime}. Para hacer esta simplificación en Lean basta
-con:
+A continuación, se va a habilitar el
+\href{https://leanprover.github.io/reference/other_commands.html#namespaces}
+{espacio de nombre} de los números naturales en este caso. Esto se hace
+con el objetivo de simplificar la notación; por ejemplo, escribiendo
+\texttt{prime} en lugar de \texttt{nat.prime}. Para hacer esta
+simplificación en Lean basta con:
 \begin{leancode}
 open nat
 \end{leancode}
@@ -81,13 +87,12 @@ de la función \texttt{prime} que se encuentra en la librería que se ha
 importado.
 
 \begin{definicion}
-  Sea \(p\) un número perteneciente al conjunto de los números naturales.
-  Entonces se dice que \(p\) es primo si se verifica que \(p\) es mayor o
-  igual que dos y, además, que para todo número natural \(m\) que divide
-  a \(p\) se tiene que o bien \(m\) es uno, o bien \(m\) es igual a \(p\).
+  Un número natural \(p\) es primo si \(p\) es mayor o igual que dos y,
+  además, para todo número natural \(m\) que divide a \(p\) se tiene
+  que o bien \(m\) es uno, o bien \(m\) es igual a \(p\).
   Simbólicamente:
   \begin{equation*}
-    \text{primo }(p): p≥2 ∧ ∀m∈ℕ, m|p, (m=1 \lor m=p).
+    \text{primo }(p) := p ≥ 2 ∧ ∀ m (m | p → m = 1 ∨ m = p).
   \end{equation*}
 \end{definicion}
 
@@ -96,39 +101,42 @@ La formalización en Lean de esta definición es la siguiente:
 def prime (p : ℕ) := 2 ≤ p ∧ ∀ m ∣ p, m = 1 ∨ m = p
 \end{leancode}
 
-Por otro lado, se tiene que para el planteamiento de todas las formalizaciones
-que se van a presentar en este trabajo se han usado la estructura de
-demostración \texttt{begin}-\texttt{end} como se puede observar.
+Por otro lado, se tiene que para el planteamiento de todas las
+formalizaciones que se van a presentar en este trabajo se han usado la
+estructura de demostración \texttt{begin}-\texttt{end} como se puede
+observar.
 
-Finalmente, para acabar con el planteamiento inicial del problema, mencionar
-el uso de la táctica \tactica{sorry}{sorry}. Esta táctica es una herramienta
-mágica que prueba cualquier resultado. Más adelante iremos viendo la utilidad
-de esta táctica en el proceso de formalización de cualquier resultado.
-Asimismo, destacar que cuando en algún teorema o resultado se usa la táctica
-\tactica{sorry}{sorry}, Lean nos da un aviso de ello.
-
+Finalmente, para acabar con el planteamiento inicial del problema,
+mencionar el uso de la táctica \tactica{sorry}{sorry}. Esta táctica es
+una herramienta mágica que prueba cualquier resultado. Más adelante
+iremos viendo la utilidad de esta táctica en el proceso de formalización
+de cualquier resultado.  Asimismo, destacar que cuando en algún teorema
+o resultado se usa la táctica \tactica{sorry}{sorry}, Lean nos da un
+aviso de ello.
 
 \subsection{Desarrollo de la prueba}
-Una vez ya se ha hecho el planteamiento del enunciado del teorema, importado
-las librerías necesarias y definido las variables de trabajo (en nuestro caso
-trabajamos en el conjunto de los números naturales), se puede proceder al
-comienzo de la demostración como tal.
 
-El uso de la táctica \tactica{sorry}{sorry} que hemos mencionado anteriormente,
-no es que nos pruebe los resultados deseados. El verdadero uso es que durante
-el proceso de formalización, se va a ir diviendo el problema inicial en
-subproblemas que formalizaremos al final y de esta forma Lean no nos devuleve
-error.
+Una vez ya se ha hecho el planteamiento del enunciado del teorema,
+importado las librerías necesarias y definido las variables de trabajo
+(en nuestro caso trabajamos en el conjunto de los números naturales), se
+puede proceder al comienzo de la demostración como tal.
 
-Entonces, se tiene que obviando el uso de la táctica \tactica{sorry}{sorry}, el
-estado que tenemos actualmente de la formalización en Lean es el siguiente:
+El uso de la táctica \tactica{sorry}{sorry} que hemos mencionado
+anteriormente, no es que nos pruebe los resultados deseados. El
+verdadero uso es que durante el proceso de formalización, se va a ir
+diviendo el problema inicial en subproblemas que formalizaremos al final
+y de esta forma Lean no nos devuelve error.
+
+Entonces, se tiene que obviando el uso de la táctica
+\tactica{sorry}{sorry}, el estado que tenemos actualmente de la
+formalización en Lean es el siguiente:
 \begin{leancode}
 ⊢ ∀ (n : ℕ), ∃ (p : ℕ) (H : p ≥ n), prime p
 \end{leancode}
 
-Ahora bien, como la formalización que queremos plantear comienza con un para
-todo número natural \(n\), lo primero que hacemos es fijar dicho número
-natural. En Lean esto lo formalizamos como sigue:
+Ahora bien, como la formalización que queremos plantear comienza con un
+para todo número natural \(n\), lo primero que hacemos es fijar dicho
+número natural arbitrario. En Lean esto lo formalizamos como sigue:
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
@@ -137,21 +145,21 @@ begin
 end
 \end{leancode}
 
-Para la introducción del número natural \(n\) se ha hecho uso de la táctica
-\tactica{intro}{intro} mediante la cual fijamos dicho número. Al haber
-introducido el número natural \(n\), se tiene que el estado de la prueba en
-Lean pasa a ser el siguiente:
+Para la introducción del número natural \(n\) se ha hecho uso de la
+táctica \tactica{intro}{intro} mediante la cual fijamos dicho número. Al
+haber introducido el número natural \(n\), se tiene que el estado de la
+prueba en Lean pasa a ser el siguiente:
 \begin{leancode}
 n: ℕ
 ⊢ ∃ (p : ℕ) (H : p ≥ n), prime p
 \end{leancode}
 
-A continuación, siguiendo con el desarrollo de la prueba, entramos en la parte
-más matemática de la misma. Para ello, se tiene la \textit{idea feliz} de
-considerar los siguientes dos números naturales:
+A continuación, siguiendo con el desarrollo de la prueba, entramos en la
+parte más matemática de la misma. Para ello, se tiene la \textit{idea
+feliz} de considerar los siguientes dos números naturales:
 \begin{align}
-  &m=n!+1,\label{numm}\\
-  &p=\text{mínimo factor primo de \(m\) que sea distinto de 1}.\label{nump}
+  &m = n!+1,\label{numm}\\
+  &p = \text{mínimo factor primo de \(m\) que sea distinto de 1}.\label{nump}
 \end{align}
 
 En Lean esto se formalizaría como sigue:
@@ -160,8 +168,8 @@ theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
   intro n,
 
-  let m:= factorial n + 1,
-  let p:= min_fac m,
+  let m := factorial n + 1,
+  let p := min_fac m,
   sorry,
 end
 \end{leancode}
@@ -171,10 +179,11 @@ Para introducir los dos números que hemos definido en (\ref{numm}) y
 matemáticamente es equivalente a consideremos el número \(\_\) definido de la
 siguiente manera.
 
-Asimismo, a parte del uso de la táctica \tactica{let}{let}, se han utilizado
-también dos funciones: la función factorial de un número y la función que nos
-devuelve el mínimo factor primo distinto de uno de un número. Estas dos
-funciones son formalizadas en Lean de la siguiente manera:
+Asimismo, a parte del uso de la táctica \tactica{let}{let}, se han
+utilizado también dos funciones: la función factorial de un número y la
+función que nos devuelve el mínimo factor primo distinto de uno de un
+número. Estas dos funciones están formalizadas en Lean de la siguiente
+manera:
 \begin{leancode}
 def factorial : nat → nat
 | 0        := 1
@@ -187,12 +196,13 @@ def min_fac : ℕ → ℕ
   | (n+2) := if 2 ∣ n then 2 else min_fac_aux (n + 2) 3
 \end{leancode}
 
-Destacar que para el uso de estas funciones en Lean me ha sido necesario la
-importación de una nueva teoría, en este caso correspondiente a los números
-factoriales, \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/nat/factorial.lean}{data.nat.factorial}.
+Destacar que para el uso de estas funciones en Lean me ha sido necesario
+la importación de una nueva teoría, en este caso correspondiente a los
+factoriales,
+\href{https://github.com/leanprover-community/mathlib/blob/master/src/data/nat/factorial.lean}{data.nat.factorial}.
 
-Al haber introducido la definición de los números \(m\) y \(p\) en Lean, el
-estado actual pasa a ser el siguiente:
+Al haber introducido la definición de los números \(m\) y \(p\) en Lean,
+el estado actual pasa a ser el siguiente:
 \begin{leancode}
 n: ℕ
 m: ℕ := n.factorial + 1
@@ -200,19 +210,35 @@ p: ℕ := m.min_fac
 ⊢ ∃ (p : ℕ) (H : p ≥ n), prime p
 \end{leancode}
 
-El siguiente paso que queremos realizar en la formalización es decirle a Lean
-que el número \(p\) que estamos buscando es exactamente el que hemos definido
-justo antes. Esto lo hacemos mediante la táctica \tactica{use}{use}, la cual,
-como su propio nombre indica, le dice a Lean que use el número que ordenemos.
-Veamos como sigue la formalización:
+\comentario{He añadido lo siguiente sobre la notación}
+
+En el estado anterior se observa que, por defecto, Lean usa la notación
+de puntos escribiendo, peso se puede cambiar la opción añadiendo
+\begin{leancode}
+set_option pp.structure_projections false
+\end{leancode}
+con lo que el estado anterior lo escribe con la notación habitual
+\begin{leancode}
+n : ℕ,
+m : ℕ := factorial n + 1,
+p : ℕ := min_fac m
+⊢ ∃ (p : ℕ) (H : p ≥ n), prime p
+\end{leancode}
+
+El siguiente paso que queremos realizar en la formalización es decirle a
+Lean que el número \(p\) que estamos buscando es exactamente el que
+hemos definido justo antes. Esto lo hacemos mediante la táctica
+\tactica{use}{use}, la cual, como su propio nombre indica, le dice a
+Lean que use el número que ordenemos como testigo de la fórmula
+existencial. Veamos como sigue la formalización:
 
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
   intro n,
 
-  let m:= factorial n + 1,
-  let p:= min_fac m,
+  let m := factorial n + 1,
+  let p := min_fac m,
 
   use p,
   sorry,
@@ -222,9 +248,9 @@ end
 Estamos dando un paso muy importante en el que el estado de la formalización
 pasa a ser:
 \begin{leancode}
-n: ℕ
-m: ℕ := n.factorial + 1
-p: ℕ := m.min_fac
+n : ℕ
+m : ℕ := factorial n + 1
+p : ℕ := min_fac m
 ⊢ p ≥ n ∧ prime p
 \end{leancode}
 
@@ -233,19 +259,19 @@ conjunción: por un lado hay que demostrar que \(p\) es mayor o igual que
 \(n\) y por otro lado que el número \(p\) que hemos definido es primo. Ahora
 nos interesa separar el problema a demostrar en dos sub-problemas, esto es
 muy sencillo con el uso de la táctica \tactica{split}{split}, la cual nos
-divide la disyunción. De esta manera la formalización seguiría como:
+divide la conjunción. De esta manera la formalización seguiría como:
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
   intro n,
 
-  let m:= factorial n + 1,
-  let p:= min_fac m,
+  let m := factorial n + 1,
+  let p := min_fac m,
 
   use p,
   split,
-  {sorry,},
-  {sorry,},
+  { sorry, },
+  { sorry, },
 end
 \end{leancode}
 
@@ -256,15 +282,18 @@ de escribirlo es que como se hecho, diferenciando la prueba de cada problema
 entre llaves. De esta manera, se tiene que, tras la aplicación de la táctica
 \tactica{split}{split}, el estado pasa a ser:
 \begin{leancode}
-n: ℕ
-m: ℕ := n.factorial + 1
-p: ℕ := m.min_fac
+n : ℕ
+m : ℕ := factorial n + 1
+p : ℕ := min_fac m
 ⊢ p ≥ n
-n: ℕ
-m: ℕ := n.factorial + 1
-p: ℕ := m.min_fac
+
+n : ℕ
+m : ℕ := factorial n + 1
+p : ℕ := min_fac m
 ⊢ prime p
 \end{leancode}
+
+\comentario{La siguiente explicación no es clara.}
 
 Se tiene que el segundo problema en los que se ha dividido el problema inicial
 es demostrar que \(p\) es primo. Es entonces cuando se presenta el problema de
@@ -290,21 +319,23 @@ begin
 end
 \end{leancode}
 
-Para introducir la hipótesis de que \(p\) es un número primo se ha hecho
-uso de la táctica \tactica{have}{have}. En esta hipótesis también hemos añadido
-la \tactica{sorry}{sorry} porque luego realizaremos la prueba de dicha
-hipótesis. En el estado del problema el único cambio que ha habido respecto al
-último presentado es que se ha incluido la hipótesis mencionada, es decir:
+Para introducir el hecho de que \(p\) es un número primo se ha hecho
+uso de la táctica \tactica{have}{have}. En este hecho también hemos
+añadido la \tactica{sorry}{sorry} porque luego realizaremos la prueba de
+dicho hecho. En el estado del problema el único cambio que ha habido
+respecto al último presentado es que se ha incluido el hecho
+mencionado, es decir:
 \begin{leancode}
-n: ℕ
-m: ℕ := n.factorial + 1
-p: ℕ := m.min_fac
-hp: prime p
+n : ℕ
+m : ℕ := factorial n + 1
+p : ℕ := min_fac m
+hp : prime p
 ⊢ p ≥ n
-n: ℕ
-m: ℕ := n.factorial + 1
-p: ℕ := m.min_fac
-hp: prime p
+
+n : ℕ
+m : ℕ := factorial n + 1
+p : ℕ := min_fac m
+hp : prime p
 ⊢ prime p
 \end{leancode}
 
@@ -312,47 +343,48 @@ Recordemos que el número \(p\) se ha definido como el mínimo factor primo de
 \(m\) que sea distinto de uno. Por tanto, se tiene que la prueba de que\(p\)
 es primo será directa y la dejaremos para el final.
 
-Nos centraremos en la prueba de que el número \(p\) es mayor o igual que \(n\).
-En general, muchas de las pruebas de desigualdades en matemáticas se hacen
-por contradicción. Es decir, supongo que no es cierto dicha desigualdad y
-llego a una contradicción en algún momento. Procederemos así para la prueba
-que a nosotros nos interesa; en Lean esto se formularía con la táctica
+Nos centraremos en la prueba de que el número \(p\) es mayor o igual que
+\(n\).  En general, muchas de las pruebas de desigualdades en
+matemáticas se hacen por reducción al absurdo. Es decir, supongo que no
+es cierto dicha desigualdad y llego a una contradicción en algún
+momento. Procederemos así para la prueba que a nosotros nos interesa; en
+Lean esto se formularía con la táctica
 \tactica{by_contradiction}{by\_contradiction}:
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
   intro n,
 
-  let m:= factorial n + 1,
-  let p:= min_fac m,
-  have hp: prime p := sorry,
+  let m := factorial n + 1,
+  let p := min_fac m,
+  have hp : prime p := sorry,
 
   use p,
   split,
-  {by_contradiction,
-  sorry,},
-  {sorry,},
+  { by_contradiction,
+    sorry, },
+  { sorry, },
 end
 \end{leancode}
 
-De esta manera también se actualiza el estado de es sub-problema y pasamos a
-tener una nueva hipótesis y que demostrar falso, así es como Lean nos indica
-que tenemos que llegar a una contradicción. Esto es:
+De esta manera también se actualiza el estado y pasamos a tener una
+nueva hipótesis y tenemos que demostrar falso, así es como Lean nos
+indica que tenemos que llegar a una contradicción. Esto es:
 \begin{leancode}
-n: ℕ
-m: ℕ := n.factorial + 1
-p: ℕ := m.min_fac
-hp: prime p
-h: ¬p ≥ n
+n : ℕ
+m : ℕ := factorial n + 1
+p : ℕ := min_fac n
+hp : prime p
+h : ¬p ≥ n
 ⊢ false
 \end{leancode}
 
 Para poder concluir la prueba de este primer problema, se van a introducir
-las tres siguientes hipótesis:
+las tres siguientes hechos:
 \begin{align}
   &p | (n!+1),\tag{h1}\label{h1intro}\\
-  &p | n!, \tag{h2}\label{h2intro}\\
-  &p | 1.\tag{h3}\label{h3intro}
+  &p | n!,    \tag{h2}\label{h2intro}\\
+  &p | 1.     \tag{h3}\label{h3intro}
 \end{align}
 
 Introduzcámolas ahora en Lean:
@@ -361,18 +393,18 @@ theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
   intro n,
 
-  let m:= factorial n + 1,
-  let p:= min_fac m,
-  have hp: prime p := sorry,
+  let m := factorial n + 1,
+  let p := min_fac m,
+  have hp : prime p := sorry,
 
   use p,
   split,
   { by_contradiction,
-    have h1: p ∣ factorial n + 1 := sorry,
-    have h2: p ∣ factorial n := sorry,
-    have h3: p ∣ 1 := sorry,  
-    sorry,},
-  {sorry,},
+    have h1 : p ∣ factorial n + 1 := sorry,
+    have h2 : p ∣ factorial n := sorry,
+    have h3 : p ∣ 1 := sorry,
+    sorry, },
+  { sorry, },
 end
 \end{leancode}
 
@@ -380,96 +412,100 @@ En el caso del estado de este subproblema simplemente se han introducido las
 hipótesis (\ref{h1intro}), (\ref{h2intro}) y (\ref{h3intro}), el objetivo a
 probar no cambia:
 \begin{leancode}
-n: ℕ
-m: ℕ := n.factorial + 1
-p: ℕ := m.min_fac
-hp: prime p
-h: ¬p ≥ n
-h1: p ∣ n.factorial + 1
-h2: p ∣ n.factorial
-h3: p ∣ 1
+n : ℕ
+m : ℕ := factorial n + 1
+p : ℕ := min_fac m
+hp : prime p
+h : ¬p ≥ n
+h1 : p ∣ factorial n + 1
+h2 : p ∣ factorial n
+h3 : p ∣ 1
 ⊢ false
 \end{leancode}
 
-A través de las hipótesis añadidas demostrar que se llega a una contradicción
-no es nada complicado.
+A través de las hipótesis añadidas demostrar que se llega a una
+contradicción no es nada complicado.
 
-Entonces, se ha llegado a lo que es la estructura final de la prueba. Se puede
-observar que tenemos varios resultados que tenemos demostrados con la táctica
-\tactica{sorry}{sorry}, pero los resultados que tenemos son muy sencillos
-de probar y la siguiente parte de la sección veremos cómo hacerlo con una
-herramienta muy útil de Lean.
+Entonces, se ha llegado a lo que es la estructura final de la prueba. Se
+puede observar que tenemos varios resultados que tenemos demostrados con
+la táctica \tactica{sorry}{sorry}, pero los resultados que tenemos son
+muy sencillos de probar y la siguiente parte de la sección veremos cómo
+hacerlo con una herramienta muy útil de Lean.
 
 \subsection{Finalización de la prueba}
-Una vez ya se ha llegado a la estructura final de la prueba con el uso en una
-o varias ocasiones de la táctica \tactica{sorry}{sorry} es muy sencillo llevar
-a cabo la finalización de la demostración, siempre y cuando estemos seguros
-de que los resultados que nos falten por demostrar sean ciertos.
 
-Cuando nos encontramos ante resultados casi inmediatos de probar, Lean posee
-una táctica muy útil que nos indica qué lema o teorema hay que usar. Esta
-táctica es conocida como \tactica{library_search}{library\_search}. Es por eso
-que lo primer que intentamos es utilizar dicha táctica en todos los resultados
-que nos faltan por probar. El resultado obtenido es que de los seis resultados
-que nos faltaban por probar cuatro de ellos han sido probados con esta
-táctica:
+Una vez ya se ha llegado a la estructura final de la prueba con el uso
+en una o varias ocasiones de la táctica \tactica{sorry}{sorry} es muy
+sencillo llevar a cabo la finalización de la demostración, siempre y
+cuando estemos seguros de que los resultados que nos falten por
+demostrar sean ciertos.
+
+Cuando nos encontramos ante resultados casi inmediatos de probar, Lean
+posee una táctica muy útil que nos indica qué lema o teorema hay que
+usar. Esta táctica es \tactica{library_search}{library\_search}. Es por
+eso que lo primero que intentamos es utilizar dicha táctica en todos los
+resultados que nos faltan por probar. De esta forma, de los seis
+resultados que nos faltaban por probar cuatro de ellos se prueban con
+esta táctica:
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
   intro n,
 
-  let m:= factorial n + 1,
-  let p:= min_fac m,
-  have hp: prime p := sorry,
+  let m := factorial n + 1,
+  let p := min_fac m,
+  have hp : prime p := sorry,
 
   use p,
   split,
   { by_contradiction,
-    have h1: p ∣ factorial n + 1 := by library_search,
-    have h2: p ∣ factorial n := by sorry,
-    have h3: p ∣ 1 := by library_search,  
-    library_search,},
-  {library_search,},
+    have h1 : p ∣ factorial n + 1 := by library_search,
+    have h2 : p ∣ factorial n := by sorry,
+    have h3 : p ∣ 1 := by library_search,
+    library_search, },
+  { library_search, },
 end
 \end{leancode}
 
-Para ir simplificando los problemas que nos quedan, a continuación lo que se
-puede hacer es escribir la demostración que la táctica \tactica{library_search}
-{library\_search} ha propuesto en los problemas que sí funciona. De esta forma,
-la formalización en Lean nos queda:
+Para ir simplificando los problemas que nos quedan, a continuación lo
+que se puede hacer es escribir la demostración que la táctica
+\tactica{library_search} {library\_search} ha propuesto en los problemas
+que sí funciona. De esta forma, la formalización en Lean nos queda:
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin
   intro n,
 
-  let m:= factorial n + 1,
-  let p:= min_fac m,
-  have hp: prime p := sorry,
+  let m := factorial n + 1,
+  let p := min_fac m,
+  have hp : prime p := sorry,
 
   use p,
   split,
   { by_contradiction,
-    have h1: p ∣ factorial n + 1 := min_fac_dvd m,
-    have h2: p ∣ factorial n := by sorry,
-    have h3: p ∣ 1 := (nat.dvd_add_right h2).mp h1,  
+    have h1 : p ∣ factorial n + 1 := min_fac_dvd m,
+    have h2 : p ∣ factorial n := by sorry,
+    have h3 : p ∣ 1 := (nat.dvd_add_right h2).mp h1,
     exact prime.not_dvd_one hp h3,},
-  {exact hp,},
+  { exact hp, },
 end
 \end{leancode}
 
 Antes de proseguir con la demostración de los dos resultados que nos faltan
-por demostrar (\(p\) primo y (\ref{h2intro})), veámos las pruebas que nos han
-demostrado los cuatro resultados.
+por demostrar (\(p\) primo y (\ref{h2intro})), veamos las pruebas que nos han
+demostrado los cuatro resultados anteriores.
 
 En primer lugar, para el caso de la hipótesis (\ref{h1intro}) ha hecho uso
 de que el mínimo factor primo de un número cualquiera divide a dicho número.
 En particular, como el número \(m\) está definido como el factorial de la suma
 de \(n\) y \(1\) y \(p\) es el mínimo factor primo de \(m\), se tiene de manera
-inmediata que \(p\) divide a l factorial de \(n+1\). En Lean esto se ha
+inmediata que \(p\) divide al factorial de \(n+1\). En Lean esto se ha
 formalizado haciendo uso del siguiente teorema:
 \begin{leancode}
 theorem min_fac_dvd (n : ℕ) : min_fac n ∣ n
 \end{leancode}
+
+\comentario{Comentar cómo se ve el enunciado de los lemas sugeridos.}
 
 En segundo lugar, demostrar que (\ref{h3intro}) es bastante inmediato a partir
 de las hipótesis (\ref{h1intro}) y (\ref{h2intro}). Por la hipótesis
@@ -478,10 +514,9 @@ de las hipótesis (\ref{h1intro}) y (\ref{h2intro}). Por la hipótesis
 al factorial de \(n\). Entonces aplicando el teorema que se plantea a
 continuación se tiene de manera inmediata.
 \begin{teorema}
-  Sean \(k\), \(m\) y \(n\) tres número pertenecientes al conjunto de los
-  números naturales tales que \(k\) divide a \(m\). Entonces se tiene que \(k\)
-  divide a la suma de \(m\) y \(n\) si y solamente si \(k\) divide a \(n\).
-  Simbólicamente:
+  Sean \(k\), \(m\) y \(n\) números naturales tales que \(k\) divide a
+  \(m\). Entonces se tiene que \(k\) divide a la suma de \(m\) y \(n\)
+  si y solamente si \(k\) divide a \(n\).  Simbólicamente:
   \begin{equation*}
     ∀(k,m,n∈ℕ), k|m ⟶ (k|m+n⟺k|n).
   \end{equation*}
@@ -489,45 +524,48 @@ continuación se tiene de manera inmediata.
 
 Cuya formalización en Lean es la siguiente:
 \begin{leancode}
-theorem dvd_add_right {k m n : ℕ} (h : k ∣ m) : k ∣ m + n ↔ k ∣ n 
+theorem dvd_add_right {k m n : ℕ} (h : k ∣ m) : k ∣ m + n ↔ k ∣ n
 \end{leancode}
 
-El tercer resultado que ha demostrado la táctica \tactica{library_search}
-{library\_search} es la contradicción a la que había llegar en el primer
-problema de la división. Una vez se tiene la hipótesis (\ref{h3intro}) que
-nos dice que el número \(p\) divide a \(1\) y sabiendo que \(p\) es un número
-primo que se tiene por hipótesis; la contradicción es inmediate por la propia
-definición de ser primo. Para llegar a dicha contradicción se hace uso de que
-un número primo no puede dividir al número \(1\) y esto lo formalizamos en Lean
+El tercer resultado que ha demostrado la táctica
+\tactica{library_search} {library\_search} es la contradicción a la que
+había llegar en el primer problema de la división. Una vez se tiene la
+hipótesis (\ref{h3intro}) que nos dice que el número \(p\) divide a
+\(1\) y sabiendo que \(p\) es un número primo que se tiene por
+hipótesis; la contradicción es inmediate por la propia definición de ser
+primo. Para llegar a dicha contradicción se hace uso de que un número
+primo no puede dividir al número \(1\) y esto lo formalizamos en Lean
 mediante el siguiente teorema:
 \begin{leancode}
 theorem prime.not_dvd_one {p : ℕ} (pp : prime p) : ¬ p ∣ 1
 \end{leancode}
 
-Por último, el cuarto resultado es demostrar que \(p\) es primo lo cual se tiene
-de manera inmediata a través de la hipótesis (hp) que nos falta por demostrar.
-Para ello, Lean nos propone usar la táctica \tactica{exact}{exact}.
+Por último, el cuarto resultado es demostrar que \(p\) es primo lo cual
+se tiene de manera inmediata a través de la hipótesis (hp) que nos falta
+por demostrar.  Para ello, Lean nos propone usar la táctica
+\tactica{exact}{exact}.
 
-A continuación, se van a demostrar las dos hipótesis que nos faltan para poder
-concluir la demostración. A priori, estos dos resultados no son tan triviales
-como los anteriores pero veremos como resolverlos. Una forma muy útil y cómoda
-de trabajar cuando la táctica \tactica{library_search}{library\_search} no
-ha funcionado es escribirlo como un lema independiente. Separemos las dos
-pruebas que queremos realizar en dos lemas diferentes:
+A continuación, se van a demostrar las dos hipótesis que nos faltan para
+poder concluir la demostración. A priori, estos dos resultados no son
+tan triviales como los anteriores pero veremos como resolverlos. Una
+forma muy útil y cómoda de trabajar cuando la táctica
+\tactica{library_search}{library\_search} no ha funcionado es escribirlo
+como un lema independiente. Separemos las dos pruebas que queremos
+realizar en dos lemas diferentes:
 \begin{itemize}
-\item \textbf{Demostración y formalización de la hipótesis h2}
+\item \textbf{Demostración y formalización del hecho h2}
 
-  La hipótesis (\ref{h2intro}) bajo las hipótesis que tenemos puede ser
-  enunciada de la siguiente manera:
+  El hecho (\ref{h2intro}) bajo las hipótesis que tenemos puede ser
+  enunciado de la siguiente manera:
   \begin{lema}[h2]
-    Sean \(m\), \(n\) y \(p\) tres números pertenecientes al conjunto de los
-    números naturales tales que \(m\) es igual a la suma del factorial de \(n\)
-    con \(1\) y \(p\) es igual al mínimo factor primo de \(m\). Además, estos
-    números verifican las siguientes tres hipótesis:
+    Sean \(m\), \(n\) y \(p\) tres números naturales tales que \(m\) es
+    igual a la suma del factorial de \(n\) con \(1\) y \(p\) es igual al
+    mínimo factor primo de \(m\). Además, estos números verifican las
+    siguientes tres hipótesis:
     \begin{align}
       &\text{primo}(p),\label{hpintro}\tag{hp}\\
-      &¬p ≥ n,\tag{h}\label{hintro}\\
-      &p|(n!+1).\tag{h1}\label{h11intro}
+      &¬p ≥ n,         \tag{h}\label{hintro}\\
+      &p | (n!+1).       \tag{h1}\label{h11intro}
     \end{align}
     Entonces se tiene que \(p\) divide al factorial de \(n\).
   \end{lema}
@@ -535,19 +573,17 @@ pruebas que queremos realizar en dos lemas diferentes:
   Para formalizar la demostración de la hipótesis (\ref{h2intro}) hemos creado
   un lema auxiliar con las hipótesis correspondiente. Esta formalización es:
   \begin{leancode}
-  lemma h2 
-  (n: ℕ)
-  (m: ℕ)
-  (p: ℕ)
-  (m = n.factorial + 1)
-  (p = m.min_fac)
-  (hp: prime p)
-  (h: ¬p ≥ n)
-  (h1: p ∣ n.factorial + 1)
-  : p ∣ factorial n:=
+lemma h2
+  (n : ℕ)
+  (m = factorial n + 1)
+  (p = min_fac m)
+  (hp : prime p)
+  (h : ¬p ≥ n)
+  (h1 : p ∣ factorial n + 1)
+  : p ∣ factorial n :=
   begin
     sorry,
-  end
+end
   \end{leancode}
 
   Se puede observar que hemos vuelto a usar la estructura \texttt{begin}-
@@ -563,29 +599,27 @@ pruebas que queremos realizar en dos lemas diferentes:
   propone multitud de soluciones es por eso que debemos valorarlas y probar a
   elegir una. En el caso que a nosotros nos concierne la primera propuesta nos
   sirve de gran utilidad. Veámosla:
-  \begin{leancode}
-  lemma h2 
-  (n: ℕ)
-  (m: ℕ)
-  (p: ℕ)
-  (m = n.factorial + 1)
-  (p = m.min_fac)
-  (hp: prime p)
-  (h: ¬p ≥ n)
-  (h1: p ∣ n.factorial + 1)
+\begin{leancode}
+lemma h2
+  (n : ℕ)
+  (m = factorial n + 1)
+  (p = min_fac m)
+  (hp : prime p)
+  (h : ¬p ≥ n)
+  (h1 : p ∣ factorial n + 1)
   : p ∣ factorial n:=
-  begin
-    refine hp.dvd_factorial.mpr _,
-    sorry,
-  end
-  \end{leancode}
+begin
+  refine (prime.dvd_factorial hp).mpr _,
+  exact le_of_not_ge h,
+end
+\end{leancode}
 
   La táctica \tactica{sugest}{sugest} nos ha propuesto el uso del siguiente
   lema:
   \begin{lema}
-    Sean \(n\) y \(p\) dos números pertenecientes al conjunto de los números
-    naturales tales que \(p\) es primo. Entonces se tiene que \(p\) divide
-    al factorial de \(n\) si y solmante si \(p\) es menor o igual que \(n\)
+    Sean \(n\) y \(p\) dos números naturales tales que \(p\) es
+    primo. Entonces se tiene que \(p\) divide al factorial de \(n\) si y
+    solamante si \(p\) es menor o igual que \(n\)
   \end{lema}
 
   Cuya formalización en Lean es:
@@ -601,44 +635,33 @@ pruebas que queremos realizar en dos lemas diferentes:
   Tras el uso de este lema, se tiene que el estado del problema se convierte en
   el siguiente:
   \begin{leancode}
-  nmpm: ℕ
-  H: m = n.factorial + 1
-  p: ℕ
-  H: p = m.min_fac
-  hp: prime p
-  h: ¬p ≥ n
-  h1: p ∣ n.factorial + 1
-  ⊢ p ≤ n
+n m : ℕ,
+H : m = factorial n + 1,
+p : ℕ,
+H : p = min_fac m,
+hp : prime p,
+h : ¬p ≥ n,
+h1 : p ∣ factorial n + 1
+⊢ p ≤ n
   \end{leancode}
 
   Una vez se ha conseguido a dar un paso en la demostración, se propone de nuevo
   el uso de la táctica \tactica{library_search}{library\_search}.
   \begin{leancode}
-  
+
   \end{leancode}
 
   En este caso, sí ha sido capaz de culminar la prueba de la hipótesis
   (\ref{h2intro}) y la solución propuesta es la que presentamos a continuación:
 
+\item \textbf{Demostración y formalización del hecho hp}
 
-  
-
-  
-
-\item \textbf{Demostración y formalización de la hipótesis hp}
-  
   Segundo lema
 \end{itemize}
 
-
-
-
-
-
-
 \section{Tácticas}
-En esta última sección se van a detallar las tácticas que han sido usadas en
-la memoria para la resolución de los diferentes problemas.
+
+En esta última sección se van a detallar las tácticas que han sido
+usadas en la memoria para la resolución de los diferentes problemas.
 
 \subsection{Táctica sorry}
-
