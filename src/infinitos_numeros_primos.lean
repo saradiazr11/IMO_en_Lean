@@ -10,9 +10,9 @@ begin
 
   let m:= factorial n + 1,
   let p:= min_fac m,
-  have hp: prime p := 
+  have hp: prime p :=
   begin
-    refine min_fact_prime _,
+    refine min_fac_prime _,
     sorry,
   end,
 
@@ -21,12 +21,12 @@ begin
   { by_contradiction,
     have h1: p ∣ factorial n + 1 := min_fac_dvd m,
     have h2: p ∣ factorial n := by sorry,
-    have h3: p ∣ 1 := (nat.dvd_add_right h2).mp h1,  
+    have h3: p ∣ 1 := (nat.dvd_add_right h2).mp h1,
     exact prime.not_dvd_one hp h3,},
   {exact hp,},
 end
 
-lemma h2 
+lemma h2
 (n: ℕ)
 (m: ℕ)
 (p: ℕ)
