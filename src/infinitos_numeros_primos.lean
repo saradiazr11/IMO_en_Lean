@@ -1,5 +1,6 @@
 import data.nat.factorial
 import data.nat.prime
+import tactic
 
 open nat
 
@@ -43,11 +44,13 @@ begin
 end
 
 lemma hp
-  (n: ℕ)
-  (m = factorial n + 1)
-  (p = min_fac m)
-  : prime p:=
+  (n m p : ℕ)
+  (h1 : m = factorial n + 1)
+  (h2 : p = min_fac m)
+  : prime p :=
 begin
+  rw h2,
   refine min_fac_prime _,
-  sorry,
+  have : 0 < factorial n := factorial_pos n,
+  linarith,
 end
