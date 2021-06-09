@@ -545,17 +545,17 @@ theorem prime.not_dvd_one {p : ℕ} (pp : prime p) : ¬ p ∣ 1
 \end{leancode}
 
 Por último, el cuarto resultado es demostrar que \(p\) es primo lo cual
-se tiene de manera inmediata a través de la hipótesis (hp) que nos falta
-por demostrar.  Para ello, Lean nos propone usar la táctica
+se tiene de manera inmediata a través de la hipótesis (\ref{hpintro}) que nos
+falta por demostrar.  Para ello, Lean nos propone usar la táctica
 \tactica{exact}{exact}.
 
 A continuación, se van a demostrar las dos hipótesis que nos faltan para
-poder concluir la demostración. A priori, estos dos resultados no son
-tan triviales como los anteriores pero veremos como resolverlos. Una
-forma muy útil y cómoda de trabajar cuando la táctica
-\tactica{library_search}{library\_search} no ha funcionado es escribirlo
-como un lema independiente. Separemos las dos pruebas que queremos
-realizar en dos lemas diferentes:
+poder concluir la demostración, es decir, (\ref{h2intro}) y (\ref{hpintro}).
+A priori, estos dos resultados no son tan triviales como los anteriores pero
+veremos cómo resolverlos. Una forma muy útil y cómoda de trabajar cuando la
+táctica \tactica{library_search}{library\_search} no ha funcionado es escribirlo
+como un lema independiente. Separemos las dos pruebas que queremos realizar en
+dos lemas diferentes:
 \begin{itemize}
 \item \textbf{Demostración y formalización del hecho h2}
 
@@ -614,7 +614,7 @@ lemma h2
   : p ∣ factorial n:=
 begin
   refine (prime.dvd_factorial hp).mpr _,
-  exact le_of_not_ge h,
+  sorry,
 end
 \end{leancode}
 
@@ -639,27 +639,219 @@ end
   Tras el uso de este lema, se tiene que el estado del problema se convierte en
   el siguiente:
   \begin{leancode}
-n m : ℕ,
-H : m = factorial n + 1,
-p : ℕ,
-H : p = min_fac m,
-hp : prime p,
-h : ¬p ≥ n,
-h1 : p ∣ factorial n + 1
-⊢ p ≤ n
+  n m : ℕ,
+  H : m = factorial n + 1,
+  p : ℕ,
+  H : p = min_fac m,
+  hp : prime p,
+  h : ¬p ≥ n,
+  h1 : p ∣ factorial n + 1
+  ⊢ p ≤ n
   \end{leancode}
 
   Una vez se ha conseguido a dar un paso en la demostración, se propone de nuevo
-  el uso de la táctica \tactica{library_search}{library\_search}.
+  el uso de la táctica \tactica{library_search}{library\_search} y es capaz de
+  concluir la prueba de esta hipótesis:
   \begin{leancode}
-
+lemma h2
+  (n : ℕ)
+  (m = factorial n + 1)
+  (p = min_fac m)
+  (hp : prime p)
+  (h : ¬p ≥ n)
+  (h1 : p ∣ factorial n + 1)
+  : p ∣ factorial n:=
+begin
+  refine (prime.dvd_factorial hp).mpr _,
+  library_search,
+end
   \end{leancode}
 
-  En este caso, sí ha sido capaz de culminar la prueba de la hipótesis
-  (\ref{h2intro}) y la solución propuesta es la que presentamos a continuación:
+  En este caso, para culminar la prueba de la hipótesis (\ref{h2intro}) ha
+  hecho la siguiente propuesta:
+  \begin{leancode}
+lemma h2
+  (n : ℕ)
+  (m = factorial n + 1)
+  (p = min_fac m)
+  (hp : prime p)
+  (h : ¬p ≥ n)
+  (h1 : p ∣ factorial n + 1)
+  : p ∣ factorial n:=
+begin
+  refine (prime.dvd_factorial hp).mpr _,
+  exact le_of_not_ge h,
+end
+  \end{leancode}
 
+  Simplemente ha hecho uso del lema que se presenta a continuación:
+  \begin{lema}
+    Sean \(a\) y \(b\) dos números cualesquiera tales que no se verifica que
+    \(a\) sea mayor o igual que \(b\). Entonces se tiene que \(a\) es menor o
+    igual que \(b\).
+  \end{lema}
+
+  Cuya formalización en Lean es:
+  \begin{leancode}
+  lemma le_of_not_ge {a b : α} : ¬ a ≥ b → a ≤ b 
+  \end{leancode}
+  
 \item \textbf{Demostración y formalización del hecho hp}
 
-  Segundo lema
-\end{itemize}
+  A continuación, se demostrará el hecho (\ref{hpintro}) bajo las hipótesis
+  del problema. Este nuevo lema podría ser enunciado de la siguiente manera:
+  \begin{lema}
+    Sean \(n\), \(m\) y \(p\) números naturales tales que verifican las dos
+    siguiente condiciones:
+    \begin{align}
+      &m=n!+1\tag{h1p}\label{h1pintro}\\
+      &p=\text{mínimo factor primo de }m\text{ que sea distinto de }1.\tag{h2p}
+        \label{h2pintro} 
+    \end{align}
+    Entonces se tiene que el número \(p\) así definido es primo.
+  \end{lema}
+
+  Y su correspondiente formalización en Lean sería:
+  \begin{leancode}
+lemma hp
+  (n m p : ℕ)
+  (h1 : m = factorial n + 1)
+  (h2 : p = min_fac m)
+  : prime p :=
+begin
+  sorry,
+end
+  \end{leancode}
+
+  A continuación, procedamos a la demostración de ese resultado:
+  \begin{demostracion}
+    En primer lugar, para que realmente el lema que hemos enunciado se
+    corresponda con el que se tiene en el teorema principal hay que reescribir
+    \(p\) como nos dice la hipótesis (\ref{h2pintro}). En Lean esto se haría
+    de la siguiente forma:
+  \begin{leancode}
+lemma hp
+  (n m p : ℕ)
+  (h1 : m = factorial n + 1)
+  (h2 : p = min_fac m)
+  : prime p :=
+begin
+  rw h2p,
+  sorry,
+end
+  \end{leancode}
+  En este caso para introducir la hipótesis (\ref{h2pintro}) en el objetivo a
+  probar se ha hecho uso de la táctica \tactica{rw / rewrite}{rw}. De esta
+  forma, el objetivo a demostrar se convierte en:
+  \begin{leancode}
+nmp: ℕ
+h1p: m = factorial n + 1
+h2p: p = min_fac m
+⊢ prime (min_fac m)
+  \end{leancode}
+
+  Al intentar aplicar la táctica \tactica{library_search}{library\_search},
+  seguimos sin tener una propuesta de solución. Es por eso que intentamos con
+  la táctica \tactica{suggest}{suggest} y se obtiene varias prupuestas, de la
+  que se ha elegido la siguiente:
+
+  \begin{leancode}
+lemma hp
+  (n m p : ℕ)
+  (h1p : m = factorial n + 1)
+  (h2p : p = min_fac m)
+  : prime p :=
+begin
+  rw h2p,
+  refine min_fac_prime _,
+  sorry,
+end
+  \end{leancode}
+
+  Lo que la táctica \tactica{suggest}{suggest} nos ha propuesto es hacer uso
+  del teorema que se va a presentar a continuación junto con la táctica
+  \tactica{refine}{refine}.
+
+  \begin{teorema}
+    Sea \(n\) un número natural distinto de \(1\). Entonces se tiene que el
+    mínimo factor primo de \(n\) es primo.
+  \end{teorema}
+
+  La formalización en Lean de este teorema sería:
+  \begin{leancode}
+theorem min_fac_prime {n : ℕ} (n1 : n ≠ 1) : prime (min_fac n) 
+  \end{leancode}
+
+  Tras la aplicación de este teorema el objetivo a demostrar pasa a ser el
+  siguiente:
+  \begin{leancode}
+nmp: ℕ
+h1p: m = factorial n + 1
+h2p: p = min_fac m
+⊢ m ≠ 1
+  \end{leancode}
+
+  De esta manera, si observamos las hipótesis que tenemos, el objetivo a probar
+  es bastante sencillo. En primer lugar, se va a introducir la hipótesis de
+  que el factorial del número \(n\) es mayor que cero, esto es:
+  \begin{equation}
+    0<n!
+  \end{equation}
+
+  Este resultado se tiene de manera inmediata con el teorema siguiente:
+  \begin{teorema}
+    Sea \(n\) un número cualquiera, entonces se tiene que el factorial de dicho
+    número es mayor estrictamente que cero.
+  \end{teorema}
+
+  Y en Lean nos quedaría:
+  \begin{leancode}
+theorem factorial_pos : ∀ n, 0 < n!
+  \end{leancode}
+
+  La introducción en Lean de esta hipótesis se haría a través de la taćtica
+  \tactica{have}{have} y se plantearía como sigue:
+  \begin{leancode}
+lemma hp
+  (n m p : ℕ)
+  (h1p : m = factorial n + 1)
+  (h2p : p = min_fac m)
+  : prime p :=
+begin
+  rw h2p,
+  refine min_fac_prime _,
+  have : 0 < factorial n := factorial_pos n,
+  sorry,
+end
+  \end{leancode}
+
+  De esta forma, el objetivo a demostrar no cambia, simplemente se añade la
+  hipótesis definida al conjunto de las hipótesis.
+
+  A continuación, si observamos las hipótesis que tenemos, se puede comprobar
+  que haciendo uso de la desigualdad planteada y la definición del número
+  \(m\) se puede concluir la formalización. Como se trata de un paso en el que
+  hay que trabajar con desigualdades tiene sentido probar con la táctica
+  \tactica{linarith}{linarith}. De esta manera, se concluiría la prueba:
+
+  \begin{leancode}
+lemma hp
+  (n m p : ℕ)
+  (h1p : m = factorial n + 1)
+  (h2p : p = min_fac m)
+  : prime p :=
+begin
+  rw h2p,
+  refine min_fac_prime _,
+  have : 0 < factorial n := factorial_pos n,
+  linarith,
+end
+  \end{leancode}
+
+  Ya se tendría demostrada entonces la hipótesis (\ref{hpintro}).
+  \end{itemize}
+
+  Al haber demostrado y formalizado las hipótesis (\ref{h2intro}) y
+  (\ref{hpintro})
+\end{demostracion}
 
