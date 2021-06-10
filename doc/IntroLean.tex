@@ -499,17 +499,21 @@ Antes de proseguir con la demostración de los dos resultados que nos faltan
 por demostrar (\(p\) primo y (\ref{h2intro})), veamos las pruebas que nos han
 demostrado los cuatro resultados anteriores.
 
-En primer lugar, para el caso de la hipótesis (\ref{h1intro}) ha hecho uso
-de que el mínimo factor primo de un número cualquiera divide a dicho número.
-En particular, como el número \(m\) está definido como el factorial de la suma
-de \(n\) y \(1\) y \(p\) es el mínimo factor primo de \(m\), se tiene de manera
-inmediata que \(p\) divide al factorial de \(n+1\). En Lean esto se ha
-formalizado haciendo uso del siguiente teorema:
+En primer lugar, para el caso de la hipótesis (\ref{h1intro}) se ha hecho uso
+del siguiente teorema:
+\begin{teorema}
+  Sea \(n\) cualquier número natural, entonces se tiene que el mínimo factor
+  primo de \(n\) divide al propio \(n\).
+\end{teorema}
+Y su formalización en Lean es la siguiente:
 \begin{leancode}
 theorem min_fac_dvd (n : ℕ) : min_fac n ∣ n
 \end{leancode}
 
-\comentario{Comentar cómo se ve el enunciado de los lemas sugeridos.}
+En particular, como el número \(m\) está definido como el factorial de la suma
+de \(n\) y \(1\) y \(p\) es el mínimo factor primo de \(m\), se tiene de manera
+inmediata que \(p\) divide al factorial de \(n+1\).
+
 
 En segundo lugar, demostrar que (\ref{h3intro}) es bastante inmediato a partir
 de las hipótesis (\ref{h1intro}) y (\ref{h2intro}). Por la hipótesis
@@ -538,8 +542,13 @@ hipótesis (\ref{h3intro}) que nos dice que el número \(p\) divide a
 \(1\) y sabiendo que \(p\) es un número primo que se tiene por
 hipótesis; la contradicción es inmediate por la propia definición de ser
 primo. Para llegar a dicha contradicción se hace uso de que un número
-primo no puede dividir al número \(1\) y esto lo formalizamos en Lean
-mediante el siguiente teorema:
+primo no puede dividir al número \(1\), formalmente este teorema se enunciaría
+como sigue:
+\begin{teorema}
+  Sea \(p\) un número natural verificando que es un número primo. Entonces
+  se tiene que \(p\) no divide a \(1\).
+\end{teorema}
+Cuya correspondiente formalización en Lean sería:
 \begin{leancode}
 theorem prime.not_dvd_one {p : ℕ} (pp : prime p) : ¬ p ∣ 1
 \end{leancode}
@@ -724,12 +733,14 @@ end
   \end{leancode}
 
   A continuación, procedamos a la demostración de ese resultado:
+  
   \begin{demostracion}
+    
     En primer lugar, para que realmente el lema que hemos enunciado se
     corresponda con el que se tiene en el teorema principal hay que reescribir
     \(p\) como nos dice la hipótesis (\ref{h2pintro}). En Lean esto se haría
     de la siguiente forma:
-  \begin{leancode}
+    \begin{leancode}
 lemma hp
   (n m p : ℕ)
   (h1 : m = factorial n + 1)
@@ -739,23 +750,23 @@ begin
   rw h2p,
   sorry,
 end
-  \end{leancode}
-  En este caso para introducir la hipótesis (\ref{h2pintro}) en el objetivo a
-  probar se ha hecho uso de la táctica \tactica{rw / rewrite}{rw}. De esta
-  forma, el objetivo a demostrar se convierte en:
-  \begin{leancode}
+    \end{leancode}
+    En este caso para introducir la hipótesis (\ref{h2pintro}) en el objetivo a
+    probar se ha hecho uso de la táctica \tactica{rw / rewrite}{rw}. De esta
+    forma, el objetivo a demostrar se convierte en:
+    \begin{leancode}
 nmp: ℕ
 h1p: m = factorial n + 1
 h2p: p = min_fac m
 ⊢ prime (min_fac m)
-  \end{leancode}
+    \end{leancode}
 
-  Al intentar aplicar la táctica \tactica{library_search}{library\_search},
-  seguimos sin tener una propuesta de solución. Es por eso que intentamos con
-  la táctica \tactica{suggest}{suggest} y se obtiene varias prupuestas, de la
-  que se ha elegido la siguiente:
+    Al intentar aplicar la táctica \tactica{library_search}{library\_search},
+    seguimos sin tener una propuesta de solución. Es por eso que intentamos con
+    la táctica \tactica{suggest}{suggest} y se obtiene varias prupuestas, de la
+    que se ha elegido la siguiente:
 
-  \begin{leancode}
+    \begin{leancode}
 lemma hp
   (n m p : ℕ)
   (h1p : m = factorial n + 1)
@@ -766,52 +777,52 @@ begin
   refine min_fac_prime _,
   sorry,
 end
-  \end{leancode}
+    \end{leancode}
 
-  Lo que la táctica \tactica{suggest}{suggest} nos ha propuesto es hacer uso
-  del teorema que se va a presentar a continuación junto con la táctica
-  \tactica{refine}{refine}.
+    Lo que la táctica \tactica{suggest}{suggest} nos ha propuesto es hacer uso
+    del teorema que se va a presentar a continuación junto con la táctica
+    \tactica{refine}{refine}.
 
-  \begin{teorema}
-    Sea \(n\) un número natural distinto de \(1\). Entonces se tiene que el
-    mínimo factor primo de \(n\) es primo.
-  \end{teorema}
+    \begin{teorema}
+      Sea \(n\) un número natural distinto de \(1\). Entonces se tiene que el
+      mínimo factor primo de \(n\) es primo.
+    \end{teorema}
 
-  La formalización en Lean de este teorema sería:
-  \begin{leancode}
+    La formalización en Lean de este teorema sería:
+    \begin{leancode}
 theorem min_fac_prime {n : ℕ} (n1 : n ≠ 1) : prime (min_fac n) 
-  \end{leancode}
+    \end{leancode}
 
-  Tras la aplicación de este teorema el objetivo a demostrar pasa a ser el
-  siguiente:
-  \begin{leancode}
+    Tras la aplicación de este teorema el objetivo a demostrar pasa a ser el
+    siguiente:
+    \begin{leancode}
 nmp: ℕ
 h1p: m = factorial n + 1
 h2p: p = min_fac m
 ⊢ m ≠ 1
-  \end{leancode}
+    \end{leancode}
 
-  De esta manera, si observamos las hipótesis que tenemos, el objetivo a probar
-  es bastante sencillo. En primer lugar, se va a introducir la hipótesis de
-  que el factorial del número \(n\) es mayor que cero, esto es:
-  \begin{equation}
-    0<n!
-  \end{equation}
+    De esta manera, si observamos las hipótesis que tenemos, el objetivo a probar
+    es bastante sencillo. En primer lugar, se va a introducir la hipótesis de
+    que el factorial del número \(n\) es mayor que cero, esto es:
+    \begin{equation}
+      0<n!
+    \end{equation}
 
-  Este resultado se tiene de manera inmediata con el teorema siguiente:
-  \begin{teorema}
-    Sea \(n\) un número cualquiera, entonces se tiene que el factorial de dicho
-    número es mayor estrictamente que cero.
-  \end{teorema}
+    Este resultado se tiene de manera inmediata con el teorema siguiente:
+    \begin{teorema}
+      Sea \(n\) un número cualquiera, entonces se tiene que el factorial de dicho
+      número es mayor estrictamente que cero.
+    \end{teorema}
 
-  Y en Lean nos quedaría:
-  \begin{leancode}
+    Y en Lean nos quedaría:
+    \begin{leancode}
 theorem factorial_pos : ∀ n, 0 < n!
-  \end{leancode}
+    \end{leancode}
 
-  La introducción en Lean de esta hipótesis se haría a través de la taćtica
-  \tactica{have}{have} y se plantearía como sigue:
-  \begin{leancode}
+    La introducción en Lean de esta hipótesis se haría a través de la taćtica
+    \tactica{have}{have} y se plantearía como sigue:
+    \begin{leancode}
 lemma hp
   (n m p : ℕ)
   (h1p : m = factorial n + 1)
@@ -823,18 +834,18 @@ begin
   have : 0 < factorial n := factorial_pos n,
   sorry,
 end
-  \end{leancode}
+    \end{leancode}
 
-  De esta forma, el objetivo a demostrar no cambia, simplemente se añade la
-  hipótesis definida al conjunto de las hipótesis.
+    De esta forma, el objetivo a demostrar no cambia, simplemente se añade la
+    hipótesis definida al conjunto de las hipótesis.
 
-  A continuación, si observamos las hipótesis que tenemos, se puede comprobar
-  que haciendo uso de la desigualdad planteada y la definición del número
-  \(m\) se puede concluir la formalización. Como se trata de un paso en el que
-  hay que trabajar con desigualdades tiene sentido probar con la táctica
-  \tactica{linarith}{linarith}. De esta manera, se concluiría la prueba:
+    A continuación, si observamos las hipótesis que tenemos, se puede comprobar
+    que haciendo uso de la desigualdad planteada y la definición del número
+    \(m\) se puede concluir la formalización. Como se trata de un paso en el que
+    hay que trabajar con desigualdades tiene sentido probar con la táctica
+    \tactica{linarith}{linarith}. De esta manera, se concluiría la prueba:
 
-  \begin{leancode}
+    \begin{leancode}
 lemma hp
   (n m p : ℕ)
   (h1p : m = factorial n + 1)
@@ -846,12 +857,100 @@ begin
   have : 0 < factorial n := factorial_pos n,
   linarith,
 end
-  \end{leancode}
+    \end{leancode}
+    Ya se tendría demostrada entonces la hipótesis (\ref{hpintro}).
+  \end{demostracion}
+\end{itemize}
 
-  Ya se tendría demostrada entonces la hipótesis (\ref{hpintro}).
-  \end{itemize}
+Al haber demostrado y formalizado las hipótesis (\ref{h2intro}) y
+(\ref{hpintro}) ya se tendría completada la prueba de que existen infitos
+números primos naturales. Bastaría con incluir las demostraciones realizadas
+en la formalización principal:
+\begin{leancode}
+theorem infinitos_numeros_primos:
+∀ n, ∃ p ≥ n, prime p:=
+begin
+  intro n,
 
-  Al haber demostrado y formalizado las hipótesis (\ref{h2intro}) y
-  (\ref{hpintro})
-\end{demostracion}
+  let m := factorial n + 1,
+  let p := min_fac m,
+  have hp : prime p ,
+  { refine min_fac_prime _,
+    have : 0 < factorial n := factorial_pos n,
+    linarith,},
+
+  use p,
+  split,
+  { by_contradiction,
+    have h1 : p ∣ factorial n + 1 := min_fac_dvd m,
+    have h2 : p ∣ factorial n,
+    { refine (prime.dvd_factorial hp).mpr _,
+      exact le_of_not_ge h,},
+    have h3 : p ∣ 1 := (nat.dvd_add_right h2).mp h1,
+    exact prime.not_dvd_one hp h3,},
+  { exact hp, },
+  end
+\end{leancode}
+
+Para finalizar de manera completa la formalización en Lean de este resultado
+faltaría un último paso. Este paso consiste en tratar de reducir las
+demostraciones de algunos hechos; en concreto, los hechos (\ref{hpintro}) y
+(\ref{h2intro}) son los que podrían ser simplificados. Para ello, se hace
+uso de la táctica \tactica{show_term}{show\_term} de la siguiente manera:
+\begin{leancode}
+theorem infinitos_numeros_primos:
+  ∀ n, ∃ p ≥ n, prime p:=
+begin
+  intro n,
+
+  let m := factorial n + 1,
+  let p := min_fac m,
+  have hp : prime p ,
+  show_term{ refine min_fac_prime _,
+    have : 0 < factorial n := factorial_pos n,
+    linarith,},
+
+  use p,
+  split,
+  { by_contradiction,
+    have h1 : p ∣ factorial n + 1 := min_fac_dvd m,
+    have h2 : p ∣ factorial n,
+    show_term{ refine (prime.dvd_factorial hp).mpr _,
+      exact le_of_not_ge h,},
+    have h3 : p ∣ 1 := (nat.dvd_add_right h2).mp h1,
+    exact prime.not_dvd_one hp h3,},
+  { exact hp, },
+end
+\end{leancode}
+
+En el caso del hecho (\ref{hpintro}) la propuesta que nos hace Lean no es óptima
+y por eso mismo la desestimamos; mientras la que hace para el hecho
+(\ref{h2intro}) sí lo es y la introducimos en nuestra formalización. Entonces,
+se tiene que la formalización del teorema final sería:
+\begin{leancode}
+theorem infinitos_numeros_primos:
+  ∀ n, ∃ p ≥ n, prime p:=
+begin
+  intro n,
+
+  let m := factorial n + 1,
+  let p := min_fac m,
+  have hp : prime p ,
+  { refine min_fac_prime _,
+    have : 0 < factorial n := factorial_pos n,
+    linarith,},
+
+  use p,
+  split,
+  { by_contradiction,
+    have h1 : p ∣ factorial n + 1 := min_fac_dvd m,
+    have h2 : p ∣ factorial n,
+    exact iff.mpr (prime.dvd_factorial hp) (le_of_not_ge h),
+    have h3 : p ∣ 1 := (nat.dvd_add_right h2).mp h1,
+    exact prime.not_dvd_one hp h3,},
+  { exact hp, },
+end
+\end{leancode}
+
+
 
