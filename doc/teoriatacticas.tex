@@ -1,4 +1,140 @@
-\chapter{Tácticas en Lean}
+\chapter{Tácticas en Lean}\label{apentacti}
 
-En esta última sección se van a detallar las tácticas que han sido
-usadas en la memoria para la resolución de los diferentes problemas.
+En el apéndice que se presenta a continuación, se van a explicar de manera
+detalla las diferentes tácticas usadas durante el desarrollo del trabajo.
+Con el objetivo de clarificar las ideas, se plantearán diferentes ejemplos
+para ver cómo actuán las diversas tácticas.
+
+Muchos de los ejemplos que he usado para la clarificación de las diferentes
+tácticas han sido obtenidos del tutorial que realicé para comenzar a trabajar
+con Lean, en concreto \cite{tutor}.
+
+\section{Táctica sorry}
+
+La primera táctica que vamos a estudiar es la táctica \tactica{sorry}{sorry}.
+En particular, esta táctica es muy útil y tiene una función muy sencilla:
+es capaz de probar cualquier resultado. Ahora bien, a nosotros no nos interesa
+usar esta táctica para la formalización como tal de las pruebas pero sí como
+herramienta de ayuda que nos permita formalizar resultados auxiliares o
+hechos dentro de una prueba.
+
+Realmente cualquier ejemplo, lema o teorema sería válido para ver cómo funciona
+esta táctica. Veámos el siguiente:
+\begin{leancode}
+example (h₁ : a ∣ b) (h₂ : b ∣ c) : a ∣ c :=
+begin
+  sorry,
+end
+\end{leancode}
+
+Asimismo, veámos un ejemplo en el que la táctica \tactica{sorry}{sorry} sea
+utilizada con la función de probar un hecho dentro de la prueba. Es más,
+en este ejemplo aparecen las dos funciones mencionadas de la táctica:
+\begin{leancode}
+example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
+begin
+  intro hyp,
+  have H : a*(1 - b) = 0, by sorry,
+  sorry,
+end
+\end{leancode}
+
+\section{Táctica rewrite}
+
+A continuación, se presenta la táctica \tactica{rw / rewrite}{rw}. Esta táctica
+es muy usada y su forma de funcionar es muy intuitiva: consiste en reemplazar
+la ecuación o el si y solamente si que se encuentre después de la táctica
+\tactica{rw / rewrite}{rw} sobre el objetivo a demotrar.
+
+Si a continuación de la táctica \tactica{rw / rewrite}{rw} se encuentra una
+flecha hacia la izquierda (\(←\)) se tiene que la sustitución es aplicada
+al revés.
+
+En el ejemplo que se presenta a continuación se pueden observar los dos usos
+de la táctica \tactica{rw / rewrite}{rw} que hemos mencionado:
+
+\begin{leancode}
+example (a b : ℝ) : (a + b)*(a - b) = a^2 - b^2 :=
+begin
+  rw mul_sub (a+b) a b,
+  rw add_mul a b b,
+  rw pow_two a,
+  rw pow_two b,
+  rw mul_comm a b,
+  rw ← sub_sub ((a+b)*a) (b*a) (b*b),
+  rw add_mul a b a,
+  rw ← add_sub,
+  rw sub_self,
+  rw add_zero (a*a), 
+end
+\end{leancode}
+
+Asimismo, otra función de la táctica \tactica{rw / rewrite}{rw} de la cual se
+ha hecho uso durante el desarrollo del trabajo es aplicar la sustitución en
+alguna hipótesis y no en el objetivo a demostrar. Esto se hace haciendo uso
+del predicado \texttt{at}; veámoslo en Lean:
+manera en Lean:
+\begin{leancode}
+example (a b c d : ℝ) (hyp : c = d*a + b) (hyp' : b = a*d) : c = 2*a*d :=
+begin
+  rw hyp' at hyp,
+  rw mul_comm d a at hyp,
+  rw ← two_mul (a*d) at hyp,
+  rw ← mul_assoc 2 a d at hyp,
+  exact hyp,
+end
+\end{leancode}
+
+En este ejemplo se pueden observar las tres funciones descritas de la táctica
+\tactica{rw / rewrite}{rw}. 
+
+\section{Táctica have}
+
+\section{Táctica exact}
+
+\section{Táctica intro}
+
+\section{Táctica apply}
+
+\section{Táctica linarith}
+
+\section{Táctica nlinarith}
+
+\section{Táctica assume}
+
+\section{Táctica by contradiction}
+
+\section{Táctica let}
+
+\section{Táctica use}
+
+\section{Táctica induction}
+
+\section{Táctica cases}
+
+\section{Táctica from}
+
+\section{Tácticas left y right}
+
+\section{Táctica library search}
+
+\section{Táctica norm num}
+
+\section{Táctica refine}
+
+\section{Táctica ring}
+
+Táctica ring:
+\begin{leancode}
+example (a b : ℝ) : (a + b) + a = 2*a + b :=
+begin
+  by ring,
+end
+\end{leancode}
+
+\section{Tácticas simp y simpa}
+
+\section{Táctica split}
+
+\section{Táctica suggest}
+
