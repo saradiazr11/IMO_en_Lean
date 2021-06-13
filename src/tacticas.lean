@@ -57,10 +57,40 @@ begin
 end
 
 /-
-TÁCTICA EXACT
+TÁCTICA LINARITH
+-/
+def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
+def is_max (a : ℝ) (A : set ℝ) := a ∈ A ∧ a ∈ up_bounds A
+infix ` is_a_max_of `:55 := is_max
+
+example (A : set ℝ) (x y : ℝ) (hx : x is_a_max_of A) (hy : y is_a_max_of A) : 
+x = y :=
+begin
+  have : x ≤ y, from hy.2 x hx.1,
+  have : y ≤ x, from hx.2 y hy.1,
+  linarith,
+end
+
+/-
+TÁCTICA NLINARITH
 -/
 
 
+
+/-
+TÁCTICA APPLY
+-/
+def non_decreasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ ≤ f x₂
+def non_increasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ ≥ f x₂
+
+example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_increasing g) : 
+non_increasing (g ∘ f) :=
+begin
+  intros x1 x2 h,
+  apply hg,
+  apply hf,
+  exact h,
+end
 
 /-
 TÁCTICA RING
@@ -71,16 +101,3 @@ begin
   by ring,
 end
 
-/-
-TÁCTICA LINARITH
--/
-def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
-def is_max (a : ℝ) (A : set ℝ) := a ∈ A ∧ a ∈ up_bounds A
-infix ` is_a_max_of `:55 := is_max
-
-example (A : set ℝ) (x y : ℝ) (hx : x is_a_max_of A) (hy : y is_a_max_of A) : x = y :=
-begin
-  have : x ≤ y, from hy.2 x hx.1,
-  have : y ≤ x, from hx.2 y hy.1,
-  linarith,
-end

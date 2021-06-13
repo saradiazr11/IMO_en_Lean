@@ -135,7 +135,27 @@ conclusión de un resultado auxiliar (el que se especifique justo después de
 aplicar la táctica). De manera que si unifica, los objetivos a demostrar pasan
 a ser las diversas premisas que tuviese el resultado usado.
 
+Veámos un ejemplo en el que se utiliza esta táctica:
+\begin{leancode}
+def non_decreasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ ≤ f x₂
+def non_increasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ ≥ f x₂
+
+example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_increasing g) : 
+non_increasing (g ∘ f) :=
+begin
+  intros x1 x2 h,
+  apply hg,
+  apply hf,
+  exact h,
+end
+\end{leancode}
+
+
 \section{Táctica linarith}
+La siguiente táctica ha sido otra muy utilizada en el trabajo y es
+\tactica{linarith}{linarith}. Esta táctica trata de encontrar una contradicción
+entre las hipótesis del problema que son igualdades o desigualdades. En el
+ejemplo que se plantea a continuación se puede ver de manera muy clara:
 
 \begin{leancode}
 def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
@@ -151,8 +171,18 @@ begin
 end
 \end{leancode}
 
-\section{Táctica nlinarith}
+Se tienen dos hipótesis: por un lado que \(x\) es menor o igual que \(y\) y por
+otro que \(y\) es menor o igual que \(x\). Entonces, con la táctica
+\tactica{linarith}{linarith} se prueba directamente que \(x\) es igual a \(y\).
 
+\section{Táctica nlinarith}
+La táctica \tactica{nlinarith}{nlinarith}, que es la que vamos a estudiar a
+continuaón, es muy parecida a la táctica \tactica{linarith}{linarith} que
+acabamos de describir. Realmente la táctica \tactica{nlinarith}{nlinarith} no
+es más que una extensión de la táctica \tactica{linarith}{linarith} que puede
+resolver problemas no lineales.
+
+Veámos un ejemplo de esta táctica en Lean:
 \section{Táctica assume}
 
 \section{Táctica by contradiction}
