@@ -73,7 +73,6 @@ Asimismo, otra función de la táctica \tactica{rw / rewrite}{rw} de la cual se
 ha hecho uso durante el desarrollo del trabajo es aplicar la sustitución en
 alguna hipótesis y no en el objetivo a demostrar. Esto se hace haciendo uso
 del predicado \texttt{at}; veámoslo en Lean:
-manera en Lean:
 \begin{leancode}
 example (a b c d : ℝ) (hyp : c = d*a + b) (hyp' : b = a*d) : c = 2*a*d :=
 begin
@@ -89,14 +88,68 @@ En este ejemplo se pueden observar las tres funciones descritas de la táctica
 \tactica{rw / rewrite}{rw}. 
 
 \section{Táctica have}
+La siguiente táctica a estudiar será la táctica \tactica{have}{have}. Esta
+táctica es usada cuando se quieren introducir nuevas hipótesis al problema que
+tendrán que ser demostradas luego.
+
+En este caso el mismo ejemplo que uno de los que usamos para estudiar la táctica
+\tactica{sorry}{sorry}. Este ejemplo era:
+
+\begin{leancode}
+example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
+begin
+  intro hyp,
+  have H : a*(1 - b) = 0, by sorry,
+  sorry,
+end
+\end{leancode}
 
 \section{Táctica exact}
+La táctica \tactica{exact}{exact} ha sido una de las más utilizadas en el
+trabajo y cuya función es muy simple: nos introduce una prueba directa del
+objetivo a demostrar.
+
+Para ver un ejemplo del uso de esta táctica, también se va a hacer uso de uno
+ya propuesto anteriormente y es uno de los que se estudió al ver la táctica
+\tactica{rw / rewrite}{rw}. El ejemplo era el siguiente:
+
+\begin{leancode}
+example (a b c d : ℝ) (hyp : c = d*a + b) (hyp' : b = a*d) : c = 2*a*d :=
+begin
+  rw hyp' at hyp,
+  rw mul_comm d a at hyp,
+  rw ← two_mul (a*d) at hyp,
+  rw ← mul_assoc 2 a d at hyp,
+  exact hyp,
+end
+\end{leancode}
+
 
 \section{Táctica intro}
+La siguiente táctica que se va a introducir es \tactica{intro / intros}{intro}
 
 \section{Táctica apply}
+La táctica \tactica{apply}{apply} es la siguiente que vamos a introducir. La
+función de esta táctica trata de unificar el objetivo a demostrar con la
+conclusión de un resultado auxiliar (el que se especifique justo después de
+aplicar la táctica). De manera que si unifica, los objetivos a demostrar pasan
+a ser las diversas premisas que tuviese el resultado usado.
 
 \section{Táctica linarith}
+
+\begin{leancode}
+def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
+def is_max (a : ℝ) (A : set ℝ) := a ∈ A ∧ a ∈ up_bounds A
+infix ` is_a_max_of `:55 := is_max
+
+example (A : set ℝ) (x y : ℝ) (hx : x is_a_max_of A) (hy : y is_a_max_of A) :
+x = y :=
+begin
+  have : x ≤ y, from hy.2 x hx.1,
+  have : y ≤ x, from hx.2 y hy.1,
+  linarith,
+end
+\end{leancode}
 
 \section{Táctica nlinarith}
 
