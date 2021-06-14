@@ -357,7 +357,7 @@ matemáticas se hacen por reducción al absurdo. Es decir, supongo que no
 es cierto dicha desigualdad y llego a una contradicción en algún
 momento. Procederemos así para la prueba que a nosotros nos interesa; en
 Lean esto se formularía con la táctica
-\tactica{by_contradiction}{by\_contradiction}:
+\tactica{by_contra / by_contradiction}{by\_contradiction}:
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
 begin

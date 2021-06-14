@@ -33,7 +33,6 @@ en este ejemplo aparecen las dos funciones mencionadas de la táctica:
 \begin{leancode}
 example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
 begin
-  intro hyp,
   have H : a*(1 - b) = 0, by sorry,
   sorry,
 end
@@ -126,7 +125,34 @@ end
 
 
 \section{Táctica intro}
-La siguiente táctica que se va a introducir es \tactica{intro / intros}{intro}
+La siguiente táctica que se va a introducir es \tactica{intro / intros}{intro},
+esta táctica puede ser utilizada de diversas maneras. Una manera muy común de
+usarla es cuando tenemos que demostrar una implicación, entonces se supone
+como cierta la primera parte de la implicación y esto se hace a través de la
+táctica \tactica{intro / intros}{intro}.
+
+En el siguiente ejemplo se ve muy claro:
+
+\begin{leancode}
+example (a b : ℝ): 0 ≤ b → a ≤ a + b :=
+begin
+  intro hb,
+  exact le_add_of_nonneg_right hb,
+end
+\end{leancode}
+
+En el siguiente ejemplo que se plantea, se hace uso intros, en este caso como
+se quiere demostrar que \(Q\) implica no \(P\), al decirle intros q p, le
+estamos diciendo que introduzca las hipótesis de que se verifica \(Q\) y
+también \(P\). De esta manera, el objetivo a demostrar pasa a ser false.
+\begin{leancode}
+example (P Q : Prop) (h₁ : P ∨ Q) (h₂ : ¬ (P ∧ Q)) : Q → ¬P :=
+begin
+  intros q p,
+  exact h₂ ⟨p,q⟩ ,
+end
+\end{leancode}
+
 
 \section{Táctica apply}
 La táctica \tactica{apply}{apply} es la siguiente que vamos a introducir. La
@@ -182,32 +208,215 @@ acabamos de describir. Realmente la táctica \tactica{nlinarith}{nlinarith} no
 es más que una extensión de la táctica \tactica{linarith}{linarith} que puede
 resolver problemas no lineales.
 
-Veámos un ejemplo de esta táctica en Lean:
+Para ver un ejemplo sobre esta táctica, se ha usado uno que se corresponde con
+un lema auxiliar del problema Q6 de 2001 de las Olimpiadas Internacionales de
+Mátemáticas. El ejemplo es el que se plantea a continuación:
+
+\begin{leancode}
+example (a b c d : ℤ)
+  (hba : b < a)
+  (hcb : c < b)
+  (hdc : d < c)
+  (h : a*c + b*d = (a + b - c + d) * (-a + b + c + d))
+  : a*c + b*d < a*b + c*d:=
+begin
+  nlinarith,
+end
+\end{leancode}
+
 \section{Táctica assume}
+La siguiente táctica que se estudia es la táctica \tactica{assume}{assume}. Como
+su propio nombre indica nos sirve para asumir o fijar una variable o incluso una
+hipótesis.
+
+Cuando nos encoentramos ante un resultado en el que hay que demostrar un para
+todo, esta táctica es muy útil. Veámos el siguiente ejemplo:
+
+\begin{leancode}
+variables{n : ℕ}
+example : ∀ n, 3*n=n*3 :=
+begin
+  assume n,
+  sorry,
+end
+\end{leancode}
+
+Se puede observar que el objetivo a demostrar pasa a ser sólo y excluivamente
+probar la igualdad puesto que hemos fijado el número \(n\) perteneciente al
+conjunto de los números naturales.
+
 
 \section{Táctica by contradiction}
+La táctica \tactica{by_contra / by_contradiction}{by\_contradiction} es muy
+usada en las pruebas matemáticas. Esta táctica consiste en suponer que el
+objetivo a demostrar no se verifica y que se acabe llegando a  un error.
+
+Un ejemplo en el que el uso de esta táctica se ver muy claro es el siguiente:
+
+\begin{leancode}
+example (P Q : Prop) (h : ¬ Q → ¬ P) : P → Q :=
+begin
+  intro hP,
+  by_contradiction hnQ,
+  exact h hnQ hP,
+end
+\end{leancode}
+
+En la primera línea, se intoduce como hipótesis hP que se tiene la proposición
+\(P\) y luego se denota como hipótesis hnQ que no se tiene \(Q\). En la última
+línea es cuando ya se llega a la contradicción.
 
 \section{Táctica let}
 
 \section{Táctica use}
+La táctica \tactica{use}{use} irá acompañado de un número o una variable que
+el sistema conozca (o pueda calcular a través de sus datos). Esta táctica será
+utilizada cuando nos encontremos que hay que probar que existe un número tal
+que verifica una condición; entonces, cuando le queremos decir que considere un
+número en concreto se lo decimos a Lean a través de la táctica
+\tactica{use}{use}.
+
+En el siguiente ejemplo se puede ver de manera inmediata:
+
+\begin{leancode}
+example : ∃ n : ℕ, 8 = 2*n :=
+begin
+  use 4,
+  refl,
+end
+\end{leancode}
+
 
 \section{Táctica induction}
+La táctica \tactica{induction}{induction} es uno de los mecanismos más famosos
+para demostrar resultados en Matemáticas. Simplemente consiste en demostrar
+un resultado por inducción, es decir, si hacemos inducción el número \(b\),
+se tiene que demostrar el resultado para \(b\) igual a \(0\) y luego, suponiendo
+que se verifica para \(k=b\) hay que demostrar el mismo resultado para \(k+1\).
+
+En el ejemplo que se plantea a continuación, se ve cómo se usa esta táctica:
+al decir induction b with k h, se está diciendo que hacemos la inducción sobre
+el número \(b\) denotándo los casos por \(k=0\) y \(k+1\):
+
+\begin{leancode}
+example (t a b : ℕ) : t * (a + b) = t * a + t * b :=
+begin
+induction b with k h,
+{sorry,},
+
+{sorry,},
+end
+\end{leancode}
 
 \section{Táctica cases}
+La táctica \tactica{cases}{cases} es también una táctica muy usada en las
+formalizaciones de Lean. Existen diversas formas de usar esta táctica, no
+obstante, nos centraremos en la que se ha usado en el trabajo y consiste en que
+cuando tenemos una hipótesis que nos dice que existe un número verificando una
+condición, se usa la táctica \tactica{cases}{cases} para por un lado tener el
+número en cuestión y por otro la condición que él verifica.
+
+En el ejemplo que se presenta a continuación, se puede ver como funciona
+
+\begin{leancode}
+example {a b : ℝ} : (0 ≤ a ∧ 0 ≤ b) → 0 ≤ a + b :=
+begin
+  intros hyp,
+  cases hyp with ha hb,
+  exact add_nonneg ha hb,
+end
+\end{leancode}
+
+
+\section{Táctica split}
+El caso de la táctica \tactica{split}{split} es bastante intuitivo: esta táctica
+divide cuando hay que demostrar un si y solamente si en las dos implicaciones
+como objetivos separados o también separa en dos objetivos cuando hay que
+demostrar una conjunción.
+
+En este primer ejemplo, se puede observar como separa el si y solamente si en
+dos objetivos separados:
+
+\begin{leancode}
+example (P Q R : Prop) : (P ∧ Q → R) ↔ (P → (Q → R)) :=
+begin
+  split, 
+  {intros h1 h2 h3,
+  exact h1 ⟨ h2,h3⟩ },
+  {intros h1 h2,
+  cases h2 with p q,
+  exact h1 p q}
+end
+\end{leancode}
+
+Mientras que un ejemplo muy simple en el que la táctica \tactica{split}{split}
+es usada para dividir una conjunción es el siguiente:
+\begin{leancode}
+example (P Q : Prop) (hp: P) (hq : Q) : P ∧ Q :=
+begin
+  split, 
+  {exact hp,},
+  {exact hq,},
+end
+\end{leancode}
 
 \section{Táctica from}
 
 \section{Tácticas left y right}
 
 \section{Táctica library search}
+La táctica \tactica{library_search}{library\_search} es una táctica que para
+llevar a cabo formalizaciones de pruebas en Lean es muy útil. Esta táctica se
+suele utilizar cuando estamos cerca de concluir la demostración y no sabemos
+qué lema auxiliar utilizar o si existe alguno o no, \tactica{library_search}
+{library\_search} nos da esta información. En el caso de que haya un lema
+mediante el cual se pueda probar el resultado o una prueba medio directa, esta
+táctica nos la proporciona; mientras que en el caso de que no sea capaz de
+encontrarlo pues no nos proporciona ninguna respuesta.
+
+Por ejemplo, en uno de los ejemplos propuestos analizar la táctica
+\tactica{intro / intros}{intro}, se puede ver muy bien el uso de esta táctica:
+
+\begin{leancode}
+example (a b : ℝ): 0 ≤ a → b ≤ a + b :=
+begin
+  library_search,
+end
+\end{leancode}
+
+Si hacemos caso de la propuesta de formalización que nos propone nos quedaría:
+
+\begin{leancode}
+example (a b : ℝ): 0 ≤ a → b ≤ a + b :=
+begin
+  exact le_add_of_nonneg_left,
+end
+\end{leancode}
+
+Se puede observar que es una formalización diferente a la propuesta en el
+ejemplo de la táctica \tactica{intro / intros}{intro} e incluso me atrevería a
+decir que más elegante.
+
 
 \section{Táctica norm num}
 
 \section{Táctica refine}
+La táctica \tactica{refine}{refine} funciona de manera totalmente análoga a como
+lo hace la táctica \tactica{exact}{exact}; no obstante, en esta nueva táctica no
+es necesario decir la hipótesis o resultado que se aplica, es decir, bastaría
+con decir refine \(\_\).
+
+Veamos un ejemplo de esto
 
 \section{Táctica ring}
+La táctica \tactica{ring}{ring} en Lean es una táctica muy útil puesto que es
+capaz de resolver las ecuaciones cuando se está trabajando con anillos
+(semi) conmutativos.
 
-Táctica ring:
+Por ejemplo, cuando nos encontramos ante situaciones \textit{triviales}, se
+pueden demostrar directamente mediante el uso de esta táctica. El siguiente
+ejemplo es muy representativo:
+
 \begin{leancode}
 example (a b : ℝ) : (a + b) + a = 2*a + b :=
 begin
@@ -217,7 +426,6 @@ end
 
 \section{Tácticas simp y simpa}
 
-\section{Táctica split}
 
 \section{Táctica suggest}
 
