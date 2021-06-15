@@ -7,6 +7,7 @@
  -/
 import data.real.basic
 import data.int.parity
+import algebra.group.pi
 variables (a b c : ℤ)
 
 example (h₁ : a ∣ b) (h₂ : b ∣ c) : a ∣ c :=
@@ -89,15 +90,8 @@ end
 /-
 TÁCTICA LINARITH
 -/
-def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
-def is_max (a : ℝ) (A : set ℝ) := a ∈ A ∧ a ∈ up_bounds A
-infix ` is_a_max_of `:55 := is_max
-
-example (A : set ℝ) (x y : ℝ) (hx : x is_a_max_of A) (hy : y is_a_max_of A) : 
-x = y :=
+example (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a + b :=
 begin
-  have : x ≤ y, from hy.2 x hx.1,
-  have : y ≤ x, from hx.2 y hy.1,
   linarith,
 end
 
@@ -135,6 +129,30 @@ begin
   exact h hnQ hP,
 end
 
+
+/-
+TÁCTICA LET
+-/
+variables (u v w : ℕ → ℝ) (l l' : ℝ)
+notation `|`x`|` := abs x
+def seq_limit (u : ℕ → ℝ) (l : ℝ) : Prop :=
+∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| ≤ ε
+
+def tendsto_infinity (u : ℕ → ℝ) := ∀ A, ∃ N, ∀ n ≥ N, u n ≥ A
+
+example {u : ℕ → ℝ} : tendsto_infinity u → ∀ l, ¬ seq_limit u l :=
+begin
+  intro h,
+  intro l,
+  intro lim,
+  cases lim 1 (by linarith) with N1 hN1,
+  cases h (l+2) with N2 hN2,
+  let N3:= max N1 N2,
+  sorry,
+end
+
+
+
 /-
 TÁCTICA USE
 -/
@@ -169,6 +187,18 @@ begin
   exact add_nonneg ha hb,
 end
 
+example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
+begin
+  intro hyp,
+  have H : a*(1 - b) = 0,
+  { calc a*(1 - b) = a - a*b : by ring
+               ... = 0       : by linarith, },
+  rw mul_eq_zero at H,
+  cases H with Ha Hb,
+  { sorry, },
+  { sorry, },
+end
+
 /-
 TÁCTICA SPLIT
 -/
@@ -191,6 +221,42 @@ end
 
 
 /-
+TÁCTICA FROM
+-/
+
+def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
+def is_max (a : ℝ) (A : set ℝ) := a ∈ A ∧ a ∈ up_bounds A
+infix ` is_a_max_of `:55 := is_max
+
+example (A : set ℝ) (x y : ℝ) (hx : x is_a_max_of A) (hy : y is_a_max_of A) : 
+x = y :=
+begin
+  have : x ≤ y, from hy.2 x hx.1,
+  have : y ≤ x, from hx.2 y hy.1,
+  linarith,
+end
+
+
+
+/-
+TÁCTICA LEFT RIGHT
+-/
+example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
+begin
+  intro hyp,
+  have H : a*(1 - b) = 0,
+  { calc a*(1 - b) = a - a*b : by ring
+               ... = 0       : by linarith, },
+  rw mul_eq_zero at H,
+  cases H with Ha Hb,
+  { left,
+    exact Ha, },
+  { right,
+    linarith, },
+end
+
+
+/-
 TÁCTICA LIBRARY SEARCH
 -/
 example (a b : ℝ): 0 ≤ a → b ≤ a + b :=
@@ -202,6 +268,22 @@ example (a b : ℝ): 0 ≤ a → b ≤ a + b :=
 begin
   exact le_add_of_nonneg_left,
 end
+
+
+/-
+TÁCTICA NORM NUM
+-/
+
+example : (2 : ℝ) + 2 = 4 := 
+begin
+  norm_num,
+end
+
+example : (73 : ℝ) < 789/2 := 
+begin
+  norm_num,
+end
+
 
 /-
 TÁCTICA REFINE
@@ -218,3 +300,17 @@ begin
   by ring,
 end
 
+
+
+/-
+TÁCTICA SIMP SIMPA
+-/
+example (a b : ℝ) : (a + b) + a = 2*a + b :=
+begin
+  by simp,
+end
+
+
+/-
+TÁCTICA SUGGEST
+-/

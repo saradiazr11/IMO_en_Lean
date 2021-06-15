@@ -184,15 +184,8 @@ entre las hipótesis del problema que son igualdades o desigualdades. En el
 ejemplo que se plantea a continuación se puede ver de manera muy clara:
 
 \begin{leancode}
-def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
-def is_max (a : ℝ) (A : set ℝ) := a ∈ A ∧ a ∈ up_bounds A
-infix ` is_a_max_of `:55 := is_max
-
-example (A : set ℝ) (x y : ℝ) (hx : x is_a_max_of A) (hy : y is_a_max_of A) :
-x = y :=
+example (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a + b :=
 begin
-  have : x ≤ y, from hy.2 x hx.1,
-  have : y ≤ x, from hx.2 y hy.1,
   linarith,
 end
 \end{leancode}
@@ -267,6 +260,32 @@ En la primera línea, se intoduce como hipótesis hP que se tiene la proposició
 línea es cuando ya se llega a la contradicción.
 
 \section{Táctica let}
+La táctica \tactica{let}{let} que ha sido usada en alguna formalización que
+se ha realizado en Lean consiste en introducir una nueva hipótesis (a la que
+se puede nombrar si así se desea).
+
+En el ejemplo que se tiene a continuación, se puede ver que se ha introducido
+una nueva hipótesis a través de la táctica \tactica{let}{let}:
+
+\begin{leancode}
+variables (u v w : ℕ → ℝ) (l l' : ℝ)
+notation `|`x`|` := abs x
+def seq_limit (u : ℕ → ℝ) (l : ℝ) : Prop :=
+∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| ≤ ε
+
+def tendsto_infinity (u : ℕ → ℝ) := ∀ A, ∃ N, ∀ n ≥ N, u n ≥ A
+
+example {u : ℕ → ℝ} : tendsto_infinity u → ∀ l, ¬ seq_limit u l :=
+begin
+  intro h,
+  intro l,
+  intro lim,
+  cases lim 1 (by linarith) with N1 hN1,
+  cases h (l+2) with N2 hN2,
+  let N3:= max N1 N2,
+  sorry,
+end
+\end{leancode}
 
 \section{Táctica use}
 La táctica \tactica{use}{use} irá acompañado de un número o una variable que
@@ -311,12 +330,22 @@ end
 \section{Táctica cases}
 La táctica \tactica{cases}{cases} es también una táctica muy usada en las
 formalizaciones de Lean. Existen diversas formas de usar esta táctica, no
-obstante, nos centraremos en la que se ha usado en el trabajo y consiste en que
-cuando tenemos una hipótesis que nos dice que existe un número verificando una
-condición, se usa la táctica \tactica{cases}{cases} para por un lado tener el
-número en cuestión y por otro la condición que él verifica.
+obstante, nos centraremos en las dos que se han usado en el trabajo y que
+consisten en:
+\begin{enumerate}
+\item Cuando se tiene una hipótesis que afirma que existe un número tal que
+  verifica una determinada considción, se usa la táctica \tactica{cases}{cases}
+  para por un lado tener el número en cuestión y por otro la condición que él
+  verifica.
 
-En el ejemplo que se presenta a continuación, se puede ver como funciona
+\item Cuando se tiene una hipótesis que es una disyunción, se usa la táctica
+  \tactica{cases}{cases} para dividir el problema en dos: probar el objetivo
+  suponiendo la primera parte de la disyunción y probarlo suponiendo que
+  se verifica la segunda parte.
+\end{enumerate}
+
+En el siguiente ejemplo que se presenta, se puede ver como funciona la táctica
+en el primer caso que hemos descrito:
 
 \begin{leancode}
 example {a b : ℝ} : (0 ≤ a ∧ 0 ≤ b) → 0 ≤ a + b :=
@@ -326,6 +355,24 @@ begin
   exact add_nonneg ha hb,
 end
 \end{leancode}
+
+Además, en este otro ejemplo se puede ver cómo utilizar esta táctica en el
+segundo caso:
+
+\begin{leancode}
+example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
+begin
+  intro hyp,
+  have H : a*(1 - b) = 0,
+  { calc a*(1 - b) = a - a*b : by ring
+               ... = 0       : by linarith, },
+  rw mul_eq_zero at H,
+  cases H with Ha Hb,
+  { sorry, },
+  { sorry, },
+end
+\end{leancode}
+
 
 
 \section{Táctica split}
@@ -361,8 +408,54 @@ end
 \end{leancode}
 
 \section{Táctica from}
+La táctica que se va a presentar es la conocida como \tactica{from}{from}, esta
+táctica es muy similar a la táctica \tactica{exact}{exact}; pero a diferencia
+de esta última, la táctica \tactica{from}{from} se puede usar con otras tácticas
+como \tactica{have}.
+
+Veámos un ejemplo del uso de la táctica \tactica{from}{from} para probar una
+hipótesis que ha sido introducida con la táctica \tactica{have}{have}:
+
+\begin{leancode}
+def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
+def is_max (a : ℝ) (A : set ℝ) := a ∈ A ∧ a ∈ up_bounds A
+infix ` is_a_max_of `:55 := is_max
+
+example (A : set ℝ) (x y : ℝ) (hx : x is_a_max_of A) (hy : y is_a_max_of A) : 
+x = y :=
+begin
+  have : x ≤ y, from hy.2 x hx.1,
+  have : y ≤ x, from hx.2 y hy.1,
+  linarith,
+end
+\end{leancode}
 
 \section{Tácticas left y right}
+La táctica \tactica{left / right}{left} se usa cuando se quiere quedar con la
+primera parte del objetivo a demostrar que está formada por dos constructores.
+De manera totalmente análoga, la táctica \tactica{left / right}{right} se queda
+con la segunda parte del objetivo cuando está formada por dos constructores.
+
+Continuando la formalización de uno de los ejemplos que se ha presentado en la
+explicación de la táctica \tactica{cases}{cases} (en concreto el segundo), se
+puede ver muy bien el uso de las tácticas \tactica{left / right}{left} y
+\tactica{left / right}{right}:
+\begin{leancode}
+example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
+begin
+  intro hyp,
+  have H : a*(1 - b) = 0,
+  { calc a*(1 - b) = a - a*b : by ring
+               ... = 0       : by linarith, },
+  rw mul_eq_zero at H,
+  cases H with Ha Hb,
+  { left,
+    exact Ha, },
+  { right,
+    linarith, },
+end
+\end{leancode}
+
 
 \section{Táctica library search}
 La táctica \tactica{library_search}{library\_search} es una táctica que para
@@ -399,6 +492,27 @@ decir que más elegante.
 
 
 \section{Táctica norm num}
+La táctica \tactica{norm_num}{norm\_num} es capaz de probar de manera directa
+multitud de igualdades y desiguldades.
+
+Por ejemplo, la siguiente igualdad la prueba en un sólo paso:
+
+\begin{leancode}
+example : (2 : ℝ) + 2 = 4 := 
+begin
+  norm_num,
+end
+\end{leancode}
+
+En el ejemplo que se presena ahora, la táctica \tactica{norm_num}{norm\_num} es
+capaz de probar la siguiente desigualdad:
+\begin{leancode}
+example : (73 : ℝ) < 789/2 := 
+begin
+  norm_num,
+end
+\end{leancode}
+
 
 \section{Táctica refine}
 La táctica \tactica{refine}{refine} funciona de manera totalmente análoga a como
