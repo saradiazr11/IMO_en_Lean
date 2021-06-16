@@ -8,6 +8,7 @@
 import data.real.basic
 import data.int.parity
 import algebra.group.pi
+import data.nat.prime
 variables (a b c : ℤ)
 
 example (h₁ : a ∣ b) (h₂ : b ∣ c) : a ∣ c :=
@@ -288,6 +289,11 @@ end
 /-
 TÁCTICA REFINE
 -/
+example (p : ℕ) (h: p.prime) : 1 ∣ p :=
+begin
+  refine is_unit.dvd _,
+  exact is_unit_one,
+end
 
 
 
@@ -303,14 +309,39 @@ end
 
 
 /-
-TÁCTICA SIMP SIMPA
+TÁCTICA SIMP
 -/
-example (a b : ℝ) : (a + b) + a = 2*a + b :=
+example (a b : ℝ) (h : b=0): a + b = a :=
 begin
-  by simp,
+  simp,
+  exact h,
+end
+
+/-
+TÁCTICA SIMPA
+-/
+example (a b : ℝ) (h : b=0): a + b = a :=
+begin
+  simpa,
 end
 
 
 /-
 TÁCTICA SUGGEST
 -/
+
+example (a b : ℕ) : a + b ≤ a + b +1 :=
+begin
+  suggest,
+  sorry,
+end 
+
+example (a b : ℕ) : a + b ≤ a + b +1 :=
+begin
+  exact (a + b).le_succ,
+end 
+
+example (a b : ℕ) : a + b ≤ a + b +1 :=
+begin
+  exact nat.le.intro rfl,
+end 

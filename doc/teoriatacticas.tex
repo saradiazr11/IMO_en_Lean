@@ -8,6 +8,7 @@ para ver cómo actuán las diversas tácticas.
 Muchos de los ejemplos que he usado para la clarificación de las diferentes
 tácticas han sido obtenidos del tutorial que realicé para comenzar a trabajar
 con Lean, en concreto \cite{tutor}.
+\comentario{En la bibliografía he puesto el tutorial pero no sé qué autor poner}
 
 \section{Táctica sorry}
 
@@ -516,11 +517,20 @@ end
 
 \section{Táctica refine}
 La táctica \tactica{refine}{refine} funciona de manera totalmente análoga a como
-lo hace la táctica \tactica{exact}{exact}; no obstante, en esta nueva táctica no
-es necesario decir la hipótesis o resultado que se aplica, es decir, bastaría
-con decir refine \(\_\).
+lo hace la táctica \tactica{exact}{exact}; no obstante, en esta nueva táctica se
+puede escribir \(\_\) como huecos que pueden ser rellenados. Tras el uso de
+esta táctica, se pasará a tener tantos objetivos como huecos se hayan puesto.
 
-Veamos un ejemplo de esto
+Veamos un ejemplo de esto:
+
+\begin{leancode}
+example (p : ℕ) (h: p.prime) : 1 ∣ p :=
+begin
+  refine is_unit.dvd _,
+  exact is_unit_one,
+end
+\end{leancode}
+
 
 \section{Táctica ring}
 La táctica \tactica{ring}{ring} en Lean es una táctica muy útil puesto que es
@@ -538,8 +548,93 @@ begin
 end
 \end{leancode}
 
-\section{Tácticas simp y simpa}
+\section{Táctica simp}
+La táctica \tactica{simp}{simp} lo que hace es simplificar el objetivo a probar
+haciendo uso de lemas ya definidos en Lean. En el ejemplo planteado se ve muy
+claro:
+\begin{leancode}
+example (a b : ℝ) (h: b=0): a + b = a :=
+begin
+  simp,
+  exact h,
+end
+\end{leancode}
+
+Mediante el uso de la táctica \tactica{simp}{simp} se ha simplificado el
+objetivo a demostrar mediante el uso del lema auxiliar de cancelación. De esta
+manera, el objetivo a demostrar pasa a ser que el número \(b\) es cero.
+
+
+
+\section{Táctica simpa}
+La táctica \tactica{simpa}{simpa} es muy parecida a la táctica \tactica{simp}
+{simp}; no obstante, la que se introduce ahora se trata de una táctica de
+conclusión de los resultados.
+
+El mismo ejemplo que se ha propuesto para la táctica \tactica{simp}{simp} es
+válido para la táctica \tactica{simpa}{simpa} y es más, con esta última se
+concluye el resultado de manera directa. Veámoslo:
+
+\begin{leancode}
+example (a b : ℝ) (h : b=0): a + b = a :=
+begin
+  simpa,
+end
+\end{leancode}
+
 
 
 \section{Táctica suggest}
+En general, cuando la táctica \tactica{library_search}{library\_search} no es
+capaz de solucionarlos el problema y no sabemos cómo continuar con la
+formalización en Lean del resultado, se suele usar la táctica \tactica{suggest}
+{suggest}. Cuando se usa esta táctica en la formalización de un resultado, se
+nos proporciona una lista de posibles vías de continuar la formalización. En
+general, la mayoría de las posibilidades propuestas hacen uso de la táctica
+\tactica{refine}{refine} ya descrita.
 
+Veámos el uso de esta táctica con un ejemplo:
+
+\begin{leancode}
+example (a b : ℝ) : a + b ≤ a + b +1 :=
+begin
+  suggest,
+  sorry,
+end 
+\end{leancode}
+
+Destacar que la táctica \tactica{suggest}{suggest} no es capaz de probar el
+resultado, de ahí que se añada la táctica \tactica{sorry}{sorry}. Algunas de
+las propuestas que se nos hace en el ejemplo propuesto son las siguientes:
+
+\begin{leancode}
+Try this: exact (a + b).le_succ
+Try this: exact nat.le.intro rfl
+Try this: refine eq.ge _
+Try this: refine eq.le _
+Try this: refine ge.le _
+Try this: refine not_lt.mp _
+Try this: refine le_of_eq _
+Try this: refine ge_of_eq _
+Try this: refine le_of_lt _
+Try this: refine ge_iff_le.mp _
+Try this: refine ge_iff_le.mpr _
+Try this: refine le_add_left _
+Try this: refine sup_eq_left.mp _
+...
+\end{leancode}
+
+Es más, usando cualquiera de las dos primeras propuestas se tendría demostrado
+el problema. Aquí planteamos las dos:
+
+\begin{leancode}
+example (a b : ℕ) : a + b ≤ a + b +1 :=
+begin
+  exact (a + b).le_succ,
+end 
+
+example (a b : ℕ) : a + b ≤ a + b +1 :=
+begin
+  exact nat.le.intro rfl,
+end 
+\end{leancode}
