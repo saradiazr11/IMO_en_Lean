@@ -7,13 +7,47 @@ probar diversos resultados matemáticos; es por eso que, previo al
 estudio detallado de la estructura de una prueba y cómo realizarla,
 comenzaremos introduciendo los términos de Lean y mathlib.
 
-\section{Introducción a Lean y mathlib}
+\section{Pilares fundamentales: Lean, IMO y mathlib}
+Lean se trata de un demostrador interactivo de problemas mediante el cual se
+pueden formalizar multitud de resultados. Existen otros demostradores
+interactivos muy conocidos como es Isabelle/HOL que ha sido usado en alguna
+asignatura del Máster en Lógica, Computación e Inteligencia Artificial de la
+Universidad de Sevilla.
+
+El demostrador interactivo Lean es relativamente joven pues fue desarrollado
+en 2013 por Microsoft Research. Asimismo, existen diversas versiones de Lean,
+en concreto en el trabajo ha sido utilizada la versión 3.28.00.
+
+En este trabajo se ha usado Lean con el objetivo de formalizar diferentes
+problemas correspondientes a las Olimpiadas Internacionales de Matemáticas
+(IMO).
+
+Las IMO consisten en una competición de matemáticas que se realiza anualmente
+para estudiantes preuniversitarios. La competición consta de dos cuestionarios
+con tres problemas cada uno, formando un total de seis. Los problemas que aquí
+se proponen suelen ser de diversas áreas de las matemáticas: álgebra, análisis,
+geometría, teoría de números...
+
+Para la formalización de los diversos problemas que se han estudiado en el
+trabajo, se ha hecho uso de la librería matemática de Lean conocida como
+mathlib.
+
+La librería mathlib está formada por una gran cantidad de resultados (lemas,
+teoremas, ...) y definiciones matemáticas ya formalizadas de todas las
+diferentes áreas de esta ciencia.
+
+El trabajo que se presenta ha sido desarrollado con la siguiente versión de
+mathlib: 5511275718b4aa55fc66f969cbdf2065160b00bb. No obstante, durante la
+realización de este trabajo se han producido multitud de problemas con las
+versiones de mathlib. Estos ptoblemas son bastante comunes cuando se trabaja
+con sistemas que se encuentran en continuo desarrollo, como es el caso de la
+librería mathlib.
 
 \section{Formalización de las demostraciones con Lean}
 
 En esta sección del trabajo se va a explicar de manera detallada la
 estructura de las pruebas que en el resto del trabajo se plantean y el
-mecanismo mediante el cual se han llebado a cabo. Con el objetivo de que
+mecanismo mediante el cual se han llevado a cabo. Con el objetivo de que
 sea más fácil e intuitivo de seguir la explicación, se va a realizar con
 el desarrollo de un ejemplo muy visual que ya propuso Scott Morrison en
 el vídeo \cite{video} en el Congreso
@@ -22,6 +56,9 @@ el vídeo \cite{video} en el Congreso
 
      \comentario{He añadido a la bibliografía la cita del vídeo según las
        indicaciones que me dió, pero no estoy del todo segura.}
+
+     \comentario{En la última corrección usted me añadió la cita del congreso,
+     aunque no entiendo muy bien ahí como está introducida.}
      
 Dividiremos en tres partes principales el procedimiento mediante el
 cual se llegará a la formalización final. La primera parte se
