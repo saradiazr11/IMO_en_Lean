@@ -7,8 +7,6 @@ open nat
 -- Para que no use la notación con puntos
 set_option pp.structure_projections false
 
-
-
 theorem infinitos_numeros_primos:
   ∀ n, ∃ p ≥ n, prime p:=
 begin
@@ -56,4 +54,3 @@ begin
   have : 0 < factorial n := factorial_pos n,
   linarith,
 end
-

@@ -1,8 +1,8 @@
 \chapter{Elementos de matemáticas en Lean}
 
-En este capítulo se presentan algunas demostraciones de las que se
-estudian en diversas asignaturas del Grado de Matemáticas formalizadas
-en Lean.
+En este capítulo, para continuar con la introducción al uso de Lean, se
+presentan algunas demostraciones de las que se estudian en diversas
+asignaturas del Grado de Matemáticas formalizadas en Lean.
 
 \section{Cálculo infinitesimal}
 
@@ -16,7 +16,6 @@ de \cite{ML} y \cite{LP}.
 Estudiaremos un total de seis resultados. Los tres primeros son relativos
 a la convergencia de sucesiones, mientras que los tres últimos son sobre
 la paridad de las funciones.
-
 
 \subsection{Unicidad del límite}
 
@@ -129,9 +128,11 @@ begin
 end
 \end{leancode}
 
+\comentario{Añadir librerías, lemas y tácticas utilizadas.}
+
 \subsection{Las sucesiones convergentes son sucesiones de Cauchy}
 
-Previo al enunciado y demostración del Teorema, veamos en qué consiste
+Previo al enunciado y demostración del teorema, veamos en qué consiste
 una sucesión de Cauchy.
 
 \begin{definicion}
@@ -212,6 +213,8 @@ begin
 end
 \end{leancode}
 
+\comentario{Añadir librerías, lemas y tácticas utilizadas.}
+
 \subsection{Suma de sucesiones convergentes}
 
 \begin{teorema}
@@ -285,6 +288,8 @@ begin
                                                 hN2 n (by linarith)],
 end
 \end{leancode}
+
+\comentario{Añadir librerías, lemas y tácticas utilizadas.}
 
 \subsection{Paridad de la suma de funciones}
 
@@ -362,6 +367,7 @@ begin
 end
 \end{leancode}
 
+\comentario{Añadir librerías, lemas y tácticas utilizadas.}
 
 \subsection{Paridad de la composición de funciones}
 
@@ -404,6 +410,7 @@ begin
 end
 \end{leancode}
 
+\comentario{Añadir librerías, lemas y tácticas utilizadas.}
 
 \subsection{Imparidad de la composición de funciones impares}
 
@@ -451,12 +458,14 @@ begin
 end
 \end{leancode}
 
-\section{Álgebra Básica}
+\comentario{Añadir librerías, lemas y tácticas utilizadas.}
+
+\section{Álgebra básica}
 
 En esta segunda sección se estudiarán diversos resultados
-correspondientes a la asignatura de formación básica: Álgebra Básica.
-Al igual que Cálculo Infinitesimal, también se corresponde al primer año
-del grado en Matemáticas.
+correspondientes a la asignatura de ``Álgebra Básica''.  Al igual que
+Cálculo Infinitesimal, también es del primer año del grado en
+Matemáticas.
 
 Se van a estudiar dos resultados para los cuales es necesario introducir
 previamente el siguiente concepto:
@@ -521,6 +530,8 @@ exact hk2,
 end
 \end{leancode}
 
+\comentario{Añadir librerías, lemas y tácticas utilizadas.}
+
 \subsection{Aditividad de la división}
 
 \begin{teorema}
@@ -568,7 +579,7 @@ begin
 end
 \end{leancode}
 
-
+\comentario{Añadir librerías, lemas y tácticas utilizadas.}
 
 %%% Local Variables:
 %%% mode: latex
