@@ -1,34 +1,39 @@
 \chapter{Prueba de teoremas con Lean}
 
 En este primer capítulo del trabajo se hace una introducción al uso de
-Lean y mathlib de manera que sea posible la correcta comprensión del
-resto del trabajo. Estas herramientas han sido usadas con el objetivo de
-probar diversos resultados matemáticos; es por eso que, previo al
-estudio detallado de la estructura de una prueba y cómo realizarla,
-comenzaremos introduciendo los términos de Lean y mathlib.
+\href{https://leanprover-community.github.io/}{Lean}\footnote{\url{https://leanprover-community.github.io/}] y
+\href{https://leanprover-community.github.io/mathlib_docs/}{mathlib}\footnote{\url{https://leanprover-community.github.io/mathlib_docs/}}
+de manera que sea posible la correcta comprensión del resto del
+trabajo. Estas herramientas han sido usadas con el objetivo de probar
+diversos resultados matemáticos; es por eso que, previo al estudio
+detallado de la estructura de una prueba y cómo realizarla, comenzaremos
+introduciendo los términos de Lean y mathlib.
 
 \section{Pilares fundamentales: Lean, IMO y mathlib}
-Lean se trata de un demostrador interactivo de problemas mediante el cual se
-pueden formalizar multitud de resultados. Existen otros demostradores
-interactivos muy conocidos como es Isabelle/HOL que ha sido usado en alguna
-asignatura del Máster en Lógica, Computación e Inteligencia Artificial de la
+
+Lean es un demostrador interactivo mediante el cual se pueden formalizar
+multitud de resultados. Existen otros demostradores interactivos muy
+conocidos como es
+\href{https://www.cl.cam.ac.uk/research/hvg/Isabelle/index.html}{Isabelle/HOL}\footnote{https://www.cl.cam.ac.uk/research/hvg/Isabelle}}
+que ha sido usado en alguna asignatura
+del Máster en Lógica, Computación e Inteligencia Artificial de la
 Universidad de Sevilla.
 
-El demostrador interactivo Lean es relativamente joven pues fue desarrollado
-en 2013 por Microsoft Research. Asimismo, existen diversas versiones de Lean,
-en concreto en el trabajo ha sido utilizada la versión 3.28.00.
+El demostrador interactivo Lean es relativamente joven pues fue
+desarrollado en 2013 por Leonardo de Moura en Microsoft
+Research. Asimismo, existen diversas versiones de Lean, en concreto en
+el trabajo ha sido utilizada la versión 3.28.00.
 
-En este trabajo se ha usado Lean con el objetivo de formalizar diferentes
-problemas correspondientes a las Olimpiadas Internacionales de Matemáticas
-(IMO).
+En este trabajo se ha usado Lean con el objetivo de formalizar problemas
+correspondientes a las Olimpiadas Internacionales de Matemáticas (IMO).
 
-Las IMO consisten en una competición de matemáticas que se realiza anualmente
-para estudiantes preuniversitarios. La competición consta de dos cuestionarios
-con tres problemas cada uno, formando un total de seis. Los problemas que aquí
-se proponen suelen ser de diversas áreas de las matemáticas: álgebra, análisis,
-geometría, teoría de números...
+Las IMO consisten en una competición de matemáticas que se realiza
+anualmente para estudiantes preuniversitarios. La competición consta de
+dos cuestionarios con tres problemas cada uno, formando un total de
+seis. Los problemas que se proponen suelen ser de diversas áreas de las
+matemáticas: álgebra, análisis, geometría, teoría de números, \dots.
 
-Para la formalización de los diversos problemas que se han estudiado en el
+Para la formalización de los problemas que se han estudiado en el
 trabajo, se ha hecho uso de la librería matemática de Lean conocida como
 mathlib.
 
@@ -49,17 +54,11 @@ En esta sección del trabajo se va a explicar de manera detallada la
 estructura de las pruebas que en el resto del trabajo se plantean y el
 mecanismo mediante el cual se han llevado a cabo. Con el objetivo de que
 sea más fácil e intuitivo de seguir la explicación, se va a realizar con
-el desarrollo de un ejemplo muy visual que ya propuso Scott Morrison en
+el desarrollo de un ejemplo muy visual que propuesto Scott Morrison en
 el vídeo \cite{video} en el Congreso
 \href{https://leanprover-community.github.io/lftcm2020/}
      {Lean for the Curious Mathematician 2020}\footnote{\url{https://leanprover-community.github.io/lftcm2020/}}
 
-     \comentario{He añadido a la bibliografía la cita del vídeo según las
-       indicaciones que me dió, pero no estoy del todo segura.}
-
-     \comentario{En la última corrección usted me añadió la cita del congreso,
-     aunque no entiendo muy bien ahí como está introducida.}
-     
 Dividiremos en tres partes principales el procedimiento mediante el
 cual se llegará a la formalización final. La primera parte se
 corresponderá con el planteamiento inicial del problema. La segunda
@@ -82,9 +81,9 @@ desea formalizar en Lean. En nuestro caso es el siguiente:
 \end{teorema}
 
 Para llevar a cabo la formalización en Lean de este resultado, es
-indispensable importar la librería que se necesitan. En estas
-librerías hay diferentes conceptos, definiciones o lemas auxiliares que
-ya son conocidos para Lean y que resultan útiles para la prueba.
+indispensable importar la librería que se necesitan. En estas librerías
+hay diferentes conceptos, definiciones o lemas auxiliares que ya son
+conocidos para Lean y que resultan útiles para la prueba.
 
 En el caso del problema que se va a planear, inicialmente sólo es necesario
 una teoría y es
@@ -98,7 +97,7 @@ import data.nat.prime
 \begin{nota}
   Destacar que en el proceso de realización de una prueba no siempre se sabe
   desde un principio cuáles son las librerías necesarias que habrá que importar.
-  Es por eso que esto se puede hacer en cualquiero momento de la formalización
+  Es por eso que esto se puede hacer en cualquiero momento de la formalización,
   aunque es necesario escribirlo al comienzo del fichero.
 \end{nota}
 
@@ -147,12 +146,12 @@ def prime (p : ℕ) := 2 ≤ p ∧ ∀ m ∣ p, m = 1 ∨ m = p
 
 Por otro lado, se tiene que para el planteamiento de todas las
 formalizaciones que se van a presentar en este trabajo se han usado la
-estructura de demostración \texttt{begin}-\texttt{end} como se puede
+estructura de demostración \texttt{begin}--\texttt{end} como se puede
 observar.
 
 Finalmente, para acabar con el planteamiento inicial del problema,
 mencionar el uso de la táctica \tactica{sorry}{sorry}. Esta táctica es
-una herramienta mágica que prueba cualquier resultado. Más adelante
+una herramienta mágica que acepta cualquier resultado. Más adelante
 iremos viendo la utilidad de esta táctica en el proceso de formalización
 de cualquier resultado.  Asimismo, destacar que cuando en algún teorema
 o resultado se usa la táctica \tactica{sorry}{sorry}, Lean nos da un
@@ -179,7 +178,7 @@ formalización en Lean es el siguiente:
 \end{leancode}
 
 Ahora bien, como la formalización que queremos plantear comienza con un
-para todo número natural \(n\), lo primero que hacemos es fijar dicho
+para todo número natural \(n\), lo primero que hacemos es introducir un
 número natural arbitrario. En Lean esto lo formalizamos como sigue:
 \begin{leancode}
 theorem infinitos_numeros_primos : ∀ n, ∃ p ≥ n, prime p:=
@@ -220,8 +219,8 @@ end
 
 Para introducir los dos números que hemos definido en (\ref{numm}) y
 (\ref{nump}) se ha hecho uso de la táctica \tactica{let}{let} que
-matemáticamente es equivalente a consideremos el número \(\_\) definido de la
-siguiente manera.
+matemáticamente es equivalente a consideremos el número \(\_\) definido
+de la siguiente manera.
 
 Asimismo, a parte del uso de la táctica \tactica{let}{let}, se han
 utilizado también dos funciones: la función factorial de un número y la
@@ -230,15 +229,16 @@ número. Estas dos funciones están formalizadas en Lean de la siguiente
 manera:
 \begin{leancode}
 def factorial : nat → nat
-| 0        := 1
-| (succ n) := succ n * factorial n
-\end{leancode}
-\begin{leancode}
+  | 0        := 1
+  | (succ n) := succ n * factorial n
+
 def min_fac : ℕ → ℕ
   | 0 := 2
   | 1 := 1
   | (n+2) := if 2 ∣ n then 2 else min_fac_aux (n + 2) 3
 \end{leancode}
+
+\comentario{Se usa, sin comentar, min\_fac\_aux.}
 
 Destacar que para el uso de estas funciones en Lean me ha sido necesario
 la importación de una nueva teoría, en este caso correspondiente a los
@@ -255,7 +255,7 @@ p: ℕ := m.min_fac
 \end{leancode}
 
 En el estado anterior se observa que, por defecto, Lean usa la notación
-de puntos escribiendo, peso se puede cambiar la opción añadiendo
+de puntos, pero se puede cambiar la opción añadiendo
 \begin{leancode}
 set_option pp.structure_projections false
 \end{leancode}
@@ -298,8 +298,8 @@ p : ℕ := min_fac m
 
 Se puede observar que el objetivo a demostrar se ha convertido en una
 conjunción: por un lado hay que demostrar que \(p\) es mayor o igual que
-\(n\) y por otro lado que el número \(p\) que hemos definido es primo. Ahora
-nos interesa separar el problema a demostrar en dos sub-problemas, esto es
+\(n\) y, por otro lado, que el número \(p\) que hemos definido es primo. Ahora
+nos interesa separar el problema a demostrar en dos subproblemas, esto es
 muy sencillo con el uso de la táctica \tactica{split}{split}, la cual nos
 divide la conjunción. De esta manera la formalización seguiría como:
 \begin{leancode}
@@ -318,11 +318,11 @@ end
 \end{leancode}
 
 Se puede observar que en la formalización se ha pasado de tener un
-\tactica{sorry}{sorry} a tener dos; esto se tiene como consecuencia de haber
-dividido el problema en dos partes. Además, la manera más elegante y cómoda
-de escribirlo es que como se hecho, diferenciando la prueba de cada problema
-entre llaves. De esta manera, se tiene que, tras la aplicación de la táctica
-\tactica{split}{split}, el estado pasa a ser:
+\tactica{sorry}{sorry} a tener dos; esto se tiene como consecuencia de
+haber dividido el problema en dos partes. Además, la manera más elegante
+y cómoda de escribirlo es que como se hecho, diferenciando la prueba de
+cada problema entre llaves. De esta manera, se tiene que, tras la
+aplicación de la táctica \tactica{split}{split}, el estado pasa a ser:
 \begin{leancode}
 n : ℕ
 m : ℕ := factorial n + 1
@@ -372,7 +372,7 @@ Para introducir la hipótesis (\ref{hpintro}) se ha hecho uso de la táctica
 \tactica{have}{have}. En este resultado también hemos añadido la \tactica{sorry}
 {sorry} porque la prueba se realizará luego. En el estado del problema el único
 cambio que ha habido respecto al último presentado es que se ha incluido la
-hipótesis (\ref{hpintro}) en los dos sub-problemas:
+hipótesis (\ref{hpintro}) en los dos subproblemas:
 \begin{leancode}
 n : ℕ
 m : ℕ := factorial n + 1
@@ -392,7 +392,7 @@ Recordemos que el número \(p\) se ha definido como el mínimo factor primo de
 es primo será directa y la dejaremos para el final.
 
 Nos centraremos en la prueba de que el número \(p\) es mayor o igual que
-\(n\).  En general, muchas de las pruebas de desigualdades en
+\(n\). En general, muchas de las pruebas de desigualdades en
 matemáticas se hacen por reducción al absurdo. Es decir, supongo que no
 es cierto dicha desigualdad y llego a una contradicción en algún
 momento. Procederemos así para la prueba que a nosotros nos interesa; en
@@ -475,7 +475,7 @@ A través de las hipótesis añadidas demostrar que se llega a una
 contradicción no es nada complicado.
 
 Entonces, se ha llegado a lo que es la estructura final de la prueba. Se
-puede observar que tenemos varios resultados que tenemos demostrados con
+puede observar que tenemos varios resultados que tenemos pendientes con
 la táctica \tactica{sorry}{sorry}, pero los resultados que tenemos son
 muy sencillos de probar y la siguiente parte de la sección veremos cómo
 hacerlo con una herramienta muy útil de Lean.
@@ -558,7 +558,6 @@ En particular, como el número \(m\) está definido como el factorial de la suma
 de \(n\) y \(1\) y \(p\) es el mínimo factor primo de \(m\), se tiene de manera
 inmediata que \(p\) divide al factorial de \(n+1\).
 
-
 En segundo lugar, demostrar que (\ref{h3intro}) es bastante inmediato a partir
 de las hipótesis (\ref{h1intro}) y (\ref{h2intro}). Por la hipótesis
 (\ref{h1intro}) se tiene que \(p\) divide a la suma del factorial de \(n\) y
@@ -586,8 +585,8 @@ hipótesis (\ref{h3intro}) que nos dice que el número \(p\) divide a
 \(1\) y sabiendo que \(p\) es un número primo que se tiene por
 hipótesis; la contradicción es inmediate por la propia definición de ser
 primo. Para llegar a dicha contradicción se hace uso de que un número
-primo no puede dividir al número \(1\), formalmente este teorema se enunciaría
-como sigue:
+primo no puede dividir al número \(1\), formalmente este teorema se
+enunciaría como sigue:
 \begin{teorema}
   Sea \(p\) un número natural verificando que es un número primo. Entonces
   se tiene que \(p\) no divide a \(1\).
@@ -603,7 +602,7 @@ falta por demostrar.  Para ello, Lean nos propone usar la táctica
 \tactica{exact}{exact}.
 
 A continuación, se van a demostrar las dos hipótesis que nos faltan para
-poder concluir la demostración, es decir, (\ref{h2intro}) y (\ref{hpintro}).
+poder concluir la demostración; es decir, (\ref{h2intro}) y (\ref{hpintro}).
 A priori, estos dos resultados no son tan triviales como los anteriores pero
 veremos cómo resolverlos. Una forma muy útil y cómoda de trabajar cuando la
 táctica \tactica{library_search}{library\_search} no ha funcionado es escribirlo
@@ -622,7 +621,7 @@ dos lemas diferentes:
     \begin{align}
       &\text{primo}(p),\label{hpintro}\tag{hp}\\
       &¬p ≥ n,         \tag{h}\label{hintro}\\
-      &p | (n!+1).       \tag{h1}\label{h11intro}
+      &p | (n!+1).     \tag{h1}\label{h11intro}
     \end{align}
     Entonces se tiene que \(p\) divide al factorial de \(n\).
   \end{lema}
@@ -643,19 +642,20 @@ lemma h2
 end
   \end{leancode}
 
-  Se puede observar que hemos vuelto a usar la estructura \texttt{begin}-
-  \texttt{end} que usamos para el teorema inicialmente. Esto se debe a que
-  cuando nos encontramos ante resultados que de primeras no somos capaces de
-  demostrar en una línea es más sencillo comenzar la formalización de esta
-  manera.
+  Se puede observar que hemos vuelto a usar la estructura
+  \texttt{begin}- \texttt{end} que usamos para el teorema
+  inicialmente. Esto se debe a que cuando nos encontramos ante
+  resultados que de primeras no somos capaces de demostrar en una línea
+  es más sencillo comenzar la formalización de esta manera.
 
-  Ya hemos comprobado que la táctica \tactica{library_search}{library\_search}
-  no es capaz de solucionarnos este lema; sin embargo, existe otra táctica que
-  nos da sugerencias sobre las posibles soluciones. Esta táctica es
-  \tactica{suggest}{suggest}. En general, cuando se usa esta táctica, Lean te
-  propone multitud de soluciones es por eso que debemos valorarlas y probar a
-  elegir una. En el caso que a nosotros nos concierne la primera propuesta nos
-  sirve de gran utilidad. Veámosla:
+  Ya hemos comprobado que la táctica
+  \tactica{library_search}{library\_search} no es capaz de solucionarnos
+  este lema; sin embargo, existe otra táctica que nos da sugerencias
+  sobre las posibles soluciones. Esta táctica es
+  \tactica{suggest}{suggest}. En general, cuando se usa esta táctica,
+  Lean propone multitud de soluciones. Es por eso que debemos
+  valorarlas y probar a elegir una. En el caso que a nosotros nos
+  concierne la primera propuesta nos sirve de gran utilidad. Veámosla:
 \begin{leancode}
 lemma h2
   (n : ℕ)
@@ -702,9 +702,10 @@ end
   ⊢ p ≤ n
   \end{leancode}
 
-  Una vez se ha conseguido a dar un paso en la demostración, se propone de nuevo
-  el uso de la táctica \tactica{library_search}{library\_search} y es capaz de
-  concluir la prueba de esta hipótesis:
+  Una vez se ha conseguido a dar un paso en la demostración, se propone
+  de nuevo el uso de la táctica
+  \tactica{library_search}{library\_search} y es capaz de concluir la
+  prueba de esta hipótesis:
   \begin{leancode}
 lemma h2
   (n : ℕ)
@@ -739,16 +740,16 @@ end
 
   Simplemente ha hecho uso del lema que se presenta a continuación:
   \begin{lema}
-    Sean \(a\) y \(b\) dos números cualesquiera tales que no se verifica que
-    \(a\) sea mayor o igual que \(b\). Entonces se tiene que \(a\) es menor o
+    Sean \(a\) y \(b\) dos números cualesquiera tales que \(a\) no es
+    mayor o igual que \(b\). Entonces se tiene que \(a\) es menor o
     igual que \(b\).
   \end{lema}
 
   Cuya formalización en Lean es:
   \begin{leancode}
-  lemma le_of_not_ge {a b : α} : ¬ a ≥ b → a ≤ b 
+  lemma le_of_not_ge {a b : α} : ¬ a ≥ b → a ≤ b
   \end{leancode}
-  
+
 \item \textbf{Demostración y formalización del hecho hp}
 
   A continuación, se demostrará el hecho (\ref{hpintro}) bajo las hipótesis
@@ -759,7 +760,7 @@ end
     \begin{align}
       &m=n!+1\tag{h1p}\label{h1pintro}\\
       &p=\text{mínimo factor primo de }m\text{ que sea distinto de }1.\tag{h2p}
-        \label{h2pintro} 
+        \label{h2pintro}
     \end{align}
     Entonces se tiene que el número \(p\) así definido es primo.
   \end{lema}
@@ -777,9 +778,9 @@ end
   \end{leancode}
 
   A continuación, procedamos a la demostración de ese resultado:
-  
+
   \begin{demostracion}
-    
+
     En primer lugar, para que realmente el lema que hemos enunciado se
     corresponda con el que se tiene en el teorema principal hay que reescribir
     \(p\) como nos dice la hipótesis (\ref{h2pintro}). En Lean esto se haría
@@ -809,7 +810,6 @@ h2p: p = min_fac m
     seguimos sin tener una propuesta de solución. Es por eso que intentamos con
     la táctica \tactica{suggest}{suggest} y se obtiene varias prupuestas, de la
     que se ha elegido la siguiente:
-
     \begin{leancode}
 lemma hp
   (n m p : ℕ)
@@ -834,7 +834,7 @@ end
 
     La formalización en Lean de este teorema sería:
     \begin{leancode}
-theorem min_fac_prime {n : ℕ} (n1 : n ≠ 1) : prime (min_fac n) 
+theorem min_fac_prime {n : ℕ} (n1 : n ≠ 1) : prime (min_fac n)
     \end{leancode}
 
     Tras la aplicación de este teorema el objetivo a demostrar pasa a ser el
@@ -850,7 +850,7 @@ h2p: p = min_fac m
     es bastante sencillo. En primer lugar, se va a introducir la hipótesis de
     que el factorial del número \(n\) es mayor que cero, esto es:
     \begin{equation}
-      0<n!
+      0 < n!
     \end{equation}
 
     Este resultado se tiene de manera inmediata con el teorema siguiente:
@@ -995,6 +995,3 @@ begin
   { exact hp, },
 end
 \end{leancode}
-
-
-
