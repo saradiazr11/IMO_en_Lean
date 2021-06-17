@@ -1,7 +1,7 @@
 \chapter{Prueba de teoremas con Lean}
 
 En este primer capítulo del trabajo se hace una introducción al uso de
-\href{https://leanprover-community.github.io/}{Lean}\footnote{\url{https://leanprover-community.github.io/}] y
+\href{https://leanprover-community.github.io/}{Lean}\footnote{\url{https://leanprover-community.github.io/}} y
 \href{https://leanprover-community.github.io/mathlib_docs/}{mathlib}\footnote{\url{https://leanprover-community.github.io/mathlib_docs/}}
 de manera que sea posible la correcta comprensión del resto del
 trabajo. Estas herramientas han sido usadas con el objetivo de probar
@@ -14,7 +14,7 @@ introduciendo los términos de Lean y mathlib.
 Lean es un demostrador interactivo mediante el cual se pueden formalizar
 multitud de resultados. Existen otros demostradores interactivos muy
 conocidos como es
-\href{https://www.cl.cam.ac.uk/research/hvg/Isabelle/index.html}{Isabelle/HOL}\footnote{https://www.cl.cam.ac.uk/research/hvg/Isabelle}}
+\href{https://www.cl.cam.ac.uk/research/hvg/Isabelle/index.html}{Isabelle/HOL}\footnote{\url{https://www.cl.cam.ac.uk/research/hvg/Isabelle}}
 que ha sido usado en alguna asignatura
 del Máster en Lógica, Computación e Inteligencia Artificial de la
 Universidad de Sevilla.
@@ -54,7 +54,7 @@ En esta sección del trabajo se va a explicar de manera detallada la
 estructura de las pruebas que en el resto del trabajo se plantean y el
 mecanismo mediante el cual se han llevado a cabo. Con el objetivo de que
 sea más fácil e intuitivo de seguir la explicación, se va a realizar con
-el desarrollo de un ejemplo muy visual que propuesto Scott Morrison en
+el desarrollo de un ejemplo muy visual que propuso Scott Morrison en
 el vídeo \cite{video} en el Congreso
 \href{https://leanprover-community.github.io/lftcm2020/}
      {Lean for the Curious Mathematician 2020}\footnote{\url{https://leanprover-community.github.io/lftcm2020/}}
@@ -67,7 +67,7 @@ finalización o conclusión de la misma.
 
 Asimismo, destacar que tanto en el desarrollo de esta sección como en el
 desarrollo de todo el trabajo se ha hecho uso de multitud de tácticas, las
-cuales han sido detalladas en el Apéndice \ref{apentacti}
+cuales han sido detalladas en el Apéndice \ref{apentacti}.
 
 \subsection{Planteamiento del problema}
 
@@ -223,8 +223,8 @@ matemáticamente es equivalente a consideremos el número \(\_\) definido
 de la siguiente manera.
 
 Asimismo, a parte del uso de la táctica \tactica{let}{let}, se han
-utilizado también dos funciones: la función factorial de un número y la
-función que nos devuelve el mínimo factor primo distinto de uno de un
+utilizado también dos funciones: la función \textbf{factorial} de un número y la
+función que nos devuelve el \textbf{mínimo factor primo distinto de uno} de un
 número. Estas dos funciones están formalizadas en Lean de la siguiente
 manera:
 \begin{leancode}
@@ -238,22 +238,55 @@ def min_fac : ℕ → ℕ
   | (n+2) := if 2 ∣ n then 2 else min_fac_aux (n + 2) 3
 \end{leancode}
 
-\comentario{Se usa, sin comentar, min\_fac\_aux.}
-
 Destacar que para el uso de estas funciones en Lean me ha sido necesario
 la importación de una nueva teoría, en este caso correspondiente a los
 factoriales,
 \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/nat/factorial.lean}{data.nat.factorial}.
 
-Al haber introducido la definición de los números \(m\) y \(p\) en Lean,
-el estado actual pasa a ser el siguiente:
+Además, se puede observar que al definir la función mínimo factor primo de un
+número natural se ha hecho uso de una función auxiliar llamada
+\textbf{min\_fac\_aux} y que se define de la siguiente manera:
+
+\begin{definicion}
+  Sea \(n\) y \(k\) números naturales. Definimos la función
+  \textbf{min\_fac\_aux} con la siguiente casuística:
+  \begin{itemize}
+  \item  Si se verifica que \(n\) es menor que el producto de \(k\) por sí
+    mismo; entonces la función \textbf{min\_fac\_aux} devuelve el propio
+    número \(n\).
+
+  \item En el caso de que \(k\) divida a \(n\); entonces
+    \textbf{min\_fac\_aux} devuelve el número \(k\).
+
+  \item En cualquier otro caso, la función \textbf{min\_fac\_aux} aplicada
+    sobre los números \(n\) y \(k\) es igual a aplicar esta misma función
+    sobre los números \(n\) y \(k+2\).
+  \end{itemize}
+\end{definicion}
+
+En Lean, la formalización de esta definición es:
+
+\begin{leancode}
+def min_fac_aux (n : ℕ) : ℕ → ℕ | k :=
+  if h : n < k * k then n else
+  if k ∣ n then k else
+  have _, from min_fac_lemma n k h,
+  min_fac_aux (k + 2)
+  using_well_founded {rel_tac :=
+    λ _ _, `[exact ⟨_, measure_wf (λ k, sqrt n + 2 - k)⟩]}
+\end{leancode}
+
+Tras todo lo detallado, se tiene que al haber introducido la definición de los
+números \(m\) y \(p\) anteoriormente descritos en Lean; el estado actual pasa a
+ser el siguiente:
 \begin{leancode}
 n: ℕ
 m: ℕ := n.factorial + 1
 p: ℕ := m.min_fac
 ⊢ ∃ (p : ℕ) (H : p ≥ n), prime p
 \end{leancode}
-
+\comentario{He modificado las últimas líneas tras la inclusión de la definición.
+A ver si le parece bien}
 En el estado anterior se observa que, por defecto, Lean usa la notación
 de puntos, pero se puede cambiar la opción añadiendo
 \begin{leancode}
