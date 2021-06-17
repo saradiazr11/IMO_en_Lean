@@ -147,6 +147,7 @@ Además,se han usado las tácticas
 \tactica{by_contradiction}{by\_contradiction},
 \tactica{push_neg}{push\_neg},
 \tactica{specialize}{specialize},
+\tactica{calc}{calc},
 \tactica{intro / intros}{intro},
 \tactica{intro / intros}{intros},
 \tactica{cases}{cases} y
@@ -235,7 +236,25 @@ begin
 end
 \end{leancode}
 
-\comentario{Añadir librerías, lemas y tácticas utilizadas.}
+Para la formalización de este resultado se han usado los dos siguientes lemas
+auxiliares:
+
+\begin{itemize}
+\item \mint{lean}|abs_add (a b : α) : abs (a + b) ≤ abs a + abs b|
+  \indLema{abs\_add}
+\item \mint{lean}|abs_sub (a b : α) : abs (a - b) = abs (b - a)|
+  \indLema{abs\_sub}
+\end{itemize}
+Además,se han usado las tácticas
+\tactica{rw /rewrite}{rw}.
+\tactica{use}{use},
+\tactica{apply}{apply},
+\tactica{ring}{ring},
+\tactica{intro / intros}{intros},
+\tactica{cases}{cases} y
+\tactica{linarith}{linarith}.
+
+\comentario{Añadir librerías.}
 
 \subsection{Suma de sucesiones convergentes}
 
@@ -311,7 +330,26 @@ begin
 end
 \end{leancode}
 
-\comentario{Añadir librerías, lemas y tácticas utilizadas.}
+En este caso, para la formalización del resultado sólo se ha usado el siguiente
+lema auxiliar:
+
+\begin{itemize}
+\item \mint{lean}|abs_add (a b : α) : abs (a + b) ≤ abs a + abs b|
+  \indLema{abs\_add}
+\end{itemize}
+
+Además del lema auxiliar, se han usado las tácticas
+\tactica{rw /rewrite}{rw}.
+\tactica{use}{use},
+\tactica{let}{let},
+\tactica{apply}{apply},
+\tactica{ring}{ring},
+\tactica{congr'}{congr'},
+\tactica{intro / intros}{intros},
+\tactica{cases}{cases} y
+\tactica{linarith}{linarith}.
+
+\comentario{Añadir librerías utilizadas.}
 
 \subsection{Paridad de la suma de funciones}
 
@@ -389,7 +427,7 @@ begin
 end
 \end{leancode}
 
-\comentario{Añadir librerías, lemas y tácticas utilizadas.}
+\comentario{Añadir tacticas lemas ylibrerías utilizadas.}
 
 \subsection{Paridad de la composición de funciones}
 
