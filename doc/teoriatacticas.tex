@@ -737,9 +737,18 @@ recursividad de las funciones.
 Veamos un ejemplo de la táctica \tactica{congr'}{congr'}:
 
 \begin{leancode}
-
+variables (f g: ℝ → ℝ) 
+example {x y : ℝ} : f (g (x + y)) = f (g (y + x)):=
+begin
+  congr',
+  {sorry,},
+  {sorry,},
+end
 \end{leancode}
-\comentario{FALTA EJEMPLO}
+
+Se puede observar que tras aplicar la táctica \tactica{congr'}{congr'} el
+objetivo a probar pasa a dividirse en dos: por un lado, probar que el número
+\(x\) es igual a \(y\) y por otro que \(y\) es igual a \(x\).
 
 \section{Otras tácticas}
 
