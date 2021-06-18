@@ -1,5 +1,4 @@
 import data.real.basic
-import algebra.group.pi
 
 variables {u v: ℕ → ℝ} {l l' : ℝ}
 

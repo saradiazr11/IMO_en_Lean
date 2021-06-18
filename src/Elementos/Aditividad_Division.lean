@@ -1,4 +1,5 @@
-import data.int.parity
+import data.int.basic
+import tactic 
 
 variables (a b c : ℤ)
 

@@ -181,10 +181,10 @@ end
 \section{Táctica linarith}
 
 La siguiente táctica ha sido otra muy utilizada en el trabajo y es
-\tactica{linarith}{linarith}. Esta táctica trata de encontrar una
-contradicción entre las hipótesis del problema que son igualdades o
-desigualdades. En el ejemplo que se plantea a continuación se puede ver
-de manera muy clara:
+\tactica{linarith}{linarith}. Esta táctica es capaz de probar multitud de
+igualdades y desigualdades de manera directa; realemente, es capaz de probar
+casi cualquier problema lineal. En el ejemplo que se plantea a continuación
+se puede ver de manera muy clara:
 
 \begin{leancode}
 example (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a + b :=
@@ -197,7 +197,7 @@ Se tienen dos hipótesis: por un lado que \(x\) es menor o igual que \(y\) y por
 otro que \(y\) es menor o igual que \(x\). Entonces, con la táctica
 \tactica{linarith}{linarith} se prueba directamente que \(x\) es igual a \(y\).
 
-\comentario{La explicación no se corresponde con el ejemplo.}
+\comentario{¿Esta explicaciín sí valdría?}
 
 \section{Táctica nlinarith}
 
@@ -358,7 +358,8 @@ consisten en:
 \end{enumerate}
 
 En el siguiente ejemplo que se presenta, se puede ver como funciona la táctica
-en el primer caso que hemos descrito:
+\tactica{cases}{cases} cuando se usa para la regla de eliminación de la
+conjunción:
 
 \begin{leancode}
 example {a b : ℝ} : (0 ≤ a ∧ 0 ≤ b) → 0 ≤ a + b :=
@@ -369,24 +370,32 @@ begin
 end
 \end{leancode}
 
-Además, en este otro ejemplo se puede ver cómo utilizar esta táctica en el
-segundo caso:
-
+En el segundo ejemplo, se puede observar la táctica \tactica{cases}{cases}
+usada para la regla de eliminación del existencial:
 \begin{leancode}
-example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
+example (n : ℕ) (h : ∃ k : ℕ, n = k + 1) : n > 0 :=
 begin
-  intro hyp,
-  have H : a*(1 - b) = 0,
-  { calc a*(1 - b) = a - a*b : by ring
-               ... = 0       : by linarith, },
-  rw mul_eq_zero at H,
-  cases H with Ha Hb,
-  { sorry, },
-  { sorry, },
+  cases h with k₀ hk₀,
+  rw hk₀,
+  exact nat.succ_pos k₀,
 end
 \end{leancode}
 
-\comentario{Poner ejemplos más ilustrativos.}
+En este último ejemplo, se presenta la táctica \tactica{cases}{cases} para la
+regla de eliminación de la disyunción:
+
+\begin{leancode}
+example (P Q : Prop): P ∨ Q → Q ∨ P :=
+begin
+  intro hpq,
+  cases hpq with hp hq,
+  {sorry,},
+  {sorry,},
+end
+\end{leancode}
+
+\comentario{A ver si le parecen bien estos ejemplos. El primero lo he mantenido
+porque si me parecía ilustrativo (si a usted no, busco otro).}
 
 \section{Táctica split}
 
@@ -456,24 +465,21 @@ constructores. Esta táctica incluyes las reglas de introducción de la
 disyunción.
 
 Continuando la formalización de uno de los ejemplos que se ha presentado en la
-explicación de la táctica \tactica{cases}{cases} (en concreto el segundo), se
-puede ver muy bien el uso de las tácticas \tactica{left / right}{left} y
-\tactica{left / right}{right}:
+explicación de la táctica \tactica{cases}{cases} (en concreto el usado para
+ilustrar la regla de eliminación de la disyunción), se puede ver muy bien el
+uso de las tácticas \tactica{left / right}{left} y \tactica{left / right}{right}:
 \begin{leancode}
-example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
+example (P Q : Prop): P ∨ Q → Q ∨ P :=
 begin
-  intro hyp,
-  have H : a*(1 - b) = 0,
-  { calc a*(1 - b) = a - a*b : by ring
-               ... = 0       : by linarith, },
-  rw mul_eq_zero at H,
-  cases H with Ha Hb,
-  { left,
-    exact Ha, },
-  { right,
-    linarith, },
+  intro hpq,
+  cases hpq with hp hq,
+  {right,
+  exact hp,},
+  {left,
+  exact hq,},
 end
 \end{leancode}
+\comentario{He modificado este ejemplo también. Me parece más visual}
 
 \section{Táctica library search}
 
@@ -659,4 +665,88 @@ begin
 end
 \end{leancode}
 
-\comentario{Comentar dónde encontrar documentación sobre más tácticas.}
+
+\section{Táctica specialize}
+
+La táctica \tactica{specialize}{specialize} actúa sobre una hipótesis
+determinada y su función consiste en concretar los términos que en la hipótesis
+son generales o universales por lo que el usuario imponga.
+
+Para ver mejor cómo funciona esta hipótesis, planteemos un ejemplo:
+\begin{leancode}
+lemma unique_max
+(A : set ℝ)
+(x y : ℝ)
+(hx : x is_a_max_of A)
+(hy : y is_a_max_of A) : 
+x = y :=
+begin
+  cases hx with x_in x_up,
+  cases hy with y_in y_up,
+  specialize x_up y,
+  specialize x_up y_in,
+  specialize y_up x x_in,
+  linarith,
+end
+\end{leancode}
+
+Se puede observar que en el primer uso de la táctica
+\tactica{specialize}{specialize}, se ha particularizado la hipótesis x\(\_\)up
+para el número real \(y\) considerado.
+
+De manera totalmente análoga se tiene en los dos siguientes usos de la táctica
+\tactica{specialize}{specialize}.
+
+
+
+\section{Táctica push neg}
+
+La táctica \tactica{push_neg}{push\_neg} puede ser aplicada sobre una hipótesis
+o sobre el propio objetivo a demostrar. Básicamente, lo que hace esta función es
+que cuando se tiene la negación de un cierto hecho, lo convierte en un hecho
+sin negación pero con el mismo significado y manteniendo el nombre de las
+variables.
+
+\begin{leancode}
+example {x y : ℝ} : (∀ ε > 0, y ≤ x + ε) →  y ≤ x :=
+begin
+  intro h,
+  by_contradiction H,
+  push_neg at H,
+  sorry,
+end
+\end{leancode}
+
+Se puede observar que la hipótesis H es la negación de que \(y\) sea menor o
+igual que \(x\). Tras la aplicación de la táctica \tactica{push_neg}{push\_neg},
+esta hipótesis se convierte en considerar que \(x\) es menor estrictamente que
+\(y\). 
+
+\section{Táctica congr'}
+
+La última táctica que se va a detallar en este apéndice es la táctica
+\tactica{congr'}{congr'}, la cual sólo ha sido utilizada una vez en el
+desarrollo del trabajo. La táctica \tactica{congr'}{congr'} es una táctica muy
+parecida a \tactica{congr}{congr} pero menos agresiva que esta última.
+
+Estas tácticas tratan de demostrar el objetivo cuando se trata de una igualdad
+devolviendo unos determinados subojetivos a probar. La táctica
+\tactica{congr'}{congr'} hace uso de un argumento opcional que es el de la
+recursividad de las funciones.
+
+Veamos un ejemplo de la táctica \tactica{congr'}{congr'}:
+
+\begin{leancode}
+
+\end{leancode}
+\comentario{FALTA EJEMPLO}
+
+\section{Otras tácticas}
+
+En este apéndice se han detallado todas las tácticas que se han utilizado en
+el desarrollo del trabajo; no obstante, existen muchas más tácticas que pueden
+ser utilizadas en las formalizaciones en Lean. En \cite{tactic} es un buen
+lugar para ver y estudiar las tácticas que se pueden usar en Lean.
+
+\comentario{He añadido las tácticas specialize, push neg y congr' que se usan
+en el capítulo de elementos y también esta última sección}
