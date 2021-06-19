@@ -1,7 +1,147 @@
 \chapter*{Introducción}
 \addcontentsline{toc}{chapter}{Introducción}
 
-En este capítulo se realiza una introducción del trabajo.
+Las Olimpiadas Internacionales de Matemáticas (IMO) son probablemente la
+competición mental con mayor número de celebraciones en el mundo y es por eso
+que se encuentra entre los últimos grandes objetivos de la Inteligencia
+Artificial.
+
+Uno de los grand challage que plantean es construir una herramienta de
+Inteligencia Artificial que sea capaz de ganar la medalla de oro en esta
+competición.
+
+Con el objetivo de eliminar la ambigüedad que existe a la hora de comprobar si
+las diversas soluciones propuestas a los ejercicios son correctas o no y qué
+puntación hay que concederle a cada una, se plantea la variante de las IMO
+que se conoce como formal-to-formal (F2F), \cite{challenge}. Básicamente, esta
+variante consiste en que recibe el enunciado y la solución al problema, ambos
+formalizados en Lean y comprueba si la solución proporcionada es correcta o no
+según las reglas estipuladas.
+
+Lean se trata de un demostrador interactivo, mediante el cual se pueden
+comprobar si los resultados o demostraciones que se proponen a un problema son
+correctas. Esta herramienta es muy útil pues hay situaciones en las que a los
+humanos se nos puede olvidar comentar un aspecto trivial de la demostración
+pero el cual es indispensable para la correcta compresión. Asimismo, hay
+situaciones en las que por motivos de extensión o complejidad se hace casi
+imposible poder realizar la comprobación correspondiente. En la actualidad, los
+demostradores interactivos son un tema muy a la orden del día y que en los
+últimos tiempos se ha convertido en una herramienta muy importante, como
+se comenta en \cite{ART2}. Asimismo, en este artículo se acaba concluyendo que
+los demostradores interactivos poseen una limitación muy importante y es que,
+has donde se sabe, tienen su función muy bien definida, es decir, ahora mismo
+no se sabe si se les puede encontrar una función diferente a la que ahora mismo
+poseen (que ya es bastante ventajosa).
+
+De esta manera, se tiene que el grand challente que se quiere conseguir consiste
+en crear un sistema inteligente que sea capaz de obtener la puntuación en F2F
+necesaria para alcanzar la medalla de oro en la competición, en el caso de
+competir contra humanos.
+
+Como consecuencia de todo esto, actualmente se están desarrollando multitud de
+trabajos y proyectos que se basan en la formalización de diversos problemas (no
+sólo de las IMO, también de otras competiciones) con ayuda de diferentes
+demostradores interactivos como Lean o Isabelle/HOL.
+
+El proyecto MiniF2F, \cite{mini}, ha comenzado a desarrollarse hace muy poco
+tiempo y consiste en formalizar problemas correspondientes a diferentes
+competiciones como las IMO pero también otras como American Mathematics
+Competitions (AMC). Asimismo, se propone la formalización de problemas de
+matemáticas de nivel escolar. En este proyecto las formalizaciones que se
+proponen son a través de varias herramientas, entre ellas Lean.
+
+En el trabajo que aquí se propone, se estudia detalladamente diversas
+formalizaciones en Lean de problemas matemáticos correspondientes a las IMO.
+Para llevar a cabo este trabajo nos hemos basado en el artículo \cite{ART} en
+el que estudiantes de la Universidad de Belgrado estudiaron de manera teórica y
+formalizaron en el programa Isabelle/HOL problemas de las IMO.
+
+El trabajo se ha comenzando con una \textbf{introducción a Lean}, (\ref{cap1}),
+donde se ha descrito brevemente esta herramienta y también su librería
+matemática \textbf{mathlib}. Asimismo, en este capítulo se desarrolla la
+\textbf{formalización de una prueba} de manera muy detallada: explicando y
+justificando cada paso de la formalización, para que de esta manera se pueda
+comprender la estructura de las formalizaciones.
+
+A continuación, en el capítulo llamado \textbf{elementos de matemáticas en Lean}
+, (\ref{cap2}), se plantean varias formalizaciones sobre lemas o teoremas que
+han sido estudiados en asignaturas de formación básica corresponditentes al
+Grado en Matemáticas de la Universidad de Sevilla, en concreto los resultados
+son correspondientes a las asignaturas de Cálculo Infinitesimal y Álgebra
+Básica. Estas formalizaciones fueron obtenidas con ayuda del tutorial
+\cite{tutor} que realicé junto con
+\href{https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/}{The Natural Number Game}\footnote{The Natural Number Game es un curso en el que se
+  explica la teoría de los números naturales diseñada a modo de juego de manera
+  que a medida que avanzas en él se introducen más técnucas de demostración que
+  se deben ir utilizando.}.
+
+El siguiente capítulo es el más extenso del trabajo y es en el que se detallan
+varias \textbf{formalizaciones en Lean de problemas de las IMO} que ya han sido
+formalizados con anterioridad (\ref{cap3}). Además de la correspondiente formalización en
+Lean, en cada problema se plantea su resolución en lenguaje natural para que
+el lector pueda entender y ver la analogía entre ambas. En concreto se han
+estudiado los siguientes problemas que se presentan a continuación:
+\begin{itemize}
+\item \textbf{IMO 1959 Q1}
+
+  En este problema hay que demostrar que una cierta fracción es irreducible
+  para cualquier número natural. La formalización propuesta en la que se ha
+  basado la que se plantea aquí en el trabajo es \cite{KL}.
+
+\item \textbf{IMO 1962 Q4}
+
+  En este caso, el problema que se plantea es resolver una ecuación en la que
+  aparecen funciones trigonométricas. La formalización en la que se ha basado
+  la que se plantea en el trabajo es la pruepuesta en \cite{KLHM}.
+
+\item \textbf{IMO 1977 Q6}
+
+  Este problema consiste en probar que la función que se define en el enunciado
+  en el conjunto de los números naturales bajo una ciertas condiciones, verifica
+  una igualdad determinada. En este caso, la formalización que se ha usado
+  para plantear la que aparece en el trabajo es \cite{TC}.
+
+
+\item \textbf{IMO 2001 Q2}
+
+  El último problema que se formaliza en esta sección del trabajo se corresponde
+  con demostrar una desigualdad que se verefica para cualesquiera tres números
+  reales. En este caso, la formalización en la que se ha basado la planteado
+  en el trabajo es muy reciente (en concreto, ha sido realizada este año 2021)
+  y se puede encontrar en \cite{TCC}. 
+\end{itemize}
+
+Todos estos capítulos que se han desarrollado previamente, han permitido
+adquirir los conocimientos y la destreza suficiente como para formalizar un
+problema que no haya sido formalizado con anterioridad. Entonces, en el último
+capítulo del trabajo se ha llevado a cabo la \textbf{
+formalización en Lean de un nuevo problema que no se había formalizado antes},
+(\ref{cap4}). En concreto, el problema que se ha formalizado en este capítulo es
+el Q6 correspondiente al año 2001. Este problema consiste en que dado cuatros
+números enteros verificando una serie de hipótesis, hay que probar que un
+número que se define a través de esos cuatro números enteros es primo.
+
+Finalmente, cabe mencionar que la realización de este trabajo ha supuesto el
+aprendizaje del programa Lean y el uso de su librería mathlib. Asimismo,
+comentar también que en el apéndice \ref{apentacti} se han explicado todas
+las tácticas de Lean que se han usado en el trabajo.
+
+Además, el objetivo pincipal del trabajo ha sido alcanzado: obtener la destreza
+suficiente como para ser capaz de formalizar un problema que no se había
+formalizado con anterioridad.
+
+Por último, comentar que es un trabajo que tiene muchas líneas futuras de
+continuación pues aún quedan multitud de problemas de las IMO que no han sido
+formalizados. Es más, existen otras muchas competiciones o problemas que
+también se pueden formalizar mediante demostradores interactivos.
+
+
+\comentario{Las citas challenge y tactic no sé si se corresponden al año 2019.}
+\comentario{La cita challenge no sé si está correcta}
+\comentario{En la cita mini en los apartados de autor e institución no sé qué
+  poner}
+\comentario{La parte del Apéndice A no sé si está bien comentada ahí o no pero
+no se me ocurre dónde introducirlo (alomejor no es necesario).}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "IMO_en_Lean"

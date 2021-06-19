@@ -670,7 +670,7 @@ end
 
 La táctica \tactica{specialize}{specialize} actúa sobre una hipótesis
 determinada y su función consiste en concretar los términos que en la hipótesis
-son generales o universales por lo que el usuario imponga.
+son generales o universales por los que el usuario imponga.
 
 Para ver mejor cómo funciona esta hipótesis, planteemos un ejemplo:
 \begin{leancode}
@@ -702,7 +702,7 @@ De manera totalmente análoga se tiene en los dos siguientes usos de la táctica
 \section{Táctica push neg}
 
 La táctica \tactica{push_neg}{push\_neg} puede ser aplicada sobre una hipótesis
-o sobre el propio objetivo a demostrar. Básicamente, lo que hace esta función es
+o sobre el propio objetivo a demostrar. Básicamente, lo que hace esta táctica es
 que cuando se tiene la negación de un cierto hecho, lo convierte en un hecho
 sin negación pero con el mismo significado y manteniendo el nombre de las
 variables.
@@ -729,7 +729,7 @@ La última táctica que se va a detallar en este apéndice es la táctica
 desarrollo del trabajo. La táctica \tactica{congr'}{congr'} es una táctica muy
 parecida a \tactica{congr}{congr} pero menos agresiva que esta última.
 
-Estas tácticas tratan de demostrar el objetivo cuando se trata de una igualdad
+Estas tácticas intentan demostrar el objetivo cuando se trata de una igualdad
 devolviendo unos determinados subojetivos a probar. La táctica
 \tactica{congr'}{congr'} hace uso de un argumento opcional que es el de la
 recursividad de las funciones.
