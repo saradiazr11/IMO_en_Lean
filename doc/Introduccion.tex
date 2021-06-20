@@ -89,35 +89,100 @@ problemas que se presentan a continuación:
 \begin{itemize}
 \item \textbf{IMO 1959 Q1}
 
-  En este problema hay que demostrar que una cierta fracción es irreducible
-  para cualquier número natural. La formalización propuesta en la que se ha
-  basado la que se plantea aquí en el trabajo es \cite{KL}.
+  El enuncuiado de este problemas es el siguiente:
+
+  Demostrar que la fracción
+  \[\frac{21⋅n+4}{14⋅n+3}\]
+  es irreducible para cualquier número natural \(n\).
+
+  La demostración que en el trabajo se plantea consiste en probar que el
+  denominador y el numerador de la fracción son coprimos para cualquier
+  número natural \(n\), lo cual es equivalente a probar que la fracción es
+  irreducible.
+
+  Entonces, se tiene que la formalización en Lean para resolver este ejercicio
+  es la siguiente:
+  \begin{leancode}
+  theorem imo1959_q1 : ∀ n : ℕ, coprime (21 * n + 4) (14 * n + 3) 
+  \end{leancode}
+
+  Asimismo, mencionar que la formalización en la que se ha basado la que se
+  plantea en el trabajo se encuentra disponible en \cite{KL}.
 
 \item \textbf{IMO 1962 Q4}
 
-  En este caso, el problema que se plantea es resolver una ecuación en la que
-  aparecen funciones trigonométricas. La formalización en la que se ha basado
-  la que se plantea en el trabajo es la pruepuesta en \cite{KLHM}.
+  En este caso, el enunciado del problema en consideración es:
+  
+  Resolver la ecuación
+  \[\cos²(x)+\cos²(2x)+\cos²(3x)=1. \]
+
+  Cuyo enunciado en Lean se ha planteado de la siguiente manera:
+
+  \begin{leancode}
+  theorem imo1962_q4
+  {x : ℝ}
+  : problema x ↔ x ∈ Solucion
+  \end{leancode}
+
+  Se tiene que la función problema ha sido definida como la función que se
+  quiere resolver planteada antes y el conjunto Solucion, como su propio nombre
+  indica, se corresponde con las soluciones del problema.
+  
+  La formalización en la que se ha basado la que se propone en el trabajo
+  es la que ha sido desarrollada en \cite{KLHM}.
 
 \item \textbf{IMO 1977 Q6}
 
-  Este problema consiste en probar que la función que se define en el enunciado
-  en el conjunto de los números naturales bajo una ciertas condiciones, verifica
-  una igualdad determinada. En este caso, la formalización que se ha usado
-  para plantear la que aparece en el trabajo es \cite{TC}.
+  Este problema tiene el siguiente enunciado:
+
+  Considere la función
+  \(f:ℕ⁺ → ℕ⁺\) satisfaciendo que
+  \[f(f(n)) < f(n+1)\]
+  para cualquier número \(n\). Probar que para todo número
+  natural positivo \(n\) se verifica que
+  \[f(n) = n.\]
+
+  En Lean esto se ha formalizado de la siguiente manera:
+  \begin{leancode}
+  theorem imo1977_q6
+    (f : ℕ+ → ℕ+)
+    (h : ∀ n, f (f n) < f (n + 1))
+    : ∀ n, f n = n
+  \end{leancode}
+    
+  Para llevar a cabo el desarrollo de este problema nos hemos basado en la
+  propuesta llevado a cabo en \cite{TC}.
 
 
 \item \textbf{IMO 2001 Q2}
 
-  El último problema que se formaliza en esta sección del trabajo se corresponde
-  con demostrar una desigualdad que se verefica para cualesquiera tres números
-  reales. En este caso, la formalización en la que se ha basado la planteado
+  El último problema que se formaliza en esta sección del trabajo posee el
+  siguiente enunciado:
+
+  Consideremos \(a\), \(b\) y \(c\) tres números reales y positivos
+  cualesquiera. Demostrar que
+  \begin{equation*}
+    \frac{a}{\sqrt{a²+8bc}} +
+    \frac{b}{\sqrt{b²+8ca}} +
+    \frac{c}{\sqrt{c²+8ab}} ≥ 1.
+  \end{equation*}
+
+  La formalización en Lean del enunciado del teorema es bastante directa:
+
+  \begin{leancode}
+  theorem imo2001_q2
+    (ha : 0 < a)
+    (hb : 0 < b)
+    (hc : 0 < c)
+    : 1 ≤ a / sqrt (a ^ 2 + 8 * b * c) +
+          b / sqrt (b ^ 2 + 8 * c * a) +
+          c / sqrt (c ^ 2 + 8 * a * b)
+  \end{leancode}
+      
+  En este caso, la formalización en la que se ha basado la planteado
   en el trabajo es muy reciente (en concreto, ha sido realizada este año 2021)
   y se puede encontrar en \cite{TCC}.
 \end{itemize}
-
-\comentario{Cambiar la descripción de los 4 problemas anteriores por su
-  enunciado en lenguaje natural y en Lean.}
 
 Todos estos capítulos que se han desarrollado previamente, han permitido
 adquirir los conocimientos y la destreza suficiente como para formalizar un
@@ -125,17 +190,37 @@ problema que no haya sido formalizado con anterioridad. Entonces, en el último
 capítulo del trabajo se ha llevado a cabo la \textbf{
 formalización en Lean de un nuevo problema que no se había formalizado antes},
 (\ref{cap4}). En concreto, el problema que se ha formalizado en este capítulo es
-el Q6 correspondiente al año 2001. Este problema consiste en que dado cuatros
-números enteros verificando una serie de hipótesis, hay que probar que un
-número que se define a través de esos cuatro números enteros es primo.
+el Q6 correspondiente al año 2001. El problema que en este capítulo se ha
+estudiado posee el siguiente enunciado:
 
-\comentario{Cambiar la descripción de los 4 problemas anteriores por su
-  enunciado en lenguaje natural y en Lean.}
+Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
+\(a > b > c > d > 0\). Supongamos que
+\begin{equation*}
+  ac+bd = (a+b-c+d)(-a+b+c+d).
+\end{equation*}
+Demostrar que \(ab+cd\) no es primo.
+
+Asimismo, la formalización que se ha propuesto en el trabajo para resolver el
+problema que es la siguiente:
+
+\begin{leancode}
+theorem imo2001q6
+  (hd  : 0 < d)
+  (hdc : d < c)
+  (hcb : c < b)
+  (hba : b < a)
+  (h : a*c + b*d = (a + b - c + d)*(-a + b + c + d))
+  : ¬ prime (a*b + c*d)
+\end{leancode}
+
+
+\comentario{No sé si sería conveniente poner en otra letra los enunciados
+  (como por ejemplo cursiva) para resaltar un poco más o no, ¿qué le parece?}
 
 Finalmente, en el apéndice \ref{apentacti} se han explicado todas
 las tácticas de Lean que se han usado en el trabajo.
 
-\comentario{Dejar los siguientes párrafos para la presentación del TFM.}
+
 
 % Finalmente, cabe mencionar que la realización de este trabajo ha supuesto el
 % aprendizaje del programa Lean y el uso de su librería mathlib. Asimismo,

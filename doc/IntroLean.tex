@@ -264,22 +264,6 @@ de un número natural se ha hecho uso de una función auxiliar llamada
   \end{itemize}
 \end{definicion}
 
-En Lean, la formalización de esta definición es:
-
-\begin{leancode}
-def min_fac_aux (n : ℕ) : ℕ → ℕ | k :=
-  if h : n < k * k then n else
-  if k ∣ n then k else
-  have _, from min_fac_lemma n k h,
-  min_fac_aux (k + 2)
-  using_well_founded {rel_tac :=
-    λ _ _, `[exact ⟨_, measure_wf (λ k, sqrt n + 2 - k)⟩]}
-\end{leancode}
-
-\comentario{En la definición antrior es la única vez que aparece el uso
-  de medidas para justificar la terminación. Creo que lo mejor es no
-  incluir su formalización.}
-
 Tras todo lo detallado, se tiene que al haber introducido la definición de los
 números \(m\) y \(p\) anteriormente descritos en Lean; el estado actual pasa a
 ser el siguiente:
