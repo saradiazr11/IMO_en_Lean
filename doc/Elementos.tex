@@ -135,15 +135,15 @@ importar la librería \href{https://github.com/leanprover-community/mathlib/blob
 En la formalización de este teorema Lean han sido necesarios el uso
 de los siguiente lemas y teoremas:
 \begin{itemize}
-\item \mint{lean}|eq_of_abs_sub_nonpos (h : abs (a - b) ≤ 0) : a = b |
+\item \mint{lean}|eq_of_abs_sub_nonpos : (a - b) ≤ 0 → a = b|
   \indLema{eq\_of\_abs\_sub\_nonpos}
-\item \mint{lean}|abs_add (a b : α) : abs (a + b) ≤ abs a + abs b|
+\item \mint{lean}|abs_add : abs (a + b) ≤ abs a + abs b|
   \indLema{abs\_add}
-\item \mint{lean}|abs_sub (a b : α) : abs (a - b) = abs (b - a)|
+\item \mint{lean}|abs_sub : abs (a - b) = abs (b - a)|
   \indLema{abs\_sub}
-\item \mint{lean}|le_max_left (a b : α) : a ≤ max a b|
+\item \mint{lean}|le_max_left : a ≤ max a b|
   \indLema{le\_max\_left}
-\item \mint{lean}|le_max_right (a b : α) : b ≤ max a b|
+\item \mint{lean}|le_max_right : b ≤ max a b|
   \indLema{le\_max\_right}
 \end{itemize}
 
