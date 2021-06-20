@@ -243,8 +243,8 @@ la importación de una nueva teoría, en este caso correspondiente a los
 factoriales,
 \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/nat/factorial.lean}{data.nat.factorial}.
 
-Además, se puede observar que al definir la función mínimo factor primo de un
-número natural se ha hecho uso de una función auxiliar llamada
+Además, se puede observar que al definir la función mínimo factor primo
+de un número natural se ha hecho uso de una función auxiliar llamada
 \textbf{min\_fac\_aux} y que se define de la siguiente manera:
 
 \begin{definicion}
@@ -275,6 +275,10 @@ def min_fac_aux (n : ℕ) : ℕ → ℕ | k :=
   using_well_founded {rel_tac :=
     λ _ _, `[exact ⟨_, measure_wf (λ k, sqrt n + 2 - k)⟩]}
 \end{leancode}
+
+\comentario{En la definición antrior es la única vez que aparece el uso
+  de medidas para justificar la terminación. Creo que lo mejor es no
+  incluir su formalización.}
 
 Tras todo lo detallado, se tiene que al haber introducido la definición de los
 números \(m\) y \(p\) anteoriormente descritos en Lean; el estado actual pasa a
