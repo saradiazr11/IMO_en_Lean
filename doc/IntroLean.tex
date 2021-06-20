@@ -243,8 +243,8 @@ la importación de una nueva teoría, en este caso correspondiente a los
 factoriales,
 \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/nat/factorial.lean}{data.nat.factorial}.
 
-Además, se puede observar que al definir la función mínimo factor primo de un
-número natural se ha hecho uso de una función auxiliar llamada
+Además, se puede observar que al definir la función mínimo factor primo
+de un número natural se ha hecho uso de una función auxiliar llamada
 \textbf{min\_fac\_aux} y que se define de la siguiente manera:
 
 \begin{definicion}
@@ -276,8 +276,12 @@ def min_fac_aux (n : ℕ) : ℕ → ℕ | k :=
     λ _ _, `[exact ⟨_, measure_wf (λ k, sqrt n + 2 - k)⟩]}
 \end{leancode}
 
+\comentario{En la definición antrior es la única vez que aparece el uso
+  de medidas para justificar la terminación. Creo que lo mejor es no
+  incluir su formalización.}
+
 Tras todo lo detallado, se tiene que al haber introducido la definición de los
-números \(m\) y \(p\) anteoriormente descritos en Lean; el estado actual pasa a
+números \(m\) y \(p\) anteriormente descritos en Lean; el estado actual pasa a
 ser el siguiente:
 \begin{leancode}
 n: ℕ
@@ -285,8 +289,7 @@ m: ℕ := n.factorial + 1
 p: ℕ := m.min_fac
 ⊢ ∃ (p : ℕ) (H : p ≥ n), prime p
 \end{leancode}
-\comentario{He modificado las últimas líneas tras la inclusión de la definición.
-A ver si le parece bien}
+
 En el estado anterior se observa que, por defecto, Lean usa la notación
 de puntos, pero se puede cambiar la opción añadiendo
 \begin{leancode}
@@ -704,7 +707,7 @@ begin
 end
 \end{leancode}
 
-  La táctica \tactica{sugest}{sugest} nos ha propuesto el uso del siguiente
+  La táctica \tactica{suggest}{suggest} nos ha propuesto el uso del siguiente
   lema:
   \begin{lema}
     Sean \(n\) y \(p\) dos números naturales tales que \(p\) es

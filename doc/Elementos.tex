@@ -135,15 +135,15 @@ importar la librería \href{https://github.com/leanprover-community/mathlib/blob
 En la formalización de este teorema Lean han sido necesarios el uso
 de los siguiente lemas y teoremas:
 \begin{itemize}
-\item \mint{lean}|eq_of_abs_sub_nonpos (h : abs (a - b) ≤ 0) : a = b |
+\item \mint{lean}|eq_of_abs_sub_nonpos : (a - b) ≤ 0 → a = b|
   \indLema{eq\_of\_abs\_sub\_nonpos}
-\item \mint{lean}|abs_add (a b : α) : abs (a + b) ≤ abs a + abs b|
+\item \mint{lean}|abs_add : abs (a + b) ≤ abs a + abs b|
   \indLema{abs\_add}
-\item \mint{lean}|abs_sub (a b : α) : abs (a - b) = abs (b - a)|
+\item \mint{lean}|abs_sub : abs (a - b) = abs (b - a)|
   \indLema{abs\_sub}
-\item \mint{lean}|le_max_left (a b : α) : a ≤ max a b|
+\item \mint{lean}|le_max_left : a ≤ max a b|
   \indLema{le\_max\_left}
-\item \mint{lean}|le_max_right (a b : α) : b ≤ max a b|
+\item \mint{lean}|le_max_right : b ≤ max a b|
   \indLema{le\_max\_right}
 \end{itemize}
 
@@ -241,17 +241,14 @@ begin
 end
 \end{leancode}
 
-Al igual que en el resultado anterior, para la formalización del que acabamos
+Al igual que en el resultado anterior, para la formalización que acabamos
 de plantear, ha sido necesario importar la librería \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}
-{data.real.basic} para poder trabajar con los números reales.
-
-Para la formalización de este resultado se han usado los dos siguientes lemas
+{data.real.basic} para poder trabajar con los números reales y se han usado los dos siguientes lemas
 auxiliares:
-
 \begin{itemize}
-\item \mint{lean}|abs_add (a b : α) : abs (a + b) ≤ abs a + abs b|
+\item \mint{lean}|abs_add : abs (a + b) ≤ abs a + abs b|
   \indLema{abs\_add}
-\item \mint{lean}|abs_sub (a b : α) : abs (a - b) = abs (b - a)|
+\item \mint{lean}|abs_sub : abs (a - b) = abs (b - a)|
   \indLema{abs\_sub}
 \end{itemize}
 Además,se han usado las tácticas
@@ -262,7 +259,6 @@ Además,se han usado las tácticas
 \tactica{intro / intros}{intros},
 \tactica{cases}{cases} y
 \tactica{linarith}{linarith}.
-
 
 \subsection{Suma de sucesiones convergentes}
 
@@ -337,14 +333,12 @@ begin
 end
 \end{leancode}
 
-En el caso de este resultado, se ha importado  librería \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}
-  {data.real.basic}, para trabajar con el conjunto de los números reales.
-
-En este caso, para la formalización del resultado sólo se ha usado el siguiente
+En el caso de este resultado, se ha importado librería
+\href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}{data.real.basic},
+para trabajar con el conjunto de los números reales y sólo se ha usado el siguiente
 lema auxiliar:
-
 \begin{itemize}
-\item \mint{lean}|abs_add (a b : α) : abs (a + b) ≤ abs a + abs b|
+\item \mint{lean}|abs_add : abs (a + b) ≤ abs a + abs b|
   \indLema{abs\_add}
 \end{itemize}
 
@@ -634,7 +628,7 @@ que nos permite trabajar con el conjunto de los números enteros.
 En la formalización de este resultado ha sido necesario usar el siguiente
 lema auxiliar:
 \begin{itemize}
-\item \mint{lean}|mul_assoc : ∀ a b c : G, a * b * c = a * (b * c)|
+\item \mint{lean}|mul_assoc : a * b * c = a * (b * c)|
   \indLema{mul\_assoc}
 \end{itemize}
 
@@ -700,14 +694,11 @@ En la formalización de este resultado ha sido necesario importar dos librerías
   para poder hacer uso de algunas tácticas como \tactica{ring}{ring}.
 \end{itemize}
 
-
 Asimismo, aparte de la táctica \tactica{ring}{ring}, ha sido necesario el uso
 de las tácticas
 \tactica{cases}{cases},
 \tactica{rw /rewrite}{rw} y
 \tactica{use}{use}.
-
-
 
 %%% Local Variables:
 %%% mode: latex
