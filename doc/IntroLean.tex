@@ -281,7 +281,7 @@ def min_fac_aux (n : ℕ) : ℕ → ℕ | k :=
   incluir su formalización.}
 
 Tras todo lo detallado, se tiene que al haber introducido la definición de los
-números \(m\) y \(p\) anteoriormente descritos en Lean; el estado actual pasa a
+números \(m\) y \(p\) anteriormente descritos en Lean; el estado actual pasa a
 ser el siguiente:
 \begin{leancode}
 n: ℕ
@@ -289,8 +289,7 @@ m: ℕ := n.factorial + 1
 p: ℕ := m.min_fac
 ⊢ ∃ (p : ℕ) (H : p ≥ n), prime p
 \end{leancode}
-\comentario{He modificado las últimas líneas tras la inclusión de la definición.
-A ver si le parece bien}
+
 En el estado anterior se observa que, por defecto, Lean usa la notación
 de puntos, pero se puede cambiar la opción añadiendo
 \begin{leancode}
@@ -708,7 +707,7 @@ begin
 end
 \end{leancode}
 
-  La táctica \tactica{sugest}{sugest} nos ha propuesto el uso del siguiente
+  La táctica \tactica{suggest}{suggest} nos ha propuesto el uso del siguiente
   lema:
   \begin{lema}
     Sean \(n\) y \(p\) dos números naturales tales que \(p\) es

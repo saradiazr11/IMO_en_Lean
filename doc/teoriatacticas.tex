@@ -12,7 +12,7 @@ comenzar a trabajar con Lean, en concreto \cite{tutor}.
 \section{Táctica sorry}
 
 La primera táctica que vamos a estudiar es la táctica
-\tactica{sorry}{sorry}.  En particular, esta táctica es muy útil y tiene
+\dtactica{sorry}{sorry}.  En particular, esta táctica es muy útil y tiene
 una función muy sencilla: es capaz de aceptar cualquier resultado. Ahora
 bien, a nosotros no nos interesa usar esta táctica para la formalización
 como tal de las pruebas pero sí como herramienta de ayuda que nos
@@ -27,7 +27,7 @@ begin
 end
 \end{leancode}
 
-Asimismo, veamos un ejemplo en el que la táctica \tactica{sorry}{sorry} sea
+Asimismo, veamos un ejemplo en el que la táctica \dtactica{sorry}{sorry} sea
 utilizada con la función de probar un hecho dentro de la prueba. Es más,
 en este ejemplo aparecen las dos funciones mencionadas de la táctica:
 \begin{leancode}
@@ -40,17 +40,17 @@ end
 
 \section{Táctica rewrite}
 
-A continuación, se presenta la táctica \tactica{rw / rewrite}{rw}. Esta táctica
+A continuación, se presenta la táctica \dtactica{rw / rewrite}{rw}. Esta táctica
 es muy usada y su forma de funcionar es muy intuitiva: consiste en reemplazar
 la ecuación o el si y solamente si que se encuentre después de la táctica
-\tactica{rw / rewrite}{rw} sobre el objetivo a demotrar.
+\dtactica{rw / rewrite}{rw} sobre el objetivo a demotrar.
 
-Si a continuación de la táctica \tactica{rw / rewrite}{rw} se encuentra una
+Si a continuación de la táctica \dtactica{rw / rewrite}{rw} se encuentra una
 flecha hacia la izquierda (\(←\)) se tiene que la sustitución es aplicada
 al revés.
 
 En el ejemplo que se presenta a continuación se pueden observar los dos usos
-de la táctica \tactica{rw / rewrite}{rw} que hemos mencionado:
+de la táctica \dtactica{rw / rewrite}{rw} que hemos mencionado:
 
 \begin{leancode}
 example (a b : ℝ) : (a + b)*(a - b) = a^2 - b^2 :=
@@ -68,7 +68,7 @@ begin
 end
 \end{leancode}
 
-Asimismo, otra función de la táctica \tactica{rw / rewrite}{rw} de la cual se
+Asimismo, otra función de la táctica \dtactica{rw / rewrite}{rw} de la cual se
 ha hecho uso durante el desarrollo del trabajo es aplicar la sustitución en
 alguna hipótesis y no en el objetivo a demostrar. Esto se hace haciendo uso
 del predicado \texttt{at}; veámoslo en Lean:
@@ -84,16 +84,16 @@ end
 \end{leancode}
 
 En este ejemplo se pueden observar las tres funciones descritas de la táctica
-\tactica{rw / rewrite}{rw}.
+\dtactica{rw / rewrite}{rw}.
 
 \section{Táctica have}
 
 La siguiente táctica a estudiar será la táctica
-\tactica{have}{have}. Esta táctica es usada cuando se quieren introducir
+\dtactica{have}{have}. Esta táctica es usada cuando se quieren introducir
 nuevos lemas al problema que tendrán que ser demostrados luego.
 
 En este caso el mismo ejemplo que uno de los que usamos para estudiar la táctica
-\tactica{sorry}{sorry}. Este ejemplo era:
+\dtactica{sorry}{sorry}. Este ejemplo era:
 
 \begin{leancode}
 example (a b : ℝ) : a = a*b → a = 0 ∨ b = 1 :=
@@ -106,13 +106,13 @@ end
 
 \section{Táctica exact}
 
-La táctica \tactica{exact}{exact} ha sido una de las más utilizadas en
+La táctica \dtactica{exact}{exact} ha sido una de las más utilizadas en
 el trabajo y cuya función es muy simple: nos introduce una prueba
 directa del objetivo a demostrar.
 
 Para ver un ejemplo del uso de esta táctica, también se va a hacer uso de uno
 ya propuesto anteriormente y es uno de los que se estudió al ver la táctica
-\tactica{rw / rewrite}{rw}. El ejemplo era el siguiente:
+\dtactica{rw / rewrite}{rw}. El ejemplo era el siguiente:
 
 \begin{leancode}
 example (a b c d : ℝ) (hyp : c = d*a + b) (hyp' : b = a*d) : c = 2*a*d :=
@@ -127,11 +127,11 @@ end
 
 \section{Táctica intro}
 
-La siguiente táctica que se va a introducir es \tactica{intro / intros}{intro},
+La siguiente táctica que se va a introducir es \dtactica{intro / intros}{intro},
 esta táctica puede ser utilizada de diversas maneras. Una manera muy común de
 usarla es cuando tenemos que demostrar una implicación, entonces se supone
 como cierta la primera parte de la implicación y esto se hace a través de la
-táctica \tactica{intro / intros}{intro}.
+táctica \dtactica{intro / intros}{intro}.
 
 En el siguiente ejemplo se ve muy claro:
 
@@ -157,7 +157,7 @@ end
 
 \section{Táctica apply}
 
-La táctica \tactica{apply}{apply} es la siguiente que vamos a introducir. La
+La táctica \dtactica{apply}{apply} es la siguiente que vamos a introducir. La
 función de esta táctica trata de unificar el objetivo a demostrar con la
 conclusión de un resultado auxiliar (el que se especifique justo después de
 aplicar la táctica). De manera que si unifica, los objetivos a demostrar pasan
@@ -181,7 +181,7 @@ end
 \section{Táctica linarith}
 
 La siguiente táctica ha sido otra muy utilizada en el trabajo y es
-\tactica{linarith}{linarith}. Esta táctica es capaz de probar multitud de
+\dtactica{linarith}{linarith}. Esta táctica es capaz de probar multitud de
 igualdades y desigualdades de manera directa; realemente, es capaz de probar
 casi cualquier problema lineal. En el ejemplo que se plantea a continuación
 se puede ver de manera muy clara:
@@ -195,16 +195,16 @@ end
 
 Se tienen dos hipótesis: por un lado que \(x\) es menor o igual que \(y\) y por
 otro que \(y\) es menor o igual que \(x\). Entonces, con la táctica
-\tactica{linarith}{linarith} se prueba directamente que \(x\) es igual a \(y\).
+\dtactica{linarith}{linarith} se prueba directamente que \(x\) es igual a \(y\).
 
-\comentario{¿Esta explicaciín sí valdría?}
+\comentario{En el ejemplo no aparece nada sobre la x y la y.}
 
 \section{Táctica nlinarith}
 
-La táctica \tactica{nlinarith}{nlinarith}, que es la que vamos a estudiar a
-continuaón, es muy parecida a la táctica \tactica{linarith}{linarith} que
-acabamos de describir. Realmente la táctica \tactica{nlinarith}{nlinarith} no
-es más que una extensión de la táctica \tactica{linarith}{linarith} que puede
+La táctica \dtactica{nlinarith}{nlinarith}, que es la que vamos a estudiar a
+continuaón, es muy parecida a la táctica \dtactica{linarith}{linarith} que
+acabamos de describir. Realmente la táctica \dtactica{nlinarith}{nlinarith} no
+es más que una extensión de la táctica \dtactica{linarith}{linarith} que puede
 resolver problemas no lineales.
 
 Para ver un ejemplo sobre esta táctica, se ha usado uno que se corresponde con
@@ -225,7 +225,7 @@ end
 
 \section{Táctica assume}
 
-La siguiente táctica que se estudia es la táctica \tactica{assume}{assume}. Como
+La siguiente táctica que se estudia es la táctica \dtactica{assume}{assume}. Como
 su propio nombre indica nos sirve para asumir o fijar una variable o incluso una
 hipótesis.
 
@@ -247,7 +247,7 @@ conjunto de los números naturales.
 
 \section{Táctica by contradiction}
 
-La táctica \tactica{by_contra / by_contradiction}{by\_contradiction} es muy
+La táctica \dtactica{by_contra / by_contradiction}{by\_contradiction} es muy
 usada en las pruebas matemáticas. Esta táctica consiste en suponer que el
 objetivo a demostrar no se verifica y que se acabe llegando a una contradicción.
 
@@ -268,12 +268,12 @@ línea es cuando ya se llega a la contradicción.
 
 \section{Táctica let}
 
-La táctica \tactica{let}{let} que ha sido usada en alguna formalización que
+La táctica \dtactica{let}{let} que ha sido usada en alguna formalización que
 se ha realizado en Lean consiste en introducir una nueva hipótesis (a la que
 se puede nombrar si así se desea).
 
 En el ejemplo que se tiene a continuación, se puede ver que se ha introducido
-una nueva hipótesis a través de la táctica \tactica{let}{let}:
+una nueva hipótesis a través de la táctica \dtactica{let}{let}:
 
 \begin{leancode}
 variables (u v w : ℕ → ℝ) (l l' : ℝ)
@@ -297,11 +297,11 @@ end
 
 \section{Táctica use}
 
-La táctica \tactica{use}{use} irá acompañado de una expresión. Esta
+La táctica \dtactica{use}{use} irá acompañado de una expresión. Esta
 táctica será utilizada cuando nos encontremos que hay que probar que
 existe un elemento tal que verifica una condición; entonces, cuando le
 queremos decir que considere uno en concreto se lo decimos a Lean
-a través de la táctica \tactica{use}{use}.
+a través de la táctica \dtactica{use}{use}.
 
 En el siguiente ejemplo se puede ver de manera inmediata:
 
@@ -315,7 +315,7 @@ end
 
 \section{Táctica induction}
 
-La táctica \tactica{induction}{induction} es uno de los mecanismos más famosos
+La táctica \dtactica{induction}{induction} es uno de los mecanismos más famosos
 para demostrar resultados en Matemáticas. Simplemente consiste en demostrar
 un resultado por inducción, es decir, si hacemos inducción el número \(b\),
 se tiene que demostrar el resultado para \(b\) igual a \(0\) y luego, suponiendo
@@ -336,29 +336,29 @@ end
 
 \section{Táctica cases}
 
-La táctica \tactica{cases}{cases} es también una táctica muy usada en las
+La táctica \dtactica{cases}{cases} es también una táctica muy usada en las
 formalizaciones de Lean. Existen diversas formas de usar esta táctica, no
 obstante, nos centraremos en las dos que se han usado en el trabajo y que
 consisten en:
 \begin{enumerate}
 \item Cuando se tiene una hipótesis que es una conjunción, se usa la
-  táctica \tactica{cases}{cases} para separar sus componentes. Es decir,
+  táctica \dtactica{cases}{cases} para separar sus componentes. Es decir,
   para la regla de eliminación de la conjunción.
 
 \item Cuando se tiene una hipótesis que afirma que existe un número tal que
-  verifica una determinada condición, se usa la táctica \tactica{cases}{cases}
+  verifica una determinada condición, se usa la táctica \dtactica{cases}{cases}
   para por un lado tener el número en cuestión y por otro la condición que él
   verifica. Es decir, para la regla de eliminación del existencial.
 
 \item Cuando se tiene una hipótesis que es una disyunción, se usa la táctica
-  \tactica{cases}{cases} para dividir el problema en dos: probar el objetivo
+  \dtactica{cases}{cases} para dividir el problema en dos: probar el objetivo
   suponiendo la primera parte de la disyunción y probarlo suponiendo que
   se verifica la segunda parte. Es decir, para la regla de eliminación
   de la disyunción.
 \end{enumerate}
 
-En el siguiente ejemplo que se presenta, se puede ver como funciona la táctica
-\tactica{cases}{cases} cuando se usa para la regla de eliminación de la
+En el siguiente ejemplo que se presenta, se puede ver cómo funciona la táctica
+\dtactica{cases}{cases} cuando se usa para la regla de eliminación de la
 conjunción:
 
 \begin{leancode}
@@ -370,7 +370,7 @@ begin
 end
 \end{leancode}
 
-En el segundo ejemplo, se puede observar la táctica \tactica{cases}{cases}
+En el segundo ejemplo, se puede observar la táctica \dtactica{cases}{cases}
 usada para la regla de eliminación del existencial:
 \begin{leancode}
 example (n : ℕ) (h : ∃ k : ℕ, n = k + 1) : n > 0 :=
@@ -381,7 +381,7 @@ begin
 end
 \end{leancode}
 
-En este último ejemplo, se presenta la táctica \tactica{cases}{cases} para la
+En este último ejemplo, se presenta la táctica \dtactica{cases}{cases} para la
 regla de eliminación de la disyunción:
 
 \begin{leancode}
@@ -394,12 +394,9 @@ begin
 end
 \end{leancode}
 
-\comentario{A ver si le parecen bien estos ejemplos. El primero lo he mantenido
-porque si me parecía ilustrativo (si a usted no, busco otro).}
-
 \section{Táctica split}
 
-El caso de la táctica \tactica{split}{split} es bastante intuitivo: esta táctica
+El caso de la táctica \dtactica{split}{split} es bastante intuitivo: esta táctica
 divide cuando hay que demostrar un si y solamente si en las dos implicaciones
 como objetivos separados o también separa en dos objetivos cuando hay que
 demostrar una conjunción. Es decir, incluye las reglas de introducción
@@ -420,7 +417,7 @@ begin
 end
 \end{leancode}
 
-Mientras que un ejemplo muy simple en el que la táctica \tactica{split}{split}
+Mientras que un ejemplo muy simple en el que la táctica \dtactica{split}{split}
 es usada para dividir una conjunción es el siguiente:
 \begin{leancode}
 example (P Q : Prop) (hp: P) (hq : Q) : P ∧ Q :=
@@ -433,13 +430,13 @@ end
 
 \section{Táctica from}
 
-La táctica que se va a presentar es la conocida como \tactica{from}{from}, esta
-táctica es muy similar a la táctica \tactica{exact}{exact}; pero a diferencia
-de esta última, la táctica \tactica{from}{from} se puede usar con otras tácticas
-como \tactica{have}.
+La táctica que se va a presentar es la conocida como \dtactica{from}{from}, esta
+táctica es muy similar a la táctica \dtactica{exact}{exact}; pero a diferencia
+de esta última, la táctica \dtactica{from}{from} se puede usar con otras tácticas
+como \dtactica{have}.
 
-Veamos un ejemplo del uso de la táctica \tactica{from}{from} para probar una
-hipótesis que ha sido introducida con la táctica \tactica{have}{have}:
+Veamos un ejemplo del uso de la táctica \dtactica{from}{from} para probar una
+hipótesis que ha sido introducida con la táctica \dtactica{have}{have}:
 
 \begin{leancode}
 def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
@@ -457,44 +454,43 @@ end
 
 \section{Tácticas left y right}
 
-La táctica \tactica{left / right}{left} se usa cuando se quiere quedar con la
+La táctica \dtactica{left / right}{left} se usa cuando se quiere quedar con la
 primera parte del objetivo a demostrar que está formada por dos constructores.
-De manera totalmente análoga, la táctica \tactica{left / right}{right} se queda
+De manera totalmente análoga, la táctica \dtactica{left / right}{right} se queda
 con la segunda parte del objetivo cuando está formada por dos
 constructores. Esta táctica incluyes las reglas de introducción de la
 disyunción.
 
 Continuando la formalización de uno de los ejemplos que se ha presentado en la
-explicación de la táctica \tactica{cases}{cases} (en concreto el usado para
+explicación de la táctica \dtactica{cases}{cases} (en concreto el usado para
 ilustrar la regla de eliminación de la disyunción), se puede ver muy bien el
-uso de las tácticas \tactica{left / right}{left} y \tactica{left / right}{right}:
+uso de las tácticas \dtactica{left / right}{left} y \dtactica{left / right}{right}:
 \begin{leancode}
 example (P Q : Prop): P ∨ Q → Q ∨ P :=
 begin
   intro hpq,
   cases hpq with hp hq,
-  {right,
-  exact hp,},
-  {left,
-  exact hq,},
+  { right,
+    exact hp,},
+  { left,
+    exact hq,},
 end
 \end{leancode}
-\comentario{He modificado este ejemplo también. Me parece más visual}
 
 \section{Táctica library search}
 
-La táctica \tactica{library_search}{library\_search} es una táctica que
+La táctica \dtactica{library_search}{library\_search} es una táctica que
 para llevar a cabo formalizaciones de pruebas en Lean es muy útil. Esta
 táctica se suele utilizar cuando estamos cerca de concluir la
 demostración y no sabemos qué lema auxiliar utilizar o si existe alguno
-o no, \tactica{library_search} {library\_search} nos da esta
+o no, \dtactica{library_search} {library\_search} nos da esta
 información. En el caso de que haya un lema mediante el cual se pueda
 probar el resultado o una prueba medio directa, esta táctica nos la
 proporciona; mientras que en el caso de que no sea capaz de encontrarlo
 pues no nos proporciona ninguna respuesta.
 
 Por ejemplo, en uno de los ejemplos propuestos analizar la táctica
-\tactica{intro / intros}{intro}, se puede ver muy bien el uso de esta
+\dtactica{intro / intros}{intro}, se puede ver muy bien el uso de esta
 táctica:
 
 \begin{leancode}
@@ -514,12 +510,12 @@ end
 \end{leancode}
 
 Se puede observar que es una formalización diferente a la propuesta en
-el ejemplo de la táctica \tactica{intro / intros}{intro} e incluso me
+el ejemplo de la táctica \dtactica{intro / intros}{intro} e incluso me
 atrevería a decir que más elegante.
 
 \section{Táctica norm num}
 
-La táctica \tactica{norm_num}{norm\_num} es capaz de probar de manera
+La táctica \dtactica{norm_num}{norm\_num} es capaz de probar de manera
 directa multitud de igualdades y desigualdades.
 
 Por ejemplo, la siguiente igualdad la prueba en un solo paso:
@@ -531,7 +527,7 @@ begin
 end
 \end{leancode}
 
-En el ejemplo que se presena ahora, la táctica \tactica{norm_num}{norm\_num} es
+En el ejemplo que se presena ahora, la táctica \dtactica{norm_num}{norm\_num} es
 capaz de probar la siguiente desigualdad:
 \begin{leancode}
 example : (73 : ℝ) < 789/2 :=
@@ -542,8 +538,8 @@ end
 
 \section{Táctica refine}
 
-La táctica \tactica{refine}{refine} funciona de manera totalmente
-análoga a como lo hace la táctica \tactica{exact}{exact}; no obstante,
+La táctica \dtactica{refine}{refine} funciona de manera totalmente
+análoga a como lo hace la táctica \dtactica{exact}{exact}; no obstante,
 en esta nueva táctica se puede escribir \(\_\) como huecos que pueden
 ser rellenados. Tras el uso de esta táctica, se pasará a tener tantos
 objetivos como huecos se hayan puesto.
@@ -560,7 +556,7 @@ end
 
 \section{Táctica ring}
 
-La táctica \tactica{ring}{ring} en Lean es una táctica muy útil puesto que es
+La táctica \dtactica{ring}{ring} en Lean es una táctica muy útil puesto que es
 capaz de resolver las ecuaciones cuando se está trabajando con anillos
 (semi) conmutativos.
 
@@ -577,7 +573,7 @@ end
 
 \section{Táctica simp}
 
-La táctica \tactica{simp}{simp} lo que hace es simplificar el objetivo a probar
+La táctica \dtactica{simp}{simp} lo que hace es simplificar el objetivo a probar
 haciendo uso de lemas ya definidos en Lean. En el ejemplo planteado se ve muy
 claro:
 \begin{leancode}
@@ -588,18 +584,18 @@ begin
 end
 \end{leancode}
 
-Mediante el uso de la táctica \tactica{simp}{simp} se ha simplificado el
+Mediante el uso de la táctica \dtactica{simp}{simp} se ha simplificado el
 objetivo a demostrar mediante el uso del lema auxiliar de cancelación. De esta
 manera, el objetivo a demostrar pasa a ser que el número \(b\) es cero.
 
 \section{Táctica simpa}
 
-La táctica \tactica{simpa}{simpa} es muy parecida a la táctica \tactica{simp}
+La táctica \dtactica{simpa}{simpa} es muy parecida a la táctica \dtactica{simp}
 {simp}; no obstante, la que se introduce ahora se trata de una táctica de
 conclusión de los resultados.
 
-El mismo ejemplo que se ha propuesto para la táctica \tactica{simp}{simp} es
-válido para la táctica \tactica{simpa}{simpa} y es más, con esta última se
+El mismo ejemplo que se ha propuesto para la táctica \dtactica{simp}{simp} es
+válido para la táctica \dtactica{simpa}{simpa} y es más, con esta última se
 concluye el resultado de manera directa. Veámoslo:
 
 \begin{leancode}
@@ -611,13 +607,13 @@ end
 
 \section{Táctica suggest}
 
-En general, cuando la táctica \tactica{library_search}{library\_search} no es
+En general, cuando la táctica \dtactica{library_search}{library\_search} no es
 capaz de solucionarlos el problema y no sabemos cómo continuar con la
-formalización en Lean del resultado, se suele usar la táctica \tactica{suggest}
+formalización en Lean del resultado, se suele usar la táctica \dtactica{suggest}
 {suggest}. Cuando se usa esta táctica en la formalización de un resultado, se
 nos proporciona una lista de posibles vías de continuar la formalización. En
 general, la mayoría de las posibilidades propuestas hacen uso de la táctica
-\tactica{refine}{refine} ya descrita.
+\dtactica{refine}{refine} ya descrita.
 
 Veamos el uso de esta táctica con un ejemplo:
 
@@ -629,8 +625,8 @@ begin
 end
 \end{leancode}
 
-Destacar que la táctica \tactica{suggest}{suggest} no es capaz de probar el
-resultado, de ahí que se añada la táctica \tactica{sorry}{sorry}. Algunas de
+Destacar que la táctica \dtactica{suggest}{suggest} no es capaz de probar el
+resultado, de ahí que se añada la táctica \dtactica{sorry}{sorry}. Algunas de
 las propuestas que se nos hace en el ejemplo propuesto son las siguientes:
 
 \begin{leancode}
@@ -668,18 +664,20 @@ end
 
 \section{Táctica specialize}
 
-La táctica \tactica{specialize}{specialize} actúa sobre una hipótesis
-determinada y su función consiste en concretar los términos que en la hipótesis
-son generales o universales por los que el usuario imponga.
+La táctica \dtactica{specialize}{specialize} actúa sobre una hipótesis
+determinada y su función consiste en concretar los términos que en la
+hipótesis son generales o universales por los que el usuario
+imponga. Esta táctica se corresponde con la regla de eliminación del
+cuantificador universal.
 
-Para ver mejor cómo funciona esta hipótesis, planteemos un ejemplo:
+Para ver mejor cómo funciona, planteemos un ejemplo:
 \begin{leancode}
 lemma unique_max
-(A : set ℝ)
-(x y : ℝ)
-(hx : x is_a_max_of A)
-(hy : y is_a_max_of A) : 
-x = y :=
+  (A : set ℝ)
+  (x y : ℝ)
+  (hx : x is_a_max_of A)
+  (hy : y is_a_max_of A) :
+  x = y :=
 begin
   cases hx with x_in x_up,
   cases hy with y_in y_up,
@@ -691,21 +689,19 @@ end
 \end{leancode}
 
 Se puede observar que en el primer uso de la táctica
-\tactica{specialize}{specialize}, se ha particularizado la hipótesis x\(\_\)up
+\dtactica{specialize}{specialize}, se ha particularizado la hipótesis x\(\_\)up
 para el número real \(y\) considerado.
 
 De manera totalmente análoga se tiene en los dos siguientes usos de la táctica
-\tactica{specialize}{specialize}.
-
-
+\dtactica{specialize}{specialize}.
 
 \section{Táctica push neg}
 
-La táctica \tactica{push_neg}{push\_neg} puede ser aplicada sobre una hipótesis
-o sobre el propio objetivo a demostrar. Básicamente, lo que hace esta táctica es
-que cuando se tiene la negación de un cierto hecho, lo convierte en un hecho
-sin negación pero con el mismo significado y manteniendo el nombre de las
-variables.
+La táctica \dtactica{push_neg}{push\_neg} puede ser aplicada sobre una
+hipótesis o sobre el propio objetivo a demostrar. Básicamente, lo que
+hace esta táctica es que cuando se tiene la negación de un cierto hecho,
+lo convierte en un hecho interiorizando la negación pero con el mismo
+significado y manteniendo el nombre de las variables.
 
 \begin{leancode}
 example {x y : ℝ} : (∀ ε > 0, y ≤ x + ε) →  y ≤ x :=
@@ -718,26 +714,27 @@ end
 \end{leancode}
 
 Se puede observar que la hipótesis H es la negación de que \(y\) sea menor o
-igual que \(x\). Tras la aplicación de la táctica \tactica{push_neg}{push\_neg},
+igual que \(x\). Tras la aplicación de la táctica \dtactica{push_neg}{push\_neg},
 esta hipótesis se convierte en considerar que \(x\) es menor estrictamente que
-\(y\). 
+\(y\).
 
 \section{Táctica congr'}
 
 La última táctica que se va a detallar en este apéndice es la táctica
-\tactica{congr'}{congr'}, la cual sólo ha sido utilizada una vez en el
-desarrollo del trabajo. La táctica \tactica{congr'}{congr'} es una táctica muy
-parecida a \tactica{congr}{congr} pero menos agresiva que esta última.
+\dtactica{congr'}{congr'}, la cual sólo ha sido utilizada una vez en el
+desarrollo del trabajo. La táctica \dtactica{congr'}{congr'} es una
+táctica muy parecida a \dtactica{congr}{congr} pero menos agresiva que
+esta última.
 
-Estas tácticas intentan demostrar el objetivo cuando se trata de una igualdad
-devolviendo unos determinados subojetivos a probar. La táctica
-\tactica{congr'}{congr'} hace uso de un argumento opcional que es el de la
-recursividad de las funciones.
+Estas tácticas intentan demostrar el objetivo cuando se trata de una
+igualdad devolviendo unos determinados subojetivos a probar. La táctica
+\dtactica{congr'}{congr'} hace uso de un argumento opcional que es el de
+la recursividad de las funciones.
 
-Veamos un ejemplo de la táctica \tactica{congr'}{congr'}:
+Veamos un ejemplo de la táctica \dtactica{congr'}{congr'}:
 
 \begin{leancode}
-variables (f g: ℝ → ℝ) 
+variables (f g: ℝ → ℝ)
 example {x y : ℝ} : f (g (x + y)) = f (g (y + x)):=
 begin
   congr',
@@ -746,7 +743,7 @@ begin
 end
 \end{leancode}
 
-Se puede observar que tras aplicar la táctica \tactica{congr'}{congr'} el
+Se puede observar que tras aplicar la táctica \dtactica{congr'}{congr'} el
 objetivo a probar pasa a dividirse en dos: por un lado, probar que el número
 \(x\) es igual a \(y\) y por otro que \(y\) es igual a \(x\).
 
@@ -756,6 +753,3 @@ En este apéndice se han detallado todas las tácticas que se han utilizado en
 el desarrollo del trabajo; no obstante, existen muchas más tácticas que pueden
 ser utilizadas en las formalizaciones en Lean. En \cite{tactic} es un buen
 lugar para ver y estudiar las tácticas que se pueden usar en Lean.
-
-\comentario{He añadido las tácticas specialize, push neg y congr' que se usan
-en el capítulo de elementos y también esta última sección}
