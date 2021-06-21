@@ -89,7 +89,7 @@ problemas que se presentan a continuación:
 \begin{itemize}
 \item \textbf{IMO 1959 Q1}
 
-  El enuncuiado de este problemas es el siguiente:
+  El enunciado de este problemas es el siguiente:
 
   Demostrar que la fracción
   \[\frac{21⋅n+4}{14⋅n+3}\]
@@ -97,22 +97,17 @@ problemas que se presentan a continuación:
 
   La demostración que en el trabajo se plantea consiste en probar que el
   denominador y el numerador de la fracción son coprimos para cualquier
-  número natural \(n\), lo cual es equivalente a probar que la fracción es
-  irreducible.
-
-  Entonces, se tiene que la formalización en Lean para resolver este ejercicio
-  es la siguiente:
+  número natural \(n\), lo cual es equivalente a probar que la fracción
+  es irreducible. Por tanto, el enunciado en Lean del ejercicio es la
+  siguiente:
   \begin{leancode}
-  theorem imo1959_q1 : ∀ n : ℕ, coprime (21 * n + 4) (14 * n + 3) 
+  theorem imo1959_q1 : ∀ n : ℕ, coprime (21 * n + 4) (14 * n + 3)
   \end{leancode}
-
-  Asimismo, mencionar que la formalización en la que se ha basado la que se
-  plantea en el trabajo se encuentra disponible en \cite{KL}.
 
 \item \textbf{IMO 1962 Q4}
 
   En este caso, el enunciado del problema en consideración es:
-  
+
   Resolver la ecuación
   \[\cos²(x)+\cos²(2x)+\cos²(3x)=1. \]
 
@@ -120,16 +115,19 @@ problemas que se presentan a continuación:
 
   \begin{leancode}
   theorem imo1962_q4
-  {x : ℝ}
-  : problema x ↔ x ∈ Solucion
+    {x : ℝ}
+    : problema x ↔ x ∈ Solucion
   \end{leancode}
+  donde, previamente, se han definido problema como la función que se
+  quiere resolver y el conjunto Solucion que se corresponde con las
+  soluciones del problema. Su formalización en Lean es
+  \begin{leancode}
+  def problema (x : ℝ) : Prop :=
+    cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
 
-  Se tiene que la función problema ha sido definida como la función que se
-  quiere resolver planteada antes y el conjunto Solucion, como su propio nombre
-  indica, se corresponde con las soluciones del problema.
-  
-  La formalización en la que se ha basado la que se propone en el trabajo
-  es la que ha sido desarrollada en \cite{KLHM}.
+  def Solucion : set ℝ :=
+    {x : ℝ | ∃ k : ℤ, x = (2*k+1)*π/4 ∨ x = (2*k+1)*π/6}
+  \end{leancode}
 
 \item \textbf{IMO 1977 Q6}
 
@@ -149,17 +147,13 @@ problemas que se presentan a continuación:
     (h : ∀ n, f (f n) < f (n + 1))
     : ∀ n, f n = n
   \end{leancode}
-    
-  Para llevar a cabo el desarrollo de este problema nos hemos basado en la
-  propuesta llevado a cabo en \cite{TC}.
-
 
 \item \textbf{IMO 2001 Q2}
 
   El último problema que se formaliza en esta sección del trabajo posee el
   siguiente enunciado:
 
-  Consideremos \(a\), \(b\) y \(c\) tres números reales y positivos
+  Consideremos \(a\), \(b\) y \(c\) tres números reales positivos
   cualesquiera. Demostrar que
   \begin{equation*}
     \frac{a}{\sqrt{a²+8bc}} +
@@ -178,10 +172,7 @@ problemas que se presentan a continuación:
           b / sqrt (b ^ 2 + 8 * c * a) +
           c / sqrt (c ^ 2 + 8 * a * b)
   \end{leancode}
-      
-  En este caso, la formalización en la que se ha basado la planteado
-  en el trabajo es muy reciente (en concreto, ha sido realizada este año 2021)
-  y se puede encontrar en \cite{TCC}.
+
 \end{itemize}
 
 Todos estos capítulos que se han desarrollado previamente, han permitido
