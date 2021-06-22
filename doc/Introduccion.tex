@@ -86,94 +86,117 @@ correspondiente formalización en Lean, en cada problema se plantea su
 resolución en lenguaje natural para que el lector pueda entender y ver
 la analogía entre ambas. En concreto se han estudiado los siguientes
 problemas que se presentan a continuación:
+
+\textbf{IMO 1959 Q1}
+
+\noindent
+Demostrar que la fracción
+\[\frac{21⋅n+4}{14⋅n+3}\]
+es irreducible para cualquier número natural \(n\).
+
+Probar que una fracción es irreducible es equivalente a demostrar que el
+numerador y el denominador de dicha fracción son coprimos entre sí, esto es,
+que el máximo común divisor que estos poseen es \(1\). Esta es la demostración
+que se plantea en el trabajo. 
+
+La demostración se puede dividir en dos partes principales:
 \begin{itemize}
-\item \textbf{IMO 1959 Q1}
+\item En primer lugar, se prueba que si existe un número natural \(k\) que
+  divide al numerador y que también divide al denominador, entonces dicho número
+  \(k\) divide a \(1\). Esta prueba se formaliza en Lean mediante un lema auxiliar.
 
-  El enunciado de este problemas es el siguiente:
-
-  Demostrar que la fracción
-  \[\frac{21⋅n+4}{14⋅n+3}\]
-  es irreducible para cualquier número natural \(n\).
-
-  La demostración que en el trabajo se plantea consiste en probar que el
-  denominador y el numerador de la fracción son coprimos para cualquier
-  número natural \(n\), lo cual es equivalente a probar que la fracción
-  es irreducible. Por tanto, el enunciado en Lean del ejercicio es la
-  siguiente:
-  \begin{leancode}
-  theorem imo1959_q1 : ∀ n : ℕ, coprime (21 * n + 4) (14 * n + 3)
-  \end{leancode}
-
-\item \textbf{IMO 1962 Q4}
-
-  En este caso, el enunciado del problema en consideración es:
-
-  Resolver la ecuación
-  \[\cos²(x)+\cos²(2x)+\cos²(3x)=1. \]
-
-  Cuyo enunciado en Lean se ha planteado de la siguiente manera:
-
-  \begin{leancode}
-  theorem imo1962_q4
-    {x : ℝ}
-    : problema x ↔ x ∈ Solucion
-  \end{leancode}
-  donde, previamente, se han definido problema como la función que se
-  quiere resolver y el conjunto Solucion que se corresponde con las
-  soluciones del problema. Su formalización en Lean es
-  \begin{leancode}
-  def problema (x : ℝ) : Prop :=
-    cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
-
-  def Solucion : set ℝ :=
-    {x : ℝ | ∃ k : ℤ, x = (2*k+1)*π/4 ∨ x = (2*k+1)*π/6}
-  \end{leancode}
-
-\item \textbf{IMO 1977 Q6}
-
-  Este problema tiene el siguiente enunciado:
-
-  Considere la función
-  \(f:ℕ⁺ → ℕ⁺\) satisfaciendo que
-  \[f(f(n)) < f(n+1)\]
-  para cualquier número \(n\). Probar que para todo número
-  natural positivo \(n\) se verifica que
-  \[f(n) = n.\]
-
-  En Lean esto se ha formalizado de la siguiente manera:
-  \begin{leancode}
-  theorem imo1977_q6
-    (f : ℕ+ → ℕ+)
-    (h : ∀ n, f (f n) < f (n + 1))
-    : ∀ n, f n = n
-  \end{leancode}
-
-\item \textbf{IMO 2001 Q2}
-
-  El último problema que se formaliza en esta sección del trabajo posee el
-  siguiente enunciado:
-
-  Consideremos \(a\), \(b\) y \(c\) tres números reales positivos
-  cualesquiera. Demostrar que
-  \begin{equation*}
-    \frac{a}{\sqrt{a²+8bc}} +
-    \frac{b}{\sqrt{b²+8ca}} +
-    \frac{c}{\sqrt{c²+8ab}} ≥ 1.
-  \end{equation*}
-
-  La formalización en Lean del enunciado del teorema es bastante directa:
-
-  \begin{leancode}
-  theorem imo2001_q2
-    (ha : 0 < a)
-    (hb : 0 < b)
-    (hc : 0 < c)
-    : 1 ≤ a / sqrt (a ^ 2 + 8 * b * c) +
-          b / sqrt (b ^ 2 + 8 * c * a) +
-          c / sqrt (c ^ 2 + 8 * a * b)
-  \end{leancode}
-
+\item En segundo lugar, una vez ya se tiene que el divisor común del numerador y
+  el denominador divide a \(1\), se puede concluir el resultado deseado muy
+  fácilmente: basta con usar un lema que se encuentra en una de las librerías de
+  mathlib.
 \end{itemize}
+
+Como se verá en la sección \ref{q159} del trabajo de manera más detallada, el
+teorema principal mediante el cual se ha formalizado el ejercicio en Lean, es el
+que se presenta a continuación:
+\begin{leancode}
+theorem imo1959_q1 : ∀ n : ℕ, coprime (21 * n + 4) (14 * n + 3)
+\end{leancode}
+
+Asimismo, como se ha comentado, en la formalización de este resultado se ha hecho
+uso de un lema auxiliar y es el que nos dice que si existe un número \(k\) que
+divida al numerador y al denominador de la fracción, entonces dicho número divide
+a \(1\). Su formalización en Lean ha sido necesaria para la conclusión del
+ejercicio y es la siguiente:
+\begin{leancode}
+lemma Auxiliar
+  (n k : ℕ)
+  (h1 : k ∣ 21 * n + 4)
+  (h2 : k ∣ 14 * n + 3)
+  : k ∣ 1
+\end{leancode}
+
+\textbf{IMO 1962 Q4}
+
+\noindent
+Resolver la ecuación
+\[\cos²(x)+\cos²(2x)+\cos²(3x)=1. \]
+
+Cuyo enunciado en Lean se ha planteado de la siguiente manera:
+
+\begin{leancode}
+theorem imo1962_q4
+  {x : ℝ}
+  : problema x ↔ x ∈ Solucion
+\end{leancode}
+donde, previamente, se han definido problema como la función que se
+quiere resolver y el conjunto Solucion que se corresponde con las
+soluciones del problema. Su formalización en Lean es
+\begin{leancode}
+def problema (x : ℝ) : Prop :=
+  cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
+
+def Solucion : set ℝ :=
+  {x : ℝ | ∃ k : ℤ, x = (2*k+1)*π/4 ∨ x = (2*k+1)*π/6}
+\end{leancode}
+
+\textbf{IMO 1977 Q6}
+
+\noindent
+Considere la función
+\(f:ℕ⁺ → ℕ⁺\) satisfaciendo que
+\[f(f(n)) < f(n+1)\]
+para cualquier número \(n\). Probar que para todo número
+natural positivo \(n\) se verifica que
+\[f(n) = n.\]
+
+En Lean esto se ha formalizado de la siguiente manera:
+\begin{leancode}
+theorem imo1977_q6
+  (f : ℕ+ → ℕ+)
+  (h : ∀ n, f (f n) < f (n + 1))
+  : ∀ n, f n = n
+\end{leancode}
+
+\textbf{IMO 2001 Q2}
+
+\noindent
+Consideremos \(a\), \(b\) y \(c\) tres números reales positivos
+cualesquiera. Demostrar que
+\begin{equation*}
+  \frac{a}{\sqrt{a²+8bc}} +
+  \frac{b}{\sqrt{b²+8ca}} +
+  \frac{c}{\sqrt{c²+8ab}} ≥ 1.
+\end{equation*}
+
+La formalización en Lean del enunciado del teorema es bastante directa:
+
+\begin{leancode}
+theorem imo2001_q2
+  (ha : 0 < a)
+  (hb : 0 < b)
+  (hc : 0 < c)
+  : 1 ≤ a / sqrt (a ^ 2 + 8 * b * c) +
+        b / sqrt (b ^ 2 + 8 * c * a) +
+        c / sqrt (c ^ 2 + 8 * a * b)
+\end{leancode}
+
+
 
 Todos estos capítulos que se han desarrollado previamente, han permitido
 adquirir los conocimientos y la destreza suficiente como para formalizar un
