@@ -639,7 +639,7 @@ dos lemas diferentes:
     mínimo factor primo de \(m\). Además, estos números verifican las
     siguientes tres hipótesis:
     \begin{align}
-      &\text{primo}(p),\label{hpintro}\tag{hp}\\
+      &\text{primo}(p),\label{hpintro2}\tag{hp}\\
       &¬p ≥ n,         \tag{h}\label{hintro}\\
       &p | (n!+1).     \tag{h1}\label{h11intro}
     \end{align}
@@ -772,7 +772,7 @@ end
 
 \item \textbf{Demostración y formalización del hecho hp}
 
-  A continuación, se demostrará el hecho (\ref{hpintro}) bajo las hipótesis
+  A continuación, se demostrará el hecho (\ref{hpintro2}) bajo las hipótesis
   del problema. Este nuevo lema podría ser enunciado de la siguiente manera:
   \begin{lema}
     Sean \(n\), \(m\) y \(p\) números naturales tales que verifican las dos
@@ -922,12 +922,12 @@ begin
   linarith,
 end
     \end{leancode}
-    Ya se tendría demostrada entonces la hipótesis (\ref{hpintro}).
+    Ya se tendría demostrada entonces la hipótesis (\ref{hpintro2}).
   \end{demostracion}
 \end{itemize}
 
 Al haber demostrado y formalizado las hipótesis (\ref{h2intro}) y
-(\ref{hpintro}) ya se tendría completada la prueba de que existen infitos
+(\ref{hpintro2}) ya se tendría completada la prueba de que existen infinitos
 números primos naturales. Bastaría con incluir las demostraciones realizadas
 en la formalización principal:
 \begin{leancode}
@@ -958,7 +958,7 @@ begin
 
 Para finalizar de manera completa la formalización en Lean de este resultado
 faltaría un último paso. Este paso consiste en tratar de reducir las
-demostraciones de algunos hechos; en concreto, los hechos (\ref{hpintro}) y
+demostraciones de algunos hechos; en concreto, los hechos (\ref{hpintro2}) y
 (\ref{h2intro}) son los que podrían ser simplificados. Para ello, se hace
 uso de la táctica \tactica{show_term}{show\_term} de la siguiente manera:
 \begin{leancode}
@@ -987,7 +987,7 @@ begin
 end
 \end{leancode}
 
-En el caso del hecho (\ref{hpintro}) la propuesta que nos hace Lean no es óptima
+En el caso del hecho (\ref{hpintro2}) la propuesta que nos hace Lean no es óptima
 y por eso mismo la desestimamos; mientras la que hace para el hecho
 (\ref{h2intro}) sí lo es y la introducimos en nuestra formalización. Entonces,
 se tiene que la formalización del teorema final sería:

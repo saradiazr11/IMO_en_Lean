@@ -59,6 +59,18 @@ IMO. Para llevar a cabo este trabajo nos hemos basado en el artículo
 estudiaron de manera teórica y formalizaron en el programa Isabelle/HOL
 problemas de las IMO.
 
+Destacar que el trabajo que aquí se expone se encuentra disponible en
+su totalidad en el siguiente repositorio de GitHub:
+
+\begin{center}
+\href{https://github.com/saradiazr11/IMO_en_Lean}{Repositorio IMO en Lean}
+\end{center}
+
+A continnuación, se va a detallar la estructura que se ha propuesto en
+el trabajo:
+
+\section{Primer capítulo}
+
 El trabajo se ha comenzando con una \textbf{introducción a Lean},
 (\ref{cap1}), donde se ha descrito brevemente esta herramienta y también
 su librería matemática \textbf{mathlib}. Asimismo, en este capítulo se
@@ -66,6 +78,8 @@ desarrolla la \textbf{formalización de una prueba} de manera muy
 detallada: explicando y justificando cada paso de la formalización, para
 que de esta manera se pueda comprender la estructura de las
 formalizaciones.
+
+\section{Segundo capítulo}
 
 A continuación, en el capítulo llamado \textbf{elementos de matemáticas
   en Lean}, (\ref{cap2}), se plantean varias formalizaciones sobre lemas
@@ -80,6 +94,8 @@ con ayuda del tutorial \cite{tutor} que realicé junto con
   de juego de manera que a medida que avanzas en él se introducen más
   técnicas de demostración que se deben ir utilizando.}.
 
+\section{Tercer capítulo}
+
 El siguiente capítulo es el más extenso del trabajo y es en el que se
 detallan varias \textbf{formalizaciones en Lean de problemas de las IMO}
 que ya han sido formalizados con anterioridad (\ref{cap3}). Además de la
@@ -88,7 +104,7 @@ resolución en lenguaje natural para que el lector pueda entender y ver
 la analogía entre ambas. En concreto se han estudiado los siguientes
 problemas que se presentan a continuación:
 
-\textbf{IMO 1959 Q1}
+\subsection{IMO 1959 Q1}
 
 \noindent
 Demostrar que la fracción
@@ -113,7 +129,7 @@ La demostración se puede dividir en dos partes principales:
   encuentra en una de las librerías de mathlib.
 \end{itemize}
 
-Como se verá en la sección \ref{q159} del trabajo de manera más
+Como se verá en la sección \ref{inq159} del trabajo de manera más
 detallada, el teorema principal mediante el cual se ha formalizado el
 ejercicio en Lean, es el que se presenta a continuación:
 \begin{leancode}
@@ -133,11 +149,11 @@ lemma Auxiliar
   : k ∣ 1
 \end{leancode}
 
-\textbf{IMO 1962 Q4}
+\subsection{IMO 1962 Q4}
 
 \noindent
 Resolver la ecuación
-\begin{equation}\label{ecuacionq4}
+\begin{equation}\label{iecuacionq4}
   \cos²(x)+\cos²(2x)+\cos²(3x)=1.
 \end{equation}
 
@@ -147,7 +163,7 @@ auxiliares.
 
 En primer lugar se ha definido la propiedad \textbf{problema} para
 referirnos a la ecuación que se quiere resolver, esto es,
-(\ref{ecuacionq4}). En Lean esto se ha formalizado de la siguiente
+(\ref{iecuacionq4}). En Lean esto se ha formalizado de la siguiente
 manera:
 \begin{leancode}
 def problema (x : R) : Prop :=
@@ -228,7 +244,7 @@ theorem imo1962_q4
   : problema x ↔ x ∈ Solucion
 \end{leancode}
 
-\textbf{IMO 1977 Q6}
+\subsection{IMO 1977 Q6}
 
 \noindent
 Considere la función
@@ -274,12 +290,12 @@ necesario probar que la función así definida verifica las hipótesis del
 teorema, lo cual se comprueba de manera muy sencilla diferenciando por
 casos.
 
-\textbf{IMO 2001 Q2}
+\subsection{IMO 2001 Q2}
 
 \noindent
 Consideremos \(a\), \(b\) y \(c\) tres números reales positivos
 cualesquiera. Demostrar que
-\begin{equation}\label{introq2}
+\begin{equation}\label{iintroq2}
   \frac{a}{\sqrt{a²+8bc}} +
   \frac{b}{\sqrt{b²+8ca}} +
   \frac{c}{\sqrt{c²+8ab}} ≥ 1.
@@ -304,7 +320,7 @@ auxiliar han sido necesarios a su vez otros dos lemas.
 El teorema auxiliar mediante el cual se ha podido resolver el último
 ejercicio del capítulo consiste en probar que bajo las hipótesis del
 problema se tiene la siguiente desigualdad:
-\begin{equation}\label{introteoraux}
+\begin{equation}\label{iintroteoraux}
    1 ≤ \frac{a³}{\sqrt{(a³)²+8b³c³}}+\frac{b³}{\sqrt{(b³)²+8c³a³}}+
     \frac{c³}{\sqrt{(c³)²+8a³b³}}.
 \end{equation}
@@ -320,17 +336,19 @@ theorem imo2001_q2_aux
         c ^ 3 / sqrt ((c ^ 3) ^ 2 + 8 * a ^ 3 * b ^ 3)
 \end{leancode}
 
-Si se observan de manera detallada las expresiones (\ref{introq2}) y
-(\ref{introteoraux}), se tiene que considerando los números reales
+Si se observan de manera detallada las expresiones (\ref{iintroq2}) y
+(\ref{iintroteoraux}), se tiene que considerando los números reales
 \((a^{3})^{-1}\), \((b^{3})^{-1}\) y \((c^{3})^{-1}\) en
-(\ref{introteoraux}) se llega directamente a (\ref{introq2}).
+(\ref{iintroteoraux}) se llega directamente a (\ref{iintroq2}).
+
+\section{Cuarto capítulo}
 
 Todos estos capítulos que se han desarrollado previamente, han permitido
 adquirir los conocimientos y la destreza suficiente como para formalizar
 un problema que no haya sido formalizado con anterioridad. Entonces, en
 el último capítulo del trabajo se ha llevado a cabo la
 \textbf{formalización en Lean de un nuevo problema que no se había
-formalizadoantes}, (\ref{cap4}). En concreto, el problema que se ha
+formalizado antes}, (\ref{cap4}). En concreto, el problema que se ha
 formalizado en este capítulo es el Q6 correspondiente al año 2001. El
 problema que en este capítulo se ha estudiado posee el siguiente
 enunciado:
@@ -338,7 +356,7 @@ enunciado:
 \noindent
 Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
 \(a > b > c > d > 0\). Supongamos que
-\begin{equation}\label{introhipotesis}\tag{h}
+\begin{equation}\label{ihipotesis}\tag{h}
   ac+bd = (a+b-c+d)(-a+b+c+d).
 \end{equation}
 Demostrar que \(ab+cd\) no es primo.
@@ -359,7 +377,7 @@ theorem imo2001q6
 Para llevar acabo tal formalización en Lean he hecho uso de cinco lemas
 auxiliares. Expangamos estos cinco resultados:
 \begin{enumerate}
-\item Bajo la hipótesis (\ref{introhipotesis}) del problema, se tiene
+\item Bajo la hipótesis (\ref{ihipotesis}) del problema, se tiene
   que los cuatro números enteros descritos verifican la siguiente
   igualdad:
   \begin{equation*}
@@ -373,7 +391,7 @@ auxiliares. Expangamos estos cinco resultados:
     : b^2 + b*d + d^2 = a^2 - a*c + c^2
   \end{leancode}
 
-\item Bajos la misma hipótesis (\ref{introhipotesis}) del problema,
+\item Bajos la misma hipótesis (\ref{ihipotesis}) del problema,
   probamos que los cuatro números enteros descritos verifican la
   siguiente expresión:
   \begin{equation*}
@@ -453,17 +471,13 @@ Estudiando ambas posibilidades se llega a contradicción como
 consecuencia de las dos desigualdades que se han introducido en los
 resultados auxiliares.
 
+\section{Apéndice A}
+
 Finalmente, en el apéndice \ref{apentacti} se han explicado todas
 las tácticas de Lean que se han usado en el trabajo y en el índice de
 lemas se han indicado los lemas usados.
 
-\comentario{Se confunden las referencias a las ecuaciones y a los
-  diferentes capítulos}
 
-\comentario{Quedaría mejor una distinción de secciones. Por ejemplo
-  cuando decimos "Todos estos capítulos que se han desarrollado
-  previamente..." no sé si está muy seguido de la conclusión de los
-  problemas}
 
 %%% Local Variables:
 %%% mode: latex
