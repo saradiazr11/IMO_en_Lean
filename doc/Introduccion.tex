@@ -12,13 +12,14 @@ En el proyecto
 se plantea construir un sistema de Inteligencia Artificial que sea capaz
 de ganar la medalla de oro en esta competición.
 
-Con el objetivo de eliminar la ambigüedad que existe a la hora de comprobar si
-las diversas soluciones propuestas a los ejercicios son correctas o no y qué
-puntación hay que concederle a cada una, se plantea la variante de las IMO
-que se conoce como formal--to--formal (F2F), \cite{challenge}. Básicamente, esta
-variante consiste en que recibe el enunciado y la solución al problema, ambos
-formalizados en Lean y comprueba si la solución proporcionada es correcta o no
-según las reglas estipuladas.
+Con el objetivo de eliminar la ambigüedad que existe a la hora de
+comprobar si las diversas soluciones propuestas a los ejercicios son
+correctas o no y qué puntación hay que concederle a cada una, se plantea
+la variante de las IMO que se conoce como formal--to--formal (F2F),
+\cite{challenge}. Básicamente, esta variante consiste en que recibe el
+enunciado y la solución al problema, ambos formalizados en Lean y
+comprueba si la solución proporcionada es correcta o no según las reglas
+estipuladas.
 
 Lean es un demostrador interactivo, mediante el cual se pueden comprobar
 si los resultados o demostraciones que se proponen a un problema son
@@ -95,34 +96,35 @@ Demostrar que la fracción
 es irreducible para cualquier número natural \(n\).
 
 Probar que una fracción es irreducible es equivalente a demostrar que el
-numerador y el denominador de dicha fracción son coprimos entre sí, esto es,
-que el máximo común divisor que estos poseen es \(1\). Esta es la demostración
-que se plantea en el trabajo. 
+numerador y el denominador de dicha fracción son coprimos entre sí, esto
+es, que el máximo común divisor que estos poseen es \(1\). Esta es la
+demostración que se plantea en el trabajo.
 
 La demostración se puede dividir en dos partes principales:
 \begin{itemize}
-\item En primer lugar, se prueba que si existe un número natural \(k\) que
-  divide al numerador y que también divide al denominador, entonces dicho número
-  \(k\) divide a \(1\). Esta prueba se formaliza en Lean mediante un lema auxiliar.
+\item En primer lugar, se prueba que si existe un número natural \(k\)
+  que divide al numerador y que también divide al denominador, entonces
+  dicho número \(k\) divide a \(1\). Esta prueba se formaliza en Lean
+  mediante un lema auxiliar.
 
-\item En segundo lugar, una vez ya se tiene que el divisor común del numerador y
-  el denominador divide a \(1\), se puede concluir el resultado deseado muy
-  fácilmente: basta con usar un lema que se encuentra en una de las librerías de
-  mathlib.
+\item En segundo lugar, una vez ya se tiene que el divisor común del
+  numerador y el denominador divide a \(1\), se puede concluir el
+  resultado deseado muy fácilmente: basta con usar un lema que se
+  encuentra en una de las librerías de mathlib.
 \end{itemize}
 
-Como se verá en la sección \ref{q159} del trabajo de manera más detallada, el
-teorema principal mediante el cual se ha formalizado el ejercicio en Lean, es el
-que se presenta a continuación:
+Como se verá en la sección \ref{q159} del trabajo de manera más
+detallada, el teorema principal mediante el cual se ha formalizado el
+ejercicio en Lean, es el que se presenta a continuación:
 \begin{leancode}
 theorem imo1959_q1 : ∀ n : ℕ, coprime (21 * n + 4) (14 * n + 3)
 \end{leancode}
 
-Asimismo, como se ha comentado, en la formalización de este resultado se ha hecho
-uso de un lema auxiliar y es el que nos dice que si existe un número \(k\) que
-divida al numerador y al denominador de la fracción, entonces dicho número divide
-a \(1\). Su formalización en Lean ha sido necesaria para la conclusión del
-ejercicio y es la siguiente:
+Asimismo, como se ha comentado, en la formalización de este resultado se
+ha hecho uso de un lema auxiliar y es el que nos dice que si existe un
+número \(k\) que divida al numerador y al denominador de la fracción,
+entonces dicho número divide a \(1\). Su formalización en Lean ha sido
+necesaria para la conclusión del ejercicio y es la siguiente:
 \begin{leancode}
 lemma Auxiliar
   (n k : ℕ)
@@ -139,15 +141,17 @@ Resolver la ecuación
   \cos²(x)+\cos²(2x)+\cos²(3x)=1.
 \end{equation}
 
-Este problema ha sido probablemente el más laborioso del trabajo: ha sido
-necesario demostrar y formalizar varios resultados y definiciones auxiliares.
+Este problema ha sido probablemente el más laborioso del trabajo: ha
+sido necesario demostrar y formalizar varios resultados y definiciones
+auxiliares.
 
-En primer lugar se ha definido la etiqueta \textbf{problema} para referirnos
-a la ecuación que se quiere resolver, esto es, (\ref{ecuacionq4}). En Lean
-esto se ha formalizado de la siguiente manera:
+En primer lugar se ha definido la propiedad \textbf{problema} para
+referirnos a la ecuación que se quiere resolver, esto es,
+(\ref{ecuacionq4}). En Lean esto se ha formalizado de la siguiente
+manera:
 \begin{leancode}
 def problema (x : R) : Prop :=
-cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
+  cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
 \end{leancode}
 
 A continuación, se ha definido una función que hemos notado como
@@ -159,23 +163,23 @@ A continuación, se ha definido una función que hemos notado como
 Esta definición se ha formalizado en Lean como:
 \begin{leancode}
 def funauxiliar (x : ℝ) : ℝ :=
-cos x * (cos x ^ 2 - 1/2) * cos (3 * x)
+  cos x * (cos x ^ 2 - 1/2) * cos (3 * x)
 \end{leancode}
 
-El siguiente paso en la demostración, ha consistido en probar que resolver la
-ecuación que nos interesa es equivalente a resolver la expresión obtenida de
-igualar (\ref{introaux}) a cero. En Lean esto lo hemos formalizado con el
-siguiente lema auxiliar:
+El siguiente paso en la demostración, ha consistido en probar que
+resolver la ecuación que nos interesa es equivalente a resolver la
+expresión obtenida de igualar (\ref{introaux}) a cero. En Lean esto lo
+hemos formalizado con el siguiente lema auxiliar:
 \begin{leancode}
 lemma Equivalencia
   {x : ℝ}
-  : problema x ↔ funauxiliar x = 0 
+  : problema x ↔ funauxiliar x = 0
 \end{leancode}
 
 Luego, se ha resuelto el problema equivalente. Se puede observar que
-como la \textbf{funAuxiliar} está factorizada e igualada a cero, hallar las
-correspondientes soluciones no es nada complicado. Es más, los dos casos
-en los que se verificará dicha ecuación será:
+como la \textbf{funAuxiliar} está factorizada e igualada a cero, hallar
+las correspondientes soluciones no es nada complicado. Es más, los dos
+casos en los que se verificará dicha ecuación será:
 \begin{itemize}
 \item El coseno al cuadrado de \(x\) sea igual a un medio.
 
@@ -189,10 +193,10 @@ lemma CasosSolucion
   : funauxiliar x = 0 ↔ cos x ^ 2 = 1/2 ∨ cos (3 * x) = 0
 \end{leancode}
 
-Una vez ya se ha demostrado en qué dos casos se verifica la expresión para
-resolver el problema, se ha estudiado cuáles son los números \(x\) que verifican
-dicha expresión. Esto se ha hecho con la formalización de los dos siguientes
-lemas:
+Una vez ya se ha demostrado en qué dos casos se verifica la expresión
+para resolver el problema, se ha estudiado cuáles son los números \(x\)
+que verifican dicha expresión. Esto se ha hecho con la formalización de
+los dos siguientes lemas:
 \begin{leancode}
 lemma SolucionCosenoCuadrado
   {x : R}
@@ -203,27 +207,26 @@ lemma SolucionCosenoTriple
   : cos (3 * x) = 0 ↔ ∃ k : Z, x = (2 * k + 1) * π / 6
 \end{leancode}
 
-Se puede observar que al estar trabajando con funciones trigonométricas, los
-valores para los que se verifican las diferentes igualdades son bien conocidos.
-Por tanto, se tiene ahora que definiendo el conjunto formado por todos los
-números que verifican una de las dos posibilidades planteadas ya se tendría
-el conjunto de soluciones del problema. La formalización de dicho conjunto es
-la siguiente:
+Se puede observar que al estar trabajando con funciones trigonométricas,
+los valores para los que se verifican las diferentes igualdades son bien
+conocidos.  Por tanto, se tiene ahora que definiendo el conjunto formado
+por todos los números que verifican una de las dos posibilidades
+planteadas ya se tendría el conjunto de soluciones del problema. La
+formalización de dicho conjunto es la siguiente:
 \begin{leancode}
 def Solucion : set R :=
-{x : R | ∃ k : Z, x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6}
+  {x : R | ∃ k : Z, x = (2 * k + 1) * π / 4 ∨ x = (2 * k + 1) * π / 6}
 \end{leancode}
 
-Finalmente, ya se tiene la conclusión del ejercicio y es que el conjunto de
-soluciones del problema se corresponde con el definido justo antes. En Lean se
-ha formalizado de la siguiente manera:
+Finalmente, ya se tiene la conclusión del ejercicio y es que el conjunto
+de soluciones del problema se corresponde con el definido justo
+antes. En Lean se ha formalizado de la siguiente manera:
 
 \begin{leancode}
 theorem imo1962_q4
   {x : ℝ}
   : problema x ↔ x ∈ Solucion
 \end{leancode}
-
 
 \textbf{IMO 1977 Q6}
 
@@ -235,7 +238,8 @@ para cualquier número \(n\). Probar que para todo número
 natural positivo \(n\) se verifica que
 \[f(n) = n.\]
 
-El correspondiente enunciado en Lean ha sido formalizado de la siguiente manera:
+El correspondiente enunciado en Lean ha sido formalizado de la siguiente
+manera:
 \begin{leancode}
 theorem imo1977_q6
   (f : ℕ+ → ℕ+)
@@ -243,12 +247,12 @@ theorem imo1977_q6
   : ∀ n, f n = n
 \end{leancode}
 
-Para llevar a cabo la demostración de este resultado sólo ha sido necesario el
-uso de un teorema auxiliar. Este teorema consiste en probar el mismo resultado
-que se plantea inicialmente y bajo las mismas hipótesis pero considerando
-que la función \(f\) está definida del conjunto de los natural al conjunto
-de los natural (es decir, no tienen porqué ser positivos). En Lean esto se ha
-formalizado como sigue:
+Para llevar a cabo la demostración de este resultado sólo ha sido
+necesario el uso de un teorema auxiliar. Este teorema consiste en probar
+el mismo resultado que se plantea inicialmente y bajo las mismas
+hipótesis pero considerando que la función \(f\) está definida del
+conjunto de los naturales al conjunto de los naturales (es decir, no
+tienen porqué ser positivos). En Lean esto se ha formalizado como sigue:
 \begin{leancode}
 theorem Extension
   (f : ℕ → ℕ)
@@ -256,8 +260,8 @@ theorem Extension
   : ∀ n, f n = n
 \end{leancode}
 
-Finalmente, para concluir el problema que deseamos basta con aplicar el teorema
-que acabamos de detallar sobre la siguiente función:
+Finalmente, para concluir el problema que deseamos basta con aplicar el
+teorema que acabamos de detallar sobre la siguiente función:
  \begin{equation}
     f_1(m)=\left\lbrace\begin{array}{ll}
                          f(m), & \text{si } m>0, \\
@@ -265,10 +269,11 @@ que acabamos de detallar sobre la siguiente función:
                        \end{array}\right.
 \end{equation}
 
-Destacar que para poder aplicar dicho teorema, previamente ha sido necesario
-probar que la función así definida verifica las hipótesis del teorema, lo cual
-se comprueba de manera muy sencilla diferenciando por casos.
-                   
+Destacar que para poder aplicar dicho teorema, previamente ha sido
+necesario probar que la función así definida verifica las hipótesis del
+teorema, lo cual se comprueba de manera muy sencilla diferenciando por
+casos.
+
 \textbf{IMO 2001 Q2}
 
 \noindent
@@ -292,18 +297,18 @@ theorem imo2001_q2
         c / sqrt (c ^ 2 + 8 * a * b)
 \end{leancode}
 
-Para formalizar este resultado sólo ha sido necesario el uso de un teorema
-auxiliar. No obstante, mencionar que para demostrar el teorema auxiliar han
-sido necesarios a su vez otros dos lemas.
+Para formalizar este resultado sólo ha sido necesario el uso de un
+teorema auxiliar. No obstante, mencionar que para demostrar el teorema
+auxiliar han sido necesarios a su vez otros dos lemas.
 
-El teorema auxiliar mediante el cual se ha podido resolver el último ejercicio
-del capítulo consiste en probar que bajo las hipótesis del problema se tiene
-la siguiente desigualdad:
+El teorema auxiliar mediante el cual se ha podido resolver el último
+ejercicio del capítulo consiste en probar que bajo las hipótesis del
+problema se tiene la siguiente desigualdad:
 \begin{equation}\label{introteoraux}
    1 ≤ \frac{a³}{\sqrt{(a³)²+8b³c³}}+\frac{b³}{\sqrt{(b³)²+8c³a³}}+
     \frac{c³}{\sqrt{(c³)²+8a³b³}}.
 \end{equation}
-  
+
 En Lean este resultado lo hemos formalizado de la siguiente manera:
 \begin{leancode}
 theorem imo2001_q2_aux
@@ -317,18 +322,18 @@ theorem imo2001_q2_aux
 
 Si se observan de manera detallada las expresiones (\ref{introq2}) y
 (\ref{introteoraux}), se tiene que considerando los números reales
-\((a^{3})^{-1}\), \((b^{3})^{-1}\) y \((c^{3})^{-1}\) en (\ref{introteoraux}) se
-llega directamente a (\ref{introq2}).
-
+\((a^{3})^{-1}\), \((b^{3})^{-1}\) y \((c^{3})^{-1}\) en
+(\ref{introteoraux}) se llega directamente a (\ref{introq2}).
 
 Todos estos capítulos que se han desarrollado previamente, han permitido
-adquirir los conocimientos y la destreza suficiente como para formalizar un
-problema que no haya sido formalizado con anterioridad. Entonces, en el último
-capítulo del trabajo se ha llevado a cabo la \textbf{
-formalización en Lean de un nuevo problema que no se había formalizado antes},
-(\ref{cap4}). En concreto, el problema que se ha formalizado en este capítulo es
-el Q6 correspondiente al año 2001. El problema que en este capítulo se ha
-estudiado posee el siguiente enunciado:
+adquirir los conocimientos y la destreza suficiente como para formalizar
+un problema que no haya sido formalizado con anterioridad. Entonces, en
+el último capítulo del trabajo se ha llevado a cabo la
+\textbf{formalización en Lean de un nuevo problema que no se había
+formalizadoantes}, (\ref{cap4}). En concreto, el problema que se ha
+formalizado en este capítulo es el Q6 correspondiente al año 2001. El
+problema que en este capítulo se ha estudiado posee el siguiente
+enunciado:
 
 \noindent
 Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
@@ -338,8 +343,8 @@ Sean \(a\), \(b\), \(c\) y \(d\) cuatro números enteros tales que
 \end{equation}
 Demostrar que \(ab+cd\) no es primo.
 
-Asimismo, la formalización que se ha propuesto en el trabajo para resolver el
-problema que es la siguiente:
+Asimismo, la formalización que se ha propuesto en el trabajo para
+resolver el problema que es la siguiente:
 
 \begin{leancode}
 theorem imo2001q6
@@ -354,8 +359,9 @@ theorem imo2001q6
 Para llevar acabo tal formalización en Lean he hecho uso de cinco lemas
 auxiliares. Expangamos estos cinco resultados:
 \begin{enumerate}
-\item Bajo la hipótesis (\ref{introhipotesis}) del problema, se tiene que los
-  cuatro números enteros descritos verifican la siguiente igualdad:
+\item Bajo la hipótesis (\ref{introhipotesis}) del problema, se tiene
+  que los cuatro números enteros descritos verifican la siguiente
+  igualdad:
   \begin{equation*}
     b²+bd+d²=a²-ac+c².
   \end{equation*}
@@ -367,21 +373,23 @@ auxiliares. Expangamos estos cinco resultados:
     : b^2 + b*d + d^2 = a^2 - a*c + c^2
   \end{leancode}
 
-\item Bajos la misma hipótesis (\ref{introhipotesis}) del problema, probamos
-  que los cuatro números enteros descritos verifican la siguiente expresión:
+\item Bajos la misma hipótesis (\ref{introhipotesis}) del problema,
+  probamos que los cuatro números enteros descritos verifican la
+  siguiente expresión:
   \begin{equation*}
     (ac+bd)(b²+bd+d²)=(ab+cd)(ad+bc).
   \end{equation*}
 
-  Asimismo, la correspondiente formalización en Lean de este resultado es:
+  Asimismo, la correspondiente formalización en Lean de este resultado
+  es:
   \begin{leancode}
   lemma productos_equivalentes
     (h : a*c + b*d = (a + b - c + d) * (-a + b + c + d))
     : (a*c + b*d) * (b^2 + b*d + d^2) = (a*b + c*d) * (a*d + b*c)
   \end{leancode}
 
-\item Bajo todas las hipótesis del problema inicial, se verifica la siguiente
-  desigualdad:
+\item Bajo todas las hipótesis del problema inicial, se verifica la
+  siguiente desigualdad:
   \begin{equation*}
     ac+bd<ab+cd.
   \end{equation*}
@@ -412,8 +420,8 @@ auxiliares. Expangamos estos cinco resultados:
   \end{leancode}
 
 \item El último resultado es inmediato a partir del segundo que hemos
-  enunciado, y es que se tiene que el número \(ac+bd\) divide al producto de los
-  números \(ab+cd\) y \(ad+bc\).
+  enunciado, y es que se tiene que el número \(ac+bd\) divide al
+  producto de los números \(ab+cd\) y \(ad+bc\).
 
   Esto lo hemos formalizado en Lean de la siguiente manera:
 
@@ -422,47 +430,40 @@ auxiliares. Expangamos estos cinco resultados:
     (h : a*c + b*d = (a + b - c + d) * (-a + b + c + d))
     : a*c + b*d ∣ (a*b+c*d) * (a*d+b*c)
   \end{leancode}
-  
+
 \end{enumerate}
 
-Entonces, tras detallar los resultados auxiliares que han sido usados, se tiene
-que la demostración del teorema principal se hace por contradicción, suponiendo
-que el número \(ab+cd\) sí es primo y llegando entonces a una contradicción.
+Entonces, tras detallar los resultados auxiliares que han sido usados,
+se tiene que la demostración del teorema principal se hace por
+contradicción, suponiendo que el número \(ab+cd\) sí es primo y llegando
+entonces a una contradicción.
 
-Para llegar a tal contradicción, se usa que por el quinto resultado auxiliar se
-tiene que \(ac+bd\) divide al producto de \(ab+cd\) con \(ad+bc\) y también
-se tiene la hipótesis de que \(ab+cd\) es primo. Entonces, sabemos que se ha
-de verificar una de las dos siguientes posibilidades:
+Para llegar a tal contradicción, se usa que por el quinto resultado
+auxiliar se tiene que \(ac+bd\) divide al producto de \(ab+cd\) con
+\(ad+bc\) y también se tiene la hipótesis de que \(ab+cd\) es
+primo. Entonces, sabemos que se ha de verificar una de las dos
+siguientes posibilidades:
 \begin{itemize}
 \item Que \(ab+cd\) divida a \(ac+bd\).
 
 \item O bien que \(ac+bd\) divida a \(ad+bc\).
 \end{itemize}
 
-Estudiando ambas posibilidades se llega a contradicción como consecuencia
-de las dos desigualdades que se han introducido en los resultados auxiliares.
+Estudiando ambas posibilidades se llega a contradicción como
+consecuencia de las dos desigualdades que se han introducido en los
+resultados auxiliares.
 
 Finalmente, en el apéndice \ref{apentacti} se han explicado todas
-las tácticas de Lean que se han usado en el trabajo.
+las tácticas de Lean que se han usado en el trabajo y en el índice de
+lemas se han indicado los lemas usados.
 
-\comentario{Se confunden las referencias a las ecuaciones y a los diferentes
-capítulos}
+\comentario{Se confunden las referencias a las ecuaciones y a los
+  diferentes capítulos}
 
-\comentario{Quedaría mejor una distinción de secciones. Por ejemplo cuando decimos "Todos estos capítulos que se han desarrollado previamente..." no sé si está
-muy seguido de la conclusión de los problemas}
-% Finalmente, cabe mencionar que la realización de este trabajo ha supuesto el
-% aprendizaje del programa Lean y el uso de su librería mathlib. Asimismo,
-% comentar también que en el apéndice \ref{apentacti} se han explicado todas
-% las tácticas de Lean que se han usado en el trabajo.
-%
-% Además, el objetivo pincipal del trabajo ha sido alcanzado: obtener la destreza
-% suficiente como para ser capaz de formalizar un problema que no se había
-% formalizado con anterioridad.
-%
-% Por último, comentar que es un trabajo que tiene muchas líneas futuras de
-% continuación pues aún quedan multitud de problemas de las IMO que no han sido
-% formalizados. Es más, existen otras muchas competiciones o problemas que
-% también se pueden formalizar mediante demostradores interactivos.
+\comentario{Quedaría mejor una distinción de secciones. Por ejemplo
+  cuando decimos "Todos estos capítulos que se han desarrollado
+  previamente..." no sé si está muy seguido de la conclusión de los
+  problemas}
 
 %%% Local Variables:
 %%% mode: latex
