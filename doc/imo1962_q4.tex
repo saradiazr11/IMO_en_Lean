@@ -48,7 +48,7 @@ más compacta:
 \end{definicion}
 
 De manera que la formalización en Lean de la definición
-(\ref{problema}) es:
+\ref{problema} es:
 \begin{leancode}
 def problema (x : ℝ) : Prop :=
 cos x ^ 2 + cos (2 * x) ^ 2 + cos (3 * x) ^ 2 = 1
@@ -177,7 +177,7 @@ Una vez se ha introducido este lema, se puede proceder a la demostración
 del lema que ya se adelantó y que consiste en probar que resolver la
 expresión \textbf{problema}, (\ref{expresionprob}), es equivalente a
 resolver la expresión obtenida de igualar a cero \textbf{funauxiliar},
-(\ref{funaux}). Veámoslo:
+\ref{funaux}. Veámoslo:
 
 \begin{lema}[Equivalencia]\label{lemaequivalenciaprob}
   Resolver la expresión (\ref{expresionprob}) es equivalente a resolver
@@ -287,8 +287,9 @@ y las tácticas
 \tactica{norm_num}{norm\_num} y
 \tactica{rw / rewrite}{rw}.
 
-En el caso de la prueba de nuestro lema, esta táctica ha sido usada para
-demostrar que cuatro es distinto de cero. Esta táctica prueba de manera
+En el caso de la prueba de nuestro lema, la táctica
+\tactica{norm_num}{norm\_num} ha sido usada para demostrar que
+cuatro es distinto de cero. Esta táctica prueba de manera
 directa este tipo de igualdades y desigualdades.
 
 \subsection{Resolución del problema equivalente}\label{secequiv}
@@ -297,7 +298,7 @@ Una vez ya se ha demostrado que el problema (\ref{probaux}) es
 equivalente al problema que inicialmente queríamos demostrar, se va a
 proceder a encontrar los ceros de (\ref{probaux}). Para ello, se
 introducirán tres lemas auxiliares. El primero de ellos consistirá en
-ver para en qué dos casos se verifica el problema (\ref{probaux});
+ver en qué dos casos se verifica el problema (\ref{probaux});
 mientras que en los dos últimos lemas se detallará la forma de la
 solución para los dos casos que se obtendrán en el primer lema.
 
@@ -338,7 +339,7 @@ solución para los dos casos que se obtendrán en el primer lema.
   donde hemos aplicado dos veces el resultado de que el producto
   de dos términos esté igualado a cero.
 
-  De esta forma, tenemos que el problema inicial, (\ref{problema}),
+  De esta forma, tenemos que el problema inicial, \ref{problema},
   es equivalente al que se plantea a continuación:
   \begin{equation}\label{problemaEquiv2}
     \cos(x)=0 \lor \cos²(x)=\frac{1}{2} \lor \cos(3x)=0
@@ -528,7 +529,7 @@ y las tácticas
     números naturales. Entonces se tiene que se verifica la
     expresión coseno de \(θ\) igual a cero si y solamente si
     existe un número \(k\) perteneciente al conjunto de los
-    números enteros tal que \(θ\) es igual al producdo del
+    números enteros tal que \(θ\) es igual al producto del
     doble de \(k\) más uno por \(π\) medio. Simbólicamente:
   \begin{equation}\label{alpha2}
     \cos(θ) = 0 ⟺ ∃ k ∈ ℤ,  θ = \frac{(2k+1)π}{2}.
@@ -569,8 +570,8 @@ y las tácticas
    \noindent
    \framebox{\longleftarrow} Supongamos ahora que existe \(k\)
    perteneciente al conjunto de los números enteros, a partir del cual
-   \(x\) se puede escribir como el producto de el doble de \(k \) más
-   uno, por \( π\) medio. Simbólicamente,
+   \(x\) se puede escribir como el producto del doble de \(k \) más
+   uno, por \( π\) cuarto. Simbólicamente,
    \begin{equation}\label{CosDobleh2}\tag{h2}
       ∃ k ∈ ℤ, x = \frac{(2k+1)π}{4}.
     \end{equation}
@@ -633,7 +634,7 @@ entero \(k\) representado por \textit{↑k}. Esto es debido a lo que en
 Lean se conoce como coerción (o inmersión), en nuestro caso, entre el
 conjunto de los números reales y el conjunto de los números
 enteros. Realmente, esto no es más que todo número entero se puede ver
-como un número real en el caso de que sea necesario.
+como un número real en el caso que sea necesario.
 
 Seguidamente, veamos los lemas auxiliares que se han utilizado
 para realizar la formalización de este lema son los siguiente:
@@ -769,7 +770,7 @@ las soluciones del problema auxiliar; se puede concluir el ejercicio.
 
 En primer lugar, por lo que hemos visto en la subsección
 \ref{secequiv}, se sabe que el problema equivalente
-(y por tanto del problema original) tiene solución en dos
+(y por tanto del problema original) tiene solución en los dos
 siguientes casos:
 \begin{align}
   &∃ k ∈ ℤ, x = \frac{(2k+1)π}{4}  \label{condicion1}\\
@@ -777,7 +778,7 @@ siguientes casos:
 \end{align}
 
 Esto nos permite definir el conjunto de soluciones del problema como el
-cojunto de los números reales, \(x\), tales que o bien verifiquen
+conjunto de los números reales, \(x\), tales que o bien verifiquen
 (\ref{condicion1}), o bien (\ref{condicion2}). De manera formal, podemos
 introducir el siguiente conjunto correspondiente a las soluciones del
 problema:

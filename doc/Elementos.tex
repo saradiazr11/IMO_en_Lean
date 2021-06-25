@@ -131,7 +131,7 @@ Para poder trabajar con el conjunto de los números reales ha sido necesario
 importar la librería \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}
 {data.real.basic}.
 
-En la formalización de este teorema Lean han sido necesarios el uso
+En la formalización de este teorema en Lean han sido necesarios el uso
 de los siguiente lemas y teoremas:
 \begin{itemize}
 \item \mint{lean}|eq_of_abs_sub_nonpos : (a - b) ≤ 0 → a = b|
@@ -149,6 +149,7 @@ de los siguiente lemas y teoremas:
 Además, también se han usado las tácticas
 \tactica{apply}{apply},
 \tactica{by_contradiction}{by\_contradiction},
+\linebreak
 \tactica{push_neg}{push\_neg},
 \tactica{specialize}{specialize},
 \tactica{calc}{calc},
@@ -187,7 +188,7 @@ def cauchy_sequence (u : ℕ → ℝ) :=
   sucesión en cuestión se verifica que
 
   \begin{equation}\label{lim3}
-  ∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N |u_n-l| ≤ \frac{ε}{2}.
+  ∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N, |u_n-l| ≤ \frac{ε}{2}.
   \end{equation}
 
   A continuación, consideremos \(p,q ∈ ℕ\) tales que estos dos números
@@ -251,7 +252,7 @@ usado los dos siguientes lemas auxiliares:
 \item \mint{lean}|abs_sub : abs (a - b) = abs (b - a)|
   \indLema{abs\_sub}
 \end{itemize}
-Además,se han usado las tácticas
+Además, se han usado las tácticas
 \tactica{rw /rewrite}{rw}.
 \tactica{use}{use},
 \tactica{apply}{apply},
@@ -490,7 +491,7 @@ para trabajar con el conjunto de los números reales.
 Al igual que en el caso anterior, para formalziar este resultado no ha
 sido necesario el uso de ningún lema o teorema auxiliar; pero sí se han
 usado las tácticas
-\tactica{intro / intros}{intros}.
+\tactica{intro / intros}{intros},
 \tactica{rw / rewrite}{rw},
 \tactica{calc}{calc} y
 \tactica{refl / reflexivity}{rfl}.
@@ -518,7 +519,7 @@ usado las tácticas
                   &≤ &-(g ∘ f)(x), & [(3)]
     \end{array}\]
   donde en \((2)\) y en \((3)\) se han usado las hipótesis de funciones
-  impares, (\ref{fimpar}) y (\ref{gimpar}) respectivamente.
+  impares, (\ref{fimpar}) y (\ref{gimpar}), respectivamente.
 
   De esta forma ya tendríamos la demostración deseada.
 \end{demostracion}
@@ -544,7 +545,7 @@ end
 
 Para llevar a cabo la formalización de este resultado ha sido necesario
 utilizar las tácticas
-\tactica{intro / intros}{intros}.
+\tactica{intro / intros}{intros},
 \tactica{rw / rewrite}{rw},
 \tactica{calc}{calc} y
 \tactica{refl / reflexivity}{rfl}.
@@ -670,6 +671,7 @@ Aparte del lema auxiliar, se han usado las tácticas
 La formalización de esta demostración en Lean sería:
 \begin{leancode}
 import data.int.parity
+import tactic
 
 variables (a b c : ℤ)
 

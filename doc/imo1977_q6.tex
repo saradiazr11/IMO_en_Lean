@@ -188,7 +188,7 @@ naturales. Enunciemos dicho teorema:
         \end{proposicion}
 
         La formalización en Lean de esta proposición es la que se
-        presente a continuación:
+        presenta a continuación:
         \begin{leancode}
           theorem sub_add_cancel {n m : ℕ} (h : m ≤ n) : n - m + m = n
         \end{leancode}
@@ -303,7 +303,7 @@ naturales. Enunciemos dicho teorema:
   \noindent
   \textbf{\underline{Hipótesis mon}}
 
-  El enunciado de la esta hipótesis que queremos demostrar que se
+  El enunciado de la hipótesis que queremos demostrar que se
   verifica en nuestro problema es que para cualquier número natural
   \(n\) se verifica que \(f(n)\) es menor estrictamente que \(f(n+1)\).
   Simbólicamente:
@@ -409,8 +409,7 @@ naturales. Enunciemos dicho teorema:
 
   Para concluir la demostración basta con probar (\ref{objetivo3}); esto
   se puede hacer de manera directa con la hipótesis principal del
-  problema, (\ref{h77_1}), y la monotonía de la función \(f\), hipótesis
-  (\ref{def:mono})
+  problema, (\ref{h77_1}), y la monotonía de la función \(f\).
 \end{demostracion}
 
 La formalización en Lean de este teorema sería la siguiente:
@@ -479,7 +478,7 @@ de los siguiente lemas y teoremas:
   \indLema{eq\_of\_le\_of\_lt\_succ}
 \end{itemize}
 Además,se han usado las tácticas
-\tactica{apply}{apply}.
+\tactica{apply}{apply},
 \tactica{exact}{exact},
 \tactica{have}{have},
 \tactica{induction}{induction},
@@ -529,7 +528,7 @@ naturales positivos en sí mismo. Veámoslo:
     la función se define como \(f(m)\), donde \(f\) es la definida en el
     enunciado de este teorema.
   \item Que el número natural \(m\) sea nulo. En este caso la aplicación
-    definida nos lleva éste número al cero.
+    definida nos lleva este número al cero.
   \end{enumerate}
 
   Si denotamos esta función por \(f_1\), simbólicamente se tendría:
@@ -557,7 +556,7 @@ naturales positivos en sí mismo. Veámoslo:
   (\ref{f1}), para demostrar (\ref{probar}) vamos a dividir la prueba en
   dos casos distintos:
   \begin{itemize}
-  \item \textbf{Caso \(m=0\)}
+  \item \textbf{Caso \(x=0\)}
 
     En este caso la expresión a demostrar (\ref{probar}), se convierte
     en
@@ -575,7 +574,7 @@ naturales positivos en sí mismo. Veámoslo:
     de la función \(f\) es el conjunto de los números naturales
     positivos.
 
-  \item \textbf{Caso \(m>0\)}
+  \item \textbf{Caso \(x>0\)}
 
     En este caso, se tiene que por la definición de \(f_1\), probar
     (\ref{probar}) se convierte en

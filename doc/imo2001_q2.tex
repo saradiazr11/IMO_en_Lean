@@ -39,7 +39,7 @@ open real
 
 Además, se han de introducir las variables \(a\), \(b\) y \(c\) que en
 este problema pertenecen al conjunto de los números reales (la condición
-de que son positivos se introducirán como hipótesis). En Lean esto se
+de que son positivos se introducirá como hipótesis). En Lean esto se
 formaliza de la siguiente forma:
 \begin{leancode}
 variables {a b c : ℝ}
@@ -79,7 +79,7 @@ El primer resultado auxiliar es el que se presenta a continuación:
   \end{align}
 
   Para finalizar, basta con usar dos veces el resultado que nos dice que
-  la suma de dos números postivos es positiva. Esto supone que, si
+  la suma de dos números positivos es positiva. Esto supone que, si
   usamos este resultado sobre las hipótesis (\ref{ha4q2}) y
   (\ref{hb4q2}) se tiene que
   \begin{equation}\label{sum1q2}\tag{sum1}
@@ -149,8 +149,8 @@ verifica una cota que nos resultará de gran utilidad más adelante.
   (\ref{haq22}), (\ref{hbq22}) y (\ref{hcq22}); se tiene que probar la
   expresión (\ref{eqcota}).
 
-  Para llevar a cabo tal prueba, se comenzarán una serie de hipótesis
-  que se pueden deducir fácilmente:
+  Para llevar a cabo tal prueba, se comenzará introduciendo una serie
+  de hipótesis que se pueden deducir fácilmente:
   \begin{itemize}
   \item Por la hipótesis (\ref{haq22}) se tiene que \(a\) es un
     número positivo, entonces cualquier potencia de él lo es y en
@@ -285,7 +285,7 @@ verifica una cota que nos resultará de gran utilidad más adelante.
   \end{equation}
 
   A continuación, para poder seguir con el desarrollo de la expresión a
-  demostrar, es decir, (\ref{eqcota6}) se van a introducir otra serie de
+  demostrar, es decir, (\ref{eqcota6}), se van a introducir otra serie de
   hipótesis al igual que hicimos al principio de la demostración.
   \begin{itemize}
   \item \textbf{Hipótesis desarrollo}
@@ -809,7 +809,7 @@ teorema que demuestra el resultado que nos interesa.
   bastante sencilla la resolución del problema original.
 
   Como consecuencia de que los números reales en consideración son mayor
-  que cero por hipótesis, (\ref{haq2te}) (\ref{hbq2te}) y
+  que cero por hipótesis, (\ref{haq2te}), (\ref{hbq2te}) y
   (\ref{hcq2te}), se tiene que podemos aplicar la hipótesis
   (\ref{hfinal}) en los diferentes términos que aparecen en la expresión
   de la hipótesis (\ref{auxfinal}).  De esta forma se obtendría que:
@@ -865,7 +865,7 @@ siguientes lemas y teoremas auxiliares:
   \indLema{rpow\_pos\_of\_pos}
 \end{itemize}
 
-Además,se han usado las tácticas
+Además, se han usado las tácticas
 \tactica{exact}{exact},
 \tactica{have}{have},
 \tactica{intros}{intros},

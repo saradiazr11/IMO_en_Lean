@@ -148,11 +148,11 @@ begin
 end
 \end{leancode}
 
-En el siguiente ejemplo que se plantea, se hace uso intros, en este caso
-como se quiere demostrar que \(Q\) implica no \(P\), al decirle intros q
-p, le estamos diciendo que introduzca las hipótesis de que se verifica
-\(Q\) y también \(P\). De esta manera, el objetivo a demostrar pasa a
-ser false.
+En el siguiente ejemplo que se plantea, se hace uso
+\dtactica{intro / intros}{intros}, en este caso como se quiere demostrar
+que \(Q\) implica no \(P\), al decirle intros q p, le estamos diciendo
+que introduzca las hipótesis de que se verifica \(Q\) y también \(P\).
+De esta manera, el objetivo a demostrar pasa a ser false.
 \begin{leancode}
 example (P Q : Prop) (h₁ : P ∨ Q) (h₂ : ¬ (P ∧ Q)) : Q → ¬P :=
 begin
@@ -170,7 +170,7 @@ especifique justo después de aplicar la táctica). De manera que si
 unifica, los objetivos a demostrar pasan a ser las diversas premisas que
 tuviese el resultado usado.
 
-Veámos un ejemplo en el que se utiliza esta táctica:
+Veamos un ejemplo en el que se utiliza esta táctica:
 \begin{leancode}
 def non_decreasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ ≤ f x₂
 def non_increasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ ≥ f x₂
@@ -350,7 +350,7 @@ end
 
 La táctica \dtactica{cases}{cases} es también una táctica muy usada en
 las formalizaciones de Lean. Existen diversas formas de usar esta
-táctica, no obstante, nos centraremos en las dos que se han usado en el
+táctica, no obstante, nos centraremos en las que se han usado en el
 trabajo y que consisten en:
 \begin{enumerate}
 \item Cuando se tiene una hipótesis que es una conjunción, se usa la
@@ -449,7 +449,7 @@ La táctica que se va a presentar es la conocida como
 \dtactica{from}{from}, esta táctica es muy similar a la táctica
 \dtactica{exact}{exact}; pero a diferencia de esta última, la táctica
 \dtactica{from}{from} se puede usar con otras tácticas como
-\dtactica{have}.
+\dtactica{have}{have}.
 
 Veamos un ejemplo del uso de la táctica \dtactica{from}{from} para
 probar una hipótesis que ha sido introducida con la táctica
@@ -480,7 +480,7 @@ con la primera parte del objetivo a demostrar que está formada por dos
 constructores.  De manera totalmente análoga, la táctica
 \dtactica{left / right}{right} se queda con la segunda parte del
 objetivo cuando está formada por dos constructores. Esta táctica
-incluyes las reglas de introducción de la disyunción.
+incluye las reglas de introducción de la disyunción.
 
 Continuando la formalización de uno de los ejemplos que se ha presentado
 en la explicación de la táctica \dtactica{cases}{cases} (en concreto el

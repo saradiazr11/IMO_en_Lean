@@ -34,7 +34,7 @@ Las IMO consisten en una competición de matemáticas que se realiza
 anualmente para estudiantes preuniversitarios. La competición consta de
 dos cuestionarios con tres problemas cada uno, formando un total de
 seis. Los problemas que se proponen suelen ser de diversas áreas de las
-matemáticas: álgebra, análisis, geometría, teoría de números, \dots.
+matemáticas: álgebra, análisis, geometría, teoría de números, \dots
 
 Para la formalización de los problemas que se han estudiado en el
 trabajo, se ha hecho uso de la librería matemática de Lean conocida como
@@ -253,6 +253,7 @@ de un número natural se ha hecho uso de una función auxiliar llamada
 
 \begin{definicion}
   Sea \(n\) y \(k\) números naturales. Definimos la función
+  \linebreak
   \textbf{min\_fac\_aux} con la siguiente casuística:
   \begin{itemize}
   \item Si se verifica que \(n\) es menor que el producto de \(k\) por
@@ -345,8 +346,8 @@ end
 Se puede observar que en la formalización se ha pasado de tener un
 \tactica{sorry}{sorry} a tener dos; esto se tiene como consecuencia de
 haber dividido el problema en dos partes. Además, la manera más elegante
-y cómoda de escribirlo es que como se hecho, diferenciando la prueba de
-cada problema entre llaves. De esta manera, se tiene que, tras la
+y cómoda de escribirlo es que como se ha hecho: diferenciando la prueba
+de cada problema entre llaves. De esta manera, se tiene que, tras la
 aplicación de la táctica \tactica{split}{split}, el estado pasa a ser:
 \begin{leancode}
 n : ℕ
@@ -567,8 +568,8 @@ end
 \end{leancode}
 
 Antes de proseguir con la demostración de los dos resultados que nos
-faltan por demostrar (\(p\) primo y (\ref{h2intro})), veamos las pruebas
-que nos han demostrado los cuatro resultados anteriores.
+faltan por demostrar ((\ref{hpintro}) y (\ref{h2intro})), veamos las
+pruebas que nos han demostrado los cuatro resultados anteriores.
 
 En primer lugar, para el caso de la hipótesis (\ref{h1intro}) se ha
 hecho uso del siguiente teorema:
@@ -673,7 +674,7 @@ end
   \end{leancode}
 
   Se puede observar que hemos vuelto a usar la estructura
-  \texttt{begin}- \texttt{end} que usamos para el teorema
+  \texttt{begin}-\texttt{end} que usamos para el teorema
   inicialmente. Esto se debe a que cuando nos encontramos ante
   resultados que de primeras no somos capaces de demostrar en una línea
   es más sencillo comenzar la formalización de esta manera.
@@ -800,8 +801,8 @@ end
   \begin{leancode}
 lemma hp
   (n m p : ℕ)
-  (h1 : m = factorial n + 1)
-  (h2 : p = min_fac m)
+  (h1p : m = factorial n + 1)
+  (h2p : p = min_fac m)
   : prime p :=
 begin
   sorry,
@@ -818,8 +819,8 @@ end
     \begin{leancode}
 lemma hp
   (n m p : ℕ)
-  (h1 : m = factorial n + 1)
-  (h2 : p = min_fac m)
+  (h1p : m = factorial n + 1)
+  (h2p : p = min_fac m)
   : prime p :=
 begin
   rw h2p,
@@ -840,8 +841,8 @@ h2p: p = min_fac m
     Al intentar aplicar la táctica
     \tactica{library_search}{library\_search}, seguimos sin tener una
     propuesta de solución. Es por eso que intentamos con la táctica
-    \tactica{suggest}{suggest} y se obtiene varias prupuestas, de la que
-    se ha elegido la siguiente:
+    \tactica{suggest}{suggest} y se obtienen varias prupuestas, de las
+    que se ha elegido la siguiente:
     \begin{leancode}
 lemma hp
   (n m p : ℕ)
