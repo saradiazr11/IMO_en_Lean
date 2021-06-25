@@ -13,17 +13,17 @@ Infinitesimal del primer año del Grado.
 Para llevar a cabo el desarrollo de tales resultados hemos hecho uso
 de \cite{ML} y \cite{LP}.
 
-Estudiaremos un total de seis resultados. Los tres primeros son relativos
-a la convergencia de sucesiones, mientras que los tres últimos son sobre
-la paridad de las funciones.
+Estudiaremos un total de seis resultados. Los tres primeros son
+relativos a la convergencia de sucesiones, mientras que los tres últimos
+son sobre la paridad de las funciones.
 
 \subsection{Unicidad del límite}
 
 \begin{definicion}\label{limite}
-  Una sucesión \(\{u_n\}\) se dice que converge a un número real \(c\) si,
-  dado cualquier número real \(ε > 0\), existe un número natural \(N\)
-  tal que si \(n\) es cualquier número natural mayor o igual que \(N\) se
-  cumple que \(|u_n-c| ≤ ε\). Simbólicamente,
+  Una sucesión \(\{u_n\}\) se dice que converge a un número real \(c\)
+  si, dado cualquier número real \(ε > 0\), existe un número natural
+  \(N\) tal que si \(n\) es cualquier número natural mayor o igual que
+  \(N\) se cumple que \(|u_n-c| ≤ ε\). Simbólicamente,
   \[∀ ε > 0, ∃ N ∈ ℕ, ∀ n ≥ N, |u_n-c| ≤ ε \]
 \end{definicion}
 
@@ -59,10 +59,9 @@ Cada sucesión tiene como máximo un límite.
     ∀ ε > 0, ∃ N_2 ∈ ℕ, ∀ n ≥ N_2 |u_n-l'| ≤ \frac{ε}{2}.
   \end{equation}
 
-  A continuación, definamos \(N_0 = \max(N_1,N_2)\).
-  De manera que, considerando un número arbitrario \(n\) que
-  sea mayor o igual que \(N_0\) y teniendo en cuenta lo visto anteriormente,
-  podemos escribir:
+  A continuación, definamos \(N_0 = \max(N_1,N_2)\).  De manera que,
+  considerando un número arbitrario \(n\) que sea mayor o igual que
+  \(N_0\) y teniendo en cuenta lo visto anteriormente, podemos escribir:
   \[\begin{array}{llll}
       |l-l'| &= &|l-u_{N_0}+u_{N_0}-l'|   & \\
              &≤ &|u_{N_0}-l|+|u_{N_0}-l'| & [(*)] \\
@@ -241,10 +240,11 @@ begin
 end
 \end{leancode}
 
-Al igual que en el resultado anterior, para la formalización que acabamos
-de plantear, ha sido necesario importar la librería \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}
-{data.real.basic} para poder trabajar con los números reales y se han usado los dos siguientes lemas
-auxiliares:
+Al igual que en el resultado anterior, para la formalización que
+acabamos de plantear, ha sido necesario importar la librería
+\href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}
+{data.real.basic} para poder trabajar con los números reales y se han
+usado los dos siguientes lemas auxiliares:
 \begin{itemize}
 \item \mint{lean}|abs_add : abs (a + b) ≤ abs a + abs b|
   \indLema{abs\_add}
@@ -335,8 +335,8 @@ end
 
 En el caso de este resultado, se ha importado librería
 \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}{data.real.basic},
-para trabajar con el conjunto de los números reales y sólo se ha usado el siguiente
-lema auxiliar:
+para trabajar con el conjunto de los números reales y sólo se ha usado
+el siguiente lema auxiliar:
 \begin{itemize}
 \item \mint{lean}|abs_add : abs (a + b) ≤ abs a + abs b|
   \indLema{abs\_add}
@@ -396,8 +396,8 @@ resultado deseado.
   \begin{equation}
     ∀ x ∈ ℝ, (f+g)(-x) = (f+g)(x).
   \end{equation}
-  Para probarlo, comencemos considerando un número real \(x\) arbitrario,
-  entonces estudiemos:
+  Para probarlo, comencemos considerando un número real \(x\)
+  arbitrario, entonces estudiemos:
   \[\begin{array}{llll}
       (f+g)(-x) &= &f(-x)+g(-x) & [(1)]\\
                 &≤ &f(x)+g(x)   & [(2)] \\
@@ -429,13 +429,14 @@ begin
 end
 \end{leancode}
 
-Como en el resto de ejemplos anteriores, para formalizar el resultado ha sido
-necesario importar la librería  \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}{data.real.basic}
+Como en el resto de ejemplos anteriores, para formalizar el resultado ha
+sido necesario importar la librería
+\href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}{data.real.basic}
 para trabajar con el conjunto de los números reales.
 
 Para llevar a cabo la formalización en Lean de este resultado no ha sido
-necesario utilizar ningún lema ni teorema auxiliar. No obstante, sí ha sido
-necesario usar las tácticas
+necesario utilizar ningún lema ni teorema auxiliar. No obstante, sí ha
+sido necesario usar las tácticas
 \tactica{intro / intros}{intros},
 \tactica{intro / intros}{intro},
 \tactica{rw / rewrite}{rw},
@@ -486,9 +487,9 @@ end
 En el ejemplo se ha importado la librería  \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}{data.real.basic}
 para trabajar con el conjunto de los números reales.
 
-Al igual que en el caso anterior, para formalziar este resultado no ha sido
-necesario el uso de ningún lema o teorema auxiliar; pero sí se han usado
-las tácticas
+Al igual que en el caso anterior, para formalziar este resultado no ha
+sido necesario el uso de ningún lema o teorema auxiliar; pero sí se han
+usado las tácticas
 \tactica{intro / intros}{intros}.
 \tactica{rw / rewrite}{rw},
 \tactica{calc}{calc} y
@@ -541,14 +542,15 @@ begin
 end
 \end{leancode}
 
-Para llevar a cabo la formalización de este resultado ha sido necesario utilizar
-las tácticas
+Para llevar a cabo la formalización de este resultado ha sido necesario
+utilizar las tácticas
 \tactica{intro / intros}{intros}.
 \tactica{rw / rewrite}{rw},
 \tactica{calc}{calc} y
 \tactica{refl / reflexivity}{rfl}.
 
-Asimismo, ha sido necesario importar la librería \href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}{data.real.basic}
+Asimismo, ha sido necesario importar la librería
+\href{https://github.com/leanprover-community/mathlib/blob/master/src/data/real/basic.lean}{data.real.basic}
 para trabajar con el conjunto de los números reales.
 
 \section{Álgebra básica}
@@ -694,8 +696,8 @@ En la formalización de este resultado ha sido necesario importar dos librerías
   para poder hacer uso de algunas tácticas como \tactica{ring}{ring}.
 \end{itemize}
 
-Asimismo, aparte de la táctica \tactica{ring}{ring}, ha sido necesario el uso
-de las tácticas
+Asimismo, aparte de la táctica \tactica{ring}{ring}, ha sido necesario
+el uso de las tácticas
 \tactica{cases}{cases},
 \tactica{rw /rewrite}{rw} y
 \tactica{use}{use}.
