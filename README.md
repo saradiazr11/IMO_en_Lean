@@ -32,3 +32,4 @@ son los siguientes:
 - IMO 1962 Q4.
 - IMO 1977 Q6.
 - IMO 2001 Q2.
+- IMO 2001 Q6.
