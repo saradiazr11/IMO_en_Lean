@@ -10,3 +10,7 @@ sistema Lean; para ello, con ayuda de la página oficial de Lean se puede hacer 
 muy sencilla:
 
 https://leanprover-community.github.io/
+
+Asimismo, personalmente, como entorno de desarrollo he usado VSCode, con el cual se trabaja
+de manera muy cómoda. Una vez ya se tiene instalado el programa Lean y el entorno de desarrollo
+que se desee, ya se puede usar el proyecto que aquí se plantea.
