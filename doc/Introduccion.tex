@@ -1,5 +1,7 @@
 \chapter*{Introducción}
 \addcontentsline{toc}{chapter}{Introducción}
+\chaptermark{Introducción}
+\sectionmark{Introducción}
 
 Las \href{https://www.imo-official.org/}{Olimpiadas Internacionales de
   Matemáticas (IMO)}\footnote{\url{https://www.imo-official.org}} son
@@ -69,7 +71,7 @@ su totalidad en el siguiente repositorio de GitHub:
 A continnuación, se va a detallar la estructura que se ha propuesto en
 el trabajo:
 
-\section{Primer capítulo}
+\section*{Primer capítulo}
 
 El trabajo se ha comenzando con una \textbf{introducción a Lean},
 (\ref{cap1}), donde se ha descrito brevemente esta herramienta y también
@@ -79,7 +81,7 @@ detallada: explicando y justificando cada paso de la formalización, para
 que de esta manera se pueda comprender la estructura de las
 formalizaciones.
 
-\section{Segundo capítulo}
+\section*{Segundo capítulo}
 
 A continuación, en el capítulo llamado \textbf{elementos de matemáticas
   en Lean}, (\ref{cap2}), se plantean varias formalizaciones sobre lemas
@@ -94,7 +96,7 @@ con ayuda del tutorial \cite{tutor} que realicé junto con
   de juego de manera que a medida que avanzas en él se introducen más
   técnicas de demostración que se deben ir utilizando.}.
 
-\section{Tercer capítulo}
+\section*{Tercer capítulo}
 
 El siguiente capítulo es el más extenso del trabajo y es en el que se
 detallan varias \textbf{formalizaciones en Lean de problemas de las IMO}
@@ -104,7 +106,7 @@ resolución en lenguaje natural para que el lector pueda entender y ver
 la analogía entre ambas. En concreto se han estudiado los siguientes
 problemas que se presentan a continuación:
 
-\subsection{IMO 1959 Q1}
+\subsection*{IMO 1959 Q1}
 
 \noindent
 Demostrar que la fracción
@@ -149,7 +151,7 @@ lemma Auxiliar
   : k ∣ 1
 \end{leancode}
 
-\subsection{IMO 1962 Q4}
+\subsection*{IMO 1962 Q4}
 
 \noindent
 Resolver la ecuación
@@ -244,7 +246,7 @@ theorem imo1962_q4
   : problema x ↔ x ∈ Solucion
 \end{leancode}
 
-\subsection{IMO 1977 Q6}
+\subsection*{IMO 1977 Q6}
 
 \noindent
 Considere la función
@@ -290,7 +292,7 @@ necesario probar que la función así definida verifica las hipótesis del
 teorema, lo cual se comprueba de manera muy sencilla diferenciando por
 casos.
 
-\subsection{IMO 2001 Q2}
+\subsection*{IMO 2001 Q2}
 
 \noindent
 Consideremos \(a\), \(b\) y \(c\) tres números reales positivos
@@ -341,7 +343,7 @@ Si se observan de manera detallada las expresiones (\ref{iintroq2}) y
 \((a^{3})^{-1}\), \((b^{3})^{-1}\) y \((c^{3})^{-1}\) en
 (\ref{iintroteoraux}) se llega directamente a (\ref{iintroq2}).
 
-\section{Cuarto capítulo}
+\section*{Cuarto capítulo}
 
 Todos estos capítulos que se han desarrollado previamente, han permitido
 adquirir los conocimientos y la destreza suficiente como para formalizar
@@ -471,7 +473,7 @@ Estudiando ambas posibilidades se llega a contradicción como
 consecuencia de las dos desigualdades que se han introducido en los
 resultados auxiliares.
 
-\section{Apéndice A}
+\section*{Apéndice A}
 
 Finalmente, en el apéndice \ref{apentacti} se han explicado todas
 las tácticas de Lean que se han usado en el trabajo y en el índice de

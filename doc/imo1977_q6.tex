@@ -19,9 +19,9 @@ Destacar que la formalización original del problema se ha obtenido de
     \[f(n) = n.\]}}
 
 \begin{nota}
-  En el enunciado del problema anterior se observa que la función \(f\) está
-  definida del conjunto \(ℕ⁺\) en sí mismo; dicho conjunto se define como
-  el conjunto de los números naturales positivos.
+  En el enunciado del problema anterior se observa que la función \(f\)
+  está definida del conjunto \(ℕ⁺\) en sí mismo; dicho conjunto se
+  define como el conjunto de los números naturales positivos.
 \end{nota}
 
 Para llevar a cabo la formalización en Lean del problema que
@@ -314,16 +314,16 @@ naturales. Enunciemos dicho teorema:
   Para demostrar que (\ref{mon}) es cierto bajo las hipótesis de nuestro
   problema, comenzamos fijando un número natural \(n\).
 
-  Ahora bien, por un lado se tiene que aplicando la hipótesis (\ref{h77_1})
-  a dicho número natural \(n\) resulta que
+  Ahora bien, por un lado se tiene que aplicando la hipótesis
+  (\ref{h77_1}) a dicho número natural \(n\) resulta que
   \begin{equation}\label{mon1}
     f(f(n)) < f(n+1).
   \end{equation}
 
   Por otro lado, se sabe que la imagen de aplicar la función \(f\) a un
-  número natural \(n\) es un número natural; es decir, \(f(n)\) pertenece
-  al conjunto de los número naturales. Entonces, si aplicamos la
-  hipótesis (\ref{hf}) a \(f(n\)) se tiene que
+  número natural \(n\) es un número natural; es decir, \(f(n)\)
+  pertenece al conjunto de los número naturales. Entonces, si aplicamos
+  la hipótesis (\ref{hf}) a \(f(n\)) se tiene que
   \begin{equation}\label{mon2}
     f(n) ≤ f(f(n)).
   \end{equation}
@@ -341,8 +341,8 @@ naturales. Enunciemos dicho teorema:
 
   \begin{definicion}\label{def:mono}
     Se dice que una función \(f\) es estrictamente monótona si para
-    cualesquiera \(a\) y \(b\) tales que \(a\) es menor estrictamente que
-    \(b\), se tiene que \(f(a)\) es también menor estrictamente que
+    cualesquiera \(a\) y \(b\) tales que \(a\) es menor estrictamente
+    que \(b\), se tiene que \(f(a)\) es también menor estrictamente que
     \(f(b)\). Simbólicamente:
     \begin{equation}
       ∀a,b, a < b ⟶ f(a) < f(b).
@@ -355,9 +355,9 @@ naturales. Enunciemos dicho teorema:
     ∀ ⦃a b⦄, a < b → f a < f b
   \end{leancode}
 
-  En el caso de nuestra función, que se encuentra definida en el conjunto
-  de los números naturales, existe un lema el cual nos da las condiciones
-  para que la función sea estrictamente monótona.
+  En el caso de nuestra función, que se encuentra definida en el
+  conjunto de los números naturales, existe un lema el cual nos da las
+  condiciones para que la función sea estrictamente monótona.
 
   \begin{lema}\label{lem:mono}
     Sea \(f\) una función que tiene como conjunto de salida el conjunto
@@ -395,8 +395,8 @@ naturales. Enunciemos dicho teorema:
     f(n) = n.
   \end{equation}
 
-  Haciendo uso de la hipótesis (\ref{hf}) para el número natural \(n\) que
-  estamos considerando se tiene entonces que
+  Haciendo uso de la hipótesis (\ref{hf}) para el número natural \(n\)
+  que estamos considerando se tiene entonces que
   \begin{equation}
     n ≤ f(n).
   \end{equation}
@@ -407,9 +407,10 @@ naturales. Enunciemos dicho teorema:
     f(n) < n+1.
   \end{equation}
 
-  Para concluir la demostración basta con probar (\ref{objetivo3}); esto se
-  puede hacer de manera directa con la hipótesis principal del problema,
-  (\ref{h77_1}), y la monotonía de la función \(f\), hipótesis (\ref{def:mono})
+  Para concluir la demostración basta con probar (\ref{objetivo3}); esto
+  se puede hacer de manera directa con la hipótesis principal del
+  problema, (\ref{h77_1}), y la monotonía de la función \(f\), hipótesis
+  (\ref{def:mono})
 \end{demostracion}
 
 La formalización en Lean de este teorema sería la siguiente:
@@ -517,12 +518,12 @@ naturales positivos en sí mismo. Veámoslo:
   Entonces, se quiere probar que para cualquier número natural positivo
   \(n\) se cumple (\ref{objf}).
 
-  En primer lugar, fijemos un número natural positivo arbitrario \(n\). A
-  continuación, se hace uso del teorema \ref{extension}, el cual está
-  definido sobre el conjunto de los números naturales. Aplicamos este
-  teorema sobre una función que está definida sobre el conjunto de los
-  número naturales, de manera que si consideramos un número \(m\) natural
-  se distinguen dos casos:
+  En primer lugar, fijemos un número natural positivo arbitrario
+  \(n\). A continuación, se hace uso del teorema \ref{extension}, el
+  cual está definido sobre el conjunto de los números
+  naturales. Aplicamos este teorema sobre una función que está definida
+  sobre el conjunto de los número naturales, de manera que si
+  consideramos un número \(m\) natural se distinguen dos casos:
   \begin{enumerate}
   \item Que el número natural \(m\) sea positivo. En esta situación,
     la función se define como \(f(m)\), donde \(f\) es la definida en el
@@ -552,25 +553,27 @@ naturales positivos en sí mismo. Veámoslo:
     f_1(f_1(x)) <f_1(x+1),
   \end{equation}
 
-  Como consecuencia de como se ha definido la función \(f_1\), (\ref{f1}),
-  para demostrar (\ref{probar}) vamos a dividir la prueba en dos casos
-  distintos:
+  Como consecuencia de como se ha definido la función \(f_1\),
+  (\ref{f1}), para demostrar (\ref{probar}) vamos a dividir la prueba en
+  dos casos distintos:
   \begin{itemize}
   \item \textbf{Caso \(m=0\)}
 
-    En este caso la expresión a demostrar (\ref{probar}), se convierte en
+    En este caso la expresión a demostrar (\ref{probar}), se convierte
+    en
     \begin{equation}\label{probar2}
       f_1(f_1(0)) < f_1(0+1).
     \end{equation}
 
-    Sin más que aplicar la definición de la función, (\ref{f1}), se tiene
-    que demostrar (\ref{probar2}) se convierte en
+    Sin más que aplicar la definición de la función, (\ref{f1}), se
+    tiene que demostrar (\ref{probar2}) se convierte en
     \begin{equation}
       0 < f(1).
     \end{equation}
 
     Este resultado se tiene de manera inmediata pues el conjunto imagen
-    de la función \(f\) es el conjunto de los números naturales positivos.
+    de la función \(f\) es el conjunto de los números naturales
+    positivos.
 
   \item \textbf{Caso \(m>0\)}
 
@@ -605,8 +608,8 @@ end
 \end{leancode}
 \index{imo1977\_q6}
 
-En la formalización en Lean de este teorema sólo ha sido necesario el uso
-de la siguiente aplicación:
+En la formalización en Lean de este teorema sólo ha sido necesario el
+uso de la siguiente aplicación:
 \begin{leancode}
 def to_pnat' (n : ℕ) : ℕ+ := succ_pnat (pred n)
 \end{leancode}
